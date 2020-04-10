@@ -59,6 +59,8 @@ Game.Screen.playScreen = {
      },
     exit: function() { console.log("Exited play screen."); },
     render: function(display) {
+        var screenWidth = Game.getScreenWidth();
+        var screenHeight = Game.getScreenHeight();
         // Iterate through all map cells
         for (var x = 0; x < this._map.getWidth(); x++) {
             for (var y = 0; y < this._map.getHeight(); y++) {
@@ -74,7 +76,6 @@ Game.Screen.playScreen = {
         var entities = this._map.getEntities();
         for (var i = 0; i < entities.length; i++) {
             var entity = entities[i];
-            console.log(entity.getX(), entity.getY(), entity.getChar());
             display.draw(
                 entity.getX(), 
                 entity.getY(),    
@@ -82,8 +83,23 @@ Game.Screen.playScreen = {
                 entity.getForeground(), 
                 entity.getBackground()
             );
-            console.log(entity);
         }
+        // Get the messages in the player's queue and render them
+        var messages = this._player.getMessages();
+        var messageY = 0;
+        for (var i = 0; i < messages.length; i++) {
+            console.log("drawing text");
+            // Draw each message, adding the number of lines
+            messageY += display.drawText(
+                0, 
+                messageY,
+                '%c{white}%b{black}' + messages[i]
+            );
+        }
+        // Render player HP 
+        var stats = '%c{white}%b{black}';
+        stats += vsprintf('HP: %d/%d ', [this._player.getHp(), this._player.getMaxHp()]);
+        display.drawText(0, screenHeight, stats);
     },
     handleInput: function(inputType, inputData) {
         if (inputType === 'keydown') {
