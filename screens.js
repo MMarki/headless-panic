@@ -122,7 +122,6 @@ Game.Screen.playScreen = {
             }
             // Unlock the engine
             this._map.getEngine().unlock();
-            Game.refresh()
         }    
     },
     move: function(dX, dY) {
