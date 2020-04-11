@@ -6,7 +6,7 @@ Game.Screen.startScreen = {
     exit: function() { console.log("Exited start screen."); },
     render: function(display) {
         // Render our prompt to the screen
-        display.drawText(1,1, "%c{yellow}Javascript Roguelike");
+        display.drawText(1,1, "%c{yellow}Headless Panic");
         display.drawText(1,2, "Press [Enter] to start!");
     },
     handleInput: function(inputType, inputData) {
@@ -37,28 +37,40 @@ Game.Screen.playScreen = {
     render: function(display) {
         var screenWidth = Game.getScreenWidth();
         var screenHeight = Game.getScreenHeight();
-        // Iterate through all map cells
+        var visibleCells = {}
+        //Find all visible cells
+        this._map.getFov().compute(
+            this._player.getX(), this._player.getY(), 
+            this._player.getSightRadius(), 
+            function(x, y, radius, visibility) {
+                visibleCells[x + "," + y] = true;
+            });
+        // Iterate through all visible map cells
         for (var x = 0; x < this._map.getWidth(); x++) {
             for (var y = 0; y < this._map.getHeight(); y++) {
-                // Fetch the glyph for the tile and render it to the screen
-                var tile = this._map.getTile(x, y);
-                display.draw(x, y,
-                    tile.getChar(), 
-                    tile.getForeground(), 
-                    tile.getBackground());
+                if (visibleCells[x + "," + y]){
+                    // Fetch the glyph for the tile and render it to the screen
+                    var tile = this._map.getTile(x, y);
+                    display.draw(x, y,
+                        tile.getChar(), 
+                        tile.getForeground(), 
+                        tile.getBackground());
+                }
             }
         }
         // Render the entities
         var entities = this._map.getEntities();
         for (var i = 0; i < entities.length; i++) {
             var entity = entities[i];
-            display.draw(
-                entity.getX(), 
-                entity.getY(),    
-                entity.getChar(), 
-                entity.getForeground(), 
-                entity.getBackground()
-            );
+            if (visibleCells[entity.getX() + ',' + entity.getY()]) {
+                display.draw(
+                    entity.getX(), 
+                    entity.getY(),    
+                    entity.getChar(), 
+                    entity.getForeground(), 
+                    entity.getBackground()
+                );
+            }
         }
         // Get the messages in the player's queue and render them
         var messages = this._player.getMessages();

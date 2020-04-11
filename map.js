@@ -16,6 +16,10 @@ Game.Map = function(tiles, player) {
     for (var i = 0; i < 50; i++) {
         this.addEntityAtRandomPosition(new Game.Entity(Game.FungusTemplate));
     }
+
+    //set up the field of vision
+    this._fov = {};
+    this.setupFov();
 };
 
 // Standard getters
@@ -132,4 +136,20 @@ Game.Map.prototype.getEntitiesWithinRadius = function(centerX, centerY, radius) 
         }
     }
     return results;
+}
+
+Game.Map.prototype.setupFov = function() {
+    // Keep this in 'map' variable so that we don't lose it.
+    var map = this;
+    
+    // We need to create a callback which figures out if light can pass through a given tile.
+    map._fov = new ROT.FOV.DiscreteShadowcasting(function(x, y) {
+        return !map.getTile(x, y).isBlockingLight();
+    }, 
+    {topology: 4}
+    );
+}
+
+Game.Map.prototype.getFov = function() {
+    return this._fov;
 }
