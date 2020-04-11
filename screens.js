@@ -24,36 +24,12 @@ Game.Screen.playScreen = {
     _map: null,
     _player: null,
     enter: function() {  
-        var map = [];
-        var mapWidth = Game.getScreenWidth();
-        var mapHeight = Game.getScreenHeight();
-        for (var x = 0; x < mapWidth; x++) {
-            // Create the nested array for the y values
-            map.push([]);
-            // Add all the tiles
-            for (var y = 0; y < mapHeight; y++) {
-                map[x].push(Game.Tile.nullTile);
-            }
-        }
-
-        var generator = new ROT.Map.Cellular(80, 24);
-        generator.randomize(0.535);
-        var totalIterations = 3;
-        // Iteratively smoothen the map
-        for (var i = 0; i < totalIterations - 1; i++) {
-            generator.create();
-        }
-        // Smoothen it one last time and then update our map
-        generator.create(function(x,y,v) {
-            if (v === 1) {
-                map[x][y] = Game.Tile.floorTile;
-            } else {
-                map[x][y] = Game.Tile.wallTile;
-            }
-        });
-        // Create our player and set the position
+        var width = 80;
+        var height = 24;
+        // Create our map from tiles and player
+        var tiles = new Game.Builder(width,height).getTiles()
         this._player = new Game.Entity(Game.PlayerTemplate);
-        this._map = new Game.Map(map, this._player);
+        this._map = new Game.Map(tiles, this._player);
         // Start the map's engine
         this._map.getEngine().start();
      },

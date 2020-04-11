@@ -63,6 +63,11 @@ Game.Entity.prototype.getMap = function() {
     return this._map;
 }
 
+Game.Entity.prototype.setPosition = function(x, y) {
+    this._x = x;
+    this._y = y;
+}
+
 Game.Entity.prototype.hasMixin = function(obj) {
     // Allow passing the mixin itself or the name / group name as a string
     if (typeof obj === 'object') {
