@@ -16,10 +16,12 @@ Game.Map = function(tiles, player) {
     for (var i = 0; i < 50; i++) {
         this.addEntityAtRandomPosition(new Game.Entity(Game.FungusTemplate));
     }
-
     //set up the field of vision
     this._fov = {};
     this.setupFov();
+    //set up the unexplored array
+    this._explored = new Array(this._width);
+    this._setupExploredArray();
 };
 
 // Standard getters
@@ -153,3 +155,28 @@ Game.Map.prototype.setupFov = function() {
 Game.Map.prototype.getFov = function() {
     return this._fov;
 }
+
+Game.Map.prototype._setupExploredArray = function() {
+    for (var x = 0; x < this._width; x++) {
+        this._explored[x] = new Array(this._height);
+        for (var y = 0; y < this._height; y++) {
+            this._explored[x][y] = false;
+        }
+    }
+};
+
+Game.Map.prototype.setExplored = function(x, y, state) {
+    // Only update if the tile is within bounds
+    if (this.getTile(x, y) !== Game.Tile.nullTile) {
+        this._explored[x][y] = state;
+    }
+};
+
+Game.Map.prototype.isExplored = function(x, y) {
+    // Only return the value if within bounds
+    if (this.getTile(x, y) !== Game.Tile.nullTile) {
+        return this._explored[x][y];
+    } else {
+        return false;
+    }
+};
