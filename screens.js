@@ -23,6 +23,7 @@ Game.Screen.startScreen = {
 Game.Screen.playScreen = {
     _map: null,
     _player: null,
+    _gameEnded: false,
     enter: function() {  
         var width = 80;
         var height = 24;
@@ -84,8 +85,8 @@ Game.Screen.playScreen = {
         }
         // Render the entities
         var entities = this._map.getEntities();
-        for (var i = 0; i < entities.length; i++) {
-            var entity = entities[i];
+        for (var key in entities) {
+            var entity = entities[key];
             if (visibleCells[entity.getX() + ',' + entity.getY()]) {
                 display.draw(
                     entity.getX(), 
@@ -100,7 +101,6 @@ Game.Screen.playScreen = {
         var messages = this._player.getMessages();
         var messageY = 0;
         for (var i = 0; i < messages.length; i++) {
-            console.log("drawing text");
             // Draw each message, adding the number of lines
             messageY += display.drawText(
                 0, 
@@ -114,6 +114,14 @@ Game.Screen.playScreen = {
         display.drawText(0, screenHeight, stats);
     },
     handleInput: function(inputType, inputData) {
+        // If the game is over, enter will bring the user to the losing screen.
+        if (this._gameEnded) {
+            if (inputType === 'keydown' && inputData.keyCode === ROT.KEYS.VK_RETURN) {
+                Game.switchScreen(Game.Screen.loseScreen);
+            }
+            // Return to make sure the user can't still play
+            return;
+        }
         if (inputType === 'keydown') {
             // If enter is pressed, go to the win screen
             // If escape is pressed, go to lose screen
@@ -135,6 +143,9 @@ Game.Screen.playScreen = {
             // Unlock the engine
             this._map.getEngine().unlock();
         }    
+    },
+    setGameEnded: function(gameEnded) {
+        this._gameEnded = gameEnded;
     },
     move: function(dX, dY) {
         var newX = this._player.getX() + dX;
