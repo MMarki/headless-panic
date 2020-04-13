@@ -29,7 +29,7 @@ Game.EntityRepository.define('bat', {
     foreground: 'white',
     maxHp: 5,
     attackValue: 4,
-    mixins: [Game.EntityMixins.WanderActor, 
+    mixins: [Game.EntityMixins.WanderActor, Game.EntityMixins.HeadDropper,
              Game.EntityMixins.Attacker, Game.EntityMixins.Destructible]
 });
 
@@ -39,6 +39,6 @@ Game.EntityRepository.define('newt', {
     foreground: 'yellow',
     maxHp: 3,
     attackValue: 2,
-    mixins: [Game.EntityMixins.WanderActor, 
+    mixins: [Game.EntityMixins.WanderActor, Game.EntityMixins.HeadDropper,
              Game.EntityMixins.Attacker, Game.EntityMixins.Destructible]
 });

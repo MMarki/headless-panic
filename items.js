@@ -13,3 +13,10 @@ Game.ItemRepository.define('rock', {
     character: '%',
     foreground: 'white'
 });
+
+Game.ItemRepository.define('head', {
+    name: 'head',
+    character: '%',
+}, {
+    disableRandomCreation: true
+});

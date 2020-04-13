@@ -99,6 +99,9 @@ Game.EntityMixins.Destructible = {
         // If have 0 or less HP, then remove ourseles from the map
         if (this._hp <= 0) {
             Game.sendMessage(attacker, 'You kill the %s!', [this.getName()]);
+            if (this.hasMixin(Game.EntityMixins.HeadDropper)) {
+                this.tryDropHead();
+            }
             if (this.hasMixin(Game.EntityMixins.PlayerActor)) {
                 this.act();
             } else {
@@ -257,6 +260,23 @@ Game.EntityMixins.Bleeder = {
             }
         } else if (this._hp > this._maxHp) {
             this._hp = this._maxHp;
+        }
+    }
+};
+
+Game.EntityMixins.HeadDropper = {
+    name: 'HeadDropper',
+    init: function(template) {
+        this._headDropRate = 100;
+    },
+    tryDropHead: function() {
+        if (Math.round(Math.random() * 100) < this._headDropRate) {
+            // Create a new head item and drop it.
+            this._map.addItem(this.getX(), this.getY(),
+                Game.ItemRepository.create('head', {
+                    name: this._name + ' head',
+                    foreground: this._foreground
+                }));
         }
     }
 };
