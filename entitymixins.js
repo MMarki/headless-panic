@@ -4,6 +4,11 @@ Game.EntityMixins.PlayerActor = {
     name: 'PlayerActor',
     groupName: 'Actor',
     act: function() {
+        if (this._acting) {
+            return;
+        }
+        this._acting = true;
+        this.addTurnBleed();
         // Detect if the game is over
         if (this.getHp() < 1) {
             Game.Screen.playScreen.setGameEnded(true);
@@ -16,7 +21,8 @@ Game.EntityMixins.PlayerActor = {
         // for the player to press a key.
         this.getMap().getEngine().lock();  
         // Clear the message queue
-        this.clearMessages();      
+        this.clearMessages();
+        this._acting = false; 
     }
 }
 
@@ -225,6 +231,32 @@ Game.EntityMixins.InventoryHolder = {
                 this._map.addItem(this.getX(), this.getY(), this._items[i]);
             }
             this.removeItem(i);      
+        }
+    }
+};
+
+Game.EntityMixins.Bleeder = {
+    name: 'Bleeder',
+    init: function(template) {
+        // Number of points to decrease fullness by every turn.
+        this._bleedRate = template['bleedRate'] || 1;
+    },
+    addTurnBleed: function() {
+        // Remove the standard depletion points
+        this.modifyHPBy(-this._bleedRate);
+    },
+    modifyHPBy: function(points) {
+        this._hp = this._hp + points;
+        if (this._hp <= 0) {
+            attacker = "chungus";
+            Game.sendMessage(this, 'You kill the %s!', [this.getName()]);
+            if (this.hasMixin(Game.EntityMixins.PlayerActor)) {
+                this.act();
+            } else {
+                this.getMap().removeEntity(this);
+            }
+        } else if (this._hp > this._maxHp) {
+            this._hp = this._maxHp;
         }
     }
 };

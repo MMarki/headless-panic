@@ -8,7 +8,7 @@ Game.PlayerTemplate = {
     inventorySlots: 10,
     mixins: [Game.EntityMixins.PlayerActor,
              Game.EntityMixins.Attacker, Game.EntityMixins.Destructible,
-             Game.EntityMixins.InventoryHolder,
+             Game.EntityMixins.InventoryHolder, Game.EntityMixins.Bleeder,
              Game.EntityMixins.Sight, Game.EntityMixins.MessageRecipient]
 };
 

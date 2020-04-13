@@ -190,6 +190,15 @@ Game.Screen.playScreen = {
                     this.setSubScreen(Game.Screen.dropScreen);
                 }
                 return;
+            }  else if (inputData.keyCode === ROT.KEYS.VK_E) {
+                // Show the drop screen
+                if (Game.Screen.eatScreen.setup(this._player, this._player.getItems())) {
+                    this.setSubScreen(Game.Screen.eatScreen);
+                } else {
+                    Game.sendMessage(this._player, "You have nothing to eat!");
+                    Game.refresh();
+                }
+                return;
             } else if (inputData.keyCode === ROT.KEYS.VK_COMMA) {
                 var items = this._map.getItemsAt(this._player.getX(), this._player.getY());
                 // If there are no items, show a message
@@ -272,6 +281,10 @@ Game.Screen.ItemListScreen = function(template) {
     // Set up based on the template
     this._caption = template['caption'];
     this._okFunction = template['ok'];
+    // By default, we use the identity function
+    this._isAcceptableFunction = template['isAcceptable'] || function(x) {
+        return x;
+    }
     // Whether the user can select items at all.
     this._canSelectItem = template['canSelect'];
     // Whether the user can select multiple items.
@@ -281,9 +294,22 @@ Game.Screen.ItemListScreen = function(template) {
 Game.Screen.ItemListScreen.prototype.setup = function(player, items) {
     this._player = player;
     // Should be called before switching to the screen.
-    this._items = items;
+    var count = 0;
+    // Iterate over each item, keeping only the aceptable ones and counting the number of acceptable items.
+    var that = this;
+    this._items = items.map(function(item) {
+        // Transform the item into null if it's not acceptable
+        if (that._isAcceptableFunction(item)) {
+            count++;
+            return item;
+        } else {
+            return null;
+        }
+    });
+    // Clean set of selected indices
     // Clean set of selected indices
     this._selectedIndices = {};
+    return count;
 };
 
 Game.Screen.ItemListScreen.prototype.render = function(display) {
@@ -357,6 +383,24 @@ Game.Screen.ItemListScreen.prototype.handleInput = function(inputType, inputData
         }
     }
 };
+
+Game.Screen.eatScreen = new Game.Screen.ItemListScreen({
+    caption: 'Choose the item you wish to eat',
+    canSelect: true,
+    canSelectMultipleItems: false,
+    isAcceptable: function(item) {
+        return item && item.hasMixin('Edible');
+    },
+    ok: function(selectedItems) {
+        // Eat the item
+        var key = Object.keys(selectedItems)[0];
+        var item = selectedItems[key];
+        Game.sendMessage(this._player, "You eat %s.", [item.describeThe()]);
+        item.eat(this._player);
+        this._player.removeItem(key);
+        return true;
+    }
+});
 
 Game.Screen.inventoryScreen = new Game.Screen.ItemListScreen({
     caption: 'Inventory',
