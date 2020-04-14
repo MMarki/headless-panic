@@ -10,9 +10,10 @@ Game.Map = function(tiles, player) {
     // Create a table which will hold the items
     this._items = {};
     // create the engine and scheduler
-    this._scheduler = new ROT.Scheduler.Simple();
+    this._scheduler = new ROT.Scheduler.Speed();
     this._engine = new ROT.Engine(this._scheduler);
     // add the player
+    this._player = player;
     this.addEntityAtRandomPosition(player);
     // 15 entities per floor
     for (var i = 0; i < 15; i++) {
@@ -45,10 +46,12 @@ Game.Map.prototype.getWidth = function() {
 Game.Map.prototype.getHeight = function() {
     return this._height;
 };
-
 Game.Map.prototype.getEngine = function() {
     return this._engine;
 }
+Game.Map.prototype.getPlayer = function() {
+    return this._player;
+};
 Game.Map.prototype.getEntities = function() {
     return this._entities;
 }

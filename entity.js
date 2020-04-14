@@ -6,6 +6,8 @@ Game.Entity = function(properties) {
     this._x = properties['x'] || 0;
     this._y = properties['y'] || 0;
     this._map = null;
+    // Acting speed
+    this._speed = properties['speed'] || 1000;
 };
 // Make entities inherit all the functionality from glyphs
 Game.Entity.extend(Game.DynamicGlyph);
@@ -19,6 +21,9 @@ Game.Entity.prototype.setY = function(y) {
 Game.Entity.prototype.setMap = function(map) {
     this._map = map;
 }
+Game.Entity.prototype.setSpeed = function(speed) {
+    this._speed = speed;
+};
 Game.Entity.prototype.getX = function() {
     return this._x;
 }
@@ -28,6 +33,9 @@ Game.Entity.prototype.getY   = function() {
 Game.Entity.prototype.getMap = function() {
     return this._map;
 }
+Game.Entity.prototype.getSpeed = function() {
+    return this._speed;
+};
 
 Game.Entity.prototype.setPosition = function(x, y) {
     var oldX = this._x;
