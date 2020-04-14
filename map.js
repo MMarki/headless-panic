@@ -27,7 +27,13 @@ Game.Map = function(tiles, player) {
     //set up the field of vision
     this._fov = {};
     this.setupFov();
-    //set up the unexplored array
+    // Add weapons and armor to the map in random positions
+    var templates = ['dagger', 'sword', 'staff', 'tunic', 'chainmail', 'platemail'];
+    for (var i = 0; i < templates.length; i++) {
+        this.addItemAtRandomPosition(Game.ItemRepository.create(templates[i]),
+            Math.floor(3 * Math.random()));
+    }
+    //set up the explored array
     this._explored = new Array(this._width);
     this._setupExploredArray();
 };
