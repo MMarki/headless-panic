@@ -15,8 +15,9 @@ Game.Builder = function(width, height) {
             this._regions[x][y] = 0;
         }
     }
-        
+
     this._setupRegions();
+    this._setStairs();
 };
 
 Game.Builder.prototype.getTiles = function () {
@@ -131,4 +132,19 @@ Game.Builder.prototype._setupRegions = function() {
 }
 
 
-
+// Generates stairs at a free location
+Game.Builder.prototype._setStairs = function() {
+    var matches = [];
+    // Iterate through all tiles, checking if they respectthe region constraints and are floor tiles. 
+    //We check that they are floor to make sure we don't try to put two stairs on the same tile.
+    for (var x = 0; x < this._width; x++) {
+        for (var y = 0; y < this._height; y++) {
+            if (this._tiles[x][y]  == Game.Tile.floorTile) {
+                matches.push({x: x, y: y});
+            }
+        }
+    }
+    // We shuffle the list of matches to prevent bias
+    var match =  matches[Math.floor(Math.random() * matches.length)];
+    this._tiles[match.x][match.y] = Game.Tile.stairsDownTile;
+}

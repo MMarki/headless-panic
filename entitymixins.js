@@ -350,7 +350,10 @@ Game.EntityMixins.Bleeder = {
     },
     addTurnBleed: function() {
         // Remove the standard depletion points
-        this.modifyHPBy(-this._bleedRate);
+        if (this._head === null){
+            this.modifyHPBy(-this._bleedRate);
+        }
+        
     },
     modifyHPBy: function(points) {
         this._hp = this._hp + points;
@@ -405,10 +408,10 @@ Game.EntityMixins.Equipper = {
         this._armor = null;
     },
     wearHead: function(item){
-        this._armor = item;
+        this._head = item;
     },
     unHead: function(){
-        this._armor = null;
+        this._head = null;
     },
     getWeapon: function() {
         return this._weapon;

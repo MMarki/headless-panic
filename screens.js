@@ -2,7 +2,7 @@ Game.Screen = {};
 
 // Define our initial start screen
 Game.Screen.startScreen = {
-    enter: function() {    console.log("Entered start screen."); },
+    enter: function() {console.log("Entered start screen."); },
     exit: function() { console.log("Exited start screen."); },
     render: function(display) {
         // Render our prompt to the screen
@@ -26,8 +26,8 @@ Game.Screen.playScreen = {
     _gameEnded: false,
     _subScreen: null,
     enter: function() {  
-        var width = 80;
-        var height = 24;
+        var width = Game._screenWidth;
+        var height = Game._screenHeight;
         // Create our map from tiles and player
         var tiles = new Game.Builder(width,height).getTiles()
         this._player = new Game.Entity(Game.PlayerTemplate);
@@ -179,7 +179,18 @@ Game.Screen.playScreen = {
                     this.setSubScreen(Game.Screen.inventoryScreen);
                 }
                 return;
-            } else if (inputData.keyCode === ROT.KEYS.VK_D) {
+            } else if (inputData.keyCode === ROT.KEYS.VK_PERIOD){
+                // TO DO
+                var width = Game._screenWidth;
+                var height = Game._screenHeight;
+                // Create our map from tiles and player
+                var tiles = new Game.Builder(width,height).getTiles()
+                //pass the current player and the new tiles in
+                this._map = new Game.Map(tiles, this._player, this._player.getItems());
+                // Start the map's engine
+                this._map.getEngine().start();
+            }  
+            else if (inputData.keyCode === ROT.KEYS.VK_D) {
                 if (this._player.getItems().filter(function(x){return x;}).length === 0) {
                     // If the player has no items, send a message and don't take a turn
                     Game.sendMessage(this._player, "You have nothing to drop!");

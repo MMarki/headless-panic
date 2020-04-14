@@ -1,4 +1,4 @@
-Game.Map = function(tiles, player) {
+Game.Map = function(tiles, player, items) {
     this._tiles = tiles;
     // cache the width and height based
     // on the length of the dimensions of
@@ -8,7 +8,11 @@ Game.Map = function(tiles, player) {
     // create a hash table which will hold the entities
     this._entities = {};
     // Create a table which will hold the items
-    this._items = {};
+    if (items <= null){
+        this._items = items;
+    } else {
+        this._items = {};
+    }
     // create the engine and scheduler
     this._scheduler = new ROT.Scheduler.Speed();
     this._engine = new ROT.Engine(this._scheduler);

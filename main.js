@@ -28,7 +28,6 @@ var Game =  {
         }
 	    // Bind keyboard input events
 	    bindEventToScreen('keydown');
-	    //bindEventToScreen('keyup');
 	    bindEventToScreen('keypress');
     },
     refresh: function() {
