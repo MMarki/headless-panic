@@ -2,33 +2,27 @@ Game.ItemRepository = new Game.Repository('items', Game.Item);
 
 Game.ItemRepository.define('apple', {
     name: 'apple',
-    character: '*',
+    character: '!',
     foreground: 'red',
     foodValue: 40,
     mixins: [Game.ItemMixins.Edible]
 });
 
-Game.ItemRepository.define('rock', {
-    name: 'rock',
-    character: '%',
-    foreground: 'white'
-});
-
 Game.ItemRepository.define('head', {
     name: 'head',
-    character: '%',
+    character: '\u25CB',
     headible: true,
     mixins: [Game.ItemMixins.Equippable]
 }, {
     disableRandomCreation: true
 });
 
-// ...
+// ...w
 // Weapons
 Game.ItemRepository.define('dagger', {
     name: 'dagger',
     character: ')',
-    foreground: 'gray',
+    foreground: '#F2EC2D',
     attackValue: 5,
     wieldable: true,
     mixins: [Game.ItemMixins.Equippable]
@@ -39,7 +33,7 @@ Game.ItemRepository.define('dagger', {
 Game.ItemRepository.define('sword', {
     name: 'sword',
     character: ')',
-    foreground: 'white',
+    foreground: '#F2EC2D',
     attackValue: 10,
     wieldable: true,
     mixins: [Game.ItemMixins.Equippable]
@@ -47,12 +41,11 @@ Game.ItemRepository.define('sword', {
     disableRandomCreation: true
 });
 
-Game.ItemRepository.define('staff', {
-    name: 'staff',
-    character: ')',
-    foreground: 'yellow',
+Game.ItemRepository.define('spear', {
+    name: 'spear',
+    character: '\u2191',
+    foreground: '#F2EC2D',
     attackValue: 5,
-    defenseValue: 3,
     wieldable: true,
     mixins: [Game.ItemMixins.Equippable]
 }, {
@@ -60,10 +53,10 @@ Game.ItemRepository.define('staff', {
 });
 
 // Wearables
-Game.ItemRepository.define('tunic', {
-    name: 'tunic',
+Game.ItemRepository.define('leather', {
+    name: 'leather armor',
     character: '[',
-    foreground: 'green',
+    foreground: '#F2EC2D',
     defenseValue: 2,
     wearable: true,
     mixins: [Game.ItemMixins.Equippable]
@@ -74,7 +67,7 @@ Game.ItemRepository.define('tunic', {
 Game.ItemRepository.define('chainmail', {
     name: 'chainmail',
     character: '[',
-    foreground: 'white',
+    foreground: '#F2EC2D',
     defenseValue: 4,
     wearable: true,
     mixins: [Game.ItemMixins.Equippable]
@@ -85,7 +78,7 @@ Game.ItemRepository.define('chainmail', {
 Game.ItemRepository.define('platemail', {
     name: 'platemail',
     character: '[',
-    foreground: 'aliceblue',
+    foreground: '#F2EC2D',
     defenseValue: 6,
     wearable: true,
     mixins: [Game.ItemMixins.Equippable]

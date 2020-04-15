@@ -352,6 +352,7 @@ Game.EntityMixins.Bleeder = {
         // Remove the standard depletion points
         if (this._head === null){
             this.modifyHPBy(-this._bleedRate);
+            this.getMap().changeTile(this.getX(),this.getY(), Game.Tile.bloodTile);
         }
         
     },

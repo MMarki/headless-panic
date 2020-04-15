@@ -33,7 +33,7 @@ Game.Map = function(tiles, player, items) {
     this._fov = {};
     this.setupFov();
     // Add weapons and armor to the map in random positions
-    var templates = ['dagger', 'sword', 'staff', 'tunic', 'chainmail', 'platemail'];
+    var templates = ['dagger', 'sword', 'spear', 'leather', 'chainmail', 'platemail'];
     for (var i = 0; i < templates.length; i++) {
         this.addItemAtRandomPosition(Game.ItemRepository.create(templates[i]),
             Math.floor(3 * Math.random()));
@@ -80,6 +80,10 @@ Game.Map.prototype.dig = function(x, y) {
     if (this.getTile(x, y).isDiggable()) {
         this._tiles[x][y] = Game.Tile.floorTile;
     }
+};
+
+Game.Map.prototype.changeTile = function(x, y, template) {
+    this._tiles[x][y] = template;
 };
 
 Game.Map.prototype.getRandomFloorPosition = function() {

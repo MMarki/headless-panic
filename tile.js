@@ -26,26 +26,29 @@ Game.Tile.nullTile = new Game.Tile({})
 
 Game.Tile.floorTile = new Game.Tile({
     character: '.',
+    background: "#080A1F",
     walkable: true,
-    blocksLight: false
+    blocksLight: false,
+});
+
+Game.Tile.bloodTile = new Game.Tile({
+    character: '.',
+    foreground: "red",
+    background: "#080A1F",
+    walkable: true,
+    blocksLight: false,
 });
 
 Game.Tile.wallTile = new Game.Tile({
     character: '#',
-    foreground: 'goldenrod',
+    foreground: '#232121',
+    background: "#C4B9AC",
     diggable: true
-});
-
-Game.Tile.stairsUpTile = new Game.Tile({
-    character: '<',
-    foreground: 'white',
-    walkable: true,
-    blocksLight: false
 });
 
 Game.Tile.stairsDownTile = new Game.Tile({
     character: '>',
-    foreground: 'white',
+    foreground: '#F2EC2D',
     walkable: true,
     blocksLight: false
 });

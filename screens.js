@@ -132,10 +132,22 @@ Game.Screen.playScreen = {
                 '%c{white}%b{black}' + messages[i]
             );
         }
-        // Render player HP 
+        // Render UI 
+        display.drawText(0, screenHeight, "%c{yellow}I%c{}nventory  %c{yellow}T%c{}hrow  %c{yellow}E%c{}quip  %c{yellow}U%c{}se");
+
+        var you = '%c{white}%b{black}';
+        you += "@: You";
+        display.drawText(screenWidth + 1, 0, you);
+
         var stats = '%c{white}%b{black}';
         stats += vsprintf('HP: %d/%d ', [this._player.getHp(), this._player.getMaxHp()]);
-        display.drawText(0, screenHeight, stats);
+        display.drawText(screenWidth + 1, 1, stats);
+        display.drawText(screenWidth + 1, 2, "HEAD: Chicken");
+        display.drawText(screenWidth + 1, 3, "\u2665" + " \u2665" + " \u2665" );
+        display.drawText(screenWidth + 1, 5, "ARMOR: +" + this._player.getDefenseValue());
+        display.drawText(screenWidth + 1, 6, "ATK: +" + this._player.getAttackValue());
+        display.drawText(screenWidth + 1, 7, "GOLD: 0" );
+        display.drawText(screenWidth + 1, 8, "LVL: Cellars 1" );
     },
     handleInput: function(inputType, inputData) {
         // If the game is over, enter will bring the user to the losing screen.
@@ -201,7 +213,7 @@ Game.Screen.playScreen = {
                     this.setSubScreen(Game.Screen.dropScreen);
                 }
                 return;
-            }  else if (inputData.keyCode === ROT.KEYS.VK_E) {
+            }  else if (inputData.keyCode === ROT.KEYS.VK_U) {
                 // Show the drop screen
                 if (Game.Screen.eatScreen.setup(this._player, this._player.getItems())) {
                     this.setSubScreen(Game.Screen.eatScreen);
@@ -210,7 +222,7 @@ Game.Screen.playScreen = {
                     Game.refresh();
                 }
                 return;
-            } else if (inputData.keyCode === ROT.KEYS.VK_W) {
+            } else if (inputData.keyCode === ROT.KEYS.VK_E) {
                 // Show the equip screen
                 if (Game.Screen.equipScreen.setup(this._player, this._player.getItems())) {
                     this.setSubScreen(Game.Screen.equipScreen);
@@ -359,6 +371,8 @@ Game.Screen.ItemListScreen.prototype.render = function(display) {
                 suffix = ' (wearing)';
             } else if (this._items[i] === this._player.getWeapon()) {
                 suffix = ' (wielding)';
+            } else if (this._items[i] === this._player.getHead()) {
+                suffix = ' (wearing)';
             }
             // Render at the correct row and add 2.
             display.drawText(0, 2 + row,  letter + ' ' + selectionState + ' ' + this._items[i].describe() + suffix);
