@@ -158,7 +158,23 @@ Game.EntityMixins.Destructible = {
         return this._defenseValue + modifier;
     },
     takeDamage: function(attacker, damage) {
-        this._hp -= damage;
+        if (this.hasMixin(Game.EntityMixins.Bleeder)){
+            var myHead = this.getHead()
+            if (myHead !== null){
+                console.log(myHead);
+                //drop the item that is equipped on the head of the player
+                var headIndex = this.getHeadIndex();
+                this.unHead();
+                this.removeItem(headIndex);
+                Game.sendMessage(this, "Your head falls off");
+                return true;
+            } else {
+                this._hp -= damage;
+            }
+        } else {
+            this._hp -= damage;
+        }
+        
         // If have 0 or less HP, then remove ourseles from the map
         if (this._hp <= 0) {
             Game.sendMessage(attacker, 'You kill the %s!', [this.getName()]);
@@ -369,6 +385,16 @@ Game.EntityMixins.Bleeder = {
         } else if (this._hp > this._maxHp) {
             this._hp = this._maxHp;
         }
+    },
+    getHeadIndex: function(){
+        for (var i = 0; i < this._items.length; i++) {
+            if (this._items[i]) {
+                // Check if the item is worn as a head
+                if (this._items[i] === this.getHead()) {
+                    return i;
+                }
+            }
+        }
     }
 };
 
@@ -376,6 +402,7 @@ Game.EntityMixins.HeadDropper = {
     name: 'HeadDropper',
     init: function(template) {
         this._headDropRate = 100;
+        this._headHits = template["headHits"] || 1;
     },
     tryDropHead: function() {
         if (Math.round(Math.random() * 100) < this._headDropRate) {
@@ -383,7 +410,8 @@ Game.EntityMixins.HeadDropper = {
             this._map.addItem(this.getX(), this.getY(),
                 Game.ItemRepository.create('head', {
                     name: this._name + ' head',
-                    foreground: this._foreground
+                    foreground: this._foreground,
+                    headHits: this._headHits
                 }));
         }
     }

@@ -25,6 +25,7 @@ Game.ItemMixins.Equippable = {
         this._wieldable = template['wieldable'] || false;
         this._wearable = template['wearable'] || false;
         this._headible = template['headible'] || false;
+        this._headHits = template['headHits'] || 1;
     },
     getAttackValue: function() {
         return this._attackValue;

@@ -139,15 +139,27 @@ Game.Screen.playScreen = {
         you += "@: You";
         display.drawText(screenWidth + 1, 0, you);
 
-        var stats = '%c{white}%b{black}';
-        stats += vsprintf('HP: %d/%d ', [this._player.getHp(), this._player.getMaxHp()]);
-        display.drawText(screenWidth + 1, 1, stats);
-        display.drawText(screenWidth + 1, 2, "HEAD: Chicken");
-        display.drawText(screenWidth + 1, 3, "\u2665" + " \u2665" + " \u2665" );
+        var playerHealth = this._player.getHp()/this._player.getMaxHp()
+        var healthUIColor = (playerHealth > 0.66) ? "%c{white}" : ((playerHealth > 0.33) ? "%c{yellow}" : "%c{red}");
+        var healthString = "%c{white}%b{black}HP: " + healthUIColor + this._player.getHp() + "/" + this._player.getMaxHp();
+        display.drawText(screenWidth + 1, 1, healthString);
+
+        var currentHead = this._player.getHead();
+        if (currentHead !== null){
+            display.drawText(screenWidth + 1, 2, "HEAD: " +  "%c{" + currentHead._foreground + "}"+ currentHead._name);
+            var numberOfHeadHits = currentHead._headHits;
+            for (var h = 0; h < numberOfHeadHits; h++){
+                display.drawText(screenWidth + 1 + 2 * h, 3, "\u2665 ");
+            }
+        } else {
+            display.drawText(screenWidth + 1, 2, "HEAD: " + "%c{red}NONE");
+        }
+        
+        
         display.drawText(screenWidth + 1, 5, "ARMOR: +" + this._player.getDefenseValue());
         display.drawText(screenWidth + 1, 6, "ATK: +" + this._player.getAttackValue());
         display.drawText(screenWidth + 1, 7, "GOLD: 0" );
-        display.drawText(screenWidth + 1, 8, "LVL: Cellars 1" );
+        display.drawText(screenWidth + 1, 8, "LVL: Cellars " + Game.getLevel() );
     },
     handleInput: function(inputType, inputData) {
         // If the game is over, enter will bring the user to the losing screen.
@@ -192,15 +204,22 @@ Game.Screen.playScreen = {
                 }
                 return;
             } else if (inputData.keyCode === ROT.KEYS.VK_PERIOD){
-                // TO DO
-                var width = Game._screenWidth;
-                var height = Game._screenHeight;
-                // Create our map from tiles and player
-                var tiles = new Game.Builder(width,height).getTiles()
-                //pass the current player and the new tiles in
-                this._map = new Game.Map(tiles, this._player, this._player.getItems());
-                // Start the map's engine
-                this._map.getEngine().start();
+                var playerX = this._player.getX();
+                var playerY = this._player.getY();
+                var tile = this._map.getTile(playerX, playerY);
+                if (tile != Game.Tile.stairsDownTile){
+                    Game.sendMessage(this._player, "You can't go down here!");
+                } else {
+                    var width = Game._screenWidth;
+                    var height = Game._screenHeight;
+                    // Create our map from tiles and player
+                    var tiles = new Game.Builder(width,height).getTiles()
+                    //pass the current player and the new tiles in
+                    this._map = new Game.Map(tiles, this._player, this._player.getItems());
+                    // Start the map's engine
+                    this._map.getEngine().start();
+                    Game.incrementLevel();
+                }
             }  
             else if (inputData.keyCode === ROT.KEYS.VK_D) {
                 if (this._player.getItems().filter(function(x){return x;}).length === 0) {
@@ -214,7 +233,7 @@ Game.Screen.playScreen = {
                 }
                 return;
             }  else if (inputData.keyCode === ROT.KEYS.VK_U) {
-                // Show the drop screen
+                // Show the eat screen
                 if (Game.Screen.eatScreen.setup(this._player, this._player.getItems())) {
                     this.setSubScreen(Game.Screen.eatScreen);
                 } else {
@@ -340,7 +359,6 @@ Game.Screen.ItemListScreen.prototype.setup = function(player, items) {
             return null;
         }
     });
-    // Clean set of selected indices
     // Clean set of selected indices
     this._selectedIndices = {};
     return count;

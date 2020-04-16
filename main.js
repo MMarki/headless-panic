@@ -10,6 +10,7 @@ var Game =  {
     _currentScreen: null,
     _screenWidth: 80,
     _screenHeight: 30,
+    _level: 1,
 	init: function() {
 	    // Any necessary initialization will go here.
 	    this._display = new ROT.Display({width: this._screenWidth + 20, height: this._screenHeight + 1, fontSize: 18});
@@ -44,6 +45,12 @@ var Game =  {
     },
     getScreenHeight: function(){
         return this._screenHeight;
+    },
+    getLevel: function(){
+        return this._level;
+    },
+    incrementLevel: function(){
+        this._level += 1;
     },
 	switchScreen: function(screen) {
 	    // If we had a screen before, notify it that we exited
