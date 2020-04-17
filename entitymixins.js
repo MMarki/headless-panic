@@ -161,7 +161,6 @@ Game.EntityMixins.Destructible = {
         if (this.hasMixin(Game.EntityMixins.Bleeder)){
             var myHead = this.getHead()
             if (myHead !== null){
-                console.log(myHead);
                 //drop the item that is equipped on the head of the player
                 var headIndex = this.getHeadIndex();
                 this.unHead();

@@ -186,12 +186,20 @@ Game.Screen.playScreen = {
             // Movement
             if (inputData.keyCode === ROT.KEYS.VK_LEFT) {
                 this.move(-1, 0);
+                this.handleItemPickup()
+                this.goDownStairs();
             } else if (inputData.keyCode === ROT.KEYS.VK_RIGHT) {
                 this.move(1, 0);
+                this.handleItemPickup()
+                this.goDownStairs();
             } else if (inputData.keyCode === ROT.KEYS.VK_UP) {
                 this.move(0, -1);
+                this.handleItemPickup()
+                this.goDownStairs();
             } else if (inputData.keyCode === ROT.KEYS.VK_DOWN) {
                 this.move(0, 1);
+                this.handleItemPickup()
+                this.goDownStairs();
             } else if (inputData.keyCode === ROT.KEYS.VK_I) {
                 if (this._player.getItems().filter(function(x){return x;}).length === 0) {
                     // If the player has no items, send a message and don't take a turn
@@ -203,24 +211,7 @@ Game.Screen.playScreen = {
                     this.setSubScreen(Game.Screen.inventoryScreen);
                 }
                 return;
-            } else if (inputData.keyCode === ROT.KEYS.VK_PERIOD){
-                var playerX = this._player.getX();
-                var playerY = this._player.getY();
-                var tile = this._map.getTile(playerX, playerY);
-                if (tile != Game.Tile.stairsDownTile){
-                    Game.sendMessage(this._player, "You can't go down here!");
-                } else {
-                    var width = Game._screenWidth;
-                    var height = Game._screenHeight;
-                    // Create our map from tiles and player
-                    var tiles = new Game.Builder(width,height).getTiles()
-                    //pass the current player and the new tiles in
-                    this._map = new Game.Map(tiles, this._player, this._player.getItems());
-                    // Start the map's engine
-                    this._map.getEngine().start();
-                    Game.incrementLevel();
-                }
-            }  
+            } 
             else if (inputData.keyCode === ROT.KEYS.VK_D) {
                 if (this._player.getItems().filter(function(x){return x;}).length === 0) {
                     // If the player has no items, send a message and don't take a turn
@@ -250,25 +241,6 @@ Game.Screen.playScreen = {
                     Game.refresh();
                 }
                 return;
-            } else if (inputData.keyCode === ROT.KEYS.VK_COMMA) {
-                var items = this._map.getItemsAt(this._player.getX(), this._player.getY());
-                // If there are no items, show a message
-                if (!items) {
-                    Game.sendMessage(this._player, "There is nothing here to pick up.");
-                } else if (items.length === 1) {
-                    // If only one item, try to pick it up
-                    var item = items[0];
-                    if (this._player.pickupItems([0])) {
-                        Game.sendMessage(this._player, "You pick up %s.", [item.describeA()]);
-                    } else {
-                        Game.sendMessage(this._player, "Your inventory is full! Nothing was picked up.");
-                    }
-                } else {
-                    // Show the pickup screen if there are any items
-                    Game.Screen.pickupScreen.setup(this._player, items);
-                    this.setSubScreen(Game.Screen.pickupScreen);
-                    return;
-                }
             } else {
                 // Not a valid key
                 return;
@@ -290,6 +262,42 @@ Game.Screen.playScreen = {
         this._subScreen = subScreen;
         // Refresh screen on changing the subscreen
         Game.refresh();
+    },
+    goDownStairs(){
+        var playerX = this._player.getX();
+        var playerY = this._player.getY();
+        var tile = this._map.getTile(playerX, playerY);
+        if (tile === Game.Tile.stairsDownTile){
+            var width = Game._screenWidth;
+            var height = Game._screenHeight;
+            // Create our map from tiles and player
+            var tiles = new Game.Builder(width,height).getTiles()
+            //pass the current player and the new tiles in
+            this._map = new Game.Map(tiles, this._player, this._player.getItems());
+            // Start the map's engine
+            this._map.getEngine().start();
+            Game.incrementLevel();
+            Game.sendMessage(this._player, "You go downstairs.");
+        }
+    },
+    handleItemPickup(){
+        var items = this._map.getItemsAt(this._player.getX(), this._player.getY());
+        if (!items) {
+            return;
+        } else if (items.length === 1) {
+            // If only one item, try to pick it up
+            var item = items[0];
+            if (this._player.pickupItems([0])) {
+                Game.sendMessage(this._player, "You pick up %s.", [item.describeA()]);
+            } else {
+                Game.sendMessage(this._player, "Your inventory is full! Nothing was picked up.");
+            }
+        } else {
+            // Show the pickup screen if there are any items
+            Game.Screen.pickupScreen.setup(this._player, items);
+            this.setSubScreen(Game.Screen.pickupScreen);
+            return;
+        }
     }
 }
 
