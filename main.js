@@ -1,10 +1,3 @@
-//fix from part 4
-Function.prototype.extend = function(parent) {
-    this.prototype=Object.create(parent.prototype);
-    this.prototype.constructor = this;
-    return this;
-};
-
 var Game =  {
 	_display: null,
     _currentScreen: null,

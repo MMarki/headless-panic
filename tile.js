@@ -7,6 +7,7 @@ Game.Tile = function(properties) {
     this._diggable = properties['diggable'] || false;
     this._blocksLight = (properties['blocksLight'] !== undefined) ?
         properties['blocksLight'] : true;
+    this._description = properties['description'] || '';
 };
 // Make tiles inherit all the functionality from glyphs
 Game.Tile.extend(Game.Glyph);
@@ -21,6 +22,9 @@ Game.Tile.prototype.isDiggable = function() {
 Game.Tile.prototype.isBlockingLight = function() {
     return this._blocksLight;
 }
+Game.Tile.prototype.getDescription = function() {
+    return this._description;
+};
 
 Game.Tile.nullTile = new Game.Tile({})
 
@@ -29,6 +33,7 @@ Game.Tile.floorTile = new Game.Tile({
     background: "#080A1F",
     walkable: true,
     blocksLight: false,
+    description: 'a cave floor'
 });
 
 Game.Tile.bloodTile = new Game.Tile({
@@ -37,27 +42,31 @@ Game.Tile.bloodTile = new Game.Tile({
     background: "#080A1F",
     walkable: true,
     blocksLight: false,
+    description: 'a pool of blood'
 });
 
 Game.Tile.wallTile = new Game.Tile({
     character: '#',
     foreground: '#232121',
     background: "#C4B9AC",
-    diggable: true
+    diggable: true,
+    description: 'a stone wall'
 });
 
 Game.Tile.stairsDownTile = new Game.Tile({
     character: '>',
     foreground: '#F2EC2D',
     walkable: true,
-    blocksLight: false
+    blocksLight: false,
+    description: 'a staircase leading downward'
 });
 
 Game.Tile.waterTile = new Game.Tile({
     character: '~',
     foreground: 'blue',
     walkable: false,
-    blocksLight: false
+    blocksLight: false,
+    description: 'water'
 });
 
 Game.getNeighborPositions = function(x, y) {

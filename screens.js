@@ -41,86 +41,13 @@ Game.Screen.playScreen = {
             this._subScreen.render(display);
             return;
         }
+        
         var screenWidth = Game.getScreenWidth();
         var screenHeight = Game.getScreenHeight();
-        var visibleCells = {}
-        // Store this._map and player's z to prevent losing it in callbacks
-        var map = this._map;
-        //Find all visible cells
-        this._map.getFov().compute(
-            this._player.getX(), this._player.getY(), 
-            this._player.getSightRadius(), 
-            function(x, y, radius, visibility) {
-                visibleCells[x + "," + y] = true;
-                // Mark cell as explored
-                map.setExplored(x, y, true);
-            });
-        // Iterate through all visible map cells
-        for (var x = 0; x < this._map.getWidth(); x++) {
-            for (var y = 0; y < this._map.getHeight(); y++) {
-                if (visibleCells[x + "," + y]){
-                    // Fetch the glyph for the tile and render it to the screen
-                    var tile = this._map.getTile(x, y);
-                    display.draw(x, y,
-                        tile.getChar(), 
-                        tile.getForeground(), 
-                        tile.getBackground());
-                }
-            }
-        }
-        // Render the explored map cells
-        for (var x = 0; x < this._map.getWidth(); x++) {
-            for (var y = 0; y < this._map.getHeight(); y++) {
-                if (map.isExplored(x, y)) {
-                    // Fetch the glyph for the tile and render it to the screen
-                    // at the offset position.
-                    var glyph = this._map.getTile(x, y);
-                    var foreground = glyph.getForeground();
-                    var tile = this._map.getTile(x, y);
-                    // If we are at a cell that is in the field of vision, we need
-                    // to check if there are items or entities.
-                    if (visibleCells[x + ',' + y]) {
-                        // Check for items first, since we want to draw entities
-                        // over items.
-                        var items = map.getItemsAt(x, y);
-                        // If we have items, we want to render the top most item
-                        if (items) {
-                            glyph = items[items.length - 1];
-                        }
-                        // Check if we have an entity at the position
-                        if (map.getEntityAt(x, y)) {
-                            glyph = map.getEntityAt(x, y);
-                        }
-                        // Update the foreground color in case our glyph changed
-                        foreground = glyph.getForeground();
-                    } else {
-                        // Since the tile was previously explored but is not visible,
-                        // we want to change the foreground color todark gray.
-                        foreground = 'darkGray';
-                    }
-                    display.draw(
-                        x,
-                        y,
-                        glyph.getChar(), 
-                        foreground, 
-                        tile.getBackground());
-                }
-            }
-        }
-        // Render the entities
-        var entities = this._map.getEntities();
-        for (var key in entities) {
-            var entity = entities[key];
-            if (visibleCells[entity.getX() + ',' + entity.getY()]) {
-                display.draw(
-                    entity.getX(), 
-                    entity.getY(),    
-                    entity.getChar(), 
-                    entity.getForeground(), 
-                    entity.getBackground()
-                );
-            }
-        }
+
+        // Render the tiles
+        this.renderTiles(display);
+
         // Get the messages in the player's queue and render them
         var messages = this._player.getMessages();
         var messageY = 0;
@@ -247,7 +174,18 @@ Game.Screen.playScreen = {
             }
             // Unlock the engine
             this._map.getEngine().unlock();
-        }    
+        } else {
+            var keyChar = String.fromCharCode(inputData.charCode);
+             if (keyChar === ';') {
+                // Setup the look screen.
+                Game.Screen.lookScreen.setup(this._player, this._player.getX(), this._player.getY());
+                this.setSubScreen(Game.Screen.lookScreen);
+                return;
+            } else {
+                // Not a valid key
+                return;
+            }
+        }
     },
     setGameEnded: function(gameEnded) {
         this._gameEnded = gameEnded;
@@ -297,6 +235,85 @@ Game.Screen.playScreen = {
             Game.Screen.pickupScreen.setup(this._player, items);
             this.setSubScreen(Game.Screen.pickupScreen);
             return;
+        }
+    },
+    renderTiles(display){
+        var visibleCells = {}
+        // Store this._map to prevent losing it in callbacks
+        var map = this._map;
+        //Find all visible cells
+        this._map.getFov().compute(
+            this._player.getX(), this._player.getY(), 
+            this._player.getSightRadius(), 
+            function(x, y, radius, visibility) {
+                visibleCells[x + "," + y] = true;
+                // Mark cell as explored
+                map.setExplored(x, y, true);
+            });
+        // Iterate through all visible map cells
+        for (var x = 0; x < this._map.getWidth(); x++) {
+            for (var y = 0; y < this._map.getHeight(); y++) {
+                if (visibleCells[x + "," + y]){
+                    // Fetch the glyph for the tile and render it to the screen
+                    var tile = this._map.getTile(x, y);
+                    display.draw(x, y,
+                        tile.getChar(), 
+                        tile.getForeground(), 
+                        tile.getBackground());
+                }
+            }
+        }
+        // Render the explored map cells
+        for (var x = 0; x < this._map.getWidth(); x++) {
+            for (var y = 0; y < this._map.getHeight(); y++) {
+                if (map.isExplored(x, y)) {
+                    // Fetch the glyph for the tile and render it to the screen
+                    var glyph = this._map.getTile(x, y);
+                    var foreground = glyph.getForeground();
+                    var tile = this._map.getTile(x, y);
+                    // If we are at a cell that is in the field of vision, we need
+                    // to check if there are items or entities.
+                    if (visibleCells[x + ',' + y]) {
+                        // Check for items first, since we want to draw entities
+                        // over items.
+                        var items = map.getItemsAt(x, y);
+                        // If we have items, we want to render the top most item
+                        if (items) {
+                            glyph = items[items.length - 1];
+                        }
+                        // Check if we have an entity at the position
+                        if (map.getEntityAt(x, y)) {
+                            glyph = map.getEntityAt(x, y);
+                        }
+                        // Update the foreground color in case our glyph changed
+                        foreground = glyph.getForeground();
+                    } else {
+                        // Since the tile was previously explored but is not visible,
+                        // we want to change the foreground color todark gray.
+                        foreground = 'darkGray';
+                    }
+                    display.draw(
+                        x,
+                        y,
+                        glyph.getChar(), 
+                        foreground, 
+                        tile.getBackground());
+                }
+            }
+        }
+        // Render the entities
+        var entities = this._map.getEntities();
+        for (var key in entities) {
+            var entity = entities[key];
+            if (visibleCells[entity.getX() + ',' + entity.getY()]) {
+                display.draw(
+                    entity.getX(), 
+                    entity.getY(),    
+                    entity.getChar(), 
+                    entity.getForeground(), 
+                    entity.getBackground()
+                );
+            }
         }
     }
 }
@@ -396,9 +413,9 @@ Game.Screen.ItemListScreen.prototype.render = function(display) {
             if (this._items[i] === this._player.getArmor()) {
                 suffix = ' (wearing)';
             } else if (this._items[i] === this._player.getWeapon()) {
-                suffix = ' (wielding)';
+                suffix = ' (in hand)';
             } else if (this._items[i] === this._player.getHead()) {
-                suffix = ' (wearing)';
+                suffix = ' (on neck)';
             }
             // Render at the correct row and add 2.
             display.drawText(0, 2 + row,  letter + ' ' + selectionState + ' ' + this._items[i].describe() + suffix);
@@ -539,5 +556,125 @@ Game.Screen.dropScreen = new Game.Screen.ItemListScreen({
         // Drop the selected item
         this._player.dropItem(Object.keys(selectedItems)[0]);
         return true;
+    }
+});
+
+Game.Screen.TargetBasedScreen = function(template) {
+    template = template || {};
+    // By default, our ok return does nothing and does not consume a turn.
+    this._isAcceptableFunction = template['okFunction'] || function(x, y) {
+        return false;
+    };
+    // The defaut caption function simply returns an empty string.
+    this._captionFunction = template['captionFunction'] || function(x, y) {
+        return '';
+    }
+};
+
+Game.Screen.TargetBasedScreen.prototype.setup = function(player, startX, startY) {
+    this._player = player;
+    // Store original position.
+    this._startX = startX;
+    this._startY = startY;
+    // Store current cursor position
+    this._cursorX = this._startX;
+    this._cursorY = this._startY;
+    // Cache the FOV
+    var visibleCells = {};
+    this._player.getMap().getFov().compute(
+        this._player.getX(), this._player.getY(), 
+        this._player.getSightRadius(), 
+        function(x, y, radius, visibility) {
+            visibleCells[x + "," + y] = true;
+        });
+    this._visibleCells = visibleCells;
+};
+
+Game.Screen.TargetBasedScreen.prototype.render = function(display) {
+    Game.Screen.playScreen.renderTiles.call(Game.Screen.playScreen, display);
+
+    // Draw a line from the start to the cursor.
+    var points = Game.Geometry.getLine(this._startX, this._startY, this._cursorX,
+        this._cursorY);
+
+    // Render stars along the line.
+    for (var i = 0, l = points.length; i < l; i++) {
+        display.drawText(points[i].x, points[i].y, '%c{magenta}*');
+    }
+
+    // Render the caption at the bottom.
+    display.drawText(0, Game.getScreenHeight() - 1, 
+        this._captionFunction(this._cursorX , this._cursorY));
+};
+
+Game.Screen.TargetBasedScreen.prototype.handleInput = function(inputType, inputData) {
+    // Move the cursor
+    if (inputType == 'keydown') {
+        if (inputData.keyCode === ROT.KEYS.VK_LEFT) {
+            this.moveCursor(-1, 0);
+        } else if (inputData.keyCode === ROT.KEYS.VK_RIGHT) {
+            this.moveCursor(1, 0);
+        } else if (inputData.keyCode === ROT.KEYS.VK_UP) {
+            this.moveCursor(0, -1);
+        } else if (inputData.keyCode === ROT.KEYS.VK_DOWN) {
+            this.moveCursor(0, 1);
+        } else if (inputData.keyCode === ROT.KEYS.VK_ESCAPE) {
+            Game.Screen.playScreen.setSubScreen(undefined);
+        } else if (inputData.keyCode === ROT.KEYS.VK_RETURN) {
+            this.executeOkFunction();
+        }
+    }
+    Game.refresh();
+};
+
+Game.Screen.TargetBasedScreen.prototype.moveCursor = function(dx, dy) {
+    // Make sure we stay within bounds.
+    this._cursorX = Math.max(0, Math.min(this._cursorX + dx, Game.getScreenWidth()));
+    // We have to save the last line for the caption.
+    this._cursorY = Math.max(0, Math.min(this._cursorY + dy, Game.getScreenHeight() - 1));
+};
+
+Game.Screen.TargetBasedScreen.prototype.executeOkFunction = function() {
+    // Switch back to the play screen.
+    Game.Screen.playScreen.setSubScreen(undefined);
+    // Call the OK function and end the player's turn if it return true.
+    if (this._okFunction(this._cursorX, this._cursorY)) {
+        this._player.getMap().getEngine().unlock();
+    }
+};
+
+Game.Screen.lookScreen = new Game.Screen.TargetBasedScreen({
+    captionFunction: function(x, y) {
+        var map = this._player.getMap();
+        // If the tile is explored, we can give a better capton
+        if (map.isExplored(x, y)) {
+            // If the tile isn't explored, we have to check if we can actually 
+            // see it before testing if there's an entity or item.
+            /*if (this._visibleCells[x + ',' + y]) {
+                var items = map.getItemsAt(x, y);
+                // If we have items, we want to render the top most item
+                if (items) {
+                    var item = items[items.length - 1];
+                    return String.format('%s - %s (%s)',
+                        item.getRepresentation(),
+                        item.describeA(true),
+                        item.details());
+                // Else check if there's an entity
+                } else if (map.getEntityAt(x, y)) {
+                    var entity = map.getEntityAt(x, y);
+                    return String.format('%s - %s (%s)',
+                        entity.getRepresentation(),
+                        entity.describeA(true),
+                        entity.details());
+                }
+            }*/
+            // If there was no entity/item or the tile wasn't visible, then use
+            // the tile information.
+            return map.getTile(x, y).getRepresentation() + " - " + map.getTile(x, y).getDescription();
+
+        } else {
+            // If the tile is not explored, show the null tile description.
+            return Game.Tile.nullTile.getRepresentation() + " - " + Game.Tile.nullTile.getDescription();
+        }
     }
 });
