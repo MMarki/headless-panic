@@ -5,14 +5,14 @@ Game.ItemRepository.define('apple', {
     character: '!',
     foreground: 'red',
     foodValue: 40,
-    mixins: [Game.ItemMixins.Edible]
+    mixins: [Game.ItemMixins.Edible, Game.ItemMixins.Throwable]
 });
 
 Game.ItemRepository.define('head', {
     name: 'head',
     character: '\u25CB',
     headible: true,
-    mixins: [Game.ItemMixins.Equippable]
+    mixins: [Game.ItemMixins.Equippable. Game.ItemMixins.Throwable]
 }, {
     disableRandomCreation: true
 });
@@ -26,7 +26,7 @@ Game.ItemRepository.define('dagger', {
     attackValue: 5,
     thrownAttackValue: 3,
     wieldable: true,
-    mixins: [Game.ItemMixins.Equippable]
+    mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable]
 }, {
     disableRandomCreation: true
 });
@@ -38,7 +38,7 @@ Game.ItemRepository.define('sword', {
     attackValue: 10,
     thrownAttackValue: 3,
     wieldable: true,
-    mixins: [Game.ItemMixins.Equippable]
+    mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable]
 }, {
     disableRandomCreation: true
 });
@@ -50,7 +50,7 @@ Game.ItemRepository.define('spear', {
     attackValue: 5,
     thrownAttackValue: 5,
     wieldable: true,
-    mixins: [Game.ItemMixins.Equippable]
+    mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable]
 }, {
     disableRandomCreation: true
 });

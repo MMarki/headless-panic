@@ -168,6 +168,15 @@ Game.Screen.playScreen = {
                     Game.refresh();
                 }
                 return;
+            } else if (inputData.keyCode === ROT.KEYS.VK_T) {
+                // Show the equip screen
+                if (Game.Screen.throwScreen.setup(this._player, this._player.getItems())) {
+                    this.setSubScreen(Game.Screen.throwScreen);
+                } else {
+                    Game.sendMessage(this._player, "You have nothing to throw!");
+                    Game.refresh();
+                }
+                return;
             } else {
                 // Not a valid key
                 return;
@@ -525,8 +534,8 @@ Game.Screen.inventoryScreen = new Game.Screen.ItemListScreen({
         var key = Object.keys(selectedItems)[0];
         var item = selectedItems[key];
         console.log("item: " + item)
-        Game.Screen.ItemScreenGeneric.setup(this._player, item, this, key);
-        Game.Screen.playScreen.setSubScreen(Game.Screen.ItemScreenGeneric);
+        Game.Screen.itemScreenGeneric.setup(this._player, item, this, key);
+        Game.Screen.playScreen.setSubScreen(Game.Screen.itemScreenGeneric);
     }
 });
 
@@ -554,10 +563,28 @@ Game.Screen.dropScreen = new Game.Screen.ItemListScreen({
     }
 });
 
+Game.Screen.throwScreen = new Game.Screen.ItemListScreen({
+    caption: 'Throw what?',
+    canSelect: true,
+    canSelectMultipleItems: false,
+    isAcceptable: function(item) {
+        return item && item.hasMixin('Throwable');
+    },
+    ok: function(selectedItems) {
+        // throw the item
+        var key = Object.keys(selectedItems)[0];
+        var item = selectedItems[key];
+        
+        Game.Screen.throwAtScreen.setup(this._player, this._player.getX(), this._player.getY(), item, key);
+        Game.Screen.playScreen.setSubScreen(Game.Screen.throwAtScreen);
+        return true;
+    }
+});
+
 Game.Screen.TargetBasedScreen = function(template) {
     template = template || {};
     // By default, our ok return does nothing and does not consume a turn.
-    this._isAcceptableFunction = template['okFunction'] || function(x, y) {
+    this._okFunction = template['ok'] || function(x, y) {
         return false;
     };
     // The defaut caption function simply returns an empty string.
@@ -566,11 +593,13 @@ Game.Screen.TargetBasedScreen = function(template) {
     }
 };
 
-Game.Screen.TargetBasedScreen.prototype.setup = function(player, startX, startY) {
+Game.Screen.TargetBasedScreen.prototype.setup = function(player, startX, startY, item, key) {
     this._player = player;
     // Store original position.
     this._startX = startX;
     this._startY = startY;
+    this._item = item || null;
+    this._key = key || null;
     // Store current cursor position
     this._cursorX = this._startX;
     this._cursorY = this._startY;
@@ -674,6 +703,46 @@ Game.Screen.lookScreen = new Game.Screen.TargetBasedScreen({
     }
 });
 
+Game.Screen.throwAtScreen = new Game.Screen.TargetBasedScreen({
+    captionFunction: function(x, y) {
+        var map = this._player.getMap();
+        // If the tile is explored, we can give a better capton
+        if (map.isExplored(x, y)) {
+            // If the tile isn't explored, we have to check if we can actually 
+            // see it before testing if there's an entity or item.
+            /*if (this._visibleCells[x + ',' + y]) {
+                var items = map.getItemsAt(x, y);
+                // If we have items, we want to render the top most item
+                if (items) {
+                    var item = items[items.length - 1];
+                    return String.format('%s - %s (%s)',
+                        item.getRepresentation(),
+                        item.describeA(true),
+                        item.details());
+                // Else check if there's an entity
+                } else if (map.getEntityAt(x, y)) {
+                    var entity = map.getEntityAt(x, y);
+                    return String.format('%s - %s (%s)',
+                        entity.getRepresentation(),
+                        entity.describeA(true),
+                        entity.details());
+                }
+            }*/
+            // If there was no entity/item or the tile wasn't visible, then use
+            // the tile information.
+            return map.getTile(x, y).getRepresentation() + " - " + map.getTile(x, y).getDescription();
+
+        } else {
+            // If the tile is not explored, show the null tile description.
+            return Game.Tile.nullTile.getRepresentation() + " - " + Game.Tile.nullTile.getDescription();
+        }
+    },
+    ok: function() {    
+        this._player.throwItem(this._item, this._cursorX, this._cursorY, this._key);
+        return true;
+    }
+});
+
 Game.Screen.ItemScreen = function(template) {
     // Set up based on the template
     this._caption = template['caption'];
@@ -743,7 +812,8 @@ Game.Screen.ItemScreen.prototype.handleInput = function(inputType, inputData) {
                 Game.sendMessage(this._player, "You are wearing %s.", [this._item.describeA()]);
             } 
         } else if (inputData.keyCode === ROT.KEYS.VK_T){
-            console.log("throw!")
+            Game.Screen.throwAtScreen.setup(this._player, this._player.getX(), this._player.getY(), this._item, this._key);
+            Game.Screen.playScreen.setSubScreen(Game.Screen.throwAtScreen);
         } else if (inputData.keyCode === ROT.KEYS.VK_U){
             if (this._item.isWieldable()){
                 this._player.unwield();
@@ -761,7 +831,7 @@ Game.Screen.ItemScreen.prototype.handleInput = function(inputType, inputData) {
 };
 
 
-Game.Screen.ItemScreenGeneric = new Game.Screen.ItemScreen({
+Game.Screen.itemScreenGeneric = new Game.Screen.ItemScreen({
     caption: 'What do you want to do with this item?',
     ok: function() {
         return true;

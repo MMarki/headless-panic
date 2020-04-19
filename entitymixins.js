@@ -163,7 +163,7 @@ Game.EntityMixins.Destructible = {
             if (myHead !== null){
                 //drop the item that is equipped on the head of the player
                 var headIndex = this.getHeadIndex();
-                this.unHead();
+                this.unhead();
                 this.removeItem(headIndex);
                 Game.sendMessage(this, "Your head falls off");
                 return true;
@@ -230,44 +230,39 @@ Game.EntityMixins.Thrower = {
     init: function(template) {
         this._throwDistance = template['throwDistance'] || 24;
     },
-    throwItem: function(item, x, y) {
+    throwItem: function(item, x, y, key) {
         var startPointX= this.getX();
         var startPointY = this.getY()
         var endPointX = x;
         var endPointY = y;
 
         var points = Game.Geometry.getLine(startPointX, startPointY, endPointX, endPointY);
-        for (var point in points){
-            if (this._map.getTile(point.x, point.y) == Game.Tile.wallTile){
+        for (var index in points){
+            if (this._map.getTile(points[index].x, points[index].y) == Game.Tile.wallTile){
                 break;
             }            
-            endPointX = point.x;
-            endPointY = point.y;
+            endPointX = points[index].x;
+            endPointY = points[index].y;
         }
    
         var creatureReference = this.getMap().getEntityAt(x, y);
-   
-        if (creatureReference !== null){
-            throwAttack(item, creatureReference);
-        }  
-        else{
-            Game.sendMessage(this, 'You throw a %s!',item.name());
+        if (creatureReference !== undefined){
+            this.throwAttack(item, creatureReference);
+        } else{
+            Game.sendMessage(this, 'You throw a %s!',item.getName());
         }
 
         if (this.hasMixin(Game.EntityMixins.Equipper)) {
-            this.unequip(item);
-            inventory.remove(item);
+            this.removeItem(key);
         }
         this._map.addItem(endPointX, endPointY, item);
     },
-    throwAttack(item, target) {
+    throwAttack: function(item, target) {
         var amount = Math.max(0, this.getAttackValue() / 2 + item.getThrownAttackValue() - target.getDefenseValue());
-    
         amount = (Math.random() * amount) + 1;
-    
-        doAction("throw a %s at the %s for %d damage", item.getName(), target.getName(), amount);
-    
-        target.takeDamage(amount);
+        console.log(amount);
+        Game.sendMessage(this, 'throw a %s at the %s for %d damage', [item.getName(),target.getName(), amount]);
+        target.takeDamage(this, amount);
     }
 }
 
