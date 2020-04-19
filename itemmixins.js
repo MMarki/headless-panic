@@ -21,6 +21,7 @@ Game.ItemMixins.Equippable = {
     name: 'Equippable',
     init: function(template) {
         this._attackValue = template['attackValue'] || 0;
+        this._thrownAttackValue = template['thrownAttackValue'] || 0;
         this._defenseValue = template['defenseValue'] || 0;
         this._wieldable = template['wieldable'] || false;
         this._wearable = template['wearable'] || false;
@@ -29,6 +30,9 @@ Game.ItemMixins.Equippable = {
     },
     getAttackValue: function() {
         return this._attackValue;
+    },
+    getThrownAttackValue: function() {
+        return this._thrownAttackValue;
     },
     getDefenseValue: function() {
         return this._defenseValue;

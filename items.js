@@ -24,6 +24,7 @@ Game.ItemRepository.define('dagger', {
     character: ')',
     foreground: '#F2EC2D',
     attackValue: 5,
+    thrownAttackValue: 3,
     wieldable: true,
     mixins: [Game.ItemMixins.Equippable]
 }, {
@@ -35,6 +36,7 @@ Game.ItemRepository.define('sword', {
     character: ')',
     foreground: '#F2EC2D',
     attackValue: 10,
+    thrownAttackValue: 3,
     wieldable: true,
     mixins: [Game.ItemMixins.Equippable]
 }, {
@@ -46,6 +48,7 @@ Game.ItemRepository.define('spear', {
     character: '\u2191',
     foreground: '#F2EC2D',
     attackValue: 5,
+    thrownAttackValue: 5,
     wieldable: true,
     mixins: [Game.ItemMixins.Equippable]
 }, {

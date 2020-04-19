@@ -224,6 +224,53 @@ Game.EntityMixins.Attacker = {
     }
 }
 
+Game.EntityMixins.Thrower = {
+    name: 'Thrower',
+    groupName: 'Thrower',
+    init: function(template) {
+        this._throwDistance = template['throwDistance'] || 24;
+    },
+    throwItem: function(item, x, y) {
+        var startPointX= this.getX();
+        var startPointY = this.getY()
+        var endPointX = x;
+        var endPointY = y;
+
+        var points = Game.Geometry.getLine(startPointX, startPointY, endPointX, endPointY);
+        for (var point in points){
+            if (this._map.getTile(point.x, point.y) == Game.Tile.wallTile){
+                break;
+            }            
+            endPointX = point.x;
+            endPointY = point.y;
+        }
+   
+        var creatureReference = this.getMap().getEntityAt(x, y);
+   
+        if (creatureReference !== null){
+            throwAttack(item, creatureReference);
+        }  
+        else{
+            Game.sendMessage(this, 'You throw a %s!',item.name());
+        }
+
+        if (this.hasMixin(Game.EntityMixins.Equipper)) {
+            this.unequip(item);
+            inventory.remove(item);
+        }
+        this._map.addItem(endPointX, endPointY, item);
+    },
+    throwAttack(item, target) {
+        var amount = Math.max(0, this.getAttackValue() / 2 + item.getThrownAttackValue() - target.getDefenseValue());
+    
+        amount = (Math.random() * amount) + 1;
+    
+        doAction("throw a %s at the %s for %d damage", item.getName(), target.getName(), amount);
+    
+        target.takeDamage(amount);
+    }
+}
+
 Game.EntityMixins.MessageRecipient = {
     name: 'MessageRecipient',
     init: function(template) {
@@ -438,7 +485,7 @@ Game.EntityMixins.Equipper = {
     wearHead: function(item){
         this._head = item;
     },
-    unHead: function(){
+    unhead: function(){
         this._head = null;
     },
     getWeapon: function() {
