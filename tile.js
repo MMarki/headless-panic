@@ -38,7 +38,7 @@ Game.Tile.floorTile = new Game.Tile({
 
 Game.Tile.bloodTile = new Game.Tile({
     character: '.',
-    foreground: "red",
+    foreground: "#F61067",
     background: "#080A1F",
     walkable: true,
     blocksLight: false,
@@ -63,7 +63,7 @@ Game.Tile.stairsDownTile = new Game.Tile({
 
 Game.Tile.waterTile = new Game.Tile({
     character: '~',
-    foreground: 'blue',
+    foreground: '#2191fb',
     walkable: false,
     blocksLight: false,
     description: 'water'

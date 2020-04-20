@@ -272,13 +272,16 @@ Game.EntityMixins.MessageRecipient = {
         this._messages = [];
     },
     receiveMessage: function(message) {
-        this._messages.push(message);
+        this._messages.unshift(message);
     },
     getMessages: function() {
         return this._messages;
     },
     clearMessages: function() {
-        this._messages = [];
+        var totalMessages = this._messages.length;
+        if(length > 40){
+            this._messages = this._messages.slice(0, totalMessages.length - 1);
+        } 
     }
 }
 

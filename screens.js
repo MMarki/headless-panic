@@ -50,14 +50,16 @@ Game.Screen.playScreen = {
 
         // Get the messages in the player's queue and render them
         var messages = this._player.getMessages();
-        var messageY = 0;
-        for (var i = 0; i < messages.length; i++) {
+        var messageY = screenHeight + 4;
+        for (var i = 0; i < 4; i++) {
             // Draw each message, adding the number of lines
-            messageY += display.drawText(
-                0, 
-                messageY,
-                '%c{white}%b{black}' + messages[i]
-            );
+            if (messages[i] !== undefined){
+                messageY -= display.drawText(
+                    0, 
+                    messageY,
+                    '%c{white}%b{black}' + messages[i]
+                );
+            }
         }
         // Render UI 
         display.drawText(0, screenHeight, "%c{yellow}I%c{}nventory  %c{yellow}T%c{}hrow  %c{yellow}E%c{}quip  %c{yellow}U%c{}se");
@@ -764,18 +766,18 @@ Game.Screen.ItemScreen.prototype.render = function(display) {
     var rowCount = 0;
     //open an item modal with:
     if(this._item.hasMixin('Edible')){
-        display.drawText(0, rowCount + 3, "Apply");
+        display.drawText(0, rowCount + 3, "%c{yellow}A%c{}pply");
         rowCount += 1;
     }
     if(this._item.hasMixin('Equippable')){
-        display.drawText(0, rowCount + 3, "Equip");
+        display.drawText(0, rowCount + 3, "%c{yellow}E%c{}quip");
         rowCount += 1;
     }
     if(this._item.hasMixin('Throwable')){
-        display.drawText(0, rowCount + 3, "Throw");
+        display.drawText(0, rowCount + 3, "%c{yellow}T%c{}hrow");
         rowCount += 1;
     }
-    display.drawText(0,rowCount + 3, "Drop");
+    display.drawText(0,rowCount + 3, "%c{yellow}D%c{}rop");
 };
 
 Game.Screen.ItemScreen.prototype.executeOkFunction = function() {

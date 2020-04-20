@@ -1,7 +1,7 @@
 Game.ItemRepository = new Game.Repository('items', Game.Item);
 
-Game.ItemRepository.define('apple', {
-    name: 'apple',
+Game.ItemRepository.define('health potion', {
+    name: 'health potion',
     character: '!',
     foreground: 'red',
     foodValue: 40,
@@ -12,7 +12,7 @@ Game.ItemRepository.define('head', {
     name: 'head',
     character: '\u25CB',
     headible: true,
-    mixins: [Game.ItemMixins.Equippable. Game.ItemMixins.Throwable]
+    mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable]
 }, {
     disableRandomCreation: true
 });

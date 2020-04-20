@@ -19,7 +19,7 @@ Game.EntityRepository = new Game.Repository('entities', Game.Entity);
 Game.EntityRepository.define('fungus', {
     name: 'fungus',
     character: 'F',
-    foreground: 'pink',
+    foreground: '#b33951',
     maxHp: 10,
     speed: 500,
     mixins: [Game.EntityMixins.FungusActor, Game.EntityMixins.Destructible]
@@ -28,7 +28,7 @@ Game.EntityRepository.define('fungus', {
 Game.EntityRepository.define('bat', {
     name: 'bat',
     character: 'B',
-    foreground: 'white',
+    foreground: '#f1f7ed',
     maxHp: 5,
     attackValue: 4,
     speed: 2000,
@@ -39,7 +39,7 @@ Game.EntityRepository.define('bat', {
 Game.EntityRepository.define('newt', {
     name: 'newt',
     character: 'n',
-    foreground: 'green',
+    foreground: '#91c7b1',
     maxHp: 3,
     attackValue: 2,
     mixins: [Game.EntityMixins.TaskActor, Game.EntityMixins.Attacker, Game.EntityMixins.Destructible]
@@ -48,10 +48,23 @@ Game.EntityRepository.define('newt', {
 Game.EntityRepository.define('kobold', {
     name: 'kobold',
     character: 'k',
-    foreground: 'white',
+    foreground: '#c06e52',
     maxHp: 6,
     attackValue: 4,
-    sightRadius: 6,
+    sightRadius: 10,
+    tasks: ['hunt', 'wander'],
+    mixins: [Game.EntityMixins.TaskActor, Game.EntityMixins.Sight,
+             Game.EntityMixins.Attacker, Game.EntityMixins.Destructible,
+             Game.EntityMixins.HeadDropper]
+});
+
+Game.EntityRepository.define('goblin', {
+    name: 'goblin',
+    character: 'g',
+    foreground: '#91C7B1',
+    maxHp: 8,
+    attackValue: 4,
+    sightRadius: 10,
     tasks: ['hunt', 'wander'],
     mixins: [Game.EntityMixins.TaskActor, Game.EntityMixins.Sight,
              Game.EntityMixins.Attacker, Game.EntityMixins.Destructible,
@@ -84,3 +97,16 @@ Game.EntityRepository.define('slime', {
     mixins: [Game.EntityMixins.TaskActor, Game.EntityMixins.Sight,
              Game.EntityMixins.Attacker, Game.EntityMixins.Destructible]
 });
+
+Game.EntityRepository.define('rat', {
+    name: 'rat',
+    character: 'r',
+    foreground: '#e3d081',
+    maxHp: 3,
+    attackValue: 1,
+    sightRadius: 10,
+    tasks: ['hunt', 'wander'],
+    mixins: [Game.EntityMixins.TaskActor, Game.EntityMixins.Sight,
+             Game.EntityMixins.Attacker, Game.EntityMixins.Destructible]
+});
+
