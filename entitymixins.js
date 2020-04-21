@@ -194,6 +194,7 @@ Game.EntityMixins.Attacker = {
     groupName: 'Attacker',
     init: function(template) {
         this._attackValue = template['attackValue'] || 1;
+        this._accuracyValue = template['accuracyValue'] || 70;
     },
     getAttackValue: function() {
         var modifier = 0;
@@ -206,20 +207,43 @@ Game.EntityMixins.Attacker = {
         }
         return this._attackValue + modifier;
     },
+    getAccuracyValue: function() {
+        var modifier = 0;
+        // If we can equip items, then have to take into consideration weapon and armor
+        //for player, accuracy = 100 * 1.065^(weapon net enchant)
+        //Net enchantment bonus = (Excess strength) * 0.25 + (Enchant level)
+        //Damage = (Regular damage) * 1.065 ^ Enchant
+        if (this.hasMixin(Game.EntityMixins.Equipper)) {
+            if (this.getWeapon()) {
+                modifier = 0;
+            }
+        }
+        return this._accuracyValue + modifier;
+    },
     attack: function(target) {
         // If the target is destructible, calculate the damage based on attack and defense value
         if (target.hasMixin('Destructible')) {
+            var accuracy = this.getAccuracyValue();
             var attack = this.getAttackValue();
             var defense = target.getDefenseValue();
-            var max = Math.max(0, attack - defense);
-            var damage = 1 + Math.floor(Math.random() * max);
+            if (target.hasMixin(Game.EntityMixins.PlayerActor)) {
+                defense = defense * 10;
+            }
+            var hitProbability = accuracy * Math.pow(0.987, defense);
+            console.log("def:" + defense);
+            console.log("hitprob: " + hitProbability);
+            if (Math.random()*100 < hitProbability){
+                var max = Math.max(0, attack);
+                var damage = 1 + Math.floor(Math.random() * max);
 
-            Game.sendMessage(this, 'You strike the %s for %d damage!', 
-                [target.getName(), damage]);
-            Game.sendMessage(target, 'The %s strikes you for %d damage!', 
-                [this.getName(), damage]);
+                Game.sendMessage(this, 'You strike the %s for %d damage!', [target.getName(), damage]);
+                Game.sendMessage(target, 'The %s strikes you for %d damage!',  [this.getName(), damage]);
 
-            target.takeDamage(this, damage);
+                target.takeDamage(this, damage);
+            } else {
+                Game.sendMessage(this, 'You miss the %s!', [target.getName()]);
+                Game.sendMessage(target, 'The %s misses you!',  [this.getName()]);
+            }
         }
     }
 }

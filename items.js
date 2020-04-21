@@ -67,11 +67,22 @@ Game.ItemRepository.define('leather', {
     disableRandomCreation: true
 });
 
+Game.ItemRepository.define('scalemail', {
+    name: 'scalemail',
+    character: '[',
+    foreground: '#F2EC2D',
+    defenseValue: 4,
+    wearable: true,
+    mixins: [Game.ItemMixins.Equippable]
+}, {
+    disableRandomCreation: true
+});
+
 Game.ItemRepository.define('chainmail', {
     name: 'chainmail',
     character: '[',
     foreground: '#F2EC2D',
-    defenseValue: 4,
+    defenseValue: 6,
     wearable: true,
     mixins: [Game.ItemMixins.Equippable]
 }, {
@@ -82,7 +93,7 @@ Game.ItemRepository.define('platemail', {
     name: 'platemail',
     character: '[',
     foreground: '#F2EC2D',
-    defenseValue: 6,
+    defenseValue: 8,
     wearable: true,
     mixins: [Game.ItemMixins.Equippable]
 }, {

@@ -33,7 +33,7 @@ Game.Map = function(tiles, player, items) {
     this._fov = {};
     this.setupFov();
     // Add weapons and armor to the map in random positions
-    var templates = ['dagger', 'sword', 'spear', 'leather', 'chainmail', 'platemail'];
+    var templates = ['dagger', 'sword', 'spear', 'leather', 'scalemail', 'chainmail', 'platemail'];
     for (var i = 0; i < templates.length; i++) {
         this.addItemAtRandomPosition(Game.ItemRepository.create(templates[i]),
             Math.floor(3 * Math.random()));
