@@ -66,7 +66,7 @@ Game.Tile.waterTile = new Game.Tile({
     foreground: '#2191fb',
     walkable: false,
     blocksLight: false,
-    description: 'water'
+    description: 'deep water'
 });
 
 Game.getNeighborPositions = function(x, y) {

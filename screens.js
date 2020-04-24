@@ -620,20 +620,52 @@ Game.Screen.TargetBasedScreen.prototype.render = function(display) {
     Game.Screen.playScreen.renderTiles.call(Game.Screen.playScreen, display);
 
     // Draw a line from the start to the cursor.
-    var points = Game.Geometry.getLine(this._startX, this._startY, this._cursorX,
-        this._cursorY);
+    var points = Game.Geometry.getLine(this._startX, this._startY, this._cursorX, this._cursorY);
+    var foregroundColor =  "#333333";
+    var character = "?";
 
-    // Render stars along the line.
+    var map = this._player.getMap();
+
+    // Render yellow along the line.
     for (var i = 0, l = points.length; i < l; i++) {
         var x = points[i].x
         var y = points[i].y
-        var tile = this._player.getMap().getTile(x,y)
-        display.drawText(x, y, '%c{' + tile.getForeground() + '}%b{yellow}' + tile.getChar());
+
+        // If the tile is explored, we can give a better tile image
+        if (map.isExplored(x, y)) {
+            // If the tile isn't explored, we have to check if we can actually see it before testing if there's an entity or item.
+            if (this._visibleCells[x + ',' + y]) {
+                var items = map.getItemsAt(x, y);
+                // If we have items, we want to render the top most item
+                if (items) {
+                    var item = items[items.length - 1];
+                    foregroundColor = item.getForeground();
+                    character = item.getChar();
+                // Else check if there's an entity
+                } else if (map.getEntityAt(x, y)) {
+                    var entity = map.getEntityAt(x, y);
+                    foregroundColor = entity.getForeground();
+                    character = entity.getChar();
+                } else {
+                    // If there was no entity/item or the tile wasn't visible, then use
+                    // the tile information.
+                    var tile = map.getTile(x, y)
+                    foregroundColor = tile.getForeground();
+                    character = tile.getChar();
+                }
+            }
+        } else {
+            // If the tile is not explored, show no new info to user.
+            foregroundColor =  "#333333";
+            character = "?";
+        }
+        
+        //var tile = this._player.getMap().getTile(x,y)
+        display.drawText(x, y, '%c{' + foregroundColor + '}%b{yellow}' + character);
     }
 
     // Render the caption at the bottom.
-    display.drawText(0, Game.getScreenHeight() - 1, 
-        this._captionFunction(this._cursorX , this._cursorY));
+    display.drawText(0, Game.getScreenHeight(), this._captionFunction(this._cursorX , this._cursorY));
 };
 
 Game.Screen.TargetBasedScreen.prototype.handleInput = function(inputType, inputData) {
@@ -675,28 +707,21 @@ Game.Screen.TargetBasedScreen.prototype.executeOkFunction = function() {
 Game.Screen.lookScreen = new Game.Screen.TargetBasedScreen({
     captionFunction: function(x, y) {
         var map = this._player.getMap();
-        // If the tile is explored, we can give a better capton
+        // If the tile is explored, we can give a better caption
         if (map.isExplored(x, y)) {
-            // If the tile isn't explored, we have to check if we can actually 
-            // see it before testing if there's an entity or item.
-            /*if (this._visibleCells[x + ',' + y]) {
+            // If the tile isn't explored, we have to check if we can actually see it before testing if there's an entity or item.
+            if (this._visibleCells[x + ',' + y]) {
                 var items = map.getItemsAt(x, y);
                 // If we have items, we want to render the top most item
                 if (items) {
                     var item = items[items.length - 1];
-                    return String.format('%s - %s (%s)',
-                        item.getRepresentation(),
-                        item.describeA(true),
-                        item.details());
+                    return (item.getRepresentation() + ' - ' + item.describeA(true) + '. ' + item.getDescription());
                 // Else check if there's an entity
                 } else if (map.getEntityAt(x, y)) {
                     var entity = map.getEntityAt(x, y);
-                    return String.format('%s - %s (%s)',
-                        entity.getRepresentation(),
-                        entity.describeA(true),
-                        entity.details());
+                    return (entity.getRepresentation() + ' - ' + entity.describeA(true) + '. ' + entity.getDescription());
                 }
-            }*/
+            }
             // If there was no entity/item or the tile wasn't visible, then use
             // the tile information.
             return map.getTile(x, y).getRepresentation() + " - " + map.getTile(x, y).getDescription();
@@ -713,26 +738,19 @@ Game.Screen.throwAtScreen = new Game.Screen.TargetBasedScreen({
         var map = this._player.getMap();
         // If the tile is explored, we can give a better capton
         if (map.isExplored(x, y)) {
-            // If the tile isn't explored, we have to check if we can actually 
-            // see it before testing if there's an entity or item.
-            /*if (this._visibleCells[x + ',' + y]) {
+            // If the tile isn't explored, we have to check if we can actually see it before testing if there's an entity or item.
+            if (this._visibleCells[x + ',' + y]) {
                 var items = map.getItemsAt(x, y);
                 // If we have items, we want to render the top most item
                 if (items) {
                     var item = items[items.length - 1];
-                    return String.format('%s - %s (%s)',
-                        item.getRepresentation(),
-                        item.describeA(true),
-                        item.details());
+                    return (item.getRepresentation() + ' - ' + item.describeA(true) + '. ' + item.getDescription());
                 // Else check if there's an entity
                 } else if (map.getEntityAt(x, y)) {
                     var entity = map.getEntityAt(x, y);
-                    return String.format('%s - %s (%s)',
-                        entity.getRepresentation(),
-                        entity.describeA(true),
-                        entity.details());
+                    return (entity.getRepresentation() + ' - ' + entity.describeA(true) + '. ' + entity.getDescription());
                 }
-            }*/
+            }
             // If there was no entity/item or the tile wasn't visible, then use
             // the tile information.
             return map.getTile(x, y).getRepresentation() + " - " + map.getTile(x, y).getDescription();

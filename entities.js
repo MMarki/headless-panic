@@ -1,6 +1,7 @@
 // Player template
 Game.PlayerTemplate = {
     character: '@',
+    name: 'chicken knight',
     foreground: 'white',
     maxHp: 40,
     attackValue: 10,
@@ -23,6 +24,7 @@ Game.EntityRepository.define('fungus', {
     foreground: '#b33951',
     maxHp: 10,
     speed: 500,
+    description: "Fungus multiplies at an astonishing rate.",
     mixins: [Game.EntityMixins.FungusActor, Game.EntityMixins.Destructible]
 });
 
@@ -34,6 +36,7 @@ Game.EntityRepository.define('bat', {
     attackValue: 4,
     accuracyValue: 70,
     speed: 2000,
+    description: "This monster flies quickly, and won't attack unless you bother it.",
     mixins: [Game.EntityMixins.TaskActor, Game.EntityMixins.HeadDropper,
              Game.EntityMixins.Attacker, Game.EntityMixins.Destructible]
 });
@@ -45,6 +48,7 @@ Game.EntityRepository.define('newt', {
     maxHp: 3,
     accuracyValue: 70,
     attackValue: 2,
+    description: "Newt are weak, slimy, and docile.",
     mixins: [Game.EntityMixins.TaskActor, Game.EntityMixins.Attacker, Game.EntityMixins.Destructible]
 });
 
@@ -57,6 +61,7 @@ Game.EntityRepository.define('kobold', {
     defenseValue: 0,
     accuracyValue: 70,
     sightRadius: 10,
+    description: "A small, scaly, aggressive humanoid.",
     tasks: ['hunt', 'wander'],
     mixins: [Game.EntityMixins.TaskActor, Game.EntityMixins.Sight,
              Game.EntityMixins.Attacker, Game.EntityMixins.Destructible,
@@ -72,6 +77,7 @@ Game.EntityRepository.define('goblin', {
     defenseValue: 10,
     accuracyValue: 70,
     sightRadius: 10,
+    description: "An armored underdweller with bulging eyes and green skin.",
     tasks: ['hunt', 'wander'],
     mixins: [Game.EntityMixins.TaskActor, Game.EntityMixins.Sight,
              Game.EntityMixins.Attacker, Game.EntityMixins.Destructible,
@@ -88,6 +94,7 @@ Game.EntityRepository.define('giant zombie', {
     accuracyValue: 70,
     sightRadius: 8,
     headHits: 2,
+    description: "A shambling undead monster that smells of decay.",
     tasks: ['hunt', 'wander'],
     mixins: [Game.EntityMixins.TaskActor, Game.EntityMixins.Sight,
              Game.EntityMixins.Attacker, Game.EntityMixins.Destructible,
@@ -102,6 +109,7 @@ Game.EntityRepository.define('slime', {
     attackValue: 5,
     accuracyValue: 70,
     sightRadius: 6,
+    description: "A sentient blob of jelly that divides when hit.",
     tasks: ['hunt', 'wander'],
     mixins: [Game.EntityMixins.TaskActor, Game.EntityMixins.Sight,
              Game.EntityMixins.Attacker, Game.EntityMixins.Destructible]
@@ -116,6 +124,7 @@ Game.EntityRepository.define('rat', {
     attackValue: 1,
     accuracyValue: 70,
     sightRadius: 10,
+    description: "A meaner little denizen of cellars and sewers.",
     tasks: ['hunt', 'wander'],
     mixins: [Game.EntityMixins.TaskActor, Game.EntityMixins.Sight,
              Game.EntityMixins.Attacker, Game.EntityMixins.Destructible]
@@ -130,6 +139,7 @@ Game.EntityRepository.define('death', {
     attackValue: 1,
     accuracyValue: 70,
     sightRadius: 10,
+    description: "She seeks what is hers.",
     tasks: ['hunt', 'wander'],
     mixins: [Game.EntityMixins.TaskActor, Game.EntityMixins.Sight,
              Game.EntityMixins.Attacker, Game.EntityMixins.Destructible]

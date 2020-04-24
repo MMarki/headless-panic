@@ -9,6 +9,7 @@ Game.DynamicGlyph = function(properties) {
     this._attachedMixins = {};
     // Create a similar object for groups
     this._attachedMixinGroups = {};
+    this._description = properties['description'] || '';
     // Setup the object's mixins
     var mixins = properties['mixins'] || [];
     for (var i = 0; i < mixins.length; i++) {
@@ -67,4 +68,8 @@ Game.DynamicGlyph.prototype.describeA = function(capitalize) {
 Game.DynamicGlyph.prototype.describeThe = function(capitalize) {
     var prefix = capitalize ? 'The' : 'the';
     return prefix + ' ' + this.describe();
+};
+
+Game.DynamicGlyph.prototype.getDescription = function() {
+    return this._description;
 };
