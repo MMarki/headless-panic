@@ -86,9 +86,9 @@ Game.Screen.playScreen = {
         
         
         display.drawText(screenWidth + 1, 5, "ARMOR: +" + this._player.getDefenseValue());
-        display.drawText(screenWidth + 1, 6, "ATK: +" + this._player.getAttackValue());
-        display.drawText(screenWidth + 1, 7, "GOLD: 0" );
-        display.drawText(screenWidth + 1, 8, "LVL: Cellars " + Game.getLevel() );
+        display.drawText(screenWidth + 1, 6, "ATK:   +" + this._player.getAttackValue());
+        display.drawText(screenWidth + 1, 7, "GOLD:  0" );
+        display.drawText(screenWidth + 1, 8, "LVL:   Cellars " + Game.getLevel() );
     },
     handleInput: function(inputType, inputData) {
         // If the game is over, enter will bring the user to the losing screen.
@@ -299,8 +299,13 @@ Game.Screen.playScreen = {
                         // Update the foreground color in case our glyph changed
                         foreground = glyph.getForeground();
                     } else {
+                        var items = map.getItemsAt(x, y);
+                        // If we have items, we want to render the top most item
+                        if (items) {
+                            glyph = items[items.length - 1];
+                        }
                         // Since the tile was previously explored but is not visible,
-                        // we want to change the foreground color todark gray.
+                        // we want to change the foreground color to dark gray.
                         foreground = 'darkGray';
                     }
                     display.draw(
@@ -314,17 +319,23 @@ Game.Screen.playScreen = {
         }
         // Render the entities
         var entities = this._map.getEntities();
+        var visibleEntities = [];
+        var screenWidth = Game.getScreenWidth();
+
         for (var key in entities) {
             var entity = entities[key];
             if (visibleCells[entity.getX() + ',' + entity.getY()]) {
-                display.draw(
-                    entity.getX(), 
-                    entity.getY(),    
-                    entity.getChar(), 
-                    entity.getForeground(), 
-                    entity.getBackground()
-                );
+                display.draw(entity.getX(), entity.getY(), entity.getChar(), entity.getForeground(), entity.getBackground());
+                if (!entity.hasMixin('PlayerActor')){
+                    visibleEntities.push(entity);
+                }
             }
+        }
+        
+        for (var i=0; i < visibleEntities.length; i++){
+            var visibleEntity = visibleEntities[i]
+            display.drawText(screenWidth + 1, 10 + 2*i + i , '%c{' + visibleEntity.getForeground() + '}' + visibleEntity.getChar() + ':  ' + visibleEntity.getName());
+            display.drawText(screenWidth + 1, 11 + 2*i + i, 'HP: ' + visibleEntity.getHp() + '/' + visibleEntity.getMaxHp());
         }
     }
 }
