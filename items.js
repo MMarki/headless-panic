@@ -17,7 +17,6 @@ Game.ItemRepository.define('head', {
     disableRandomCreation: true
 });
 
-// ...w
 // Weapons
 Game.ItemRepository.define('dagger', {
     name: 'dagger',

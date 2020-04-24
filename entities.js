@@ -6,7 +6,7 @@ Game.PlayerTemplate = {
     attackValue: 10,
     accuracyValue: 100,
     sightRadius: 100,
-    inventorySlots: 10,
+    inventorySlots: 15,
     mixins: [Game.EntityMixins.PlayerActor, Game.EntityMixins.Thrower,
              Game.EntityMixins.Attacker, Game.EntityMixins.Destructible,
              Game.EntityMixins.InventoryHolder, Game.EntityMixins.Bleeder,
@@ -121,3 +121,16 @@ Game.EntityRepository.define('rat', {
              Game.EntityMixins.Attacker, Game.EntityMixins.Destructible]
 });
 
+Game.EntityRepository.define('death', {
+    name: 'death',
+    character: '\u2625',
+    foreground: '#b7fdfe',
+    maxHp: 3,
+    defenseValue: 0,
+    attackValue: 1,
+    accuracyValue: 70,
+    sightRadius: 10,
+    tasks: ['hunt', 'wander'],
+    mixins: [Game.EntityMixins.TaskActor, Game.EntityMixins.Sight,
+             Game.EntityMixins.Attacker, Game.EntityMixins.Destructible]
+});

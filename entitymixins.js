@@ -176,6 +176,7 @@ Game.EntityMixins.Destructible = {
         
         // If have 0 or less HP, then remove ourseles from the map
         if (this._hp <= 0) {
+            this._hp = 0;
             Game.sendMessage(attacker, 'You kill the %s!', [this.getName()]);
             if (this.hasMixin(Game.EntityMixins.HeadDropper)) {
                 this.tryDropHead();
@@ -443,8 +444,7 @@ Game.EntityMixins.Bleeder = {
     modifyHPBy: function(points) {
         this._hp = this._hp + points;
         if (this._hp <= 0) {
-            attacker = "chungus";
-            Game.sendMessage(this, 'You kill the %s!', [this.getName()]);
+            this._hp = 0;
             if (this.hasMixin(Game.EntityMixins.PlayerActor)) {
                 this.act();
             } else {

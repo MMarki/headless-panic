@@ -625,7 +625,10 @@ Game.Screen.TargetBasedScreen.prototype.render = function(display) {
 
     // Render stars along the line.
     for (var i = 0, l = points.length; i < l; i++) {
-        display.drawText(points[i].x, points[i].y, '%c{magenta}*');
+        var x = points[i].x
+        var y = points[i].y
+        var tile = this._player.getMap().getTile(x,y)
+        display.drawText(x, y, '%c{' + tile.getForeground() + '}%b{yellow}' + tile.getChar());
     }
 
     // Render the caption at the bottom.
