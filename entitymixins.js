@@ -9,6 +9,19 @@ Game.EntityMixins.PlayerActor = {
         }
         this._acting = true;
         this.addTurnBleed();
+        //handle effects
+        var effects = this.getEffects();
+        for (var effI = 0; effI < effects.length; effI++){
+            
+            if (!effects[effI].isDone()){
+                effects[effI].update();
+                console.log(effects[effI].getName());
+                effects[effI] = null;
+            } else {
+                this.removeEffect(effI)
+            }
+        }
+
         // Detect if the game is over
         if (this.getHp() < 1) {
             Game.Screen.playScreen.setGameEnded(true);

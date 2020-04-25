@@ -84,7 +84,6 @@ Game.Screen.playScreen = {
             display.drawText(screenWidth + 1, 2, "HEAD: " + "%c{red}NONE");
         }
         
-        
         display.drawText(screenWidth + 1, 5, "ARMOR: +" + this._player.getDefenseValue());
         display.drawText(screenWidth + 1, 6, "ATK:   +" + this._player.getAttackValue());
         display.drawText(screenWidth + 1, 7, "GOLD:  0" );

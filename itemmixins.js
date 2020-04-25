@@ -5,15 +5,23 @@ Game.ItemMixins.Edible = {
     name: 'Edible',
     init: function(template) {
         // Number of points to add to health
-        this._foodValue = template['foodValue'] || 5;
+        this._name = template['name'];
+        this._healthValue = template['healthValue'] || 0;
+        this._potionEffect = template['potionEffect'];
     },
     eat: function(entity) {
-        if (entity.hasMixin('Bleeder')) {
-            entity.modifyHPBy(this._foodValue);
+        if (this._potionEffect !== null){
+            entity.setEffect(this._potionEffect);
+        } else if (entity.hasMixin('Bleeder')) {
+            if (this._name === "life potion"){
+                entity.modifyHPBy(this._healthValue);
+            } else if (this._name === "health potion"){
+                entity.modifyHPBy(this._healthValue);
+            }
         }
     },
     describe: function() {
-            return this._name;
+        return this._name;
     }
 };
 

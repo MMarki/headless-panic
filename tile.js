@@ -36,6 +36,14 @@ Game.Tile.floorTile = new Game.Tile({
     description: 'a cave floor'
 });
 
+Game.Tile.rubbleTile = new Game.Tile({
+    character: ',',
+    background: "#080A1F",
+    walkable: true,
+    blocksLight: false,
+    description: 'a small pile of rubble'
+});
+
 Game.Tile.bloodTile = new Game.Tile({
     character: '.',
     foreground: "#F61067",

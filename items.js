@@ -1,10 +1,49 @@
 Game.ItemRepository = new Game.Repository('items', Game.Item);
 
+//TO DO: More Potions, including: 
+// Fire
+// Paralysis
+
+// Darkness
+// Knowledge
+// Fire immunity
+// Invisibility
+// Teleportation
+
+//TO DO: More weapons,
+//Incendiary Darts, lance, axe, javelin
+
+Game.ItemRepository.define('life potion', {
+    name: 'life potion',
+    character: '!',
+    foreground: '#F2EC2D',
+    healthValue: 100,
+    potionEffect: null,
+    mixins: [Game.ItemMixins.Edible, Game.ItemMixins.Throwable]
+});
+
+Game.ItemRepository.define('poison potion', {
+    name: 'poison potion',
+    character: '!',
+    foreground: '#F2EC2D',
+    potionEffect: new Game.Effect(10, "poisoned"),
+    mixins: [Game.ItemMixins.Edible, Game.ItemMixins.Throwable]
+});
+
 Game.ItemRepository.define('health potion', {
     name: 'health potion',
     character: '!',
-    foreground: 'red',
-    foodValue: 40,
+    foreground: '#F2EC2D',
+    healthValue: 40,
+    potionEffect: null,
+    mixins: [Game.ItemMixins.Edible, Game.ItemMixins.Throwable]
+});
+
+Game.ItemRepository.define('shatter potion', {
+    name: 'shatter potion',
+    character: '!',
+    foreground: '#F2EC2D',
+    potionEffect: null,
     mixins: [Game.ItemMixins.Edible, Game.ItemMixins.Throwable]
 });
 
