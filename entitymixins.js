@@ -9,19 +9,7 @@ Game.EntityMixins.PlayerActor = {
         }
         this._acting = true;
         this.addTurnBleed();
-        //handle effects
-        var effects = this.getEffects();
-        for (var effI = 0; effI < effects.length; effI++){
-            
-            if (!effects[effI].isDone()){
-                effects[effI].update();
-                console.log(effects[effI].getName());
-                effects[effI] = null;
-            } else {
-                this.removeEffect(effI)
-            }
-        }
-
+        this.handleEffects();
         // Detect if the game is over
         if (this.getHp() < 1) {
             Game.Screen.playScreen.setGameEnded(true);
@@ -47,6 +35,9 @@ Game.EntityMixins.TaskActor = {
         this._tasks = template['tasks'] || ['wander']; 
     },
     act: function() {
+        var stopActor = this.handleEffects();
+        if (stopActor === 1) {return;}
+
         // Iterate through all our tasks
         for (var i = 0; i < this._tasks.length; i++) {
             if (this.canDoTask(this._tasks[i])) {
@@ -197,9 +188,12 @@ Game.EntityMixins.Destructible = {
             if (this.hasMixin(Game.EntityMixins.PlayerActor)) {
                 this.act();
             } else {
+                console.log("killing" + this);
                 this.getMap().removeEntity(this);
             }
+            return 1;
         }
+        return 0;
     }
 }
 
@@ -293,14 +287,19 @@ Game.EntityMixins.Thrower = {
         if (this.hasMixin(Game.EntityMixins.Equipper)) {
             this.removeItem(key);
         }
-        this._map.addItem(endPointX, endPointY, item);
+        if (!item.hasMixin(Game.ItemMixins.Edible)) {
+            this._map.addItem(endPointX, endPointY, item);
+        }
     },
     throwAttack: function(item, target) {
-        var amount = Math.max(0, this.getAttackValue() / 2 + item.getThrownAttackValue() - target.getDefenseValue());
-        amount = (Math.random() * amount) + 1;
-        console.log(amount);
+        var amount = Math.max(0, item.getThrownAttackValue() - target.getDefenseValue());
+        amount = Math.floor((Math.random() * amount));
         Game.sendMessage(this, 'throw a %s at the %s for %d damage', [item.getName(),target.getName(), amount]);
         target.takeDamage(this, amount);
+        if(item._potionEffect !== null){
+            console.log("setting potion effect:" + item._potionEffect);
+            target.setEffect(item._potionEffect);
+        }   
     }
 }
 
@@ -545,6 +544,41 @@ Game.EntityMixins.Equipper = {
         }
     }
 };
+
+Game.EntityMixins.Affectible = {
+    name: 'Affectible',
+    init: function(template){
+        this._effects = [];
+    },
+    getEffects: function(){
+        return this._effects;
+    },
+    handleEffects: function(){
+        var effects = this._effects;
+        var stopActor = 0;
+        for (var i = 0; i < effects.length; i++){
+            if (!effects[i].isDone()){
+                stopActor = this.applyEffect(effects[i].getName());
+                effects[i].update();
+                if (stopActor === 1) {return 1};
+            } else {
+                this.removeEffect(i)
+            }
+        }
+        return 0;
+    },
+    applyEffect: function(effectName) {
+        if (effectName === "poisoned" && this.hasMixin('Destructible')){
+            return this.takeDamage(this, 1);
+        }
+    },
+    setEffect : function(effect) {
+        this._effects.push(effect);
+    },
+    removeEffect: function(index) {
+        this._effects.splice(index,1);
+    }
+}
 
 Game.sendMessage = function(recipient, message, args) {
     // Make sure the recipient can receive the message 

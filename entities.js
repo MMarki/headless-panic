@@ -12,7 +12,7 @@ Game.PlayerTemplate = {
              Game.EntityMixins.Attacker, Game.EntityMixins.Destructible,
              Game.EntityMixins.InventoryHolder, Game.EntityMixins.Bleeder,
              Game.EntityMixins.Sight, Game.EntityMixins.MessageRecipient,
-             Game.EntityMixins.Equipper]
+             Game.EntityMixins.Equipper, Game.EntityMixins.Affectible]
 };
 
 // Create our central entity repository
@@ -25,7 +25,8 @@ Game.EntityRepository.define('fungus', {
     maxHp: 10,
     speed: 500,
     description: "Fungus multiplies at an astonishing rate.",
-    mixins: [Game.EntityMixins.FungusActor, Game.EntityMixins.Destructible]
+    mixins: [Game.EntityMixins.FungusActor, Game.EntityMixins.Destructible, 
+             Game.EntityMixins.Affectible]
 });
 
 Game.EntityRepository.define('bat', {
@@ -38,7 +39,8 @@ Game.EntityRepository.define('bat', {
     speed: 2000,
     description: "This monster flies quickly, and won't attack unless you bother it.",
     mixins: [Game.EntityMixins.TaskActor, Game.EntityMixins.HeadDropper,
-             Game.EntityMixins.Attacker, Game.EntityMixins.Destructible]
+             Game.EntityMixins.Attacker, Game.EntityMixins.Destructible,
+             Game.EntityMixins.Affectible]
 });
 
 Game.EntityRepository.define('newt', {
@@ -49,7 +51,8 @@ Game.EntityRepository.define('newt', {
     accuracyValue: 70,
     attackValue: 2,
     description: "Newt are weak, slimy, and docile.",
-    mixins: [Game.EntityMixins.TaskActor, Game.EntityMixins.Attacker, Game.EntityMixins.Destructible]
+    mixins: [Game.EntityMixins.TaskActor, Game.EntityMixins.Attacker, 
+             Game.EntityMixins.Destructible, Game.EntityMixins.Affectible]
 });
 
 Game.EntityRepository.define('kobold', {
@@ -65,7 +68,7 @@ Game.EntityRepository.define('kobold', {
     tasks: ['hunt', 'wander'],
     mixins: [Game.EntityMixins.TaskActor, Game.EntityMixins.Sight,
              Game.EntityMixins.Attacker, Game.EntityMixins.Destructible,
-             Game.EntityMixins.HeadDropper]
+             Game.EntityMixins.HeadDropper, Game.EntityMixins.Affectible]
 });
 
 Game.EntityRepository.define('goblin', {
@@ -81,7 +84,7 @@ Game.EntityRepository.define('goblin', {
     tasks: ['hunt', 'wander'],
     mixins: [Game.EntityMixins.TaskActor, Game.EntityMixins.Sight,
              Game.EntityMixins.Attacker, Game.EntityMixins.Destructible,
-             Game.EntityMixins.HeadDropper]
+             Game.EntityMixins.HeadDropper, Game.EntityMixins.Affectible]
 });
 
 Game.EntityRepository.define('giant zombie', {
@@ -98,7 +101,7 @@ Game.EntityRepository.define('giant zombie', {
     tasks: ['hunt', 'wander'],
     mixins: [Game.EntityMixins.TaskActor, Game.EntityMixins.Sight,
              Game.EntityMixins.Attacker, Game.EntityMixins.Destructible,
-             Game.EntityMixins.HeadDropper]
+             Game.EntityMixins.HeadDropper, Game.EntityMixins.Affectible]
 });
 
 Game.EntityRepository.define('slime', {
@@ -112,7 +115,8 @@ Game.EntityRepository.define('slime', {
     description: "A sentient blob of jelly that divides when hit.",
     tasks: ['hunt', 'wander'],
     mixins: [Game.EntityMixins.TaskActor, Game.EntityMixins.Sight,
-             Game.EntityMixins.Attacker, Game.EntityMixins.Destructible]
+             Game.EntityMixins.Attacker, Game.EntityMixins.Destructible, 
+             Game.EntityMixins.Affectible]
 });
 
 Game.EntityRepository.define('rat', {
@@ -127,7 +131,8 @@ Game.EntityRepository.define('rat', {
     description: "A meaner little denizen of cellars and sewers.",
     tasks: ['hunt', 'wander'],
     mixins: [Game.EntityMixins.TaskActor, Game.EntityMixins.Sight,
-             Game.EntityMixins.Attacker, Game.EntityMixins.Destructible]
+             Game.EntityMixins.Attacker, Game.EntityMixins.Destructible,
+             Game.EntityMixins.Affectible]
 });
 
 Game.EntityRepository.define('death', {
@@ -142,5 +147,6 @@ Game.EntityRepository.define('death', {
     description: "She seeks what is hers.",
     tasks: ['hunt', 'wander'],
     mixins: [Game.EntityMixins.TaskActor, Game.EntityMixins.Sight,
-             Game.EntityMixins.Attacker, Game.EntityMixins.Destructible]
+             Game.EntityMixins.Attacker, Game.EntityMixins.Destructible,
+             Game.EntityMixins.Affectible]
 });

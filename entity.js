@@ -8,8 +8,6 @@ Game.Entity = function(properties) {
     this._map = null;
     // Acting speed
     this._speed = properties['speed'] || 1000;
-    //Timed effects from potions, wands, etc.
-    this._effects = [];
 };
 // Make entities inherit all the functionality from glyphs
 Game.Entity.extend(Game.DynamicGlyph);
@@ -26,9 +24,6 @@ Game.Entity.prototype.setMap = function(map) {
 Game.Entity.prototype.setSpeed = function(speed) {
     this._speed = speed;
 };
-Game.Entity.prototype.setEffect = function(effect) {
-    this._effects.push(effect);
-};
 Game.Entity.prototype.getX = function() {
     return this._x;
 }
@@ -40,12 +35,6 @@ Game.Entity.prototype.getMap = function() {
 }
 Game.Entity.prototype.getSpeed = function() {
     return this._speed;
-};
-Game.Entity.prototype.getEffects = function() {
-    return this._effects;
-};
-Game.Entity.prototype.removeEffect = function(index) {
-    this._effects.splice(index,1);
 };
 
 Game.Entity.prototype.setPosition = function(x, y) {

@@ -7,7 +7,13 @@ Game.ItemMixins.Edible = {
         // Number of points to add to health
         this._name = template['name'];
         this._healthValue = template['healthValue'] || 0;
-        this._potionEffect = template['potionEffect'];
+        this._potionEffect = null
+        var potionEffect = template['potionEffect'] || null
+        if (potionEffect !== null){
+            this._potionEffect = new Game.Effect(potionEffect.duration, potionEffect.name);
+        } else {
+            this._potionEffect = null;
+        }
     },
     eat: function(entity) {
         if (this._potionEffect !== null){

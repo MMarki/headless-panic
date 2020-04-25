@@ -26,7 +26,10 @@ Game.ItemRepository.define('poison potion', {
     name: 'poison potion',
     character: '!',
     foreground: '#F2EC2D',
-    potionEffect: new Game.Effect(10, "poisoned"),
+    potionEffect: {
+        duration: 10,
+        name: "poisoned"
+    },
     mixins: [Game.ItemMixins.Edible, Game.ItemMixins.Throwable]
 });
 
