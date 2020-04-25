@@ -25,6 +25,12 @@ Game.ItemMixins.Edible = {
                 entity.modifyHPBy(this._healthValue);
             }
         }
+        if (this._name === "shatter potion"){
+            var x = entity.getX();
+            var y = entity.getY();
+            var map = entity.getMap();
+            map.shatter(x,y);
+        }
     },
     describe: function() {
         return this._name;

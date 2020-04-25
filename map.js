@@ -75,14 +75,25 @@ Game.Map.prototype.getTile = function(x, y) {
     }
 };
 
+Game.Map.prototype.shatter = function(x, y) {
+    for (var i = x-2; i <= x + 2; i++){
+        for (var j = y-2; j <= y+2; j++){
+            if (!(x < 0 || x >= this._width || y < 0 || y >= this._height)) {
+                this.dig(i,j);
+            }
+        }
+    }
+};
+
 Game.Map.prototype.dig = function(x, y) {
     // If the tile is diggable, update it to a floor
     if (this.getTile(x, y).isDiggable()) {
-        this._tiles[x][y] = Game.Tile.floorTile;
+        this.changeTile(x, y, Game.Tile.rubbleTile);
     }
 };
 
 Game.Map.prototype.changeTile = function(x, y, template) {
+    if (this._tiles[x][y] === Game.Tile.stairsDownTile) {return;}
     this._tiles[x][y] = template;
 };
 

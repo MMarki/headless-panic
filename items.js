@@ -3,6 +3,7 @@ Game.ItemRepository = new Game.Repository('items', Game.Item);
 //TO DO: More Potions, including: 
 // Fire
 // Paralysis
+// Magic sensitivity
 
 // Darkness
 // Knowledge

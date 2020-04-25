@@ -284,6 +284,12 @@ Game.EntityMixins.Thrower = {
             Game.sendMessage(this, 'You throw a %s!',item.getName());
         }
 
+        if (item.hasMixin(Game.ItemMixins.Edible)) {
+            if(item._name === "shatter potion"){
+                this._map.shatter(endPointX, endPointY);
+            }
+        }
+
         if (this.hasMixin(Game.EntityMixins.Equipper)) {
             this.removeItem(key);
         }

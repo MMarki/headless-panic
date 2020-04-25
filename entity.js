@@ -75,13 +75,6 @@ Game.Entity.prototype.tryMove = function(x, y, map) {
             }
         }
         return true;
-    // Check if the tile is diggable, and if so try to dig it
-    } else if (tile.isDiggable()) {
-        if (this.hasMixin(Game.EntityMixins.PlayerActor)){
-            map.dig(x, y);
-            return true;
-        }
-        return false;
     }
     return false;
 }
