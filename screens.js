@@ -31,6 +31,21 @@ Game.Screen.playScreen = {
         // Create our map from tiles and player
         var tiles = new Game.Builder(width,height).getTiles()
         this._player = new Game.Entity(Game.PlayerTemplate);
+        //starting player equipment
+        var startingHead = Game.ItemRepository.create('head', {
+            name: 'chicken head',
+            foreground: '#fff'
+        });
+        this._player.addItem(startingHead);
+        this._player.wearHead(startingHead);
+
+        var dart = Game.ItemRepository.create('dart');
+        this._player.addItem(dart);
+        this._player.addItem(dart);
+        this._player.addItem(dart);
+        this._player.addItem(dart);
+        this._player.addItem(dart);
+        //Create map
         this._map = new Game.Map(tiles, this._player);
         // Start the map's engine
         this._map.getEngine().start();
@@ -68,9 +83,9 @@ Game.Screen.playScreen = {
         you += "@: You";
         display.drawText(screenWidth + 1, 0, you);
 
-        var playerHealth = this._player.getHp()/this._player.getMaxHp()
+        var playerHealth = this._player.getHP()/this._player.getMaxHP()
         var healthUIColor = (playerHealth > 0.66) ? "%c{white}" : ((playerHealth > 0.33) ? "%c{yellow}" : "%c{red}");
-        var healthString = "%c{white}%b{black}HP: " + healthUIColor + this._player.getHp() + "/" + this._player.getMaxHp();
+        var healthString = "%c{white}%b{black}HP: " + healthUIColor + this._player.getHP() + "/" + this._player.getMaxHP();
         display.drawText(screenWidth + 1, 1, healthString);
 
         var currentHead = this._player.getHead();
@@ -334,7 +349,7 @@ Game.Screen.playScreen = {
         for (var i=0; i < visibleEntities.length; i++){
             var visibleEntity = visibleEntities[i]
             display.drawText(screenWidth + 1, 10 + 2*i + i , '%c{' + visibleEntity.getForeground() + '}' + visibleEntity.getChar() + ':  ' + visibleEntity.getName());
-            display.drawText(screenWidth + 1, 11 + 2*i + i, 'HP: ' + visibleEntity.getHp() + '/' + visibleEntity.getMaxHp());
+            display.drawText(screenWidth + 1, 11 + 2*i + i, 'HP: ' + visibleEntity.getHP() + '/' + visibleEntity.getMaxHP());
         }
     }
 }

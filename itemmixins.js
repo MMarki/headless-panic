@@ -19,9 +19,10 @@ Game.ItemMixins.Edible = {
         if (this._potionEffect !== null){
             entity.setEffect(this._potionEffect);
         } else if (entity.hasMixin('Bleeder')) {
-            if (this._name === "life potion"){
+            if (this._name === "health potion"){
                 entity.modifyHPBy(this._healthValue);
-            } else if (this._name === "health potion"){
+            } else if (this._name === "life potion"){
+                entity.modifyMaxHPBy(10);
                 entity.modifyHPBy(this._healthValue);
             }
         }

@@ -24,7 +24,7 @@ Game.Map = function(tiles, player, items) {
         // Add a random entity
         this.addEntityAtRandomPosition(Game.EntityRepository.createRandom());
     }
-    // 10 items per floor
+    // 15 items per floor
     for (var i = 0; i < 15; i++) {
         // Add a random entity
         this.addItemAtRandomPosition(Game.ItemRepository.createRandom());
@@ -33,7 +33,7 @@ Game.Map = function(tiles, player, items) {
     this._fov = {};
     this.setupFov();
     // Add weapons and armor to the map in random positions
-    var templates = ['dagger', 'sword', 'spear', 'leather', 'scalemail', 'chainmail', 'platemail'];
+    var templates = ['dagger', "dart", 'sword', 'spear', 'leather', 'scalemail', 'chainmail', 'platemail'];
     for (var i = 0; i < templates.length; i++) {
         this.addItemAtRandomPosition(Game.ItemRepository.create(templates[i]),
             Math.floor(3 * Math.random()));

@@ -61,6 +61,18 @@ Game.ItemRepository.define('head', {
 });
 
 // Weapons
+Game.ItemRepository.define('dart', {
+    name: 'dart',
+    character: '\u2191',
+    foreground: '#F2EC2D',
+    attackValue: 1,
+    thrownAttackValue: 4,
+    wieldable: true,
+    mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable]
+}, {
+    disableRandomCreation: true
+});
+
 Game.ItemRepository.define('dagger', {
     name: 'dagger',
     character: ')',

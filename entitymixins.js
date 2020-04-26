@@ -11,7 +11,7 @@ Game.EntityMixins.PlayerActor = {
         this.addTurnBleed();
         this.handleEffects();
         // Detect if the game is over
-        if (this.getHp() < 1) {
+        if (this.getHP() < 1) {
             Game.Screen.playScreen.setGameEnded(true);
             // Send a last message to the player
             Game.sendMessage(this, 'You have died... Press [Enter] to continue!');
@@ -139,16 +139,19 @@ Game.EntityMixins.FungusActor = {
 Game.EntityMixins.Destructible = {
     name: 'Destructible',
     init: function(template) {
-        this._maxHp = template['maxHp'] || 10;
+        this._maxHP = template['maxHP'] || 10;
         // We allow taking in health from the template in case we want the entity to start with a different amount of HP than the  max specified.
-        this._hp = template['hp'] || this._maxHp;
+        this._hp = template['hp'] || this._maxHP;
         this._defenseValue = template['defenseValue'] || 0;
     },
-    getHp: function() {
+    getHP: function() {
         return this._hp;
     },
-    getMaxHp: function() {
-        return this._maxHp;
+    getMaxHP: function() {
+        return this._maxHP;
+    },
+    modifyMaxHPBy: function(amount) {
+        this._maxHP += amount;
     },
     getDefenseValue: function() {
         var modifier = 0;
@@ -160,6 +163,19 @@ Game.EntityMixins.Destructible = {
             }
         }
         return this._defenseValue + modifier;
+    },
+    modifyHPBy: function(points) {
+        this._hp = this._hp + points;
+        if (this._hp <= 0) {
+            this._hp = 0;
+            if (this.hasMixin(Game.EntityMixins.PlayerActor)) {
+                this.act();
+            } else {
+                this.getMap().removeEntity(this);
+            }
+        } else if (this._hp > this._maxHP) {
+            this._hp = this._maxHP;
+        }
     },
     takeDamage: function(attacker, damage) {
         if (this.hasMixin(Game.EntityMixins.Bleeder)){
@@ -298,14 +314,30 @@ Game.EntityMixins.Thrower = {
         }
     },
     throwAttack: function(item, target) {
-        var amount = Math.max(0, item.getThrownAttackValue() - target.getDefenseValue());
-        amount = Math.floor((Math.random() * amount));
-        Game.sendMessage(this, 'throw a %s at the %s for %d damage', [item.getName(),target.getName(), amount]);
-        target.takeDamage(this, amount);
-        if(item._potionEffect !== null){
+        targetIsDestructible = target.hasMixin('Destructible');
+        if (targetIsDestructible){
+            var amount = Math.max(0, item.getThrownAttackValue() - target.getDefenseValue());
+            amount = Math.floor((Math.random() * amount));
+            if (amount > 0){
+                Game.sendMessage(this, 'throw a %s at the %s for %d damage', [item.getName(),target.getName(), amount]);
+                target.takeDamage(this, amount);
+            } else {
+                Game.sendMessage(this, 'throw a %s at the %s', [item.getName(),target.getName()]);
+            }
+        } else {
+            Game.sendMessage(this, 'throw a %s at the %s', [item.getName(),target.getName()]); 
+        }
+        
+        //handle thrown potions
+        if(item._potionEffect !== null && item._potionEffect !== undefined){
             console.log("setting potion effect:" + item._potionEffect);
             target.setEffect(item._potionEffect);
-        }   
+        } else if (item._name === "health potion" & targetIsDestructible === true){
+            target.modifyHPBy(item._healthValue);
+        } else if (item._name === "life potion" & targetIsDestructible === true){
+            target.modifyMaxHPBy(Math.floor(target.getMaxHP()/4));
+            target.modifyHPBy(item._healthValue);
+        }
     }
 }
 
@@ -456,21 +488,10 @@ Game.EntityMixins.Bleeder = {
         if (this._head === null){
             this.modifyHPBy(-this._bleedRate);
             this.getMap().changeTile(this.getX(),this.getY(), Game.Tile.bloodTile);
+        } else {
+            this.modifyHPBy(this._bleedRate);
         }
         
-    },
-    modifyHPBy: function(points) {
-        this._hp = this._hp + points;
-        if (this._hp <= 0) {
-            this._hp = 0;
-            if (this.hasMixin(Game.EntityMixins.PlayerActor)) {
-                this.act();
-            } else {
-                this.getMap().removeEntity(this);
-            }
-        } else if (this._hp > this._maxHp) {
-            this._hp = this._maxHp;
-        }
     },
     getHeadIndex: function(){
         for (var i = 0; i < this._items.length; i++) {
