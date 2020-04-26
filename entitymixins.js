@@ -258,7 +258,7 @@ Game.EntityMixins.Attacker = {
             console.log("hitprob: " + hitProbability);
             if (Math.random()*100 < hitProbability){
                 var max = Math.max(0, attack);
-                var damage = 1 + Math.floor(Math.random() * max);
+                var damage = Math.ceil(Game.Utilities.randomRange(Math.ceil(max/2), max));
 
                 Game.sendMessage(this, 'You strike the %s for %d damage!', [target.getName(), damage]);
                 Game.sendMessage(target, 'The %s strikes you for %d damage!',  [this.getName(), damage]);
@@ -309,14 +309,17 @@ Game.EntityMixins.Thrower = {
         if (this.hasMixin(Game.EntityMixins.Equipper)) {
             this.removeItem(key);
         }
+
         if (!item.hasMixin(Game.ItemMixins.Edible)) {
-            this._map.addItem(endPointX, endPointY, item);
+            if (Math.random()*100 > item._throwBreakChance){
+                this._map.addItem(endPointX, endPointY, item);
+            }
         }
     },
     throwAttack: function(item, target) {
         targetIsDestructible = target.hasMixin('Destructible');
         if (targetIsDestructible){
-            var amount = Math.max(0, item.getThrownAttackValue() - target.getDefenseValue());
+            var amount = Math.max(0, item.getThrownAttackValue() + 1);
             amount = Math.floor((Math.random() * amount));
             if (amount > 0){
                 Game.sendMessage(this, 'throw a %s at the %s for %d damage', [item.getName(),target.getName(), amount]);
@@ -329,7 +332,7 @@ Game.EntityMixins.Thrower = {
         }
         
         //handle thrown potions
-        if(item._potionEffect !== null && item._potionEffect !== undefined){
+        if( item._potionEffect !== null && item._potionEffect !== undefined){
             console.log("setting potion effect:" + item._potionEffect);
             target.setEffect(item._potionEffect);
         } else if (item._name === "health potion" & targetIsDestructible === true){

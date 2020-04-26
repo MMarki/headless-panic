@@ -70,6 +70,7 @@ Game.ItemMixins.Throwable = {
     name: 'Throwable',
     init: function(template) {
         this._thrownAttackValue = template['thrownAttackValue'] || 0;
+        this._throwBreakChance = template['throwBreakChance'] || 20;
     },
     getThrownAttackValue: function() {
         return this._thrownAttackValue;

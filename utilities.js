@@ -3,3 +3,9 @@ Function.prototype.extend = function(parent) {
     this.prototype.constructor = this;
     return this;
 };
+
+Game.Utilities = {};
+
+Game.Utilities.randomRange = function(min, max){
+        return Math.random() * (max - min) + min;
+}

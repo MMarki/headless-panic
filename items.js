@@ -12,7 +12,7 @@ Game.ItemRepository = new Game.Repository('items', Game.Item);
 // Teleportation
 
 //TO DO: More weapons,
-//Incendiary Darts, lance, axe, javelin
+//Incendiary Darts, lance, axe
 
 Game.ItemRepository.define('life potion', {
     name: 'life potion',
@@ -63,10 +63,37 @@ Game.ItemRepository.define('head', {
 // Weapons
 Game.ItemRepository.define('dart', {
     name: 'dart',
-    character: '\u2191',
+    character: '\u16DA',
     foreground: '#F2EC2D',
     attackValue: 1,
     thrownAttackValue: 4,
+    throwBreakChance: 100,
+    wieldable: true,
+    mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable]
+}, {
+    disableRandomCreation: true
+});
+
+Game.ItemRepository.define('javelin', {
+    name: 'javelin',
+    character: '\u16A8',
+    foreground: '#F2EC2D',
+    attackValue: 2,
+    thrownAttackValue: 6,
+    throwBreakChance: 100,
+    wieldable: true,
+    mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable]
+}, {
+    disableRandomCreation: true
+});
+
+Game.ItemRepository.define('incendiary dart', {
+    name: 'incendiary dart',
+    character: '\u16DB',
+    foreground: '#F2EC2D',
+    attackValue: 1,
+    thrownAttackValue: 4,
+    throwBreakChance: 100,
     wieldable: true,
     mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable]
 }, {
@@ -77,7 +104,7 @@ Game.ItemRepository.define('dagger', {
     name: 'dagger',
     character: ')',
     foreground: '#F2EC2D',
-    attackValue: 5,
+    attackValue: 3,
     thrownAttackValue: 3,
     wieldable: true,
     mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable]
@@ -89,7 +116,7 @@ Game.ItemRepository.define('sword', {
     name: 'sword',
     character: ')',
     foreground: '#F2EC2D',
-    attackValue: 10,
+    attackValue: 5,
     thrownAttackValue: 3,
     wieldable: true,
     mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable]

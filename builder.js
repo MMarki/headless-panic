@@ -39,9 +39,9 @@ Game.Builder.prototype._generateLevel = function() {
     // Setup the cave generator
     var options = {
         roomWidth: [5, 10],
-        roomHeight: [4, 8],
-        corridorLength: [0, 2],
-        dugPercentage: 0.5
+        roomHeight: [3, 8],
+        corridorLength: [0, 3],
+        dugPercentage: 0.7
     }
     var generator = new ROT.Map.Digger(this._width, this._height, options);
     var setMapTile = function (x, y, value) {
