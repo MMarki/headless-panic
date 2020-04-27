@@ -38,8 +38,8 @@ Game.Builder.prototype._generateLevel = function() {
     }
     // Setup the cave generator
     var options = {
-        roomWidth: [5, 10],
-        roomHeight: [3, 8],
+        roomWidth: [5, 20],
+        roomHeight: [3, 12],
         corridorLength: [0, 3],
         dugPercentage: 0.7
     }

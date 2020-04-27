@@ -20,12 +20,12 @@ Game.Map = function(tiles, player, items) {
     this._player = player;
     this.addEntityAtRandomPosition(player);
     // 15 entities per floor
-    for (var i = 0; i < 15; i++) {
+    for (var i = 0; i < 10; i++) {
         // Add a random entity
-        this.addEntityAtRandomPosition(Game.EntityRepository.createRandom());
+        this.addEntityAtRandomPosition(Game.EntityRepository.createRandomByFrequency('L' + Game.getLevel()));
     }
     // 15 items per floor
-    for (var i = 0; i < 15; i++) {
+    for (var i = 0; i < 4; i++) {
         // Add a random entity
         this.addItemAtRandomPosition(Game.ItemRepository.createRandom());
     }
@@ -35,8 +35,7 @@ Game.Map = function(tiles, player, items) {
     // Add weapons and armor to the map in random positions
     var templates = ['dagger', "dart", 'sword', 'spear', 'leather', 'scalemail', 'chainmail', 'platemail'];
     for (var i = 0; i < templates.length; i++) {
-        this.addItemAtRandomPosition(Game.ItemRepository.create(templates[i]),
-            Math.floor(3 * Math.random()));
+        this.addItemAtRandomPosition(Game.ItemRepository.create(templates[i]));
     }
     //set up the explored array
     this._explored = new Array(this._width);
@@ -78,10 +77,22 @@ Game.Map.prototype.getTile = function(x, y) {
 Game.Map.prototype.shatter = function(x, y) {
     for (var i = x-2; i <= x + 2; i++){
         for (var j = y-2; j <= y+2; j++){
-            if (!(x < 0 || x >= this._width || y < 0 || y >= this._height)) {
+            if (!(i < 0 || i >= this._width || j < 0 || j >= this._height)) {
                 this.dig(i,j);
             }
         }
+    }
+    if (!(x - 3 < 0)) {
+        this.dig(x-3,y);
+    }
+    if (!(x + 3 >= this._width)) {
+        this.dig(x+3,y);
+    }
+    if (!(y - 3 < 0)) {
+        this.dig(x,y-3);
+    }
+    if (!(y + 3 >= this._height)) {
+        this.dig(x,y+3);
     }
 };
 

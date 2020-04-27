@@ -77,7 +77,7 @@ Game.Screen.playScreen = {
             }
         }
         // Render UI 
-        display.drawText(0, screenHeight, "%c{yellow}I%c{}nventory  %c{yellow}T%c{}hrow  %c{yellow}E%c{}quip  %c{yellow}U%c{}se");
+        display.drawText(0, screenHeight, "%c{yellow}I%c{}nventory  %c{yellow}T%c{}hrow  %c{yellow}E%c{}quip  %c{yellow}A%c{}pply");
 
         var you = '%c{white}%b{black}';
         you += "@: You";
@@ -166,7 +166,7 @@ Game.Screen.playScreen = {
                     this.setSubScreen(Game.Screen.dropScreen);
                 }
                 return;
-            }  else if (inputData.keyCode === ROT.KEYS.VK_U) {
+            }  else if (inputData.keyCode === ROT.KEYS.VK_A) {
                 // Show the eat screen
                 if (Game.Screen.eatScreen.setup(this._player, this._player.getItems())) {
                     this.setSubScreen(Game.Screen.eatScreen);
@@ -234,12 +234,12 @@ Game.Screen.playScreen = {
             var width = Game._screenWidth;
             var height = Game._screenHeight;
             // Create our map from tiles and player
+            Game.incrementLevel();
             var tiles = new Game.Builder(width,height).getTiles()
             //pass the current player and the new tiles in
             this._map = new Game.Map(tiles, this._player, this._player.getItems());
             // Start the map's engine
             this._map.getEngine().start();
-            Game.incrementLevel();
             Game.sendMessage(this._player, "You go downstairs.");
         }
     },

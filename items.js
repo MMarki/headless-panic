@@ -1,3 +1,4 @@
+Game.GatedItemRepository = new Game.Repository('gatedItems', Game.Item);
 Game.ItemRepository = new Game.Repository('items', Game.Item);
 
 //TO DO: More Potions, including: 
@@ -5,6 +6,7 @@ Game.ItemRepository = new Game.Repository('items', Game.Item);
 // Paralysis
 // Magic sensitivity
 
+// Strength
 // Darkness
 // Knowledge
 // Fire immunity
@@ -14,7 +16,7 @@ Game.ItemRepository = new Game.Repository('items', Game.Item);
 //TO DO: More weapons,
 //Incendiary Darts, lance, axe
 
-Game.ItemRepository.define('life potion', {
+Game.GatedItemRepository.define('life potion', {
     name: 'life potion',
     character: '!',
     foreground: '#F2EC2D',
@@ -116,7 +118,7 @@ Game.ItemRepository.define('sword', {
     name: 'sword',
     character: ')',
     foreground: '#F2EC2D',
-    attackValue: 5,
+    attackValue: 6,
     thrownAttackValue: 3,
     wieldable: true,
     mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable]

@@ -31,7 +31,7 @@ Game.EntityRepository.define('fungus', {
 
 Game.EntityRepository.define('bat', {
     name: 'bat',
-    character: 'B',
+    character: 'b',
     foreground: '#f1f7ed',
     maxHP: 5,
     attackValue: 4,
@@ -43,15 +43,18 @@ Game.EntityRepository.define('bat', {
              Game.EntityMixins.Affectible]
 });
 
-Game.EntityRepository.define('newt', {
-    name: 'newt',
-    character: 'n',
-    foreground: '#91c7b1',
-    maxHP: 3,
+Game.EntityRepository.define('jackal', {
+    name: 'jackal',
+    character: 'j',
+    foreground: '#c06e52',
+    maxHP: 5,
+    attackValue: 4,
     accuracyValue: 70,
-    attackValue: 2,
-    description: "Newt are weak, slimy, and docile.",
-    mixins: [Game.EntityMixins.TaskActor, Game.EntityMixins.Attacker, 
+    speed: 2000,
+    asks: ['hunt', 'wander'],
+    description: "This monster is a dog, dawg.",
+    mixins: [Game.EntityMixins.TaskActor, Game.EntityMixins.Sight,
+             Game.EntityMixins.HeadDropper, Game.EntityMixins.Attacker, 
              Game.EntityMixins.Destructible, Game.EntityMixins.Affectible]
 });
 
@@ -60,7 +63,7 @@ Game.EntityRepository.define('kobold', {
     character: 'k',
     foreground: '#c06e52',
     maxHP: 6,
-    attackValue: 4,
+    attackValue: 3,
     defenseValue: 0,
     accuracyValue: 70,
     sightRadius: 10,
@@ -76,7 +79,7 @@ Game.EntityRepository.define('goblin', {
     character: 'g',
     foreground: '#91C7B1',
     maxHP: 8,
-    attackValue: 4,
+    attackValue: 5,
     defenseValue: 10,
     accuracyValue: 70,
     sightRadius: 10,
@@ -109,10 +112,25 @@ Game.EntityRepository.define('slime', {
     character: 's',
     foreground: 'lightGreen',
     maxHP: 20,
-    attackValue: 4,
+    attackValue: 3,
     accuracyValue: 70,
     sightRadius: 6,
     description: "A sentient blob of jelly that divides when hit.",
+    tasks: ['hunt', 'wander'],
+    mixins: [Game.EntityMixins.TaskActor, Game.EntityMixins.Sight,
+             Game.EntityMixins.Attacker, Game.EntityMixins.Destructible, 
+             Game.EntityMixins.Affectible]
+});
+
+Game.EntityRepository.define('floater', {
+    name: 'floater',
+    character: 'f',
+    foreground: '#91f291',
+    maxHP: 3,
+    attackValue: 0,
+    accuracyValue: 70,
+    sightRadius: 10,
+    description: "Blows up on contact, creates poison vapour.",
     tasks: ['hunt', 'wander'],
     mixins: [Game.EntityMixins.TaskActor, Game.EntityMixins.Sight,
              Game.EntityMixins.Attacker, Game.EntityMixins.Destructible, 
@@ -123,7 +141,7 @@ Game.EntityRepository.define('rat', {
     name: 'rat',
     character: 'r',
     foreground: '#e3d081',
-    maxHP: 3,
+    maxHP: 4,
     defenseValue: 0,
     attackValue: 1,
     accuracyValue: 70,
@@ -150,3 +168,13 @@ Game.EntityRepository.define('death', {
              Game.EntityMixins.Attacker, Game.EntityMixins.Destructible,
              Game.EntityMixins.Affectible]
 });
+
+
+Game.EntityRepository.repoFrequency = {
+    'L1': [{'rat': 3}, {'kobold': 2}, {'bat':2}, {'jackal': 1}],
+    'L2': [{'rat': 2}, {'kobold': 2}, {'bat':2}, {'jackal': 1}, {'goblin': 1}, {'floater': 1}],
+    'L3': [{'rat': 2}, {'kobold': 2}, {'bat':2}, {'jackal': 1}, {'goblin': 1}, {'floater': 1}, {'slime': 1}],
+    'L4': [{'rat': 2}, {'goblin': 1}, {'floater': 1}, {'slime': 2}],
+    'L5': [{'rat': 2}, {'goblin': 1}, {'floater': 1}, {'slime': 2}],
+    'L6': [{'rat': 2}, {'goblin': 1}, {'floater': 1}, {'slime': 2}]
+}
