@@ -45,6 +45,8 @@ Game.Screen.playScreen = {
         this._player.addItem(dart);
         var dart = Game.ItemRepository.create('dart');
         this._player.addItem(dart);
+        var test = Game.ItemRepository.create('knowledge potion');
+        this._player.addItem(test);
         //Create map
         this._map = new Game.Map(tiles, this._player);
         // Start the map's engine
@@ -338,7 +340,7 @@ Game.Screen.playScreen = {
 
         for (var key in entities) {
             var entity = entities[key];
-            if (visibleCells[entity.getX() + ',' + entity.getY()]) {
+            if (visibleCells[entity.getX() + ',' + entity.getY()] || this._player.hasEffect('knowledgeable')) {
                 display.draw(entity.getX(), entity.getY(), entity.getChar(), entity.getForeground(), entity.getBackground());
                 if (!entity.hasMixin('PlayerActor')){
                     visibleEntities.push(entity);

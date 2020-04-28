@@ -402,6 +402,11 @@ Game.EntityMixins.Sight = {
         var otherX = entity.getX();
         var otherY = entity.getY();
 
+        var seeAbleByMagic = (this.hasEffect("knowledgeable") &&  this.getMap().getEntityAt(otherX, otherY) !== null);
+        if (seeAbleByMagic){
+            return true;
+        }
+
         // If we're not in a square field of view, then we won't be in a real
         // field of view either.
         if ((otherX - this._x) * (otherX - this._x) +
@@ -633,6 +638,15 @@ Game.EntityMixins.Affectible = {
     },
     removeEffect: function(index) {
         this._effects.splice(index,1);
+    },
+    hasEffect: function(effectName){
+        var effects = this._effects;
+        for (var i = 0; i < effects.length; i++){
+            if (effectName === effects[i].getName()){
+                return true;
+            }
+        }
+        return false;
     }
 }
 

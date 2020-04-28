@@ -9,6 +9,7 @@ Game.ItemRepository = new Game.Repository('items', Game.Item);
 // Darkness
 // Fire immunity
 // Invisibility
+// Summoning potion
 
 Game.GatedItemRepository.define('life potion', {
     name: 'life potion',
@@ -59,7 +60,7 @@ Game.ItemRepository.define('knowledge potion', {
     character: '!',
     foreground: '#F2EC2D',
     potionEffect: {
-        duration: 10,
+        duration: 30,
         name: "knowledgeable"
     },
     mixins: [Game.ItemMixins.Edible, Game.ItemMixins.Throwable]
