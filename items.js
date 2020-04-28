@@ -5,22 +5,34 @@ Game.ItemRepository = new Game.Repository('items', Game.Item);
 // Fire
 // Paralysis
 // Magic sensitivity
-
-// Strength
+// Holy Water, clears curses from items in invetory
 // Darkness
 // Knowledge
 // Fire immunity
 // Invisibility
 // Teleportation
 
-//TO DO: More weapons,
-//Incendiary Darts, lance, axe
-
 Game.GatedItemRepository.define('life potion', {
     name: 'life potion',
     character: '!',
     foreground: '#F2EC2D',
     healthValue: 100,
+    potionEffect: null,
+    mixins: [Game.ItemMixins.Edible, Game.ItemMixins.Throwable]
+});
+
+Game.GatedItemRepository.define('strength potion', {
+    name: 'strength potion',
+    character: '!',
+    foreground: '#F2EC2D',
+    potionEffect: null,
+    mixins: [Game.ItemMixins.Edible, Game.ItemMixins.Throwable]
+});
+
+Game.GatedItemRepository.define('enchantment potion', {
+    name: 'enchantment potion',
+    character: '!',
+    foreground: '#F2EC2D',
     potionEffect: null,
     mixins: [Game.ItemMixins.Edible, Game.ItemMixins.Throwable]
 });
@@ -71,6 +83,7 @@ Game.ItemRepository.define('dart', {
     thrownAttackValue: 4,
     throwBreakChance: 100,
     wieldable: true,
+    stackable: true,
     mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable]
 }, {
     disableRandomCreation: true
@@ -84,6 +97,7 @@ Game.ItemRepository.define('javelin', {
     thrownAttackValue: 6,
     throwBreakChance: 100,
     wieldable: true,
+    stackable: true,
     mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable]
 }, {
     disableRandomCreation: true
@@ -97,6 +111,7 @@ Game.ItemRepository.define('incendiary dart', {
     thrownAttackValue: 4,
     throwBreakChance: 100,
     wieldable: true,
+    stackable: true,
     mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable]
 }, {
     disableRandomCreation: true
@@ -104,7 +119,7 @@ Game.ItemRepository.define('incendiary dart', {
 
 Game.ItemRepository.define('dagger', {
     name: 'dagger',
-    character: ')',
+    character: '\u07D9',
     foreground: '#F2EC2D',
     attackValue: 3,
     thrownAttackValue: 3,
@@ -116,7 +131,19 @@ Game.ItemRepository.define('dagger', {
 
 Game.ItemRepository.define('sword', {
     name: 'sword',
-    character: ')',
+    character: '\u07D9',
+    foreground: '#F2EC2D',
+    attackValue: 6,
+    thrownAttackValue: 3,
+    wieldable: true,
+    mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable]
+}, {
+    disableRandomCreation: true
+});
+
+Game.ItemRepository.define('axe', {
+    name: 'axe',
+    character: '\u16B5',
     foreground: '#F2EC2D',
     attackValue: 6,
     thrownAttackValue: 3,
@@ -137,6 +164,19 @@ Game.ItemRepository.define('spear', {
 }, {
     disableRandomCreation: true
 });
+
+Game.ItemRepository.define('lance', {
+    name: 'lance',
+    character: '\u2191',
+    foreground: '#F2EC2D',
+    attackValue: 6,
+    thrownAttackValue: 4,
+    wieldable: true,
+    mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable]
+}, {
+    disableRandomCreation: true
+});
+
 
 // Wearables
 Game.ItemRepository.define('leather', {

@@ -41,9 +41,9 @@ Game.Screen.playScreen = {
 
         var dart = Game.ItemRepository.create('dart');
         this._player.addItem(dart);
+        var dart = Game.ItemRepository.create('dart');
         this._player.addItem(dart);
-        this._player.addItem(dart);
-        this._player.addItem(dart);
+        var dart = Game.ItemRepository.create('dart');
         this._player.addItem(dart);
         //Create map
         this._map = new Game.Map(tiles, this._player);
@@ -77,15 +77,15 @@ Game.Screen.playScreen = {
             }
         }
         // Render UI 
-        display.drawText(0, screenHeight, "%c{yellow}I%c{}nventory  %c{yellow}T%c{}hrow  %c{yellow}E%c{}quip  %c{yellow}A%c{}pply");
+        display.drawText(0, screenHeight, "%c{yellow}I%c{}nventory  %c{yellow}T%c{}hrow  %c{yellow}E%c{}quip  %c{yellow}A%c{}pply  %c{yellow}L%c{}ook");
 
         var you = '%c{white}%b{black}';
-        you += "@: You";
+        you += "@:    You";
         display.drawText(screenWidth + 1, 0, you);
 
         var playerHealth = this._player.getHP()/this._player.getMaxHP()
         var healthUIColor = (playerHealth > 0.66) ? "%c{white}" : ((playerHealth > 0.33) ? "%c{yellow}" : "%c{red}");
-        var healthString = "%c{white}%b{black}HP: " + healthUIColor + this._player.getHP() + "/" + this._player.getMaxHP();
+        var healthString = "%c{white}%b{black}HP:   " + healthUIColor + this._player.getHP() + "/" + this._player.getMaxHP();
         display.drawText(screenWidth + 1, 1, healthString);
 
         var currentHead = this._player.getHead();
@@ -99,10 +99,10 @@ Game.Screen.playScreen = {
             display.drawText(screenWidth + 1, 2, "HEAD: " + "%c{red}NONE");
         }
         
-        display.drawText(screenWidth + 1, 5, "ARMOR: +" + this._player.getDefenseValue());
-        display.drawText(screenWidth + 1, 6, "ATK:   +" + this._player.getAttackValue());
-        display.drawText(screenWidth + 1, 7, "GOLD:  0" );
-        display.drawText(screenWidth + 1, 8, "LVL:   Cellars " + Game.getLevel() );
+        display.drawText(screenWidth + 1, 5, "ARMR: +" + this._player.getDefenseValue());
+        display.drawText(screenWidth + 1, 6, "ATTK: +" + this._player.getAttackValue());
+        display.drawText(screenWidth + 1, 7, "STRN: 1" );
+        display.drawText(screenWidth + 1, 8, "LVL:  Cellars " + Game.getLevel() );
     },
     handleInput: function(inputType, inputData) {
         // If the game is over, enter will bring the user to the losing screen.
@@ -201,7 +201,7 @@ Game.Screen.playScreen = {
             this._map.getEngine().unlock();
         } else {
             var keyChar = String.fromCharCode(inputData.charCode);
-             if (keyChar === ';') {
+             if (keyChar === 'l' || keyChar === 'L') {
                 // Setup the look screen.
                 Game.Screen.lookScreen.setup(this._player, this._player.getX(), this._player.getY());
                 this.setSubScreen(Game.Screen.lookScreen);
@@ -447,6 +447,10 @@ Game.Screen.ItemListScreen.prototype.render = function(display) {
             } else if (this._items[i] === this._player.getHead()) {
                 suffix = ' (on neck)';
             }
+
+            if (this._items[i].hasMixin('Throwable') && this._items[i].isStackable()) {
+                suffix = ' (x' + this._items[i].getStackQuantity() + ')';
+            }
             // Render at the correct row and add 2.
             display.drawText(0, 2 + row,  letter + ' ' + selectionState + ' ' + this._items[i].describe() + suffix);
             row++;
@@ -560,7 +564,6 @@ Game.Screen.inventoryScreen = new Game.Screen.ItemListScreen({
     ok: function(selectedItems){
         var key = Object.keys(selectedItems)[0];
         var item = selectedItems[key];
-        console.log("item: " + item)
         Game.Screen.itemScreenGeneric.setup(this._player, item, this, key);
         Game.Screen.playScreen.setSubScreen(Game.Screen.itemScreenGeneric);
     }
@@ -807,7 +810,6 @@ Game.Screen.ItemScreen.prototype.setup = function(player, item, fromScreen, key)
 Game.Screen.ItemScreen.prototype.render = function(display) {
     // Render the caption in the top row
     display.drawText(0, 0, this._caption);
-    console.log(this._item);
     display.drawText(0, 1, this._item.describe());
     var rowCount = 0;
     //open an item modal with:

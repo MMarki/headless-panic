@@ -29,11 +29,13 @@ Game.Map = function(tiles, player, items) {
         // Add a random entity
         this.addItemAtRandomPosition(Game.ItemRepository.createRandom());
     }
+    this.addItemAtRandomPosition(Game.GatedItemRepository.createRandom());
+    
     //set up the field of vision
     this._fov = {};
     this.setupFov();
     // Add weapons and armor to the map in random positions
-    var templates = ['dagger', "dart", 'sword', 'spear', 'leather', 'scalemail', 'chainmail', 'platemail'];
+    var templates = ['dagger', 'axe', 'dart', 'sword', 'spear', 'leather', 'scalemail', 'chainmail', 'platemail'];
     for (var i = 0; i < templates.length; i++) {
         this.addItemAtRandomPosition(Game.ItemRepository.create(templates[i]));
     }

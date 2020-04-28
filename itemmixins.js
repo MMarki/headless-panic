@@ -62,6 +62,9 @@ Game.ItemMixins.Equippable = {
     },
     isHeadible: function() {
         return this._headible;
+    },
+    describe: function() {
+        return this._name;
     }
 };
 
@@ -71,11 +74,22 @@ Game.ItemMixins.Throwable = {
     init: function(template) {
         this._thrownAttackValue = template['thrownAttackValue'] || 0;
         this._throwBreakChance = template['throwBreakChance'] || 20;
+        this._stackable = template['stackable'] || false;
+        this._quantity = template['quantity'] || 1;
     },
     getThrownAttackValue: function() {
         return this._thrownAttackValue;
     },
     describe: function() {
             return this._name;
+    },
+    isStackable: function(){
+        return this._stackable;
+    },
+    getStackQuantity: function(){
+        return this._quantity;
+    },
+    setStackQuantity: function(amount){
+        this._quantity = amount;
     }
 };

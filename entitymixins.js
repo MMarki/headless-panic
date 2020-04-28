@@ -307,7 +307,14 @@ Game.EntityMixins.Thrower = {
         }
 
         if (this.hasMixin(Game.EntityMixins.Equipper)) {
-            this.removeItem(key);
+            if (item.hasMixin('Throwable') && item.getStackQuantity() > 1){
+                item.setStackQuantity(item.getStackQuantity() - 1);
+                if (item.setStackQuantity === 0){
+                    this.removeItem(key);
+                }
+            } else {
+                this.removeItem(key);
+            }
         }
 
         if (!item.hasMixin(Game.ItemMixins.Edible)) {
@@ -421,6 +428,19 @@ Game.EntityMixins.InventoryHolder = {
     },
     addItem: function(item) {
         // Try to find a slot, returning true only if we could add the item.
+        if (item.hasMixin('Throwable')) {
+            if (item.isStackable()){
+                for (var i = 0; i < this._items.length; i++) {
+                    if (this._items[i] !== undefined && this._items[i] !== null){
+                        if (this._items[i].describe() == item.describe()) {
+                            this._items[i].setStackQuantity(this._items[i].getStackQuantity() + item.getStackQuantity());
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+        
         for (var i = 0; i < this._items.length; i++) {
             if (!this._items[i]) {
                 this._items[i] = item;
@@ -428,6 +448,8 @@ Game.EntityMixins.InventoryHolder = {
             }
         }
         return false;
+
+        
     },
     removeItem: function(i) {
         // If we can equip items, then make sure we unequip the item we are removing.
@@ -437,15 +459,6 @@ Game.EntityMixins.InventoryHolder = {
         // Simply clear the inventory slot.
         this._items[i] = null;
     },
-    canAddItem: function() {
-        // Check if we have an empty slot.
-        for (var i = 0; i < this._items.length; i++) {
-            if (!this._items[i]) {
-                return true;
-            }
-        }
-        return false;
-    },
     pickupItems: function(indices) {
         // Allows the user to pick up items from the map, where indices is
         // the indices for the array returned by map.getItemsAt
@@ -453,10 +466,10 @@ Game.EntityMixins.InventoryHolder = {
         var added = 0;
         // Iterate through all indices.
         for (var i = 0; i < indices.length; i++) {
-            // Try to add the item. If our inventory is not full, then splice the 
-            // item out of the list of items. In order to fetch the right item, we
-            // have to offset the number of items already added.
-            if (this.addItem(mapItems[indices[i]  - added])) {
+            // Try to add the item. If our inventory is not full, then splice the item out of the map's list of items.
+            // In order to fetch the right item, we have to offset the number of items already added.
+            var item = mapItems[indices[i] - added];
+            if (this.addItem(item)) {
                 mapItems.splice(indices[i] - added, 1);
                 added++;
             } else {
