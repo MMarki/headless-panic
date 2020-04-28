@@ -20,7 +20,7 @@ Game.EntityRepository = new Game.Repository('entities', Game.Entity);
 
 Game.EntityRepository.define('fungus', {
     name: 'fungus',
-    character: 'F',
+    character: '\u2660',
     foreground: '#b33951',
     maxHP: 10,
     speed: 500,
@@ -150,7 +150,25 @@ Game.EntityRepository.define('rat', {
     tasks: ['hunt', 'wander'],
     mixins: [Game.EntityMixins.TaskActor, Game.EntityMixins.Sight,
              Game.EntityMixins.Attacker, Game.EntityMixins.Destructible,
-             Game.EntityMixins.Affectible]
+            Game.EntityMixins.Affectible]
+});
+
+// Should be able to spawn rats, hurl dead rats
+Game.EntityRepository.define('rat king', {
+    name: 'rat king',
+    character: 'R',
+    foreground: '#e3d081',
+    maxHP: 30,
+    defenseValue: 15,
+    attackValue: 6,
+    accuracyValue: 70,
+    sightRadius: 15,
+    headHits: 3,
+    description: "A giant rat nestled in a ball of its dead rivals",
+    tasks: ['hunt', 'wander'],
+    mixins: [Game.EntityMixins.TaskActor, Game.EntityMixins.Sight,
+             Game.EntityMixins.Attacker, Game.EntityMixins.Destructible,
+             Game.EntityMixins.HeadDropper, Game.EntityMixins.Affectible]
 });
 
 Game.EntityRepository.define('death', {
