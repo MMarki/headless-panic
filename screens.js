@@ -219,7 +219,7 @@ Game.Screen.playScreen = {
         var newX = this._player.getX() + dX;
         var newY = this._player.getY() + dY;
         // Try to move to the new cell
-        this._player.tryMove(newX, newY, this._map);
+        this._player.tryMove(newX, newY);
     },
     setSubScreen: function(subScreen) {
         this._subScreen = subScreen;
@@ -610,6 +610,21 @@ Game.Screen.throwScreen = new Game.Screen.ItemListScreen({
         return true;
     }
 });
+
+//This needs its own OK function
+Game.Screen.throwScreen.executeOkFunction = function(){
+    // Gather the selected items.
+    var selectedItems = {};
+    for (var key in this._selectedIndices) {
+        selectedItems[key] = this._items[key];
+    }
+    // Switch back to the play screen.
+    Game.Screen.playScreen.setSubScreen(undefined);
+    // Call the OK function and move to the throw screen WITHOUT ending the player's turn if returns true;
+    if (this._okFunction(selectedItems)) {
+        var blah;
+    }
+}
 
 Game.Screen.TargetBasedScreen = function(template) {
     template = template || {};

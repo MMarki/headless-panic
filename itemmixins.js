@@ -26,11 +26,23 @@ Game.ItemMixins.Edible = {
                 entity.modifyHPBy(this._healthValue);
             }
         }
-        if (this._name === "shatter potion"){
+        if (this._name === 'shatter potion'){
             var x = entity.getX();
             var y = entity.getY();
             var map = entity.getMap();
             map.shatter(x,y);
+        } else if (this._name === 'teleportation potion') {
+            var x = entity.getX();
+            var y = entity.getY();
+            var newX = 0;
+            var newY = 0;
+
+            while (!entity.tryMoveNoAttack(x + newX, y + newY) ){
+                newX = Math.floor(Math.random() * 80) - 40;
+                newY = Math.floor(Math.random() * 40) - 20;
+            }
+
+            entity.setPosition(x + newX, y + newY);
         }
     },
     describe: function() {

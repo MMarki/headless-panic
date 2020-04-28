@@ -300,6 +300,7 @@ Game.EntityMixins.Thrower = {
             Game.sendMessage(this, 'You throw a %s!',item.getName());
         }
 
+        // shatter potion effect
         if (item.hasMixin(Game.ItemMixins.Edible)) {
             if(item._name === "shatter potion"){
                 this._map.shatter(endPointX, endPointY);
@@ -347,6 +348,18 @@ Game.EntityMixins.Thrower = {
         } else if (item._name === "life potion" & targetIsDestructible === true){
             target.modifyMaxHPBy(Math.floor(target.getMaxHP()/4));
             target.modifyHPBy(item._healthValue);
+        } else if (item._name === 'teleportation potion'){
+            var x = target.getX();
+            var y = target.getY();
+            var newX = 0;
+            var newY = 0;
+
+            while (!target.tryMoveNoAttack(x + newX, y + newY) ){
+                newX = Math.floor(Math.random() * 80) - 40;
+                newY = Math.floor(Math.random() * 40) - 20;
+            }
+
+            target.setPosition(x + newX, y + newY);
         }
     }
 }

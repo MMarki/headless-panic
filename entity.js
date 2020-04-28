@@ -48,7 +48,7 @@ Game.Entity.prototype.setPosition = function(x, y) {
     }
 }
 
-Game.Entity.prototype.tryMove = function(x, y, map) {
+Game.Entity.prototype.tryMove = function(x, y) {
     var map = this.getMap();
     var tile = map.getTile(x, y);
     var target = map.getEntityAt(x, y);
@@ -74,6 +74,22 @@ Game.Entity.prototype.tryMove = function(x, y, map) {
                 Game.sendMessage(this, "There are several objects here.");
             }
         }
+        return true;
+    }
+    return false;
+}
+
+Game.Entity.prototype.tryMoveNoAttack = function(x, y) {
+    var map = this.getMap();
+    console.log('x: ' + x + "y: " + y)
+    var tile = map.getTile(x, y);
+    var target = map.getEntityAt(x, y);
+    // If an entity was present at the tile
+    if (target) {
+        return false;
+    // Check if we can walk on the tile and if so simply walk onto it
+    } else if (tile.isWalkable()) {        
+        // Update the entity's position
         return true;
     }
     return false;

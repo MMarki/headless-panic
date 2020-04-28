@@ -7,10 +7,8 @@ Game.ItemRepository = new Game.Repository('items', Game.Item);
 // Magic sensitivity
 // Holy Water, clears curses from items in invetory
 // Darkness
-// Knowledge
 // Fire immunity
 // Invisibility
-// Teleportation
 
 Game.GatedItemRepository.define('life potion', {
     name: 'life potion',
@@ -44,6 +42,25 @@ Game.ItemRepository.define('poison potion', {
     potionEffect: {
         duration: 10,
         name: "poisoned"
+    },
+    mixins: [Game.ItemMixins.Edible, Game.ItemMixins.Throwable]
+});
+
+Game.ItemRepository.define('teleportation potion', {
+    name: 'teleportation potion',
+    character: '!',
+    foreground: '#F2EC2D',
+    potionEffect: null,
+    mixins: [Game.ItemMixins.Edible, Game.ItemMixins.Throwable]
+});
+
+Game.ItemRepository.define('knowledge potion', {
+    name: 'knowledge potion',
+    character: '!',
+    foreground: '#F2EC2D',
+    potionEffect: {
+        duration: 10,
+        name: "knowledgeable"
     },
     mixins: [Game.ItemMixins.Edible, Game.ItemMixins.Throwable]
 });
