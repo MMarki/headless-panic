@@ -7,7 +7,8 @@ Game.Screen.startScreen = {
     render: function(display) {
         // Render our prompt to the screen
         display.drawText(1,1, "%c{yellow}Headless Panic");
-        display.drawText(1,2, "Press [Enter] to start!");
+        display.drawText(1,3, "%c{white}Betrayed. Beheaded. Thrown into the ancient cellars below the castle.");
+        display.drawText(1,5, "%c{white}Press %c{yellow}[Enter] %c{white}to start!");
     },
     handleInput: function(inputType, inputData) {
         // When [Enter] is pressed, go to the play screen
@@ -45,7 +46,7 @@ Game.Screen.playScreen = {
         this._player.addItem(dart);
         var dart = Game.ItemRepository.create('dart');
         this._player.addItem(dart);
-        var test = Game.ItemRepository.create('knowledge potion');
+        var test = Game.ItemRepository.create('summoning potion');
         this._player.addItem(test);
         //Create map
         this._map = new Game.Map(tiles, this._player);
@@ -85,7 +86,7 @@ Game.Screen.playScreen = {
         you += "@:    You";
         display.drawText(screenWidth + 1, 0, you);
 
-        var playerHealth = this._player.getHP()/this._player.getMaxHP()
+        var playerHealth = this._player.getHP()/this._player.getMaxHP();
         var healthUIColor = (playerHealth > 0.66) ? "%c{white}" : ((playerHealth > 0.33) ? "%c{yellow}" : "%c{red}");
         var healthString = "%c{white}%b{black}HP:   " + healthUIColor + this._player.getHP() + "/" + this._player.getMaxHP();
         display.drawText(screenWidth + 1, 1, healthString);
@@ -103,7 +104,7 @@ Game.Screen.playScreen = {
         
         display.drawText(screenWidth + 1, 5, "ARMR: +" + this._player.getDefenseValue());
         display.drawText(screenWidth + 1, 6, "ATTK: +" + this._player.getAttackValue());
-        display.drawText(screenWidth + 1, 7, "STRN: 1" );
+        display.drawText(screenWidth + 1, 7, "STRN: " + this._player.getStrengthValue());
         display.drawText(screenWidth + 1, 8, "LVL:  Cellars " + Game.getLevel() );
     },
     handleInput: function(inputType, inputData) {
@@ -121,13 +122,6 @@ Game.Screen.playScreen = {
             return;
         }
         if (inputType === 'keydown') {
-            // If enter is pressed, go to the win screen
-            // If escape is pressed, go to lose screen
-            if (inputData.keyCode === ROT.KEYS.VK_RETURN) {
-                Game.switchScreen(Game.Screen.winScreen);
-            } else if (inputData.keyCode === ROT.KEYS.VK_ESCAPE) {
-                Game.switchScreen(Game.Screen.loseScreen);
-            } 
             // Movement
             if (inputData.keyCode === ROT.KEYS.VK_LEFT) {
                 this.move(-1, 0);

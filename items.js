@@ -4,12 +4,12 @@ Game.ItemRepository = new Game.Repository('items', Game.Item);
 //TO DO: More Potions, including: 
 // Fire
 // Paralysis
-// Magic sensitivity
-// Holy Water, clears curses from items in invetory
+// Magic Sensitivity
+// Holy Potion, clears curses from items in inventory
 // Darkness
 // Fire immunity
 // Invisibility
-// Summoning potion
+// Protection potion
 
 Game.GatedItemRepository.define('life potion', {
     name: 'life potion',
@@ -44,6 +44,14 @@ Game.ItemRepository.define('poison potion', {
         duration: 10,
         name: "poisoned"
     },
+    mixins: [Game.ItemMixins.Edible, Game.ItemMixins.Throwable]
+});
+
+Game.ItemRepository.define('summoning potion', {
+    name: 'summoning potion',
+    character: '!',
+    foreground: '#F2EC2D',
+    potionEffect: null,
     mixins: [Game.ItemMixins.Edible, Game.ItemMixins.Throwable]
 });
 
@@ -142,7 +150,7 @@ Game.ItemRepository.define('dagger', {
     attackValue: 3,
     thrownAttackValue: 3,
     wieldable: true,
-    mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable]
+    mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable, Game.ItemMixins.Enchantable]
 }, {
     disableRandomCreation: true
 });
@@ -154,7 +162,7 @@ Game.ItemRepository.define('sword', {
     attackValue: 6,
     thrownAttackValue: 3,
     wieldable: true,
-    mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable]
+    mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable, Game.ItemMixins.Enchantable]
 }, {
     disableRandomCreation: true
 });
@@ -166,7 +174,7 @@ Game.ItemRepository.define('axe', {
     attackValue: 6,
     thrownAttackValue: 3,
     wieldable: true,
-    mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable]
+    mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable, Game.ItemMixins.Enchantable]
 }, {
     disableRandomCreation: true
 });
@@ -178,7 +186,7 @@ Game.ItemRepository.define('spear', {
     attackValue: 5,
     thrownAttackValue: 5,
     wieldable: true,
-    mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable]
+    mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable, Game.ItemMixins.Enchantable]
 }, {
     disableRandomCreation: true
 });
@@ -190,7 +198,7 @@ Game.ItemRepository.define('lance', {
     attackValue: 6,
     thrownAttackValue: 4,
     wieldable: true,
-    mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable]
+    mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable, Game.ItemMixins.Enchantable]
 }, {
     disableRandomCreation: true
 });
@@ -203,7 +211,7 @@ Game.ItemRepository.define('leather', {
     foreground: '#F2EC2D',
     defenseValue: 2,
     wearable: true,
-    mixins: [Game.ItemMixins.Equippable]
+    mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Enchantable]
 }, {
     disableRandomCreation: true
 });
@@ -214,7 +222,7 @@ Game.ItemRepository.define('scalemail', {
     foreground: '#F2EC2D',
     defenseValue: 4,
     wearable: true,
-    mixins: [Game.ItemMixins.Equippable]
+    mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Enchantable]
 }, {
     disableRandomCreation: true
 });
@@ -225,7 +233,7 @@ Game.ItemRepository.define('chainmail', {
     foreground: '#F2EC2D',
     defenseValue: 6,
     wearable: true,
-    mixins: [Game.ItemMixins.Equippable]
+    mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Enchantable]
 }, {
     disableRandomCreation: true
 });
@@ -236,7 +244,7 @@ Game.ItemRepository.define('platemail', {
     foreground: '#F2EC2D',
     defenseValue: 8,
     wearable: true,
-    mixins: [Game.ItemMixins.Equippable]
+    mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Enchantable]
 }, {
     disableRandomCreation: true
 });

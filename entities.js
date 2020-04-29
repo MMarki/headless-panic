@@ -12,7 +12,8 @@ Game.PlayerTemplate = {
              Game.EntityMixins.Attacker, Game.EntityMixins.Destructible,
              Game.EntityMixins.InventoryHolder, Game.EntityMixins.Bleeder,
              Game.EntityMixins.Sight, Game.EntityMixins.MessageRecipient,
-             Game.EntityMixins.Equipper, Game.EntityMixins.Affectible]
+             Game.EntityMixins.Equipper, Game.EntityMixins.Affectible,
+             Game.EntityMixins.Summoner]
 };
 
 // Create our central entity repository
@@ -168,7 +169,8 @@ Game.EntityRepository.define('rat king', {
     tasks: ['hunt', 'wander'],
     mixins: [Game.EntityMixins.TaskActor, Game.EntityMixins.Sight,
              Game.EntityMixins.Attacker, Game.EntityMixins.Destructible,
-             Game.EntityMixins.HeadDropper, Game.EntityMixins.Affectible]
+             Game.EntityMixins.HeadDropper, Game.EntityMixins.Affectible,
+             Game.EntityMixins.Summoner]
 });
 
 Game.EntityRepository.define('death', {

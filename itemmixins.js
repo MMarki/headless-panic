@@ -31,6 +31,8 @@ Game.ItemMixins.Edible = {
             var y = entity.getY();
             var map = entity.getMap();
             map.shatter(x,y);
+        } else if (this._name === 'summoning potion'){
+            entity.summon();
         } else if (this._name === 'teleportation potion') {
             var x = entity.getX();
             var y = entity.getY();
@@ -43,6 +45,8 @@ Game.ItemMixins.Edible = {
             }
 
             entity.setPosition(x + newX, y + newY);
+        } else if (entity.hasMixin('Attacker') && this._name === 'strength potion'){
+            entity.incrementStrength();
         }
     },
     describe: function() {
@@ -103,5 +107,19 @@ Game.ItemMixins.Throwable = {
     },
     setStackQuantity: function(amount){
         this._quantity = amount;
+    }
+};
+
+// Enchantable mixin
+Game.ItemMixins.Enchantable = {
+    name: 'Enchantable',
+    init: function(template) {
+        this._enchantValue = template['enchantValue'] || 0;
+    },
+    getEnchantValue: function() {
+        return this._enchantValue;
+    },
+    incrementEnchantValue: function() {
+        this._enchantValue += 1;
     }
 };
