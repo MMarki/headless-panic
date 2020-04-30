@@ -3,11 +3,14 @@ Game.Tile = function(properties) {
     // Call the Glyph constructor with our properties
     Game.Glyph.call(this, properties);
     // Set up the properties. We use false by default.
+    var vary = properties['vary'] || false;
     this._walkable = properties['walkable'] || false;
     this._diggable = properties['diggable'] || false;
-    this._blocksLight = (properties['blocksLight'] !== undefined) ?
-        properties['blocksLight'] : true;
+    this._blocksLight = (properties['blocksLight'] !== undefined) ? properties['blocksLight'] : true;
     this._description = properties['description'] || '';
+    if (vary) {
+        this._background =  ROT.Color.toHex(ROT.Color.randomize(ROT.Color.fromString(this._background), [0, 0, 0]));
+     }
 };
 // Make tiles inherit all the functionality from glyphs
 Game.Tile.extend(Game.Glyph);
@@ -58,7 +61,8 @@ Game.Tile.wallTile = new Game.Tile({
     foreground: '#232121',
     background: "#C4B9AC",
     diggable: true,
-    description: 'a stone wall'
+    description: 'a stone wall',
+    vary: true
 });
 
 Game.Tile.stairsDownTile = new Game.Tile({

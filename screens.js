@@ -292,6 +292,7 @@ Game.Screen.playScreen = {
                     var glyph = this._map.getTile(x, y);
                     var foreground = glyph.getForeground();
                     var tile = this._map.getTile(x, y);
+                    var background = tile.getBackground();
                     // If we are at a cell that is in the field of vision, we need
                     // to check if there are items or entities.
                     if (visibleCells[x + ',' + y]) {
@@ -313,17 +314,21 @@ Game.Screen.playScreen = {
                         // If we have items, we want to render the top most item
                         if (items) {
                             glyph = items[items.length - 1];
+                            foreground = items[items.length - 1].getForeground();
                         }
                         // Since the tile was previously explored but is not visible,
                         // we want to change the foreground color to dark gray.
-                        foreground = 'darkGray';
+                        //console.log(ROT.Color.fromString(foreground));
+                        foreground = ROT.Color.toHex(ROT.Color.multiply(ROT.Color.fromString(foreground),[80,80,130]));
+                        background = ROT.Color.toHex(ROT.Color.multiply(ROT.Color.fromString(background),[80,80,130]));
                     }
+                    
                     display.draw(
                         x,
                         y,
                         glyph.getChar(), 
                         foreground, 
-                        tile.getBackground());
+                        background);
                 }
             }
         }
