@@ -32,11 +32,16 @@ Game.EntityMixins.TaskActor = {
     groupName: 'Actor',
     init: function(template) {
         // Load tasks
-        this._tasks = template['tasks'] || ['wander']; 
+        this._tasks = template['tasks'] || ['wander'];
+        this._ratSpawnTimer = 40; 
     },
     act: function() {
         var stopActor = this.handleEffects();
         if (stopActor === 1) {return;}
+
+        if (this._ratSpawnTimer > 0) {
+            this._ratSpawnTimer -=1;
+        }
 
         // Iterate through all our tasks
         for (var i = 0; i < this._tasks.length; i++) {
@@ -48,7 +53,10 @@ Game.EntityMixins.TaskActor = {
         }
     },
     canDoTask: function(task) {
-        if (task === 'hunt') {
+        if (task === 'summonMonster') {
+            return this._ratSpawnTimer === 0;     
+        }
+        else if (task === 'hunt') {
             return this.hasMixin('Sight') && this.canSee(this.getMap().getPlayer());
         } else if (task === 'wander') {
             return true;
@@ -79,7 +87,7 @@ Game.EntityMixins.TaskActor = {
             }
             return source.getMap().getTile(x, y).isWalkable();
         }, {topology: 4});
-        // Once we've gotten the path, we want to move to the second cell that is passed in the callback (the first is the entity's strting point)
+        // Once we've gotten the path, we want to move to the second cell that is passed in the callback (the first is the entity's starting point)
         var count = 0;
         path.compute(source.getX(), source.getY(), function(x, y) {
             if (count == 1) {
@@ -97,6 +105,10 @@ Game.EntityMixins.TaskActor = {
         } else {
             this.tryMove(this.getX(), this.getY() + moveOffset);
         }
+    },
+    summonMonster: function(){
+        this.summon();
+        this._ratSpawnTimer = 10;
     }
 };
 

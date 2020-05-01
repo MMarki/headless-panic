@@ -37,7 +37,7 @@ Game.EntityRepository.define('bat', {
     maxHP: 5,
     attackValue: 4,
     accuracyValue: 70,
-    speed: 2000,
+    speed: 1000,
     description: "This monster flies quickly, and won't attack unless you bother it.",
     mixins: [Game.EntityMixins.TaskActor, Game.EntityMixins.HeadDropper,
              Game.EntityMixins.Attacker, Game.EntityMixins.Destructible,
@@ -52,7 +52,7 @@ Game.EntityRepository.define('jackal', {
     attackValue: 4,
     accuracyValue: 70,
     speed: 2000,
-    asks: ['hunt', 'wander'],
+    tasks: ['hunt', 'wander'],
     description: "This monster is a dog, dawg.",
     mixins: [Game.EntityMixins.TaskActor, Game.EntityMixins.Sight,
              Game.EntityMixins.HeadDropper, Game.EntityMixins.Attacker, 
@@ -166,7 +166,7 @@ Game.EntityRepository.define('rat king', {
     sightRadius: 15,
     headHits: 3,
     description: "A giant rat nestled in a ball of its dead rivals",
-    tasks: ['hunt', 'wander'],
+    tasks: ['summonMonster', 'hunt', 'wander'],
     mixins: [Game.EntityMixins.TaskActor, Game.EntityMixins.Sight,
              Game.EntityMixins.Attacker, Game.EntityMixins.Destructible,
              Game.EntityMixins.HeadDropper, Game.EntityMixins.Affectible,
@@ -191,7 +191,7 @@ Game.EntityRepository.define('death', {
 
 
 Game.EntityRepository.repoFrequency = {
-    'L1': [{'rat': 3}, {'kobold': 2}, {'bat':2}, {'jackal': 1}],
+    'L1': [{'rat': 3}, {'kobold': 2}, {'bat':2}, {'jackal': 1}, {'rat king': 1}],
     'L2': [{'rat': 2}, {'kobold': 2}, {'bat':2}, {'jackal': 1}, {'goblin': 1}, {'floater': 1}],
     'L3': [{'rat': 2}, {'kobold': 2}, {'bat':2}, {'jackal': 1}, {'goblin': 1}, {'floater': 1}, {'slime': 1}],
     'L4': [{'rat': 2}, {'goblin': 1}, {'floater': 1}, {'slime': 2}],
