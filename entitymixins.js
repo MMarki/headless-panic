@@ -251,19 +251,31 @@ Game.EntityMixins.Attacker = {
             var accuracy = this.getAccuracyValue();
             var attack = this.getAttackValue();
             var defense = target.getDefenseValue();
+            var strengthModifier = 0;
+            var strengthGap = 0
             if (target.hasMixin(Game.EntityMixins.PlayerActor)) {
                 defense = defense * 10;
             }
-            var hitProbability = accuracy * Math.pow(0.987, defense);
+
             if (this.hasMixin('Equipper')){
                 if (this.getWeapon() !== null){
-                    hitProbability *= Math.max(1,(1.1 * Math.max(0,this.getStrengthValue() - this.getWeapon()._strengthRequirement)));
+                    strengthGap = this.getStrengthValue() - this.getWeapon()._strengthRequirement
+                    if (strengthGap <  0){
+                        strengthModifier = 2 * strengthGap;
+                    } else if (strengthModifier > 0){
+                        strengthModifier =  strengthGap;
+                    }
                 }
             }
+
+            console.log(strengthModifier);
+
+            var hitProbability = Math.max(0,accuracy * Math.pow(0.987, defense) + strengthModifier*5);
+           
             console.log("def:" + defense);
             console.log("hitprob: " + hitProbability);
             if (Math.random()*100 < hitProbability){
-                var max = Math.max(0, attack);
+                var max = Math.max(0, attack + (strengthModifier));
                 var damage = Math.ceil(Game.Utilities.randomRange(Math.ceil(max/2), max));
 
                 Game.sendMessage(this, 'You strike the %s for %d damage!', [target.getName(), damage]);

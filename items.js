@@ -177,7 +177,7 @@ Game.ItemRepository.define('axe', {
     foreground: '#F2EC2D',
     attackValue: 6,
     thrownAttackValue: 3,
-    strengthRequirement: 2,
+    strengthRequirement: 3,
     wieldable: true,
     mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable, Game.ItemMixins.Enchantable]
 }, {
@@ -190,7 +190,7 @@ Game.ItemRepository.define('broadsword', {
     foreground: '#F2EC2D',
     attackValue: 6,
     thrownAttackValue: 3,
-    strengthRequirement: 2,
+    strengthRequirement: 3,
     wieldable: true,
     mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable, Game.ItemMixins.Enchantable]
 }, {
