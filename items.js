@@ -2,13 +2,14 @@ Game.GatedItemRepository = new Game.Repository('gatedItems', Game.Item);
 Game.ItemRepository = new Game.Repository('items', Game.Item);
 
 //TO DO: More Potions, including: 
-// Fire
+// Invisibility
 // Paralysis
+// Darkness
+
+// Fire
 // Magic Sensitivity
 // Holy Potion, clears curses from items in inventory
-// Darkness
 // Fire immunity
-// Invisibility
 // Protection potion
 
 Game.GatedItemRepository.define('life potion', {
@@ -28,13 +29,13 @@ Game.GatedItemRepository.define('strength potion', {
     mixins: [Game.ItemMixins.Edible, Game.ItemMixins.Throwable]
 });
 
-Game.GatedItemRepository.define('enchantment potion', {
+/*Game.GatedItemRepository.define('enchantment potion', {
     name: 'enchantment potion',
     character: '!',
     foreground: '#F2EC2D',
     potionEffect: null,
     mixins: [Game.ItemMixins.Edible, Game.ItemMixins.Throwable]
-});
+});*/
 
 Game.ItemRepository.define('poison potion', {
     name: 'poison potion',
@@ -122,6 +123,7 @@ Game.ItemRepository.define('javelin', {
     attackValue: 2,
     thrownAttackValue: 6,
     throwBreakChance: 100,
+    strengthRequirement: 2,
     wieldable: true,
     stackable: true,
     mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable]
@@ -149,6 +151,7 @@ Game.ItemRepository.define('dagger', {
     foreground: '#F2EC2D',
     attackValue: 3,
     thrownAttackValue: 3,
+    strengthRequirement: 1,
     wieldable: true,
     mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable, Game.ItemMixins.Enchantable]
 }, {
@@ -161,6 +164,7 @@ Game.ItemRepository.define('sword', {
     foreground: '#F2EC2D',
     attackValue: 6,
     thrownAttackValue: 3,
+    strengthRequirement: 1,
     wieldable: true,
     mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable, Game.ItemMixins.Enchantable]
 }, {
@@ -173,6 +177,20 @@ Game.ItemRepository.define('axe', {
     foreground: '#F2EC2D',
     attackValue: 6,
     thrownAttackValue: 3,
+    strengthRequirement: 2,
+    wieldable: true,
+    mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable, Game.ItemMixins.Enchantable]
+}, {
+    disableRandomCreation: true
+});
+
+Game.ItemRepository.define('broadsword', {
+    name: 'broadsword',
+    character: '\u16B5',
+    foreground: '#F2EC2D',
+    attackValue: 6,
+    thrownAttackValue: 3,
+    strengthRequirement: 2,
     wieldable: true,
     mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable, Game.ItemMixins.Enchantable]
 }, {
@@ -185,6 +203,7 @@ Game.ItemRepository.define('spear', {
     foreground: '#F2EC2D',
     attackValue: 5,
     thrownAttackValue: 5,
+    strengthRequirement: 1,
     wieldable: true,
     mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable, Game.ItemMixins.Enchantable]
 }, {
@@ -197,6 +216,7 @@ Game.ItemRepository.define('lance', {
     foreground: '#F2EC2D',
     attackValue: 6,
     thrownAttackValue: 4,
+    strengthRequirement: 2,
     wieldable: true,
     mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable, Game.ItemMixins.Enchantable]
 }, {
@@ -210,6 +230,7 @@ Game.ItemRepository.define('leather', {
     character: '[',
     foreground: '#F2EC2D',
     defenseValue: 2,
+    strengthRequirement: 1,
     wearable: true,
     mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Enchantable]
 }, {
@@ -221,6 +242,7 @@ Game.ItemRepository.define('scalemail', {
     character: '[',
     foreground: '#F2EC2D',
     defenseValue: 4,
+    strengthRequirement: 1,
     wearable: true,
     mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Enchantable]
 }, {
@@ -232,6 +254,7 @@ Game.ItemRepository.define('chainmail', {
     character: '[',
     foreground: '#F2EC2D',
     defenseValue: 6,
+    strengthRequirement: 2,
     wearable: true,
     mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Enchantable]
 }, {
@@ -243,6 +266,7 @@ Game.ItemRepository.define('platemail', {
     character: '[',
     foreground: '#F2EC2D',
     defenseValue: 8,
+    strengthRequirement: 3,
     wearable: true,
     mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Enchantable]
 }, {

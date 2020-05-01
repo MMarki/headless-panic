@@ -255,6 +255,11 @@ Game.EntityMixins.Attacker = {
                 defense = defense * 10;
             }
             var hitProbability = accuracy * Math.pow(0.987, defense);
+            if (this.hasMixin('Equipper')){
+                if (this.getWeapon() !== null){
+                    hitProbability *= Math.max(1,(1.1 * Math.max(0,this.getStrengthValue() - this.getWeapon()._strengthRequirement)));
+                }
+            }
             console.log("def:" + defense);
             console.log("hitprob: " + hitProbability);
             if (Math.random()*100 < hitProbability){
@@ -334,14 +339,24 @@ Game.EntityMixins.Thrower = {
     throwAttack: function(item, target) {
         targetIsDestructible = target.hasMixin('Destructible');
         if (targetIsDestructible){
-            var amount = Math.max(0, item.getThrownAttackValue() + 1);
-            amount = Math.floor((Math.random() * amount));
-            if (amount > 0){
-                Game.sendMessage(this, 'throw a %s at the %s for %d damage', [item.getName(),target.getName(), amount]);
-                target.takeDamage(this, amount);
-            } else {
-                Game.sendMessage(this, 'throw a %s at the %s', [item.getName(),target.getName()]);
+            var defense = target.getDefenseValue();
+            if (target.hasMixin('PlayerActor')) {
+                defense = defense * 10;
             }
+            var hitProbability = 100 * Math.pow(0.987, defense);
+            if (Math.random()*100 < hitProbability){
+                var maxAmount = Math.max(0, item.getThrownAttackValue());
+                amount = Math.floor((Math.random() * maxAmount)) + 1;
+                if (amount > 0){
+                    Game.sendMessage(this, 'You throw a %s at the %s for %d damage.', [item.getName(),target.getName(), amount]);
+                    target.takeDamage(this, amount);
+                } else {
+                    Game.sendMessage(this, 'You throw a %s at the %s. It misses.', [item.getName(),target.getName()]);
+                }
+            } else {
+                Game.sendMessage(this, 'You throw a %s at the %s. It misses', [item.getName(),target.getName()]);
+            }
+            
         } else {
             Game.sendMessage(this, 'throw a %s at the %s', [item.getName(),target.getName()]); 
         }
@@ -615,12 +630,18 @@ Game.EntityMixins.Equipper = {
     },
     wield: function(item) {
         this._weapon = item;
+        if (item._strengthRequirement > this.getStrengthValue()){
+            Game.sendMessage(this, 'This is too heavy for you to wield effectively.');
+        }
     },
     unwield: function() {
         this._weapon = null;
     },
     wear: function(item) {
         this._armor = item;
+        if (item._strengthRequirement > this.getStrengthValue()){
+            Game.sendMessage(this, 'This is too heavy for you to wear effectively.');
+        }
     },
     unwear: function() {
         this._armor = null;
