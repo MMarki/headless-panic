@@ -221,6 +221,12 @@ Game.EntityMixins.Destructible = {
             if (this.hasMixin(Game.EntityMixins.HeadDropper)) {
                 this.tryDropHead();
             }
+            if (this.hasMixin(Game.EntityMixins.Exploder)) {
+                var currentPosition = {x: this.getX(), y: this.getY()}
+                var tempList = []
+                tempList.push(currentPosition)
+                this.getMap().cellGrow(tempList, Game.Tile.poisonTile);
+            }
             if (this.hasMixin(Game.EntityMixins.PlayerActor)) {
                 this.act();
             } else {
@@ -754,6 +760,14 @@ Game.EntityMixins.Affectible = {
             }
         }
         return false;
+    }
+}
+
+Game.EntityMixins.Exploder = {
+    name: 'Exploder',
+    init: function(template){
+        this._explodeTile = Game.Tile.poisonTile;
+        this.explodeSize = 6;
     }
 }
 

@@ -270,3 +270,44 @@ Game.Map.prototype.addItemAtRandomPosition = function(item) {
     var position = this.getRandomFloorPosition();
     this.addItem(position.x, position.y, item);
 };
+
+Game.Map.prototype.addItemAtRandomPosition = function(item) {
+    var position = this.getRandomFloorPosition();
+    this.addItem(position.x, position.y, item);
+};
+
+Game.Map.prototype.cellGrow = function(list, tileType) {
+    var growthCount = 0;
+    var i = 0;
+    console.log(this._tiles);
+    while (growthCount < 20){
+        var currentTile = list[i]
+        if (currentTile === undefined){
+            break;
+        }
+        var x = currentTile.x;
+        var y = currentTile.y;
+
+        if (this._tiles[x - 1][y] === Game.Tile.floorTile) {
+            this._tiles[x - 1][y] = tileType;
+            list.push({x: x - 1, y: y});
+            growthCount ++;
+        }
+        if (this._tiles[x + 1][y] === Game.Tile.floorTile) {
+            this._tiles[x + 1][y] = tileType;
+            list.push({x: x + 1, y: y});
+            growthCount ++;
+        }
+        if (this._tiles[x][y - 1] === Game.Tile.floorTile) {
+            this._tiles[x][y -1]  = tileType;
+            list.push({x: x, y: y - 1});
+            growthCount ++;
+        }
+        if (this._tiles[x][y + 1] === Game.Tile.floorTile) {
+            this._tiles[x][y + 1] = tileType;
+            list.push({x: x, y: y + 1});
+            growthCount ++;
+        }
+        i++
+    }
+}

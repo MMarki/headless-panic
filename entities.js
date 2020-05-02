@@ -7,7 +7,7 @@ Game.PlayerTemplate = {
     attackValue: 3,
     accuracyValue: 100,
     sightRadius: 100,
-    inventorySlots: 15,
+    inventorySlots: 20,
     mixins: [Game.EntityMixins.PlayerActor, Game.EntityMixins.Thrower,
              Game.EntityMixins.Attacker, Game.EntityMixins.Destructible,
              Game.EntityMixins.InventoryHolder, Game.EntityMixins.Bleeder,
@@ -133,11 +133,11 @@ Game.EntityRepository.define('floater', {
     attackValue: 0,
     accuracyValue: 70,
     sightRadius: 10,
-    description: "Blows up on contact, creates poison vapour.",
+    description: "Blows up on contact, creates a poison pool.",
     tasks: ['hunt', 'wander'],
     mixins: [Game.EntityMixins.TaskActor, Game.EntityMixins.Sight,
              Game.EntityMixins.Attacker, Game.EntityMixins.Destructible, 
-             Game.EntityMixins.Affectible]
+             Game.EntityMixins.Affectible, Game.EntityMixins.Exploder]
 });
 
 Game.EntityRepository.define('rat', {
@@ -194,7 +194,7 @@ Game.EntityRepository.define('death', {
 
 
 Game.EntityRepository.repoFrequency = {
-    'L1': [{'rat': 3}, {'kobold': 2}, {'bat':2}, {'jackal': 1}],
+    'L1': [{'rat': 3}, {'kobold': 2}, {'bat':2}, {'jackal': 1}, {'floater': 2}],
     'L2': [{'rat': 2}, {'kobold': 2}, {'bat':2}, {'jackal': 1}, {'goblin': 1}, {'floater': 1}],
     'L3': [{'rat': 2}, {'kobold': 2}, {'bat':2}, {'jackal': 1}, {'goblin': 1}, {'floater': 1}, {'slime': 1}, {'rat king': 1}],
     'L4': [{'rat': 2}, {'goblin': 1}, {'floater': 1}, {'slime': 2}],

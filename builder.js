@@ -214,13 +214,13 @@ Game.Builder.prototype._setShallowWater = function() {
         }
     }
     // We shuffle the list of matches to prevent bias
-    var match =  matches[Math.floor(Math.random() * matches.length)];
+    var match = matches[Math.floor(Math.random() * matches.length)];
     var waterList = [];
     waterList.push(match);
     this._cellGrow(waterList, Game.Tile.shallowWaterTile)
 }
 
-// Generates grass at free locations
+// Generates tileType at free locations
 Game.Builder.prototype._cellGrow = function(list, tileType) {
     var growthCount = 0;
     var i = 0;
