@@ -17,6 +17,15 @@ Game.Builder = function(width, height) {
     }
 
     this._setupRegions();
+    this._setBarrel();
+    this._setBarrel();
+    this._setBarrel();
+    this._setGrass();
+    this._setGrass();
+    this._setGrass();
+    this._setGrass();
+    this._setShallowWater();
+    this._setShallowWater();
     this._setStairs();
 };
 
@@ -61,6 +70,7 @@ Game.Builder.prototype._generateLevel = function() {
     var rooms = generator.getRooms();
     for (var i=0; i<rooms.length; i++) {
         var room = rooms[i];
+        //console.log(room.clearDoors());
         room.getDoors(makeDoor);
     }
     return map;
@@ -145,8 +155,7 @@ Game.Builder.prototype._setupRegions = function() {
 // Generates stairs at a free location
 Game.Builder.prototype._setStairs = function() {
     var matches = [];
-    // Iterate through all tiles, checking if they respectthe region constraints and are floor tiles. 
-    //We check that they are floor to make sure we don't try to put two stairs on the same tile.
+    // Iterate through all tiles, checking if they are floor tiles. 
     for (var x = 0; x < this._width; x++) {
         for (var y = 0; y < this._height; y++) {
             if (this._tiles[x][y]  == Game.Tile.floorTile) {
@@ -159,11 +168,10 @@ Game.Builder.prototype._setStairs = function() {
     this._tiles[match.x][match.y] = Game.Tile.stairsDownTile;
 }
 
-// Generates grass at free locations
-Game.Builder.prototype._setGrass = function() {
+// Generates barrel at a free location
+Game.Builder.prototype._setBarrel = function() {
     var matches = [];
-    // Iterate through all tiles, checking if they respectthe region constraints and are floor tiles. 
-    //We check that they are floor to make sure we don't try to put two stairs on the same tile.
+    // Iterate through all tiles, checking if they are floor tiles. 
     for (var x = 0; x < this._width; x++) {
         for (var y = 0; y < this._height; y++) {
             if (this._tiles[x][y]  == Game.Tile.floorTile) {
@@ -173,5 +181,77 @@ Game.Builder.prototype._setGrass = function() {
     }
     // We shuffle the list of matches to prevent bias
     var match =  matches[Math.floor(Math.random() * matches.length)];
-    this._tiles[match.x][match.y] = Game.Tile.grassTile;
+    this._tiles[match.x][match.y] = Game.Tile.barrelTile;
+}
+
+// Generates grass at free locations
+Game.Builder.prototype._setGrass = function() {
+    var matches = [];
+    // Iterate through all tiles, checking if they are floor tiles. 
+    for (var x = 0; x < this._width; x++) {
+        for (var y = 0; y < this._height; y++) {
+            if (this._tiles[x][y]  == Game.Tile.floorTile) {
+                matches.push({x: x, y: y});
+            }
+        }
+    }
+    // We shuffle the list of matches to prevent bias
+    var match =  matches[Math.floor(Math.random() * matches.length)];
+    var grassList = [];
+    grassList.push(match);
+    this._cellGrow(grassList, Game.Tile.grassTile)
+}
+
+// Generates grass at free locations
+Game.Builder.prototype._setShallowWater = function() {
+    var matches = [];
+    // Iterate through all tiles, checking if they are floor tiles. 
+    for (var x = 0; x < this._width; x++) {
+        for (var y = 0; y < this._height; y++) {
+            if (this._tiles[x][y]  == Game.Tile.floorTile) {
+                matches.push({x: x, y: y});
+            }
+        }
+    }
+    // We shuffle the list of matches to prevent bias
+    var match =  matches[Math.floor(Math.random() * matches.length)];
+    var waterList = [];
+    waterList.push(match);
+    this._cellGrow(waterList, Game.Tile.shallowWaterTile)
+}
+
+// Generates grass at free locations
+Game.Builder.prototype._cellGrow = function(list, tileType) {
+    var growthCount = 0;
+    var i = 0;
+    while (growthCount < 20){
+        var currentTile = list[i]
+        if (currentTile === undefined){
+            break;
+        }
+        var x = currentTile.x;
+        var y = currentTile.y;
+
+        if (this._tiles[x - 1][y]  === Game.Tile.floorTile) {
+            this._tiles[x - 1][y]  = tileType;
+            list.push({x: x - 1, y: y});
+            growthCount ++;
+        }
+        if (this._tiles[x + 1][y]  === Game.Tile.floorTile) {
+            this._tiles[x + 1][y]  = tileType;
+            list.push({x: x + 1, y: y});
+            growthCount ++;
+        }
+        if (this._tiles[x][y - 1]  === Game.Tile.floorTile) {
+            this._tiles[x][y -1]  = tileType;
+            list.push({x: x, y: y - 1});
+            growthCount ++;
+        }
+        if (this._tiles[x][y + 1]  === Game.Tile.floorTile) {
+            this._tiles[x][y + 1]  = tileType;
+            list.push({x: x, y: y + 1});
+            growthCount ++;
+        }
+        i++
+    }
 }

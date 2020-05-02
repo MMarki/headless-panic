@@ -83,7 +83,7 @@ Game.Tile.waterTile = new Game.Tile({
 
 Game.Tile.shallowWaterTile = new Game.Tile({
     character: '.',
-    foreground: '#2191fb',
+    foreground: '#fff',
     background: '#2A94E0',
     walkable: true,
     blocksLight: false,
@@ -102,7 +102,7 @@ Game.Tile.poisonTile = new Game.Tile({
 Game.Tile.doorTile = new Game.Tile({
     character: '+', //'
     foreground: '#FFF',
-    background: '#280C1C',
+    background: '#480C1C',
     walkable: true,
     blocksLight: false,
     description: 'a door'
@@ -117,10 +117,10 @@ Game.Tile.grassTile = new Game.Tile({
     description: 'a patch of grass'
 });
 
-Game.Tile.barrel = new Game.Tile({
+Game.Tile.barrelTile = new Game.Tile({
     character: '#',
-    foreground: "#232121",
-    background: "#080A1F",
+    foreground: "#C4B9AC",
+    background: "#B57F50",
     walkable: true,
     blocksLight: false,
     description: 'a barrel'

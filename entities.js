@@ -147,7 +147,7 @@ Game.EntityRepository.define('rat', {
     maxHP: 3,
     defenseValue: 0,
     attackValue: 1,
-    accuracyValue: 50,
+    accuracyValue: 30,
     sightRadius: 10,
     description: "A mean little denizen of cellars and sewers.",
     tasks: ['hunt', 'wander'],
