@@ -206,7 +206,10 @@ Game.EntityMixins.Destructible = {
             if( this._hp > 0 && this.hasMixin('Summoner') && this._splitOnHit === 1) {
                 var creature = this.summon('slime');
                 if (creature !== null){
-                    creature._hp = this._hp - 4;
+                    creature._hp = this._hp - 2;
+                    if (this.hasMixin("Affectible")){
+                        creature._effects = this._effects
+                    }   
                 }
             }
         }

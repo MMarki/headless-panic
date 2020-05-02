@@ -46,6 +46,10 @@ Game.Screen.playScreen = {
         this._player.addItem(dart);
         var dart = Game.ItemRepository.create('dart');
         this._player.addItem(dart);
+        var dart = Game.ItemRepository.create('dart');
+        this._player.addItem(dart);
+        var dart = Game.ItemRepository.create('dart');
+        this._player.addItem(dart);
         var test = Game.ItemRepository.create('knowledge potion');
         this._player.addItem(test);
         //Create map

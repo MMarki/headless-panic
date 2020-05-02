@@ -81,6 +81,51 @@ Game.Tile.waterTile = new Game.Tile({
     description: 'deep water'
 });
 
+Game.Tile.shallowWaterTile = new Game.Tile({
+    character: '.',
+    foreground: '#2191fb',
+    background: '#2A94E0',
+    walkable: true,
+    blocksLight: false,
+    description: 'a pool of shallow water'
+});
+
+Game.Tile.poisonTile = new Game.Tile({
+    character: '.',
+    foreground: '#FFF',
+    background: '#1C9B03',
+    walkable: true,
+    blocksLight: false,
+    description: 'a pool of bubbling poison'
+});
+
+Game.Tile.doorTile = new Game.Tile({
+    character: '+', //'
+    foreground: '#FFF',
+    background: '#280C1C',
+    walkable: true,
+    blocksLight: false,
+    description: 'a door'
+});
+
+Game.Tile.grassTile = new Game.Tile({
+    character: '"',
+    foreground: "#0CCE6B",
+    background: "#080A1F",
+    walkable: true,
+    blocksLight: false,
+    description: 'a patch of grass'
+});
+
+Game.Tile.barrel = new Game.Tile({
+    character: '#',
+    foreground: "#232121",
+    background: "#080A1F",
+    walkable: true,
+    blocksLight: false,
+    description: 'a barrel'
+});
+
 Game.getNeighborPositions = function(x, y) {
     var tiles = [];
     // Generate all possible offsets
