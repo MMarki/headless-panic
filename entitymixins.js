@@ -33,14 +33,13 @@ Game.EntityMixins.TaskActor = {
     init: function(template) {
         // Load tasks
         this._tasks = template['tasks'] || ['wander'];
-        this._ratSpawnTimer = 40; 
     },
     act: function() {
         var stopActor = this.handleEffects();
         if (stopActor === 1) {return;}
 
-        if (this._ratSpawnTimer > 0) {
-            this._ratSpawnTimer -=1;
+        if (this.hasMixin('Summoner') && this._summonWait > 0) {
+            this._summonWait -=1;
         }
 
         // Iterate through all our tasks
@@ -54,7 +53,8 @@ Game.EntityMixins.TaskActor = {
     },
     canDoTask: function(task) {
         if (task === 'summonMonster') {
-            return this._ratSpawnTimer === 0;     
+            console.log(this._summonWait);
+            return this._summonWait === 0;     
         }
         else if (task === 'hunt') {
             return this.hasMixin('Sight') && this.canSee(this.getMap().getPlayer());
@@ -107,8 +107,7 @@ Game.EntityMixins.TaskActor = {
         }
     },
     summonMonster: function(){
-        this.summon();
-        this._ratSpawnTimer = 10;
+        this.summon('rat');
     }
 };
 
@@ -204,6 +203,12 @@ Game.EntityMixins.Destructible = {
             }
         } else {
             this._hp -= damage;
+            if( this._hp > 0 && this.hasMixin('Summoner') && this._splitOnHit === 1) {
+                var creature = this.summon('slime');
+                if (creature !== null){
+                    creature._hp = this._hp - 4;
+                }
+            }
         }
         
         // If have 0 or less HP, then remove ourseles from the map
@@ -438,14 +443,15 @@ Game.EntityMixins.Summoner = {
     init: function(template) {
         this._summonCount = template['summonCount'] || 3;
         this._summonWaitMax = template['summonWaitMax'] || 5;
-        this._summonWait = template['summonWait'] || 0;
+        this._summonWait = template['summonWait'] || this._summonWaitMax;
+        this._splitOnHit = template['splitOnHit'] || 0;
     },
-    summon: function() {
+    summon: function(entityName) {
         var map = this.getMap();
         var alreadySummoned = 0; 
         for (var x = -1; x < 2; x++){
             for (var y = -1; y < 2; y++){
-                if (alreadySummoned >= this._summonCount){
+                if (alreadySummoned >= this._summonCount) {
                     break;
                 }
                 var newX = this.getX() + x;
@@ -455,7 +461,7 @@ Game.EntityMixins.Summoner = {
                     continue;
                 }
 
-                var creature = Game.EntityRepository.create('rat');
+                var creature = Game.EntityRepository.create(entityName);
 
                 map.addEntity(creature)
                 
@@ -467,6 +473,11 @@ Game.EntityMixins.Summoner = {
             }
         }
         this._summonWait = this._summonWaitMax;
+        if (creature !== undefined){
+          return creature;
+        } else {
+            return null;
+        }
     }
 }
 

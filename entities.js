@@ -116,11 +116,13 @@ Game.EntityRepository.define('slime', {
     attackValue: 3,
     accuracyValue: 70,
     sightRadius: 6,
+    splitOnHit: 1,
+    summonCount: 1,
     description: "A sentient blob of jelly that divides when hit.",
     tasks: ['hunt', 'wander'],
     mixins: [Game.EntityMixins.TaskActor, Game.EntityMixins.Sight,
              Game.EntityMixins.Attacker, Game.EntityMixins.Destructible, 
-             Game.EntityMixins.Affectible]
+             Game.EntityMixins.Affectible, Game.EntityMixins.Summoner]
 });
 
 Game.EntityRepository.define('floater', {
@@ -165,6 +167,7 @@ Game.EntityRepository.define('rat king', {
     accuracyValue: 70,
     sightRadius: 15,
     headHits: 3,
+    summonWaitMax: 20,
     description: "A giant rat nestled in a ball of its dead rivals",
     tasks: ['summonMonster', 'hunt', 'wander'],
     mixins: [Game.EntityMixins.TaskActor, Game.EntityMixins.Sight,
@@ -191,9 +194,9 @@ Game.EntityRepository.define('death', {
 
 
 Game.EntityRepository.repoFrequency = {
-    'L1': [{'rat': 3}, {'kobold': 2}, {'bat':2}, {'jackal': 1}, {'rat king': 1}],
+    'L1': [{'rat': 3}, {'kobold': 2}, {'bat':2}, {'jackal': 1}],
     'L2': [{'rat': 2}, {'kobold': 2}, {'bat':2}, {'jackal': 1}, {'goblin': 1}, {'floater': 1}],
-    'L3': [{'rat': 2}, {'kobold': 2}, {'bat':2}, {'jackal': 1}, {'goblin': 1}, {'floater': 1}, {'slime': 1}],
+    'L3': [{'rat': 2}, {'kobold': 2}, {'bat':2}, {'jackal': 1}, {'goblin': 1}, {'floater': 1}, {'slime': 1}, {'rat king': 1}],
     'L4': [{'rat': 2}, {'goblin': 1}, {'floater': 1}, {'slime': 2}],
     'L5': [{'rat': 2}, {'goblin': 1}, {'floater': 1}, {'slime': 2}],
     'L6': [{'rat': 2}, {'goblin': 1}, {'floater': 1}, {'slime': 2}]

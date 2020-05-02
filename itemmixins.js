@@ -32,7 +32,7 @@ Game.ItemMixins.Edible = {
             var map = entity.getMap();
             map.shatter(x,y);
         } else if (this._name === 'summoning potion'){
-            entity.summon();
+            entity.summon('rat');
         } else if (this._name === 'teleportation potion') {
             var x = entity.getX();
             var y = entity.getY();
