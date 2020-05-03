@@ -148,7 +148,7 @@ Game.EntityRepository.define('floater', {
     sightRadius: 10,
     explodeTile: 'poisonTile',
     explodeSize: 10,
-    description: "Blows up on contact, creates a poison pool.",
+    description: "Blows up on contact, creates a pool of poison slime.",
     tasks: ['hunt', 'wander'],
     mixins: [Game.EntityMixins.TaskActor, Game.EntityMixins.Sight,
              Game.EntityMixins.Attacker, Game.EntityMixins.Destructible, 

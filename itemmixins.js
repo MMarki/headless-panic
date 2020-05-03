@@ -17,7 +17,16 @@ Game.ItemMixins.Edible = {
     },
     eat: function(entity) {
         if (this._potionEffect !== null){
-            entity.setEffect(this._potionEffect);
+            if (this._potionEffect === 'knowledgeable'){
+                entity.setEffect(this._potionEffect);
+            } else {
+                var x = entity.getX();
+                var y = entity.getY();
+                var map = entity.getMap();
+                var tempList = []
+                tempList.push({x: x, y: y});
+                map.cellGrow(tempList, 'fireTile', 10);
+            }
         } else if (entity.hasMixin('Bleeder')) {
             if (this._name === "health potion"){
                 entity.modifyHPBy(this._healthValue);

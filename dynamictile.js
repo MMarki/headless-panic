@@ -12,6 +12,8 @@ Game.DynamicTile = function(properties) {
     this._isDynamic = properties['isDynamic'] || true;
     this._lifespan = properties['lifespan'] || 5;
     this._speed = properties['speed'] || 1000;
+    this._defaultForeground = this._foreground;
+    this._defaultBackground = this._background;
 };
 
 // Make items inherit all the functionality from glyphs
@@ -64,6 +66,8 @@ Game.DynamicTileMixins.Actor = {
         } else {
             this.getMap().removeDynamicTile(this);
         }
+        this._foreground = ROT.Color.toHex(ROT.Color.randomize(ROT.Color.fromString(this._defaultForeground), [10, 10, 10]));
+        this._background = ROT.Color.toHex(ROT.Color.randomize(ROT.Color.fromString(this._defaultBackground), [10, 10, 10]));
         // Re-render the screen
         Game.refresh();
     }

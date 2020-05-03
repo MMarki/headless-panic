@@ -744,6 +744,8 @@ Game.EntityMixins.Affectible = {
     applyEffect: function(effectName) {
         if (effectName === "poisoned" && this.hasMixin('Destructible')){
             return this.takeDamage(this, 1);
+        } else if (effectName === "burning" && this.hasMixin('Destructible')){
+            return this.takeDamage(this, 1);
         }
     },
     setEffect : function(effect) {
