@@ -30,6 +30,19 @@ Game.EntityRepository.define('fungus', {
              Game.EntityMixins.Affectible]
 });
 
+Game.EntityRepository.define('barrel', {
+    name: 'barrel',
+    character: '#',
+    foreground: "#C4B9AC",
+    background: "#B57F50",
+    explodeTile: Game.Tile.wineTile,
+    explodeSize: 6,
+    maxHP: 1,
+    notMonster: 1,
+    description: "a barrel",
+    mixins: [Game.EntityMixins.Destructible, Game.EntityMixins.Exploder]
+});
+
 Game.EntityRepository.define('bat', {
     name: 'bat',
     character: 'b',
@@ -133,6 +146,8 @@ Game.EntityRepository.define('floater', {
     attackValue: 0,
     accuracyValue: 70,
     sightRadius: 10,
+    explodeTile: Game.Tile.poisonTile,
+    explodeSize: 10,
     description: "Blows up on contact, creates a poison pool.",
     tasks: ['hunt', 'wander'],
     mixins: [Game.EntityMixins.TaskActor, Game.EntityMixins.Sight,

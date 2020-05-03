@@ -225,7 +225,7 @@ Game.EntityMixins.Destructible = {
                 var currentPosition = {x: this.getX(), y: this.getY()}
                 var tempList = []
                 tempList.push(currentPosition)
-                this.getMap().cellGrow(tempList, Game.Tile.poisonTile);
+                this.getMap().cellGrow(tempList, this._explodeTile, this._explodeSize);
             }
             if (this.hasMixin(Game.EntityMixins.PlayerActor)) {
                 this.act();
@@ -766,8 +766,8 @@ Game.EntityMixins.Affectible = {
 Game.EntityMixins.Exploder = {
     name: 'Exploder',
     init: function(template){
-        this._explodeTile = Game.Tile.poisonTile;
-        this.explodeSize = 6;
+        this._explodeTile = template['explodeTile'] || Game.Tile.poisonTile;
+        this._explodeSize = template['explodeSize'] || 10;
     }
 }
 

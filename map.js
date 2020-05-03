@@ -23,6 +23,7 @@ Game.Map = function(tiles, player, items) {
     for (var i = 0; i < 10; i++) {
         // Add a random entity
         this.addEntityAtRandomPosition(Game.EntityRepository.createRandomByFrequency('L' + Game.getLevel()));
+        this.addEntityAtRandomPosition(Game.EntityRepository.create("barrel"));
     }
     // 15 items per floor
     for (var i = 0; i < 4; i++) {
@@ -101,12 +102,12 @@ Game.Map.prototype.shatter = function(x, y) {
 Game.Map.prototype.dig = function(x, y) {
     // If the tile is diggable, update it to a floor
     if (this.getTile(x, y).isDiggable()) {
-        this.changeTile(x, y, Game.Tile.rubbleTile);
+        this._tiles[x][y] = Game.Tile.rubbleTile;
     }
 };
 
 Game.Map.prototype.changeTile = function(x, y, template) {
-    if (this._tiles[x][y] === Game.Tile.stairsDownTile) {return;}
+    if (this._tiles[x][y] !== Game.Tile.floorTile) {return;}
     this._tiles[x][y] = template;
 };
 
@@ -276,11 +277,11 @@ Game.Map.prototype.addItemAtRandomPosition = function(item) {
     this.addItem(position.x, position.y, item);
 };
 
-Game.Map.prototype.cellGrow = function(list, tileType) {
+Game.Map.prototype.cellGrow = function(list, tileType, numberOfTiles) {
     var growthCount = 0;
     var i = 0;
     console.log(this._tiles);
-    while (growthCount < 20){
+    while (growthCount < numberOfTiles){
         var currentTile = list[i]
         if (currentTile === undefined){
             break;

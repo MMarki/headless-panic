@@ -117,13 +117,13 @@ Game.Tile.grassTile = new Game.Tile({
     description: 'a patch of grass'
 });
 
-Game.Tile.barrelTile = new Game.Tile({
-    character: '#',
-    foreground: "#C4B9AC",
-    background: "#B57F50",
+Game.Tile.wineTile = new Game.Tile({
+    character: '.',
+    foreground: "#fff",
+    background: "#B07BAC",
     walkable: true,
     blocksLight: false,
-    description: 'a barrel'
+    description: 'a pool of wine'
 });
 
 Game.getNeighborPositions = function(x, y) {

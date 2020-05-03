@@ -17,9 +17,6 @@ Game.Builder = function(width, height) {
     }
 
     this._setupRegions();
-    this._setBarrel();
-    this._setBarrel();
-    this._setBarrel();
     this._setGrass();
     this._setGrass();
     this._setGrass();
@@ -168,22 +165,6 @@ Game.Builder.prototype._setStairs = function() {
     this._tiles[match.x][match.y] = Game.Tile.stairsDownTile;
 }
 
-// Generates barrel at a free location
-Game.Builder.prototype._setBarrel = function() {
-    var matches = [];
-    // Iterate through all tiles, checking if they are floor tiles. 
-    for (var x = 0; x < this._width; x++) {
-        for (var y = 0; y < this._height; y++) {
-            if (this._tiles[x][y]  == Game.Tile.floorTile) {
-                matches.push({x: x, y: y});
-            }
-        }
-    }
-    // We shuffle the list of matches to prevent bias
-    var match =  matches[Math.floor(Math.random() * matches.length)];
-    this._tiles[match.x][match.y] = Game.Tile.barrelTile;
-}
-
 // Generates grass at free locations
 Game.Builder.prototype._setGrass = function() {
     var matches = [];
@@ -199,7 +180,7 @@ Game.Builder.prototype._setGrass = function() {
     var match =  matches[Math.floor(Math.random() * matches.length)];
     var grassList = [];
     grassList.push(match);
-    this._cellGrow(grassList, Game.Tile.grassTile)
+    this._cellGrow(grassList, Game.Tile.grassTile, 20)
 }
 
 // Generates grass at free locations
@@ -217,14 +198,14 @@ Game.Builder.prototype._setShallowWater = function() {
     var match = matches[Math.floor(Math.random() * matches.length)];
     var waterList = [];
     waterList.push(match);
-    this._cellGrow(waterList, Game.Tile.shallowWaterTile)
+    this._cellGrow(waterList, Game.Tile.shallowWaterTile, 20)
 }
 
 // Generates tileType at free locations
-Game.Builder.prototype._cellGrow = function(list, tileType) {
+Game.Builder.prototype._cellGrow = function(list, tileType, numberOfTiles) {
     var growthCount = 0;
     var i = 0;
-    while (growthCount < 20){
+    while (growthCount < numberOfTiles){
         var currentTile = list[i]
         if (currentTile === undefined){
             break;
