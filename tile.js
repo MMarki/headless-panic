@@ -8,6 +8,9 @@ Game.Tile = function(properties) {
     this._diggable = properties['diggable'] || false;
     this._blocksLight = (properties['blocksLight'] !== undefined) ? properties['blocksLight'] : true;
     this._description = properties['description'] || '';
+    this._flammable = properties['flammable'] || false;
+    this._isDynamic = properties['isDynamic'] || false;
+    this._lifespan = properties['lifespan'] || 0;
     if (vary) {
         this._background =  ROT.Color.toHex(ROT.Color.randomize(ROT.Color.fromString(this._background), [0, 0, 0]));
      }
@@ -90,15 +93,6 @@ Game.Tile.shallowWaterTile = new Game.Tile({
     description: 'a pool of shallow water'
 });
 
-Game.Tile.poisonTile = new Game.Tile({
-    character: '.',
-    foreground: '#FFF',
-    background: '#1C9B03',
-    walkable: true,
-    blocksLight: false,
-    description: 'a pool of bubbling poison'
-});
-
 Game.Tile.doorTile = new Game.Tile({
     character: '+', //'
     foreground: '#FFF',
@@ -114,16 +108,16 @@ Game.Tile.grassTile = new Game.Tile({
     background: "#080A1F",
     walkable: true,
     blocksLight: false,
+    flammable: true,
     description: 'a patch of grass'
 });
 
-Game.Tile.wineTile = new Game.Tile({
-    character: '.',
-    foreground: "#fff",
-    background: "#B07BAC",
+Game.Tile.ashTile = new Game.Tile({
+    character: ',',
+    foreground: "#777777",
     walkable: true,
     blocksLight: false,
-    description: 'a pool of wine'
+    description: "ash"
 });
 
 Game.getNeighborPositions = function(x, y) {

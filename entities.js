@@ -35,10 +35,10 @@ Game.EntityRepository.define('barrel', {
     character: '#',
     foreground: "#C4B9AC",
     background: "#B57F50",
-    explodeTile: Game.Tile.wineTile,
+    explodeTile: 'wineTile',
     explodeSize: 6,
     maxHP: 1,
-    notMonster: 1,
+    notMonster: true,
     description: "a barrel",
     mixins: [Game.EntityMixins.Destructible, Game.EntityMixins.Exploder]
 });
@@ -146,7 +146,7 @@ Game.EntityRepository.define('floater', {
     attackValue: 0,
     accuracyValue: 70,
     sightRadius: 10,
-    explodeTile: Game.Tile.poisonTile,
+    explodeTile: 'poisonTile',
     explodeSize: 10,
     description: "Blows up on contact, creates a poison pool.",
     tasks: ['hunt', 'wander'],

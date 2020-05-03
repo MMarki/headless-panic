@@ -277,10 +277,45 @@ Game.Map.prototype.addItemAtRandomPosition = function(item) {
     this.addItem(position.x, position.y, item);
 };
 
+Game.Map.prototype.addDynamicTile = function(tile, x, y) {
+    // Update the tile's map
+    tile.setMap(this);
+    // Make sure the tile's position is within bounds
+    if (x < 0 || x >= this._width || y < 0 || y >= this._height ) {
+        throw new Error("Tile's position is out of bounds.");
+    }
+    // Add the tile to the table of tiles
+    this._tiles[x][y] = tile;
+    tile.setX(x);
+    tile.setY(y);
+
+    // Check if this tile is an actor, and if so add them to the scheduler
+    if (tile.hasMixin('Actor')) {
+       this._scheduler.add(tile, true);
+    }
+};
+
+Game.Map.prototype.removeDynamicTile = function(tile) {
+    // Remove the entity from the map
+    var x = tile.getX();
+    var y = tile.getY();
+    if (this._tiles[x][y] === tile) {
+        this._tiles[x][y] = Game.Tile.floorTile;
+    }
+
+    console.log("removing!");
+    // If the entity is an actor, remove them from the scheduler
+    if (tile.hasMixin('Actor')) {
+        this._scheduler.remove(tile);
+    }
+}
+
+
 Game.Map.prototype.cellGrow = function(list, tileType, numberOfTiles) {
     var growthCount = 0;
     var i = 0;
-    console.log(this._tiles);
+    var dynamic = 1;
+
     while (growthCount < numberOfTiles){
         var currentTile = list[i]
         if (currentTile === undefined){
@@ -291,24 +326,40 @@ Game.Map.prototype.cellGrow = function(list, tileType, numberOfTiles) {
 
         if (this._tiles[x - 1][y] === Game.Tile.floorTile) {
             this._tiles[x - 1][y] = tileType;
+            if (dynamic){
+                var tileObject = Game.DynamicTileRepository.create(tileType);
+                this.addDynamicTile(tileObject, x -1, y);
+            }
             list.push({x: x - 1, y: y});
             growthCount ++;
         }
         if (this._tiles[x + 1][y] === Game.Tile.floorTile) {
             this._tiles[x + 1][y] = tileType;
+            if (dynamic){
+                var tileObject = Game.DynamicTileRepository.create(tileType);
+                this.addDynamicTile(tileObject, x + 1, y);
+            }
             list.push({x: x + 1, y: y});
             growthCount ++;
         }
         if (this._tiles[x][y - 1] === Game.Tile.floorTile) {
             this._tiles[x][y -1]  = tileType;
+            if (dynamic){
+                var tileObject = Game.DynamicTileRepository.create(tileType);
+                this.addDynamicTile(tileObject, x, y - 1);
+            }
             list.push({x: x, y: y - 1});
             growthCount ++;
         }
         if (this._tiles[x][y + 1] === Game.Tile.floorTile) {
             this._tiles[x][y + 1] = tileType;
+            if (dynamic){
+                var tileObject = Game.DynamicTileRepository.create(tileType);
+                this.addDynamicTile(tileObject, x, y + 1);
+            }
             list.push({x: x, y: y + 1});
             growthCount ++;
         }
         i++
     }
-}
+};

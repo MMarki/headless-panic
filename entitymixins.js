@@ -766,7 +766,7 @@ Game.EntityMixins.Affectible = {
 Game.EntityMixins.Exploder = {
     name: 'Exploder',
     init: function(template){
-        this._explodeTile = template['explodeTile'] || Game.Tile.poisonTile;
+        this._explodeTile = template['explodeTile'] || 'poisonTile';
         this._explodeSize = template['explodeSize'] || 10;
     }
 }

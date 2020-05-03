@@ -8,6 +8,7 @@ Game.Entity = function(properties) {
     this._map = null;
     // Acting speed
     this._speed = properties['speed'] || 1000;
+    this._notMonster = properties['notMonster'] || false;
 };
 // Make entities inherit all the functionality from glyphs
 Game.Entity.extend(Game.DynamicGlyph);

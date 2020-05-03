@@ -322,7 +322,6 @@ Game.Screen.playScreen = {
                         }
                         // Since the tile was previously explored but is not visible,
                         // we want to change the foreground color to dark gray.
-                        //console.log(ROT.Color.fromString(foreground));
                         foreground = ROT.Color.toHex(ROT.Color.multiply(ROT.Color.fromString(foreground),[80,80,130]));
                         background = ROT.Color.toHex(ROT.Color.multiply(ROT.Color.fromString(background),[80,80,130]));
                     }
@@ -345,7 +344,7 @@ Game.Screen.playScreen = {
             var entity = entities[key];
             if (visibleCells[entity.getX() + ',' + entity.getY()] || this._player.hasEffect('knowledgeable')) {
                 display.draw(entity.getX(), entity.getY(), entity.getChar(), entity.getForeground(), entity.getBackground());
-                if (!entity.hasMixin('PlayerActor')){
+                if (!entity.hasMixin('PlayerActor') && entity._notMonster === false){
                     visibleEntities.push(entity);
                 }
             }

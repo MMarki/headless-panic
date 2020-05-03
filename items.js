@@ -7,9 +7,10 @@ Game.ItemRepository = new Game.Repository('items', Game.Item);
 // Darkness
 
 // Fire
+// Fire immunity
+
 // Magic Sensitivity
 // Holy Potion, clears curses from items in inventory
-// Fire immunity
 // Protection potion
 
 Game.GatedItemRepository.define('life potion', {
