@@ -10,6 +10,7 @@ Game.EntityMixins.PlayerActor = {
         this._acting = true;
         this.addTurnBleed();
         this.handleEffects();
+        this.applyNewEffects();
         // Detect if the game is over
         if (this.getHP() < 1) {
             Game.Screen.playScreen.setGameEnded(true);
@@ -37,6 +38,8 @@ Game.EntityMixins.TaskActor = {
     act: function() {
         var stopActor = this.handleEffects();
         if (stopActor === 1) {return;}
+
+        this.applyNewEffects();
 
         if (this.hasMixin('Summoner') && this._summonWait > 0) {
             this._summonWait -=1;
@@ -118,6 +121,8 @@ Game.EntityMixins.FungusActor = {
         this._growthsRemaining = 5;
     },
     act: function() { 
+        this.applyNewEffects();
+
         // Check if we are going to try growing this turn
         if (this._growthsRemaining > 0) {
             if (Math.random() <= 0.02) {
@@ -424,7 +429,7 @@ Game.EntityMixins.Thrower = {
             var newX = 0;
             var newY = 0;
 
-            while (!target.tryMoveNoAttack(x + newX, y + newY) ){
+            while (!target.tryMoveTeleport(x + newX, y + newY) ){
                 newX = Math.floor(Math.random() * 80) - 40;
                 newY = Math.floor(Math.random() * 40) - 20;
             }

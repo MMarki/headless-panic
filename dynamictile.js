@@ -4,6 +4,7 @@ Game.DynamicTile = function(properties) {
     Game.DynamicGlyph.call(this, properties);
     // Set up the properties. We use false by default.
     var vary = properties['vary'] || false;
+    this._name = properties['name'];
     this._walkable = properties['walkable'] || false;
     this._diggable = properties['diggable'] || false;
     this._blocksLight = (properties['blocksLight'] !== undefined) ? properties['blocksLight'] : true;

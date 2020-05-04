@@ -80,7 +80,7 @@ Game.Entity.prototype.tryMove = function(x, y) {
     return false;
 }
 
-Game.Entity.prototype.tryMoveNoAttack = function(x, y) {
+Game.Entity.prototype.tryMoveTeleport = function(x, y) {
     var map = this.getMap();
     console.log('x: ' + x + "y: " + y)
     var tile = map.getTile(x, y);
@@ -88,10 +88,35 @@ Game.Entity.prototype.tryMoveNoAttack = function(x, y) {
     // If an entity was present at the tile
     if (target) {
         return false;
-    // Check if we can walk on the tile and if so simply walk onto it
+    // Check if we can walk on the tile
     } else if (tile.isWalkable()) {        
-        // Update the entity's position
         return true;
     }
     return false;
+}
+
+Game.Entity.prototype.applyNewEffects = function(){
+    var map = this.getMap();
+    var tile = map.getTile(this._x, this._y);
+
+    //check if they already have it,
+    // if so, change the existing duration instead of adding a new one
+
+    if (this.hasMixin(Game.EntityMixins.Affectible)){
+        if (tile._name === 'fireTile'){
+            if (!this.hasEffect("burning")){
+                var duration = 7;
+                var name = "burning";
+                var newEffect = new Game.Effect(duration, name);
+                this.setEffect(newEffect);
+            }
+        } else if (tile._name === 'poisonTile'){
+            if (!this.hasEffect("poisoned")){
+                var duration = 10;
+                var name =  "poisoned";
+                var newEffect = new Game.Effect(duration, name);
+                this.setEffect(newEffect);
+            }
+        }
+    }
 }

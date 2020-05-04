@@ -3,6 +3,7 @@ Game.DynamicTileRepository = new Game.Repository('dynamicTiles', Game.DynamicTil
 
 Game.DynamicTileRepository.define('fireTile', {
     character: '^',
+    name: 'fireTile',
     foreground: "#F44708",
     background: "291201",
     walkable: true,
@@ -15,6 +16,7 @@ Game.DynamicTileRepository.define('fireTile', {
 
 Game.DynamicTileRepository.define('poisonTile', {
     character: '.',
+    name: 'poisonTile',
     foreground: '#FFF',
     background: '#1C9B03',
     walkable: true,
@@ -27,6 +29,7 @@ Game.DynamicTileRepository.define('poisonTile', {
 
 Game.DynamicTileRepository.define('wineTile', {
     character: '.',
+    name: 'wineTile',
     foreground: "#D6E4F2",
     background: "#B07BAC",
     walkable: true,
@@ -37,6 +40,7 @@ Game.DynamicTileRepository.define('wineTile', {
 
 Game.DynamicTileRepository.define('darknessTile', {
     character: '.',
+    name: 'darknessTile',
     foreground: "#1D1D1D",
     background: "#1D1D1D",
     walkable: true,

@@ -53,7 +53,7 @@ Game.ItemMixins.Edible = {
             var newX = 0;
             var newY = 0;
 
-            while (!entity.tryMoveNoAttack(x + newX, y + newY) ){
+            while (!entity.tryMoveTeleport(x + newX, y + newY) ){
                 newX = Math.floor(Math.random() * 80) - 40;
                 newY = Math.floor(Math.random() * 40) - 20;
             }
