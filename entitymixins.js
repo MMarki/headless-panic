@@ -524,7 +524,7 @@ Game.EntityMixins.Sight = {
         var otherX = entity.getX();
         var otherY = entity.getY();
 
-        var seeAbleByMagic = (this.hasEffect("knowledgeable") &&  this.getMap().getEntityAt(otherX, otherY) !== null);
+        var seeAbleByMagic = (this.hasEffect("knowledgeable") && this.getMap().getEntityAt(otherX, otherY) !== null);
         if (seeAbleByMagic){
             return true;
         }

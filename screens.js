@@ -50,7 +50,7 @@ Game.Screen.playScreen = {
         this._player.addItem(dart);
         var dart = Game.ItemRepository.create('dart');
         this._player.addItem(dart);
-        var test = Game.ItemRepository.create('fire potion');
+        var test = Game.ItemRepository.create('knowledge potion');
         this._player.addItem(test);
         var test = Game.ItemRepository.create('poison potion');
         this._player.addItem(test);
@@ -344,7 +344,7 @@ Game.Screen.playScreen = {
 
         for (var key in entities) {
             var entity = entities[key];
-            if (visibleCells[entity.getX() + ',' + entity.getY()] || this._player.hasEffect('knowledgeable')) {
+            if (visibleCells[entity.getX() + ',' + entity.getY()] || (this._player.hasEffect('knowledgeable') && entity._notMonster == false)) {
                 display.draw(entity.getX(), entity.getY(), entity.getChar(), entity.getForeground(), entity.getBackground());
                 if (!entity.hasMixin('PlayerActor') && entity._notMonster === false){
                     visibleEntities.push(entity);
