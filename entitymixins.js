@@ -352,8 +352,18 @@ Game.EntityMixins.Thrower = {
 
         // shatter potion effect
         if (item.hasMixin(Game.ItemMixins.Edible)) {
-            if(item._name === "shatter potion"){
+            if (item._name === "shatter potion"){
                 this._map.shatter(endPointX, endPointY);
+            }
+            else if (item._name === "poison potion"){
+                var tempList = []
+                tempList.push({x: endPointX, y: endPointY});
+                this._map.cellGrow(tempList, 'poisonTile', 12);
+            }
+            else if (item._name === "fire potion"){
+                var tempList = []
+                tempList.push({x: endPointX, y: endPointY});
+                this._map.cellGrow(tempList, 'fireTile', 10);
             }
         }
 

@@ -17,16 +17,7 @@ Game.ItemMixins.Edible = {
     },
     eat: function(entity) {
         if (this._potionEffect !== null){
-            if (this._potionEffect === 'knowledgeable'){
-                entity.setEffect(this._potionEffect);
-            } else {
-                var x = entity.getX();
-                var y = entity.getY();
-                var map = entity.getMap();
-                var tempList = []
-                tempList.push({x: x, y: y});
-                map.cellGrow(tempList, 'fireTile', 10);
-            }
+            entity.setEffect(this._potionEffect);
         } else if (entity.hasMixin('Bleeder')) {
             if (this._name === "health potion"){
                 entity.modifyHPBy(this._healthValue);
@@ -40,6 +31,20 @@ Game.ItemMixins.Edible = {
             var y = entity.getY();
             var map = entity.getMap();
             map.shatter(x,y);
+        } else if (this._name === 'fire potion'){
+            var x = entity.getX();
+            var y = entity.getY();
+            var map = entity.getMap();
+            var tempList = []
+            tempList.push({x: x, y: y});
+            map.cellGrow(tempList, 'fireTile', 10);
+        } else if (this._name === 'poison potion'){
+            var x = entity.getX();
+            var y = entity.getY();
+            var map = entity.getMap();
+            var tempList = []
+            tempList.push({x: x, y: y});
+            map.cellGrow(tempList, 'poisonTile', 12);
         } else if (this._name === 'summoning potion'){
             entity.summon('rat');
         } else if (this._name === 'teleportation potion') {

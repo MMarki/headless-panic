@@ -42,10 +42,6 @@ Game.ItemRepository.define('poison potion', {
     name: 'poison potion',
     character: '!',
     foreground: '#F2EC2D',
-    potionEffect: {
-        duration: 10,
-        name: "poisoned"
-    },
     mixins: [Game.ItemMixins.Edible, Game.ItemMixins.Throwable]
 });
 
@@ -53,10 +49,6 @@ Game.ItemRepository.define('fire potion', {
     name: 'fire potion',
     character: '!',
     foreground: '#F2EC2D',
-    potionEffect: {
-        duration: 7,
-        name: "burning"
-    },
     mixins: [Game.ItemMixins.Edible, Game.ItemMixins.Throwable]
 });
 

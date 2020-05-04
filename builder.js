@@ -16,7 +16,7 @@ Game.Builder = function(width, height) {
         }
     }
 
-    this._setupRegions();
+    //this._setupRegions();
     this._setGrass();
     this._setGrass();
     this._setGrass();
@@ -97,7 +97,7 @@ Game.Builder.prototype._fillRegion = function(region, x, y) {
     while (tiles.length > 0) {
         tile = tiles.pop();
         // Get the neighbors of the tile
-        neighbors = Game.getNeighborPositions(tile.x, tile.y);
+        neighbors = tile.getNeighborPositions();
         // Iterate through each neighbor, checking if we can use it to fill
         // and if so updating the region and adding it to our processing
         // list.

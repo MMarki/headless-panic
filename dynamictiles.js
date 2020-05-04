@@ -10,7 +10,7 @@ Game.DynamicTileRepository.define('fireTile', {
     isDynamic: true,
     lifespan: 8,
     description: "a dancing flame",
-    mixins: [Game.DynamicTileMixins.Actor]
+    mixins: [Game.DynamicTileMixins.Actor, Game.DynamicTileMixins.Spreadable]
 });
 
 Game.DynamicTileRepository.define('poisonTile', {

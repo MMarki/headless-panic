@@ -29,8 +29,26 @@ Game.DynamicTile.prototype.isDiggable = function() {
 Game.DynamicTile.prototype.isBlockingLight = function() {
     return this._blocksLight;
 }
+Game.DynamicTile.prototype.isFlammable = function() {
+    return this._flammable;
+}
 Game.DynamicTile.prototype.getDescription = function() {
     return this._description;
+};
+
+Game.DynamicTile.prototype.getNeighborPositions = function() {
+    var tiles = [];
+    // Generate all possible offsets
+    for (var dX = -1; dX < 2; dX ++) {
+        for (var dY = -1; dY < 2; dY++) {
+            // Make sure it isn't the same tile
+            if (dX == 0 && dY == 0) {
+                continue;
+            }
+            tiles.push({x: this._x + dX, y: this._y + dY});
+        }
+    }
+    return Game.randomize(tiles);
 };
 
 Game.DynamicTile.prototype.setX = function(x) {
@@ -66,9 +84,32 @@ Game.DynamicTileMixins.Actor = {
         } else {
             this.getMap().removeDynamicTile(this);
         }
+
+        if (this.hasMixin(Game.DynamicTileMixins.Spreadable)){
+            var neighbors = this.getNeighborPositions();
+            // see if they match this._spreadSubstance
+            for (var i = 0; i < neighbors.length; i++){
+                var neighbor = neighbors[i];
+                console.log(neighbor);
+                var tile = this._map.getTile(neighbor.x, neighbor.y);
+                if (tile.isFlammable()){
+                    var newTile =  Game.DynamicTileRepository.create('fireTile')
+                    this._map.addDynamicTile(newTile, neighbor.x, neighbor.y);
+                }
+                
+            }
+        }
+
         this._foreground = ROT.Color.toHex(ROT.Color.randomize(ROT.Color.fromString(this._defaultForeground), [10, 10, 10]));
         this._background = ROT.Color.toHex(ROT.Color.randomize(ROT.Color.fromString(this._defaultBackground), [10, 10, 10]));
         // Re-render the screen
         Game.refresh();
+    }
+};
+
+Game.DynamicTileMixins.Spreadable = {
+    name: 'Spreadable',
+    init: function(template) { 
+        this._spreadSubstance = template['spreadSubstance'] || 'flammable';
     }
 };
