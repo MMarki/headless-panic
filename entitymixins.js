@@ -77,6 +77,15 @@ Game.EntityMixins.TaskActor = {
             if (this.hasMixin('Attacker')) {
                 this.attack(player);
                 return;
+            } else {
+                if (this.hasMixin(Game.EntityMixins.Exploder)) {
+                    var currentPosition = {x: this.getX(), y: this.getY()}
+                    var tempList = []
+                    tempList.push(currentPosition)
+                    var map = this.getMap();
+                    map.cellGrow(tempList, this._explodeTile, this._explodeSize);
+                    map.removeEntity(this);
+                }
             }
         }
 

@@ -50,7 +50,17 @@ Game.Screen.playScreen = {
         this._player.addItem(dart);
         var dart = Game.ItemRepository.create('dart');
         this._player.addItem(dart);
-        var test = Game.ItemRepository.create('darkness potion');
+        var dart = Game.ItemRepository.create('dart');
+        this._player.addItem(dart);
+        var dart = Game.ItemRepository.create('dart');
+        this._player.addItem(dart);
+        var dart = Game.ItemRepository.create('dart');
+        this._player.addItem(dart);
+        var dart = Game.ItemRepository.create('dart');
+        this._player.addItem(dart);
+        var dart = Game.ItemRepository.create('dart');
+        this._player.addItem(dart);
+        var test = Game.ItemRepository.create('fire potion');
         this._player.addItem(test);
         var test = Game.ItemRepository.create('darkness potion');
         this._player.addItem(test);
@@ -86,7 +96,7 @@ Game.Screen.playScreen = {
             }
         }
         // Render UI 
-        display.drawText(0, screenHeight, "%c{yellow}I%c{}nventory  %c{yellow}T%c{}hrow  %c{yellow}E%c{}quip  %c{yellow}A%c{}pply  %c{yellow}L%c{}ook");
+        display.drawText(0, screenHeight, "%c{yellow}I%c{white}nventory  %c{yellow}T%c{white}hrow  %c{yellow}E%c{white}quip  %c{yellow}A%c{white}pply  %c{yellow}L%c{white}ook");
 
         var you = '%c{white}%b{black}';
         you += "@:    You";
@@ -95,23 +105,32 @@ Game.Screen.playScreen = {
         var playerHealth = this._player.getHP()/this._player.getMaxHP();
         var healthUIColor = (playerHealth > 0.66) ? "%c{white}" : ((playerHealth > 0.33) ? "%c{yellow}" : "%c{red}");
         var healthString = "%c{white}%b{black}HP:   " + healthUIColor + this._player.getHP() + "/" + this._player.getMaxHP();
-        display.drawText(screenWidth + 1, 1, healthString);
 
         var currentHead = this._player.getHead();
         if (currentHead !== null){
-            display.drawText(screenWidth + 1, 2, "HEAD: " +  "%c{" + currentHead._foreground + "}"+ currentHead._name);
+            display.drawText(screenWidth + 1, 2, "%c{white}HEAD: " +  "%c{" + currentHead._foreground + "}"+ currentHead._name);
             var numberOfHeadHits = currentHead._headHits;
             for (var h = 0; h < numberOfHeadHits; h++){
-                display.drawText(screenWidth + 1 + 2 * h, 3, "\u2665 ");
+                healthString +=  " \u2665";
             }
         } else {
             display.drawText(screenWidth + 1, 2, "HEAD: " + "%c{red}NONE");
         }
+        //Finally, draw the health string on the prior line
+        display.drawText(screenWidth + 1, 1, healthString);
+
+        //Draw the effects for the player
+        var effectsList = this._player.getEffects();
+        var effectsString = '';
+        for (effect of effectsList){
+            var effectsString = effectsString + '%c{' + effect._color + '}' + effect.getName() + ' ';
+        }
+        display.drawText(screenWidth + 1, 3, effectsString);
         
-        display.drawText(screenWidth + 1, 5, "ARMR: +" + this._player.getDefenseValue());
-        display.drawText(screenWidth + 1, 6, "ATTK: +" + this._player.getAttackValue());
-        display.drawText(screenWidth + 1, 7, "STRN: " + this._player.getStrengthValue());
-        display.drawText(screenWidth + 1, 8, "LVL:  Cellars " + Game.getLevel() );
+        display.drawText(screenWidth + 1, 5, "%c{white}ARMR: +" + this._player.getDefenseValue());
+        display.drawText(screenWidth + 1, 6, "%c{white}ATTK: +" + this._player.getAttackValue());
+        display.drawText(screenWidth + 1, 7, "%c{white}STRN: " + this._player.getStrengthValue());
+        display.drawText(screenWidth + 1, 8, "%c{white}LVL:  Cellars " + Game.getLevel() );
     },
     handleInput: function(inputType, inputData) {
         // If the game is over, enter will bring the user to the losing screen.
@@ -688,6 +707,20 @@ Game.Screen.TargetBasedScreen.prototype.render = function(display) {
                     foregroundColor = tile.getForeground();
                     character = tile.getChar();
                 }
+            } else {
+                    //if tile is explored but not visible, check for items, otherwise use tile
+                    var items = map.getItemsAt(x, y);
+                    if (items) {
+                        var item = items[items.length - 1];
+                        foregroundColor = item.getForeground();
+                        character = item.getChar();
+                    // Else get tile info
+                    } else {
+                        var tile = map.getTile(x, y)
+                        foregroundColor = tile.getForeground();
+                        character = tile.getChar();
+                    }
+                    
             }
         } else {
             // If the tile is not explored, show no new info to user.
@@ -821,18 +854,18 @@ Game.Screen.ItemScreen.prototype.render = function(display) {
     var rowCount = 0;
     //open an item modal with:
     if(this._item.hasMixin('Edible')){
-        display.drawText(0, rowCount + 3, "%c{yellow}A%c{}pply");
+        display.drawText(0, rowCount + 3, "%c{yellow}A%c{white}pply");
         rowCount += 1;
     }
     if(this._item.hasMixin('Equippable')){
-        display.drawText(0, rowCount + 3, "%c{yellow}E%c{}quip");
+        display.drawText(0, rowCount + 3, "%c{yellow}E%c{white}quip");
         rowCount += 1;
     }
     if(this._item.hasMixin('Throwable')){
-        display.drawText(0, rowCount + 3, "%c{yellow}T%c{}hrow");
+        display.drawText(0, rowCount + 3, "%c{yellow}T%c{white}hrow");
         rowCount += 1;
     }
-    display.drawText(0,rowCount + 3, "%c{yellow}D%c{}rop");
+    display.drawText(0,rowCount + 3, "%c{yellow}D%c{white}rop");
 };
 
 Game.Screen.ItemScreen.prototype.executeOkFunction = function() {

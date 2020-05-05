@@ -151,8 +151,8 @@ Game.EntityRepository.define('floater', {
     description: "Blows up on contact, creates a pool of poison slime.",
     tasks: ['hunt', 'wander'],
     mixins: [Game.EntityMixins.TaskActor, Game.EntityMixins.Sight,
-             Game.EntityMixins.Attacker, Game.EntityMixins.Destructible, 
-             Game.EntityMixins.Affectible, Game.EntityMixins.Exploder]
+             Game.EntityMixins.Destructible, Game.EntityMixins.Affectible,
+             Game.EntityMixins.Exploder]
 });
 
 Game.EntityRepository.define('rat', {

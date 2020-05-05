@@ -91,7 +91,6 @@ Game.DynamicTileMixins.Actor = {
             // see if they match this._spreadSubstance
             for (var i = 0; i < neighbors.length; i++){
                 var neighbor = neighbors[i];
-                console.log(neighbor);
                 var tile = this._map.getTile(neighbor.x, neighbor.y);
                 if (tile.isFlammable()){
                     var newTile =  Game.DynamicTileRepository.create('fireTile')
