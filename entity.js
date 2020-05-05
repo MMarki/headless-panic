@@ -118,5 +118,14 @@ Game.Entity.prototype.applyNewEffects = function(){
                 this.setEffect(newEffect);
             }
         }
+
+        else if (tile._name === 'darknessTile'){
+            if (!this.hasEffect("blind")){
+                var duration = 20;
+                var name =  "blind";
+                var newEffect = new Game.Effect(duration, name);
+                this.setEffect(newEffect);
+            }
+        }
     }
 }

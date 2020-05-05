@@ -359,16 +359,18 @@ Game.EntityMixins.Thrower = {
         if (item.hasMixin(Game.ItemMixins.Edible)) {
             if (item._name === "shatter potion"){
                 this._map.shatter(endPointX, endPointY);
-            }
-            else if (item._name === "poison potion"){
+            } else if (item._name === "poison potion"){
                 var tempList = []
                 tempList.push({x: endPointX, y: endPointY});
                 this._map.cellGrow(tempList, 'poisonTile', 12);
-            }
-            else if (item._name === "fire potion"){
+            } else if (item._name === "fire potion"){
                 var tempList = []
                 tempList.push({x: endPointX, y: endPointY});
                 this._map.cellGrow(tempList, 'fireTile', 10);
+            } else if (item._name === "darkness potion"){
+                var tempList = []
+                tempList.push({x: endPointX, y: endPointY});
+                this._map.cellGrow(tempList, 'darknessTile', 10);
             }
         }
 
@@ -521,6 +523,10 @@ Game.EntityMixins.Sight = {
             return false;
         }
 
+        if (this.hasEffect('blind')){
+            return false;
+        }
+
         var otherX = entity.getX();
         var otherY = entity.getY();
 
@@ -588,8 +594,6 @@ Game.EntityMixins.InventoryHolder = {
             }
         }
         return false;
-
-        
     },
     removeItem: function(i) {
         // If we can equip items, then make sure we unequip the item we are removing.

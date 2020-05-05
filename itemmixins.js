@@ -45,6 +45,13 @@ Game.ItemMixins.Edible = {
             var tempList = []
             tempList.push({x: x, y: y});
             map.cellGrow(tempList, 'poisonTile', 12);
+        } else if (this._name === 'darkness potion'){
+            var x = entity.getX();
+            var y = entity.getY();
+            var map = entity.getMap();
+            var tempList = []
+            tempList.push({x: x, y: y});
+            map.cellGrow(tempList, 'darknessTile', 9);
         } else if (this._name === 'summoning potion'){
             entity.summon('rat');
         } else if (this._name === 'teleportation potion') {

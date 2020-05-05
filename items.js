@@ -4,9 +4,6 @@ Game.ItemRepository = new Game.Repository('items', Game.Item);
 //TO DO: More Potions, including: 
 // Invisibility
 // Paralysis
-// Darkness
-
-// Fire
 // Fire immunity
 
 // Magic Sensitivity
@@ -90,6 +87,14 @@ Game.ItemRepository.define('health potion', {
 
 Game.ItemRepository.define('shatter potion', {
     name: 'shatter potion',
+    character: '!',
+    foreground: '#F2EC2D',
+    potionEffect: null,
+    mixins: [Game.ItemMixins.Edible, Game.ItemMixins.Throwable]
+});
+
+Game.ItemRepository.define('darkness potion', {
+    name: 'darkness potion',
     character: '!',
     foreground: '#F2EC2D',
     potionEffect: null,

@@ -49,7 +49,7 @@ Game.EntityRepository.define('bat', {
     foreground: '#f1f7ed',
     maxHP: 5,
     attackValue: 4,
-    accuracyValue: 70,
+    accuracyValue: 50,
     speed: 1000,
     description: "This monster flies quickly, and won't attack unless you bother it.",
     mixins: [Game.EntityMixins.TaskActor, Game.EntityMixins.HeadDropper,

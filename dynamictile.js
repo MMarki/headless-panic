@@ -43,7 +43,7 @@ Game.DynamicTile.prototype.getNeighborPositions = function() {
     for (var dX = -1; dX < 2; dX ++) {
         for (var dY = -1; dY < 2; dY++) {
             // Make sure it isn't the same tile
-            if (dX == 0 && dY == 0) {
+            if (dX === 0 && dY === 0 || (dX === dY)) {
                 continue;
             }
             tiles.push({x: this._x + dX, y: this._y + dY});

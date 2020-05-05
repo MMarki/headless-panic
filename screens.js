@@ -50,9 +50,9 @@ Game.Screen.playScreen = {
         this._player.addItem(dart);
         var dart = Game.ItemRepository.create('dart');
         this._player.addItem(dart);
-        var test = Game.ItemRepository.create('knowledge potion');
+        var test = Game.ItemRepository.create('darkness potion');
         this._player.addItem(test);
-        var test = Game.ItemRepository.create('poison potion');
+        var test = Game.ItemRepository.create('darkness potion');
         this._player.addItem(test);
         //Create map
         this._map = new Game.Map(tiles, this._player);
@@ -173,7 +173,7 @@ Game.Screen.playScreen = {
                 if (Game.Screen.eatScreen.setup(this._player, this._player.getItems())) {
                     this.setSubScreen(Game.Screen.eatScreen);
                 } else {
-                    Game.sendMessage(this._player, "You have nothing to eat!");
+                    Game.sendMessage(this._player, "You have nothing to apply!");
                     Game.refresh();
                 }
                 return;
@@ -277,19 +277,7 @@ Game.Screen.playScreen = {
                 // Mark cell as explored
                 map.setExplored(x, y, true);
             });
-        // Iterate through all visible map cells
-        for (var x = 0; x < this._map.getWidth(); x++) {
-            for (var y = 0; y < this._map.getHeight(); y++) {
-                if (visibleCells[x + "," + y]){
-                    // Fetch the glyph for the tile and render it to the screen
-                    var tile = this._map.getTile(x, y);
-                    display.draw(x, y,
-                        tile.getChar(), 
-                        tile.getForeground(), 
-                        tile.getBackground());
-                }
-            }
-        }
+
         // Render the explored map cells
         for (var x = 0; x < this._map.getWidth(); x++) {
             for (var y = 0; y < this._map.getHeight(); y++) {
@@ -327,35 +315,33 @@ Game.Screen.playScreen = {
                         foreground = ROT.Color.toHex(ROT.Color.multiply(ROT.Color.fromString(foreground),[80,80,130]));
                         background = ROT.Color.toHex(ROT.Color.multiply(ROT.Color.fromString(background),[80,80,130]));
                     }
-                    
-                    display.draw(
-                        x,
-                        y,
-                        glyph.getChar(), 
-                        foreground, 
-                        background);
+                    if (!this._player.hasEffect('blind')){
+                        display.draw(x, y, glyph.getChar(), foreground, background);
+                    }
                 }
             }
         }
         // Render the entities
-        var entities = this._map.getEntities();
-        var visibleEntities = [];
-        var screenWidth = Game.getScreenWidth();
+        if (!this._player.hasEffect('blind')){
+            var entities = this._map.getEntities();
+            var visibleEntities = [];
+            var screenWidth = Game.getScreenWidth();
 
-        for (var key in entities) {
-            var entity = entities[key];
-            if (visibleCells[entity.getX() + ',' + entity.getY()] || (this._player.hasEffect('knowledgeable') && entity._notMonster == false)) {
-                display.draw(entity.getX(), entity.getY(), entity.getChar(), entity.getForeground(), entity.getBackground());
-                if (!entity.hasMixin('PlayerActor') && entity._notMonster === false){
-                    visibleEntities.push(entity);
+            for (var key in entities) {
+                var entity = entities[key];
+                if (visibleCells[entity.getX() + ',' + entity.getY()] || (this._player.hasEffect('knowledgeable') && entity._notMonster == false)) {
+                    display.draw(entity.getX(), entity.getY(), entity.getChar(), entity.getForeground(), entity.getBackground());
+                    if (!entity.hasMixin('PlayerActor') && entity._notMonster === false){
+                        visibleEntities.push(entity);
+                    }
                 }
             }
-        }
-        
-        for (var i=0; i < visibleEntities.length; i++){
-            var visibleEntity = visibleEntities[i]
-            display.drawText(screenWidth + 1, 10 + 2*i + i , '%c{' + visibleEntity.getForeground() + '}' + visibleEntity.getChar() + ':  ' + visibleEntity.getName());
-            display.drawText(screenWidth + 1, 11 + 2*i + i, 'HP: ' + visibleEntity.getHP() + '/' + visibleEntity.getMaxHP());
+            
+            for (var i=0; i < visibleEntities.length; i++){
+                var visibleEntity = visibleEntities[i]
+                display.drawText(screenWidth + 1, 10 + 2*i + i , '%c{' + visibleEntity.getForeground() + '}' + visibleEntity.getChar() + ':  ' + visibleEntity.getName());
+                display.drawText(screenWidth + 1, 11 + 2*i + i, 'HP: ' + visibleEntity.getHP() + '/' + visibleEntity.getMaxHP());
+            }
         }
     }
 }
