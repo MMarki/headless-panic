@@ -22,7 +22,7 @@ Game.ItemMixins.Edible = {
             if (this._name === "health potion"){
                 entity.modifyHPBy(this._healthValue);
             } else if (this._name === "life potion"){
-                entity.modifyMaxHPBy(Math.floor(target.getMaxHP()/4));
+                entity.modifyMaxHPBy(Math.floor(entity.getMaxHP()/4));
                 entity.modifyHPBy(this._healthValue);
             }
         }

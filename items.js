@@ -129,7 +129,7 @@ Game.ItemRepository.define('javelin', {
     name: 'javelin',
     character: '\u16A8',
     foreground: '#F2EC2D',
-    attackValue: 2,
+    attackValue: 3,
     thrownAttackValue: 6,
     throwBreakChance: 100,
     strengthRequirement: 2,

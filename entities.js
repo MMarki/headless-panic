@@ -39,7 +39,7 @@ Game.EntityRepository.define('barrel', {
     explodeSize: 6,
     maxHP: 1,
     notMonster: true,
-    description: "a barrel",
+    description: "A wooden container for wine.",
     mixins: [Game.EntityMixins.Destructible, Game.EntityMixins.Exploder]
 });
 
@@ -66,7 +66,7 @@ Game.EntityRepository.define('jackal', {
     accuracyValue: 70,
     speed: 2000,
     tasks: ['hunt', 'wander'],
-    description: "This monster is a dog, dawg.",
+    description: "An aggressive dog who can move or attack twice each turn.",
     mixins: [Game.EntityMixins.TaskActor, Game.EntityMixins.Sight,
              Game.EntityMixins.HeadDropper, Game.EntityMixins.Attacker, 
              Game.EntityMixins.Destructible, Game.EntityMixins.Affectible]
@@ -182,7 +182,7 @@ Game.EntityRepository.define('rat king', {
     accuracyValue: 70,
     sightRadius: 15,
     headHits: 3,
-    summonWaitMax: 20,
+    summonWaitMax: 25,
     description: "A giant rat nestled in a ball of its dead rivals",
     tasks: ['summonMonster', 'hunt', 'wander'],
     mixins: [Game.EntityMixins.TaskActor, Game.EntityMixins.Sight,

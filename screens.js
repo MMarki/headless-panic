@@ -62,7 +62,7 @@ Game.Screen.playScreen = {
         this._player.addItem(dart);
         var test = Game.ItemRepository.create('fire potion');
         this._player.addItem(test);
-        var test = Game.ItemRepository.create('darkness potion');
+        var test = Game.GatedItemRepository.create('life potion');
         this._player.addItem(test);
         //Create map
         this._map = new Game.Map(tiles, this._player);
@@ -214,23 +214,17 @@ Game.Screen.playScreen = {
                     Game.refresh();
                 }
                 return;
-            } else {
-                // Not a valid key
+            } else if (inputData.keyCode === ROT.KEYS.VK_L) {
+                // Setup the look screen.
+                Game.Screen.lookScreen.setup(this._player, this._player.getX(), this._player.getY());
+                this.setSubScreen(Game.Screen.lookScreen);
                 return;
             }
             // Unlock the engine
             this._map.getEngine().unlock();
         } else {
-            var keyChar = String.fromCharCode(inputData.charCode);
-             if (keyChar === 'l' || keyChar === 'L') {
-                // Setup the look screen.
-                Game.Screen.lookScreen.setup(this._player, this._player.getX(), this._player.getY());
-                this.setSubScreen(Game.Screen.lookScreen);
-                return;
-            } else {
-                // Not a valid key
-                return;
-            }
+            // Not a valid key
+            return;
         }
     },
     setGameEnded: function(gameEnded) {
@@ -360,6 +354,13 @@ Game.Screen.playScreen = {
                 var visibleEntity = visibleEntities[i]
                 display.drawText(screenWidth + 1, 10 + 2*i + i , '%c{' + visibleEntity.getForeground() + '}' + visibleEntity.getChar() + ':  ' + visibleEntity.getName());
                 display.drawText(screenWidth + 1, 11 + 2*i + i, 'HP: ' + visibleEntity.getHP() + '/' + visibleEntity.getMaxHP());
+            
+                var effectsList = visibleEntity.getEffects();
+                var effectsString = '';
+                for (effect of effectsList){
+                    var effectsString = effectsString + '%c{' + effect._color + '}' + effect.getName() + ' ';
+                }
+                display.drawText(screenWidth + 1, 12 + 2*i + i, effectsString);
             }
         }
     }
@@ -460,7 +461,7 @@ Game.Screen.ItemListScreen.prototype.render = function(display) {
             }
 
             if (this._items[i].hasMixin('Throwable') && this._items[i].isStackable()) {
-                suffix = ' (x' + this._items[i].getStackQuantity() + ')';
+                suffix += ' (x' + this._items[i].getStackQuantity() + ')';
             }
             // Render at the correct row and add 2.
             display.drawText(0, 2 + row,  letter + ' ' + selectionState + ' ' + this._items[i].describe() + suffix);
