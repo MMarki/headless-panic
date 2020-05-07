@@ -180,12 +180,22 @@ Game.EntityMixins.Destructible = {
     },
     getDefenseValue: function() {
         var modifier = 0;
+        var strengthModifier = 0;
         // If we can equip items, then have to take into 
         // consideration weapon and armor
         if (this.hasMixin(Game.EntityMixins.Equipper)) {
-            if (this.getArmor()) {
-                modifier += this.getArmor().getDefenseValue();
+            var strengthGap = 0;
+            var armor = this.getArmor()
+            if (armor !== null) {
+                strengthGap = this.getStrengthValue() - armor._strengthRequirement;
+                if (strengthGap <  0){
+                    strengthModifier = 2 * strengthGap;
+                } else if (strengthGap > 0){
+                    strengthModifier =  strengthGap;
+                }
+                modifier = (armor.getDefenseValue() + strengthModifier);
             }
+            console.log(modifier);
         }
         return this._defenseValue + modifier;
     },
@@ -303,7 +313,7 @@ Game.EntityMixins.Attacker = {
                     strengthGap = this.getStrengthValue() - this.getWeapon()._strengthRequirement
                     if (strengthGap <  0){
                         strengthModifier = 2 * strengthGap;
-                    } else if (strengthModifier > 0){
+                    } else if (strengthGap > 0){
                         strengthModifier =  strengthGap;
                     }
                 }
