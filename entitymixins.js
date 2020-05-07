@@ -195,7 +195,6 @@ Game.EntityMixins.Destructible = {
                 }
                 modifier = (armor.getDefenseValue() + strengthModifier);
             }
-            console.log(modifier);
         }
         return this._defenseValue + modifier;
     },

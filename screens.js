@@ -478,7 +478,7 @@ Game.Screen.ItemListScreen.prototype.executeOkFunction = function() {
     }
     // Switch back to the play screen.
     Game.Screen.playScreen.setSubScreen(undefined);
-    // Call the OK function and end the player's turn if it return true.
+    // Call the OK function and end the player's turn if it returns true.
     if (this._okFunction(selectedItems)) {
         this._player.getMap().getEngine().unlock();
     }
@@ -513,6 +513,9 @@ Game.Screen.ItemListScreen.prototype.handleInput = function(inputType, inputData
                     // Redraw screen
                     Game.refresh();
                 } else {
+                    // clear it out selected indices to make sure we're only sending one index 
+                    // (in case we've come back from the itemScreen a couple times)
+                    this._selectedIndices = [];
                     this._selectedIndices[index] = true;
                     this.executeOkFunction();
                 }
@@ -889,8 +892,10 @@ Game.Screen.ItemScreen.prototype.handleInput = function(inputType, inputData) {
             Game.sendMessage(this._player, "You drink %s.", [this._item.describeThe()]);
             this._item.eat(this._player);
             this._player.removeItem(this._key);
+            this.executeOkFunction();
         } else if (inputData.keyCode === ROT.KEYS.VK_D){
             this._player.dropItem(this._key);
+            this.executeOkFunction();
         } else if (inputData.keyCode === ROT.KEYS.VK_E){
             if (this._item.isWieldable()){
                 this._player.wield(this._item);
@@ -901,10 +906,12 @@ Game.Screen.ItemScreen.prototype.handleInput = function(inputType, inputData) {
             } else if (this._item.isHeadible()){
                 this._player.wearHead(this._item);
                 Game.sendMessage(this._player, "You are wearing %s.", [this._item.describeA()]);
-            } 
+            }
+            this.executeOkFunction();
         } else if (inputData.keyCode === ROT.KEYS.VK_T){
             Game.Screen.throwAtScreen.setup(this._player, this._player.getX(), this._player.getY(), this._item, this._key);
             Game.Screen.playScreen.setSubScreen(Game.Screen.throwAtScreen);
+            // if we go to throw screen, it handles okaying itself and closing out.
         } else if (inputData.keyCode === ROT.KEYS.VK_U){
             if (this._item.isWieldable()){
                 this._player.unwield();
@@ -916,8 +923,8 @@ Game.Screen.ItemScreen.prototype.handleInput = function(inputType, inputData) {
                 this._player.unHead();
                 Game.sendMessage(this._player, "You take off %s.", [this._item.describeThe()]);
             } 
+            this.executeOkFunction();
         }
-        this.executeOkFunction();
     }
 };
 
