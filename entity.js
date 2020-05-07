@@ -9,6 +9,10 @@ Game.Entity = function(properties) {
     // Acting speed
     this._speed = properties['speed'] || 1000;
     this._notMonster = properties['notMonster'] || false;
+    //attribrutes
+    this._fierce = properties['fierce'] || false; //can sometimes attack twice per turn
+    this._protected = properties['protected'] || false; // 1 higher DEF than usual
+    this._ratThreaten = properties['ratThreaten'] || true; // rats won't attack you
 };
 // Make entities inherit all the functionality from glyphs
 Game.Entity.extend(Game.DynamicGlyph);
@@ -58,6 +62,11 @@ Game.Entity.prototype.tryMove = function(x, y) {
         // If we are an attacker, try to attack the target
         if ((this.hasMixin('Attacker') && (this.hasMixin(Game.EntityMixins.PlayerActor) || target.hasMixin(Game.EntityMixins.PlayerActor)))) {
             this.attack(target);
+            if (this._fierce && Math.random() > 0.66){
+                if (map.getEntityAt(x, y)){
+                    this.attack(target);
+                }
+            }
             return true;
         } else {
             // If not, nothing we can do, but we can't move to the tile

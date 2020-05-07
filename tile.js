@@ -11,9 +11,6 @@ Game.Tile = function(properties) {
     this._flammable = properties['flammable'] || false;
     this._isDynamic = properties['isDynamic'] || false;
     this._lifespan = properties['lifespan'] || 0;
-    //attribrutes
-    this._fierce = properties['fierce'] || 0; //can sometimes attack twice per turn
-    this._protected = properties['protected'] || 0; // 1 higher DEF than usual
     if (vary) {
         this._background =  ROT.Color.toHex(ROT.Color.randomize(ROT.Color.fromString(this._background), [0, 0, 0]));
      }

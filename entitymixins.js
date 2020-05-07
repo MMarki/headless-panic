@@ -196,7 +196,7 @@ Game.EntityMixins.Destructible = {
                 modifier = (armor.getDefenseValue() + strengthModifier);
             }
         }
-        return this._defenseValue + modifier;
+        return this._defenseValue + modifier + (this._protected ? 1: 0);
     },
     modifyHPBy: function(points) {
         this._hp = this._hp + points;
@@ -730,8 +730,28 @@ Game.EntityMixins.Equipper = {
     },
     wearHead: function(item){
         this._head = item;
+        if (this.hasMixin(Game.EntityMixins.PlayerActor)){
+            this._fierce = false;
+            this._protected = false;
+            if(this._head._name === 'goblin head'){
+                this._protected = true;
+            } else if (this._head._name === 'jackal head'){
+                this._fierce = true;
+            } else if (this._head._name === 'rat king head'){
+                this._ratThreaten = true;
+            }
+        }
     },
     unhead: function(){
+        if (this.hasMixin(Game.EntityMixins.PlayerActor)){
+            if(this._head._name === 'goblin head'){
+                this._protected = false;
+            } else if (this._head._name === 'jackal head'){
+                this._fierce = false;
+            } else if (this._head._name === 'rat king head'){
+                this._ratThreaten = false;
+            }
+        }
         this._head = null;
     },
     getWeapon: function() {

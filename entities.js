@@ -97,6 +97,7 @@ Game.EntityRepository.define('goblin', {
     defenseValue: 10,
     accuracyValue: 70,
     sightRadius: 10,
+    headHits: 2,
     description: "An armored underdweller with bulging eyes and green skin.",
     tasks: ['hunt', 'wander'],
     mixins: [Game.EntityMixins.TaskActor, Game.EntityMixins.Sight,

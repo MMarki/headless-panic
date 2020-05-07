@@ -23,5 +23,7 @@ Game.Effect.prototype.getEffectColor = function(name) {
         return '#EE4411';
     } else if (name === 'blind'){
         return '#EE22EE';
+    } else {
+        return '#4D6CFA';
     }
 }
