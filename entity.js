@@ -104,28 +104,30 @@ Game.Entity.prototype.applyNewEffects = function(){
 
     if (this.hasMixin(Game.EntityMixins.Affectible)){
         if (tile._name === 'fireTile'){
-            if (!this.hasEffect("burning")){
-                var duration = 7;
-                var name = "burning";
-                var newEffect = new Game.Effect(duration, name);
-                this.setEffect(newEffect);
+            if (this.hasEffect('burning')){
+                this.removeEffect('burning');
             }
+            var duration = 7;
+            var name = 'burning';
+            var newEffect = new Game.Effect(duration, name);
+            this.setEffect(newEffect);
         } else if (tile._name === 'poisonTile'){
-            if (!this.hasEffect("poisoned")){
-                var duration = 10;
-                var name =  "poisoned";
-                var newEffect = new Game.Effect(duration, name);
-                this.setEffect(newEffect);
+            if (this.hasEffect('poisoned')){
+                this.removeEffect('poisoned');
             }
+            var duration = 10;
+            var name =  'poisoned';
+            var newEffect = new Game.Effect(duration, name);
+            this.setEffect(newEffect);
         }
-
         else if (tile._name === 'darknessTile'){
-            if (!this.hasEffect("blind")){
-                var duration = 20;
-                var name =  "blind";
-                var newEffect = new Game.Effect(duration, name);
-                this.setEffect(newEffect);
+            if (this.hasEffect('blind')){
+                this.removeEffect('blind');
             }
+            var duration = 20;
+            var name =  'blind';
+            var newEffect = new Game.Effect(duration, name);
+            this.setEffect(newEffect);
         }
     }
 }

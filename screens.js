@@ -62,7 +62,7 @@ Game.Screen.playScreen = {
         this._player.addItem(dart);
         var test = Game.ItemRepository.create('fire potion');
         this._player.addItem(test);
-        var test = Game.GatedItemRepository.create('life potion');
+        var test = Game.ItemRepository.create('knowledge potion');
         this._player.addItem(test);
         //Create map
         this._map = new Game.Map(tiles, this._player);
@@ -96,7 +96,7 @@ Game.Screen.playScreen = {
             }
         }
         // Render UI 
-        display.drawText(0, screenHeight, "%c{yellow}I%c{white}nventory  %c{yellow}T%c{white}hrow  %c{yellow}E%c{white}quip  %c{yellow}A%c{white}pply  %c{yellow}L%c{white}ook");
+        display.drawText(0, screenHeight, "%c{yellow}I%c{white}nventory  %c{yellow}L%c{white}ook  %c{yellow}W%c{white}ait  %c{yellow}T%c{white}hrow  %c{yellow}E%c{white}quip  %c{yellow}A%c{white}pply");
 
         var you = '%c{white}%b{black}';
         you += "@:    You";

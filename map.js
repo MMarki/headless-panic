@@ -269,11 +269,9 @@ Game.Map.prototype.addItem = function(x, y, item) {
 
 Game.Map.prototype.addItemAtRandomPosition = function(item) {
     var position = this.getRandomFloorPosition();
-    this.addItem(position.x, position.y, item);
-};
-
-Game.Map.prototype.addItemAtRandomPosition = function(item) {
-    var position = this.getRandomFloorPosition();
+    while (this.getItemsAt(position.x, position.y)){
+        position = this.getRandomFloorPosition();
+    }
     this.addItem(position.x, position.y, item);
 };
 
