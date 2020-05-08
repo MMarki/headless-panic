@@ -214,13 +214,17 @@ Game.EntityMixins.Destructible = {
     takeDamage: function(attacker, damage) {
         if (this.hasMixin(Game.EntityMixins.Bleeder)){
             var myHead = this.getHead()
-            if (myHead !== null){
-                //drop the item that is equipped on the head of the player
-                var headIndex = this.getHeadIndex();
-                this.unhead();
-                this.removeItem(headIndex);
-                Game.sendMessage(this, "Your head falls off");
-                return true;
+            if (myHead !== null) {
+                if (myHead._headHits > 1) {
+                    myHead._headHits -= 1;
+                } else {
+                    //drop the item that is equipped on the head of the player
+                    var headIndex = this.getHeadIndex();
+                    this.unhead();
+                    this.removeItem(headIndex);
+                    Game.sendMessage(this, "Your head falls off");
+                    return true;
+                }
             } else {
                 this._hp -= damage;
             }
