@@ -451,12 +451,18 @@ Game.Screen.ItemListScreen.prototype.render = function(display) {
                 this._selectedIndices[i]) ? '+' : '-';
             // Render at the correct row and add 2.
             // Check if the item is worn or wielded
+            var glyph = this._items[i].getChar()
+            var foreground = this._items[i].getForeground(); 
+            var prefix = '%c{white}';
             var suffix = '';
             if (this._items[i] === this._player.getArmor()) {
+                prefix = '%c{#6C86FB}';
                 suffix = ' (wearing)';
             } else if (this._items[i] === this._player.getWeapon()) {
+                prefix = '%c{#6C86FB}';
                 suffix = ' (in hand)';
             } else if (this._items[i] === this._player.getHead()) {
+                prefix = '%c{#6C86FB}';
                 suffix = ' (on neck)';
             }
 
@@ -464,7 +470,7 @@ Game.Screen.ItemListScreen.prototype.render = function(display) {
                 suffix += ' (x' + this._items[i].getStackQuantity() + ')';
             }
             // Render at the correct row and add 2.
-            display.drawText(0, 2 + row,  letter + ' ' + selectionState + ' ' + this._items[i].describe() + suffix);
+            display.drawText(0, 2 + row,  letter + ' ' + selectionState + ' ' + '%c{'+ foreground +'}' + glyph + ' ' + prefix + this._items[i].describe() + suffix);
             row++;
         }
     }
