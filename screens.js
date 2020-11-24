@@ -291,7 +291,10 @@ Game.Screen.playScreen = {
                 map.setExplored(x, y, true);
             });
 
+        var screenWidth = Game.getScreenWidth();
+
         // Render the explored map cells
+        var j = 0;
         for (var x = 0; x < this._map.getWidth(); x++) {
             for (var y = 0; y < this._map.getHeight(); y++) {
                 if (map.isExplored(x, y)) {
@@ -303,16 +306,13 @@ Game.Screen.playScreen = {
                     // If we are at a cell that is in the field of vision, we need
                     // to check if there are items or entities.
                     if (visibleCells[x + ',' + y]) {
-                        // Check for items first, since we want to draw entities
-                        // over items.
+                        // Check for items first to draw over the floor
                         var items = map.getItemsAt(x, y);
                         // If we have items, we want to render the top most item
                         if (items) {
                             glyph = items[items.length - 1];
-                        }
-                        // Check if we have an entity at the position
-                        if (map.getEntityAt(x, y)) {
-                            glyph = map.getEntityAt(x, y);
+                            display.drawText(screenWidth + 1, 10 + j , '%c{' + glyph._foreground + '}' + glyph._char + ':  ' + glyph._name);
+                            j++;
                         }
                         // Update the foreground color in case our glyph changed
                         foreground = glyph.getForeground();
@@ -338,7 +338,7 @@ Game.Screen.playScreen = {
         if (!this._player.hasEffect('blind')){
             var entities = this._map.getEntities();
             var visibleEntities = [];
-            var screenWidth = Game.getScreenWidth();
+            //var screenWidth = Game.getScreenWidth();
 
             for (var key in entities) {
                 var entity = entities[key];
@@ -352,8 +352,8 @@ Game.Screen.playScreen = {
             
             for (var i=0; i < visibleEntities.length; i++){
                 var visibleEntity = visibleEntities[i]
-                display.drawText(screenWidth + 1, 10 + 2*i + i , '%c{' + visibleEntity.getForeground() + '}' + visibleEntity.getChar() + ':  ' + visibleEntity.getName());
-                display.drawText(screenWidth + 1, 11 + 2*i + i, 'HP: ' + visibleEntity.getHP() + '/' + visibleEntity.getMaxHP());
+                display.drawText(screenWidth + 1, 10 + 2*i + i + j , '%c{' + visibleEntity.getForeground() + '}' + visibleEntity.getChar() + ':  ' + visibleEntity.getName());
+                display.drawText(screenWidth + 1, 11 + 2*i + i + j, 'HP: ' + visibleEntity.getHP() + '/' + visibleEntity.getMaxHP());
             
                 var effectsList = visibleEntity.getEffects();
                 var effectsString = '';

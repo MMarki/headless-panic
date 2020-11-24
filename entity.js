@@ -78,9 +78,7 @@ Game.Entity.prototype.tryMove = function(x, y) {
        this.setPosition(x, y);
        var items = this.getMap().getItemsAt(x, y);
         if (items) {
-            if (items.length === 1) {
-                Game.sendMessage(this, "You see %s.", [items[0].describeA()]);
-            } else {
+            if (items.length !== 1) {
                 Game.sendMessage(this, "There are several objects here.");
             }
         }
