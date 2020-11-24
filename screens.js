@@ -360,7 +360,7 @@ Game.Screen.playScreen = {
                 for (effect of effectsList){
                     var effectsString = effectsString + '%c{' + effect._color + '}' + effect.getName() + ' ';
                 }
-                display.drawText(screenWidth + 1, 12 + 2*i + i, effectsString);
+                display.drawText(screenWidth + 1, 12 + 2*i + i + j, effectsString);
             }
         }
     }

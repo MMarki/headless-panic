@@ -22,9 +22,15 @@ Game.Map = function(tiles, player, items) {
     // 15 entities per floor
     for (var i = 0; i < 10; i++) {
         // Add a random entity
-        this.addEntityAtRandomPosition(Game.EntityRepository.createRandomByFrequency('L' + Game.getLevel()));
+        var randomEntity = Game.EntityRepository.createRandomByFrequency('L' + Game.getLevel())
+        this.addEntityAtRandomPosition( randomEntity );
         this.addEntityAtRandomPosition(Game.EntityRepository.create("barrel"));
     }
+    // if on L3, create one rat king
+    if (Game.getLevel === 3){
+        Game.EntityRepository.create('rat king')
+    }
+    
     // 15 items per floor
     for (var i = 0; i < 4; i++) {
         // Add a random entity
