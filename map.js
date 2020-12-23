@@ -27,7 +27,7 @@ Game.Map = function(tiles, player, items) {
         this.addEntityAtRandomPosition(Game.EntityRepository.create("barrel"));
     }
     // if on L3, create one rat king
-    if (Game.getLevel === 3){
+    if (Game.getLevel() === 3){
         Game.EntityRepository.create('rat king')
     }
     
