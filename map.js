@@ -28,7 +28,7 @@ Game.Map = function(tiles, player, items) {
     }
     // if on L3, create one rat king
     if (Game.getLevel() === 3){
-        Game.EntityRepository.create('rat king')
+        this.addEntityAtRandomPosition(Game.EntityRepository.create('rat king'));
     }
     
     // 15 items per floor
