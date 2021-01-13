@@ -42,12 +42,12 @@ Game.Builder.prototype._generateLevel = function() {
     for (var w = 0; w < this._width; w++) {
         map[w] = new Array(this._height);
     }
-    // Setup the cave generator
+    // Set up the level generator
     var options = {
         roomWidth: [5, 20],
-        roomHeight: [3, 12],
-        corridorLength: [0, 3],
-        dugPercentage: 0.7
+        roomHeight: [5, 12],
+        corridorLength: [0, 4],
+        dugPercentage: 0.45
     }
     var generator = new ROT.Map.Digger(this._width, this._height, options);
     var setMapTile = function (x, y, value) {
