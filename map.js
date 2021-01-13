@@ -18,17 +18,23 @@ Game.Map = function(tiles, player, items) {
     this._engine = new ROT.Engine(this._scheduler);
     // add the player
     this._player = player;
-    this.addEntityAtRandomPosition(player);
+    this.addEntityAtRandomPosition(player, 0);
+
+    //set up the field of vision
+    this._fov = {};
+    this.setupFov();
+
     // 15 entities per floor
     for (var i = 0; i < 10; i++) {
         // Add a random entity
         var randomEntity = Game.EntityRepository.createRandomByFrequency('L' + Game.getLevel())
-        this.addEntityAtRandomPosition( randomEntity );
-        this.addEntityAtRandomPosition(Game.EntityRepository.create("barrel"));
+        this.addEntityAtRandomPosition( randomEntity , 1);
+        //how do i make it so enemies don't spawn on top of me?
+        this.addEntityAtRandomPosition(Game.EntityRepository.create("barrel"), 0);
     }
     // if on L3, create one rat king
     if (Game.getLevel() === 3){
-        this.addEntityAtRandomPosition(Game.EntityRepository.create('rat king'));
+        this.addEntityAtRandomPosition(Game.EntityRepository.create('rat king'), 1);
     }
     
     // 15 items per floor
@@ -38,9 +44,6 @@ Game.Map = function(tiles, player, items) {
     }
     this.addItemAtRandomPosition(Game.GatedItemRepository.createRandom());
     
-    //set up the field of vision
-    this._fov = {};
-    this.setupFov();
     // Add weapons and armor to the map in random positions
     var templates = ['dagger', 'axe', 'dart', 'sword', 'spear', 'leather', 'scalemail', 'chainmail', 'platemail'];
     for (var i = 0; i < templates.length; i++) {
@@ -138,8 +141,22 @@ Game.Map.prototype.addEntity = function(entity) {
     }
 }
 
-Game.Map.prototype.addEntityAtRandomPosition = function(entity) {
+//adds and entity on an empty floor tile
+Game.Map.prototype.addEntityAtRandomPosition = function(entity, outOfSightline) {
     var position = this.getRandomFloorPosition();
+    if (outOfSightline){
+        // Cache the FOV
+        var visibleCells = {};
+        this.getFov().compute(
+            this._player.getX(), this._player.getY(), 
+            this._player.getSightRadius(), 
+            function(x, y, radius, visibility) {
+                visibleCells[x + "," + y] = true;
+            });
+        while (visibleCells[String(position.x) + ',' + String(position.y)] === true){
+            position = this.getRandomFloorPosition();
+        }
+    }
     entity.setX(position.x);
     entity.setY(position.y);
     this.addEntity(entity);
