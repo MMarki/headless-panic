@@ -255,7 +255,7 @@ Game.Screen.playScreen = {
             this._map = new Game.Map(tiles, this._player, this._player.getItems());
             // Start the map's engine
             this._map.getEngine().start();
-            Game.sendMessage(this._player, "You go downstairs.");
+            Game.sendMessage(this._player, "You go down the stairs. They crumble to dust behind you.");
         }
     },
     handleItemPickup(){
@@ -472,7 +472,10 @@ Game.Screen.ItemListScreen.prototype.render = function(display) {
             // Render at the correct row and add 2.
             display.drawText(0, 2 + row,  letter + ' ' + selectionState + ' ' + '%c{'+ foreground +'}' + glyph + ' ' + prefix + this._items[i].describe() + suffix);
             row++;
-        }
+        } 
+    }
+    if (this._canSelectMultipleItems){
+        display.drawText(0, 2 + row + 1, '%c{yellow}[ENTER]');
     }
 };
 
