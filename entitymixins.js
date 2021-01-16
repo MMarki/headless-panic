@@ -336,6 +336,10 @@ Game.EntityMixins.Attacker = {
                 Game.sendMessage(target, 'The %s strikes you for %d damage!',  [this.getName(), damage]);
 
                 target.takeDamage(this, damage);
+                if (this.hasMixin('Poisoner') && target.hasMixin('Affectible')){
+                    var newEffect = new Game.Effect(Math.floor(damage*1.5), 'poisoned');
+                    target.setEffect(newEffect);
+                } 
             } else {
                 Game.sendMessage(this, 'You miss the %s!', [target.getName()]);
                 Game.sendMessage(target, 'The %s misses you!',  [this.getName()]);
@@ -347,6 +351,14 @@ Game.EntityMixins.Attacker = {
     },
     getStrengthValue: function(){
         return this._strengthValue;
+    }
+}
+
+Game.EntityMixins.Poisoner = {
+    name: 'Poisoner',
+    groupName: 'Poisoner',
+    init: function(template) {
+        template;
     }
 }
 

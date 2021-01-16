@@ -136,7 +136,8 @@ Game.EntityRepository.define('poison toad', {
     tasks: ['hunt', 'wander'],
     mixins: [Game.EntityMixins.TaskActor, Game.EntityMixins.Sight,
              Game.EntityMixins.Attacker, Game.EntityMixins.Destructible,
-             Game.EntityMixins.HeadDropper, Game.EntityMixins.Affectible]
+             Game.EntityMixins.HeadDropper, Game.EntityMixins.Affectible,
+             Game.EntityMixins.Poisoner]
 });
 
 Game.EntityRepository.define('acid jelly', {
