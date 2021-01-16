@@ -339,6 +339,13 @@ Game.EntityMixins.Attacker = {
                 if (this.hasMixin('Poisoner') && target.hasMixin('Affectible')){
                     var newEffect = new Game.Effect(Math.floor(damage*1.5), 'poisoned');
                     target.setEffect(newEffect);
+                    var armorIndex = target.getArmorIndex();
+                    if (armorIndex !== null){
+                        target.unwear();
+                        target.removeItem(armorIndex);
+                        Game.sendMessage(target, 'Your armor dissolves!');
+                    }
+                    
                 } 
             } else {
                 Game.sendMessage(this, 'You miss the %s!', [target.getName()]);
@@ -790,7 +797,18 @@ Game.EntityMixins.Equipper = {
         if (this._head === item) {
             this.unhead();
         }
-    }
+    },
+    getArmorIndex: function(){
+        for (var i = 0; i < this._items.length; i++) {
+            if (this._items[i]) {
+                // Check if the item is worn as a head
+                if (this._items[i] === this.getArmor()) {
+                    return i;
+                }
+            }
+        }
+        return null;
+    },
 };
 
 Game.EntityMixins.Affectible = {
