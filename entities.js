@@ -153,7 +153,7 @@ Game.EntityRepository.define('acid jelly', {
     tasks: ['hunt', 'wander'],
     mixins: [Game.EntityMixins.TaskActor, Game.EntityMixins.Sight,
              Game.EntityMixins.Attacker, Game.EntityMixins.Destructible,
-             Game.EntityMixins.Affectible]
+             Game.EntityMixins.Affectible, Game.EntityMixins.Acidic]
 });
 
 Game.EntityRepository.define('giant zombie', {

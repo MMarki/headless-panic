@@ -339,13 +339,14 @@ Game.EntityMixins.Attacker = {
                 if (this.hasMixin('Poisoner') && target.hasMixin('Affectible')){
                     var newEffect = new Game.Effect(Math.floor(damage*1.5), 'poisoned');
                     target.setEffect(newEffect);
+                } 
+                if (this.hasMixin('Acidic') && target.hasMixin('Affectible')){
                     var armorIndex = target.getArmorIndex();
                     if (armorIndex !== null){
                         target.unwear();
                         target.removeItem(armorIndex);
                         Game.sendMessage(target, 'Your armor dissolves!');
                     }
-                    
                 } 
             } else {
                 Game.sendMessage(this, 'You miss the %s!', [target.getName()]);
@@ -364,6 +365,14 @@ Game.EntityMixins.Attacker = {
 Game.EntityMixins.Poisoner = {
     name: 'Poisoner',
     groupName: 'Poisoner',
+    init: function(template) {
+        template;
+    }
+}
+
+Game.EntityMixins.Acidic = {
+    name: 'Acidic',
+    groupName: 'Acidic',
     init: function(template) {
         template;
     }
