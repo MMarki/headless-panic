@@ -119,7 +119,7 @@ Game.EntityMixins.TaskActor = {
         }
     },
     summonMonster: function(){
-        this.summon('rat');
+        this.summon();
     }
 };
 
@@ -542,11 +542,15 @@ Game.EntityMixins.Summoner = {
     name: 'Summoner',
     init: function(template) {
         this._summonCount = template['summonCount'] || 3;
+        this._summonName = template['summonName'] || 'rat';
         this._summonWaitMax = template['summonWaitMax'] || 5;
         this._summonWait = template['summonWait'] || this._summonWaitMax;
         this._splitOnHit = template['splitOnHit'] || 0;
     },
     summon: function(entityName) {
+        if (entityName === null || entityName === undefined){
+            entityName = this._summonName;
+        }
         var map = this.getMap();
         var alreadySummoned = 0; 
         for (var x = -1; x < 2; x++){

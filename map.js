@@ -36,6 +36,10 @@ Game.Map = function(tiles, player, items) {
     if (Game.getLevel() === 3){
         this.addEntityAtRandomPosition(Game.EntityRepository.create('rat king'), 1);
     }
+    // if on L6, create one toad queen
+    if (Game.getLevel() === 6){
+        this.addEntityAtRandomPosition(Game.EntityRepository.create('toad queen'), 1);
+    }
     
     // 15 items per floor
     for (var i = 0; i < 4; i++) {

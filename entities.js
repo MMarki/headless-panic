@@ -112,8 +112,8 @@ Game.EntityRepository.define('toadman', {
     maxHP: 10,
     attackValue: 6,
     defenseValue: 10,
-    accuracyValue: 50,
-    sightRadius: 10,
+    accuracyValue: 70,
+    sightRadius: 12,
     headHits: 1,
     description: "A bloated half-toad-half-man.",
     tasks: ['hunt', 'wander'],
@@ -121,6 +121,30 @@ Game.EntityRepository.define('toadman', {
              Game.EntityMixins.Attacker, Game.EntityMixins.Destructible,
              Game.EntityMixins.HeadDropper, Game.EntityMixins.Affectible,
              Game.EntityMixins.Hopper]
+});
+
+Game.EntityRepository.define('toad queen', {
+    name: 'toad queen',
+    character: 'T',
+    foreground: '#91C7B1',
+    maxHP: 50,
+    attackValue: 7,
+    defenseValue: 10,
+    accuracyValue: 70,
+    sightRadius: 12,
+    headHits: 2,
+    explodeTile: 'poisonTile',
+    explodeSize: 12,
+    description: "An ox-sized toad.",
+    summonWaitMax: 30,
+    summonCount: 1,
+    summonName: 'toadman',
+    tasks: ['summonMonster', 'hunt', 'wander'],
+    mixins: [Game.EntityMixins.TaskActor, Game.EntityMixins.Sight,
+             Game.EntityMixins.Attacker, Game.EntityMixins.Destructible,
+             Game.EntityMixins.HeadDropper, Game.EntityMixins.Affectible,
+             Game.EntityMixins.Hopper, Game.EntityMixins.Summoner,
+             Game.EntityMixins.Exploder]
 });
 
 Game.EntityRepository.define('poison toad', {
