@@ -181,6 +181,7 @@ Game.EntityMixins.Destructible = {
     getDefenseValue: function() {
         var modifier = 0;
         var strengthModifier = 0;
+        var headIsToad = false;
         // If we can equip items, then have to take into 
         // consideration weapon and armor
         if (this.hasMixin(Game.EntityMixins.Equipper)) {
@@ -194,6 +195,20 @@ Game.EntityMixins.Destructible = {
                     strengthModifier =  strengthGap;
                 }
                 modifier = (armor.getDefenseValue() + strengthModifier);
+            }
+            
+            var myHead = this.getHead()
+            if (myHead !== null) {
+                if (myHead.describe() === 'toadman head'){
+                    headIsToad = true;
+                }
+            }
+        }
+        
+        if (this.hasMixin(Game.EntityMixins.WetBoy) || headIsToad) {
+            var tile = this._map.getTile(this._x, this._y);
+            if (tile._isWater){
+                modifier += 1;
             }
         }
         return this._defenseValue + modifier + (this._protected ? 1: 0);
@@ -365,6 +380,14 @@ Game.EntityMixins.Attacker = {
 Game.EntityMixins.Poisoner = {
     name: 'Poisoner',
     groupName: 'Poisoner',
+    init: function(template) {
+        template;
+    }
+}
+
+Game.EntityMixins.Hopper = {
+    name: 'Hopper',
+    groupName: 'Hopper',
     init: function(template) {
         template;
     }

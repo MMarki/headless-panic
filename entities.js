@@ -119,7 +119,8 @@ Game.EntityRepository.define('toadman', {
     tasks: ['hunt', 'wander'],
     mixins: [Game.EntityMixins.TaskActor, Game.EntityMixins.Sight,
              Game.EntityMixins.Attacker, Game.EntityMixins.Destructible,
-             Game.EntityMixins.HeadDropper, Game.EntityMixins.Affectible]
+             Game.EntityMixins.HeadDropper, Game.EntityMixins.Affectible,
+             Game.EntityMixins.Hopper]
 });
 
 Game.EntityRepository.define('poison toad', {

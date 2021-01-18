@@ -11,6 +11,7 @@ Game.Tile = function(properties) {
     this._flammable = properties['flammable'] || false;
     this._isDynamic = properties['isDynamic'] || false;
     this._lifespan = properties['lifespan'] || 0;
+    this._isWater = properties['isWater'] || false;
     if (vary) {
         this._background =  ROT.Color.toHex(ROT.Color.randomize(ROT.Color.fromString(this._background), [0, 0, 0]));
      }
@@ -99,7 +100,8 @@ Game.Tile.waterTile = new Game.Tile({
     foreground: '#2191fb',
     walkable: false,
     blocksLight: false,
-    description: 'deep water'
+    description: 'deep water',
+    isWater: true
 });
 
 Game.Tile.shallowWaterTile = new Game.Tile({
@@ -108,7 +110,8 @@ Game.Tile.shallowWaterTile = new Game.Tile({
     background: '#2A94E0',
     walkable: true,
     blocksLight: false,
-    description: 'a pool of shallow water'
+    description: 'a pool of shallow water',
+    isWater: true
 });
 
 Game.Tile.doorTile = new Game.Tile({
