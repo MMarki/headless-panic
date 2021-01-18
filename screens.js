@@ -392,12 +392,21 @@ Game.Screen.loseScreen = {
     exit: function() { console.log("Exited lose screen."); },
     render: function(display) {
         // Render our prompt to the screen
-        for (var i = 0; i < 22; i++) {
-            display.drawText(2, i + 1, "%b{red}You lose! :(");
-        }
+        display.drawText(2, 1, "You died.");
+        display.drawText(2, 3, this.chooseHint());
+        display.drawText(2, 5, "%c{yellow}Refresh your browser tab to restart.");
     },
     handleInput: function(inputType, inputData) {
         // Nothing to do here      
+    },
+    chooseHint: function(){
+        var hintList = [
+            "Avoiding fights is as good as winning them, especially if an enemy doesn't have a head to drop.",
+            "Wielding a weapon with insufficient strength greatly reduces chance to hit and max hit.",
+            "Wielding a weapon with excess strength increases chance to hit and max hit.",
+            "Wearing an enemy's head gives you one of their powers."
+        ];
+        return hintList[Math.floor(Math.random() * hintList.length)];
     }
 }
 
