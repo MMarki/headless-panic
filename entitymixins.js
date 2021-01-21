@@ -190,7 +190,8 @@ Game.EntityMixins.Destructible = {
             if (armor !== null) {
                 strengthGap = this.getStrengthValue() - armor._strengthRequirement;
                 if (strengthGap <  0){
-                    strengthModifier = 2 * strengthGap;
+                    //stengthModifier will be negative, and large if you're not strong enough to wear the armor
+                    strengthModifier = Math.floor(4.5 * strengthGap);
                 } else if (strengthGap > 0){
                     strengthModifier =  strengthGap;
                 }
@@ -211,7 +212,7 @@ Game.EntityMixins.Destructible = {
                 modifier += 1;
             }
         }
-        return this._defenseValue + modifier + (this._protected ? 1: 0);
+        return Math.max(this._defenseValue + modifier + (this._protected ? 1: 0), 0);
     },
     modifyHPBy: function(points) {
         this._hp = this._hp + points;
@@ -330,7 +331,7 @@ Game.EntityMixins.Attacker = {
                 if (this.getWeapon() !== null){
                     strengthGap = this.getStrengthValue() - this.getWeapon()._strengthRequirement
                     if (strengthGap <  0){
-                        strengthModifier = 2 * strengthGap;
+                        strengthModifier = 4 * strengthGap;
                     } else if (strengthGap > 0){
                         strengthModifier =  strengthGap;
                     }
@@ -344,7 +345,7 @@ Game.EntityMixins.Attacker = {
             console.log("def:" + defense);
             console.log("hitprob: " + hitProbability);
             if (Math.random()*100 < hitProbability){
-                var max = Math.max(0, attack + (strengthModifier));
+                var max = Math.max(1, attack + (strengthModifier));
                 var damage = Math.ceil(Game.Utilities.randomRange(Math.ceil(max/2), max));
 
                 Game.sendMessage(this, 'You strike the %s for %d damage!', [target.getName(), damage]);

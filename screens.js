@@ -127,9 +127,23 @@ Game.Screen.playScreen = {
         }
         display.drawText(screenWidth + 1, 3, effectsString);
         
-        display.drawText(screenWidth + 1, 5, "%c{white}ARMR: +" + this._player.getDefenseValue());
-        display.drawText(screenWidth + 1, 6, "%c{white}ATTK: +" + this._player.getAttackValue());
-        display.drawText(screenWidth + 1, 7, "%c{white}STRN: " + this._player.getStrengthValue());
+        var strengthGap = 0;
+        var strengthModifier = 0;
+        var strengthValue = this._player.getStrengthValue();
+        var attackValue = this._player.getAttackValue();
+        var defenseValue = this._player.getDefenseValue();
+        if (this._player.getWeapon() !== null){
+            strengthGap = strengthValue - this._player.getWeapon()._strengthRequirement
+            if (strengthGap <  0){
+                strengthModifier = 4 * strengthGap;
+            } else if (strengthGap > 0){
+                strengthModifier =  strengthGap;
+            }
+        }
+
+        display.drawText(screenWidth + 1, 5, "%c{white}ARMR: +" + defenseValue);
+        display.drawText(screenWidth + 1, 6, "%c{white}ATTK: +" + (attackValue + strengthModifier));
+        display.drawText(screenWidth + 1, 7, "%c{white}STRN: " + strengthValue);
         display.drawText(screenWidth + 1, 8, "%c{white}LVL:  Cellars " + Game.getLevel() );
     },
     handleInput: function(inputType, inputData) {
