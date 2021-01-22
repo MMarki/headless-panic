@@ -46,10 +46,18 @@ Game.Repository.prototype.createRandomConstrained = function(floor) {
     // Pick a random key and create an object based off of it.
     validItems = [];
     for (const [key, props] of Object.entries(this._randomTemplates)) {
-        if (props.value <= floor) validItems.push(key); 
+        if (props.itemLevel <= floor){
+            validItems.push(key);
+        }  else if (props.itemLevel === floor+1){
+            if(Math.random() >= 0.5){
+                validItems.push(key);
+            }
+        } else if (props.itemLevel === floor+2){
+            if(Math.random() >= 0.75){
+                validItems.push(key);
+            }
+        } 
     }
-
-    console.log(validItems);
     
     return this.create(validItems[Math.floor(Math.random() * validItems.length)]);
 };

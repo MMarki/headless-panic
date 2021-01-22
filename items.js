@@ -32,7 +32,7 @@ Game.ItemRepository.define('poison potion', {
     character: '!',
     foreground: '#F2EC2D',
     mixins: [Game.ItemMixins.Edible, Game.ItemMixins.Throwable],
-    value: 1
+    itemLevel: 1
 });
 
 Game.ItemRepository.define('fire potion', {
@@ -40,7 +40,7 @@ Game.ItemRepository.define('fire potion', {
     character: '!',
     foreground: '#F2EC2D',
     mixins: [Game.ItemMixins.Edible, Game.ItemMixins.Throwable],
-    value: 1
+    itemLevel: 1
 });
 
 /* Game.ItemRepository.define('summoning potion', {
@@ -57,7 +57,7 @@ Game.ItemRepository.define('teleportation potion', {
     foreground: '#F2EC2D',
     potionEffect: null,
     mixins: [Game.ItemMixins.Edible, Game.ItemMixins.Throwable],
-    value: 1
+    itemLevel: 1
 });
 
 Game.ItemRepository.define('knowledge potion', {
@@ -69,7 +69,7 @@ Game.ItemRepository.define('knowledge potion', {
         name: "knowledgeable"
     },
     mixins: [Game.ItemMixins.Edible, Game.ItemMixins.Throwable],
-    value: 3
+    itemLevel: 2
 });
 
 Game.ItemRepository.define('health potion', {
@@ -79,7 +79,7 @@ Game.ItemRepository.define('health potion', {
     healthValue: 40,
     potionEffect: null,
     mixins: [Game.ItemMixins.Edible, Game.ItemMixins.Throwable],
-    value: 1
+    itemLevel: 1
 });
 
 Game.ItemRepository.define('shatter potion', {
@@ -88,7 +88,7 @@ Game.ItemRepository.define('shatter potion', {
     foreground: '#F2EC2D',
     potionEffect: null,
     mixins: [Game.ItemMixins.Edible, Game.ItemMixins.Throwable],
-    value: 1
+    itemLevel: 1
 });
 
 Game.ItemRepository.define('darkness potion', {
@@ -97,7 +97,7 @@ Game.ItemRepository.define('darkness potion', {
     foreground: '#F2EC2D',
     potionEffect: null,
     mixins: [Game.ItemMixins.Edible, Game.ItemMixins.Throwable],
-    value: 1
+    itemLevel: 1
 });
 
 Game.ItemRepository.define('head', {
@@ -120,7 +120,7 @@ Game.ItemRepository.define('dart', {
     wieldable: true,
     stackable: true,
     mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable],
-    value: 4
+    itemLevel: 4
 }, {
     disableRandomCreation: false
 });
@@ -136,7 +136,7 @@ Game.ItemRepository.define('javelin', {
     wieldable: true,
     stackable: true,
     mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable],
-    value: 4
+    itemLevel: 4
 }, {
     disableRandomCreation: false
 });
@@ -151,7 +151,7 @@ Game.ItemRepository.define('incendiary dart', {
     wieldable: true,
     stackable: true,
     mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable],
-    value: 6
+    itemLevel: 6
 }, {
     disableRandomCreation: true
 });
@@ -165,7 +165,7 @@ Game.ItemRepository.define('dagger', {
     strengthRequirement: 1,
     wieldable: true,
     mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable, Game.ItemMixins.Enchantable],
-    value: 1
+    itemLevel: 1
 }, {
     disableRandomCreation: false
 });
@@ -179,7 +179,7 @@ Game.ItemRepository.define('sword', {
     strengthRequirement: 1,
     wieldable: true,
     mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable, Game.ItemMixins.Enchantable],
-    value: 2
+    itemLevel: 1
 }, {
     disableRandomCreation: false
 });
@@ -193,7 +193,7 @@ Game.ItemRepository.define('axe', {
     strengthRequirement: 3,
     wieldable: true,
     mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable, Game.ItemMixins.Enchantable],
-    value: 2
+    itemLevel: 2
 }, {
     disableRandomCreation: false
 });
@@ -207,7 +207,7 @@ Game.ItemRepository.define('broadsword', {
     strengthRequirement: 3,
     wieldable: true,
     mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable, Game.ItemMixins.Enchantable],
-    value: 1
+    itemLevel: 3
 }, {
     disableRandomCreation: true
 });
@@ -221,7 +221,7 @@ Game.ItemRepository.define('spear', {
     strengthRequirement: 1,
     wieldable: true,
     mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable, Game.ItemMixins.Enchantable],
-    value: 1
+    itemLevel: 1
 }, {
     disableRandomCreation: false
 });
@@ -235,7 +235,7 @@ Game.ItemRepository.define('lance', {
     strengthRequirement: 2,
     wieldable: true,
     mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable, Game.ItemMixins.Enchantable],
-    value: 1
+    itemLevel: 3
 }, {
     disableRandomCreation: true
 });
@@ -250,7 +250,7 @@ Game.ItemRepository.define('leather', {
     strengthRequirement: 1,
     wearable: true,
     mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Enchantable],
-    value: 1
+    itemLevel: 1
 }, {
     disableRandomCreation: false
 });
@@ -263,7 +263,7 @@ Game.ItemRepository.define('scalemail', {
     strengthRequirement: 1,
     wearable: true,
     mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Enchantable],
-    value: 1
+    itemLevel: 1
 }, {
     disableRandomCreation: false
 });
@@ -276,7 +276,7 @@ Game.ItemRepository.define('chainmail', {
     strengthRequirement: 2,
     wearable: true,
     mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Enchantable],
-    value: 2
+    itemLevel: 1
 }, {
     disableRandomCreation: false
 });
@@ -289,7 +289,7 @@ Game.ItemRepository.define('platemail', {
     strengthRequirement: 3,
     wearable: true,
     mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Enchantable],
-    value: 3
+    itemLevel: 2
 }, {
     disableRandomCreation: false
 });
