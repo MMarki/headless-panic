@@ -473,7 +473,7 @@ Game.EntityMixins.Thrower = {
             if (target.hasMixin('PlayerActor')) {
                 defense = defense * 10;
             }
-            var hitProbability = 100 * Math.pow(0.987, defense);
+            var hitProbability = 90 * Math.pow(0.987, defense);
             if (Math.random()*100 < hitProbability){
                 var maxAmount = Math.max(0, item.getThrownAttackValue());
                 amount = Math.floor((Math.random() * maxAmount)) + 1;

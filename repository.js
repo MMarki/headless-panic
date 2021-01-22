@@ -41,6 +41,19 @@ Game.Repository.prototype.createRandom = function() {
     return this.create(keys[Math.floor(Math.random() * keys.length)]);
 };
 
+// Create an object based on a random template
+Game.Repository.prototype.createRandomConstrained = function(floor) {
+    // Pick a random key and create an object based off of it.
+    validItems = [];
+    for (const [key, props] of Object.entries(this._randomTemplates)) {
+        if (props.value <= floor) validItems.push(key); 
+    }
+
+    console.log(validItems);
+    
+    return this.create(validItems[Math.floor(Math.random() * validItems.length)]);
+};
+
 // Create an object based on a random template, by template frequency
 Game.Repository.prototype.createRandomByFrequency = function(key) {
     var frequencyForFloor = this.repoFrequency[key];
