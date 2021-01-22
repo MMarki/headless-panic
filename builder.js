@@ -1,11 +1,11 @@
-Game.Builder = function(width, height) {
+Game.Builder = function(width, height, level) {
     this._width = width;
     this._height = height;
     this._tiles = {};
     this._regions = {};
 
     // Create a new cave at each level
-    this._tiles = this._generateLevel();
+    this._tiles = this._generateLevel(level);
     // Setup the regions array for each depth
     this._regions = new Array(width);
     for (var x = 0; x < width; x++) {
@@ -17,12 +17,18 @@ Game.Builder = function(width, height) {
     }
 
     //this._setupRegions();
+    if (level <= 3){
+        this._setGrass();
+        this._setGrass();
+    }
     this._setGrass();
     this._setGrass();
-    this._setGrass();
-    this._setGrass();
-    this._setShallowWater();
-    this._setShallowWater();
+    if (level > 3){
+        this._setShallowWater();
+        this._setShallowWater();
+        this._setShallowWater();
+        this._setShallowWater();
+    }
     this._setStairs();
 };
 
@@ -36,20 +42,35 @@ Game.Builder.prototype.getHeight = function () {
     return this._height;
 }
 
-Game.Builder.prototype._generateLevel = function() {
+Game.Builder.prototype._generateLevel = function(level) {
     // Create the empty map
     var map = new Array(this._width);
     for (var w = 0; w < this._width; w++) {
         map[w] = new Array(this._height);
     }
-    // Set up the level generator
-    var options = {
-        roomWidth: [5, 20],
-        roomHeight: [5, 12],
-        corridorLength: [0, 4],
-        dugPercentage: 0.45
+
+    if (level <= 3){
+        // Set up the level generator
+        var options = {
+            roomWidth: [4, 15],
+            roomHeight: [4, 10],
+            corridorLength: [0, 0],
+            dugPercentage: 0.50
+        }
+        var generator = new ROT.Map.Digger(this._width, this._height, options);
+
+    } else if (level <=6){
+         // Set up the level generator
+        var options = {
+            roomWidth: [5, 20],
+            roomHeight: [5, 12],
+            corridorLength: [0, 4],
+            dugPercentage: 0.45
+        }
+        var generator = new ROT.Map.Digger(this._width, this._height, options);
     }
-    var generator = new ROT.Map.Digger(this._width, this._height, options);
+
+   
     var setMapTile = function (x, y, value) {
          if (value === 1) {
             map[x][y] = Game.Tile.wallTile;

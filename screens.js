@@ -30,7 +30,7 @@ Game.Screen.playScreen = {
         var width = Game._screenWidth;
         var height = Game._screenHeight;
         // Create our map from tiles and player
-        var tiles = new Game.Builder(width,height).getTiles()
+        var tiles = new Game.Builder(width,height, Game.getLevel()).getTiles()
         this._player = new Game.Entity(Game.PlayerTemplate);
         //starting player equipment
         var startingHead = Game.ItemRepository.create('head', {
@@ -264,7 +264,7 @@ Game.Screen.playScreen = {
             var height = Game._screenHeight;
             // Create our map from tiles and player
             Game.incrementLevel();
-            var tiles = new Game.Builder(width,height).getTiles()
+            var tiles = new Game.Builder(width,height, Game.getLevel()).getTiles()
             //pass the current player and the new tiles in
             this._map = new Game.Map(tiles, this._player, this._player.getItems());
             // Start the map's engine
