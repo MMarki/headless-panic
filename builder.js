@@ -20,10 +20,30 @@ Game.Builder = function(width, height, level) {
     if (level <= 3){
         this._setGrass();
         this._setGrass();
+        this._setColumn();
+        this._setColumn();
+        this._setColumn();
+        this._setColumn();
+        this._setColumn();
+        this._setColumn();
+        this._setColumn();
+        this._setColumn();
+        this._setColumn();
+        this._setColumn();
+        this._setColumn();
+        this._setColumn();
+        this._setColumn();
+        this._setColumn();
+        this._setColumn();
+        this._setColumn();
+        this._setColumn();
+        this._setColumn();
+        this._setColumn();
     }
     this._setGrass();
     this._setGrass();
     if (level > 3){
+        this._setShallowWater();
         this._setShallowWater();
         this._setShallowWater();
         this._setShallowWater();
@@ -182,8 +202,13 @@ Game.Builder.prototype._setStairs = function() {
         }
     }
     // We shuffle the list of matches to prevent bias
-    var match =  matches[Math.floor(Math.random() * matches.length)];
-    this._tiles[match.x][match.y] = Game.Tile.stairsDownTile;
+    while (true){
+        var match =  matches[Math.floor(Math.random() * matches.length)];
+        if(this._checkAdjacent(match.x, match.y, Game.Tile.floorTile)){
+            this._tiles[match.x][match.y] = Game.Tile.stairsDownTile;
+            break
+        }
+    }
 }
 
 // Generates grass at free locations
@@ -220,6 +245,36 @@ Game.Builder.prototype._setShallowWater = function() {
     var waterList = [];
     waterList.push(match);
     this._cellGrow(waterList, Game.Tile.shallowWaterTile, 20)
+}
+
+// Generates grass at free locations
+Game.Builder.prototype._setColumn = function() {
+    var matches = [];
+    // Iterate through all tiles, checking if they are floor tiles. 
+    for (var x = 0; x < this._width; x++) {
+        for (var y = 0; y < this._height; y++) {
+            if (this._tiles[x][y]  == Game.Tile.floorTile) {
+                matches.push({x: x, y: y});
+            }
+        }
+    }
+    // We shuffle the list of matches to prevent bias
+    var match = matches[Math.floor(Math.random() * matches.length)];
+    console.log(match);
+    matchX = match.x;
+    matchY = match.y;
+    if(this._checkAdjacent(matchX, matchY, Game.Tile.floorTile)){
+        this._tiles[matchX][matchY] = Game.Tile.wallTile;
+    }
+}
+
+Game.Builder.prototype._checkAdjacent = function(x,y,tileType) {
+    if (this._tiles[x - 1][y]  === tileType && this._tiles[x + 1][y]  === tileType
+        && this._tiles[x][y - 1]  === tileType && this._tiles[x][y + 1]  === tileType) {
+            return true;
+    } else {
+        return false;
+    }
 }
 
 // Generates tileType at free locations
