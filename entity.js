@@ -75,8 +75,12 @@ Game.Entity.prototype.tryMove = function(x, y) {
     // Check if we can walk on the tile and if so simply walk onto it
     } else if (tile.isWalkable()) {        
         // Update the entity's position
-       this.setPosition(x, y);
-       var items = this.getMap().getItemsAt(x, y);
+        this.setPosition(x, y);
+        //open doors
+        if(tile === Game.Tile.doorTile) {
+           this.getMap()._tiles[x][y] = Game.Tile.openDoorTile;
+        }
+        var items = this.getMap().getItemsAt(x, y);
         if (items) {
             if (items.length !== 1) {
                 Game.sendMessage(this, "There are several objects here.");

@@ -60,7 +60,7 @@ Game.EntityRepository.define('bat', {
 Game.EntityRepository.define('jackal', {
     name: 'jackal',
     character: 'j',
-    foreground: '#c06e52',
+    foreground: '#D19A66',
     maxHP: 5,
     attackValue: 4,
     accuracyValue: 70,
@@ -108,7 +108,7 @@ Game.EntityRepository.define('goblin', {
 Game.EntityRepository.define('toadman', {
     name: 'toadman',
     character: 't',
-    foreground: '#91C7B1',
+    foreground: '#98C379',
     maxHP: 10,
     attackValue: 6,
     defenseValue: 10,
@@ -126,7 +126,7 @@ Game.EntityRepository.define('toadman', {
 Game.EntityRepository.define('toad queen', {
     name: 'toad queen',
     character: 'T',
-    foreground: '#91C7B1',
+    foreground: '#98C379',
     maxHP: 50,
     attackValue: 7,
     defenseValue: 10,
@@ -150,7 +150,7 @@ Game.EntityRepository.define('toad queen', {
 Game.EntityRepository.define('poison toad', {
     name: 'poison toad',
     character: 'p',
-    foreground: '#91C7B1',
+    foreground: '#C678DD',
     maxHP: 12,
     attackValue: 4,
     defenseValue: 10,

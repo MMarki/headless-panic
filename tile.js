@@ -119,8 +119,17 @@ Game.Tile.doorTile = new Game.Tile({
     foreground: '#FFF',
     background: '#480C1C',
     walkable: true,
+    blocksLight: true,
+    description: 'a closed door'
+});
+
+Game.Tile.openDoorTile = new Game.Tile({
+    character: '-', //'
+    foreground: '#FFF',
+    background: '#480C1C',
+    walkable: true,
     blocksLight: false,
-    description: 'a door'
+    description: 'an open door'
 });
 
 Game.Tile.grassTile = new Game.Tile({
