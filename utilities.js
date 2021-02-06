@@ -11,7 +11,7 @@ Game.Utilities.randomRange = function(min, max){
 }
 
 Game.randomize = function(array) {
-    var currentIndex = array.length, temporaryValue, randomIndex;
+    let currentIndex = array.length, temporaryValue, randomIndex;
   
     // While there remain elements to shuffle...
     while (0 !== currentIndex) {

@@ -1,12 +1,12 @@
 Game.Geometry = {
     getLine: function(startX, startY, endX, endY) {
-        var points = [];
-        var dx = Math.abs(endX - startX);
-        var dy = Math.abs(endY - startY);
-        var sx = (startX < endX) ? 1 : -1;
-        var sy = (startY < endY) ? 1 : -1;
-        var err = dx - dy;
-        var e2;
+        let points = [];
+        let dx = Math.abs(endX - startX);
+        let dy = Math.abs(endY - startY);
+        let sx = (startX < endX) ? 1 : -1;
+        let sy = (startY < endY) ? 1 : -1;
+        let err = dx - dy;
+        let e2;
 
         while (true) {
             points.push({x: startX, y: startY});
