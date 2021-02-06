@@ -10,7 +10,7 @@ Game.Repository = function(name, ctor) {
 Game.Repository.prototype.define = function(name, template, options) {
     this._templates[name] = template;
     // Apply any options
-    var disableRandomCreation = options && options['disableRandomCreation'];
+    let disableRandomCreation = options && options['disableRandomCreation'];
     if (!disableRandomCreation) {
         this._randomTemplates[name] = template;
     }
@@ -23,10 +23,10 @@ Game.Repository.prototype.create = function(name, extraProperties) {
             this._name + "'");
     }
     // Copy the template
-    var template = Object.create(this._templates[name]);
+    let template = Object.create(this._templates[name]);
     // Apply any extra properties
     if (extraProperties) {
-        for (var key in extraProperties) {
+        for (let key in extraProperties) {
             template[key] = extraProperties[key];
         }
     }
@@ -37,7 +37,7 @@ Game.Repository.prototype.create = function(name, extraProperties) {
 // Create an object based on a random template
 Game.Repository.prototype.createRandom = function() {
     // Pick a random key and create an object based off of it.
-    var keys = (Object.keys(this._randomTemplates));
+    let keys = (Object.keys(this._randomTemplates));
     return this.create(keys[Math.floor(Math.random() * keys.length)]);
 };
 
@@ -64,18 +64,18 @@ Game.Repository.prototype.createRandomConstrained = function(floor) {
 
 // Create an object based on a random template, by template frequency
 Game.Repository.prototype.createRandomByFrequency = function(key) {
-    var frequencyForFloor = this.repoFrequency[key];
-    var unWrappedArray = [];
-    for (var i = 0; i < frequencyForFloor.length; i++) {
-        var item = frequencyForFloor[i];
-        var frequency = Object.values(item)[0];
+    let frequencyForFloor = this.repoFrequency[key];
+    let unWrappedArray = [];
+    for (let i = 0; i < frequencyForFloor.length; i++) {
+        let item = frequencyForFloor[i];
+        let frequency = Object.values(item)[0];
 
-        for (var j = 0; j < frequency; j++){
+        for (let j = 0; j < frequency; j++){
             unWrappedArray.push(Object.keys(item)[0]);
         }
     }
 
-    var creature = unWrappedArray[Math.floor(Math.random() * unWrappedArray.length)];
+    let creature = unWrappedArray[Math.floor(Math.random() * unWrappedArray.length)];
     return this.create(creature);
     
 };

@@ -43,8 +43,8 @@ Game.Entity.prototype.getSpeed = function() {
 };
 
 Game.Entity.prototype.setPosition = function(x, y) {
-    var oldX = this._x;
-    var oldY = this._y;
+    let oldX = this._x;
+    let oldY = this._y;
     this._x = x;
     this._y = y;
     // If the entity is on a map, notify the map that the entity has moved.
@@ -54,9 +54,9 @@ Game.Entity.prototype.setPosition = function(x, y) {
 }
 
 Game.Entity.prototype.tryMove = function(x, y) {
-    var map = this.getMap();
-    var tile = map.getTile(x, y);
-    var target = map.getEntityAt(x, y);
+    const map = this.getMap();
+    const tile = map.getTile(x, y);
+    const target = map.getEntityAt(x, y);
     // If an entity was present at the tile
     if (target) {
         // If we are an attacker, try to attack the target
@@ -80,7 +80,7 @@ Game.Entity.prototype.tryMove = function(x, y) {
         if(tile === Game.Tile.doorTile) {
            this.getMap()._tiles[x][y] = Game.Tile.openDoorTile;
         }
-        var items = this.getMap().getItemsAt(x, y);
+        let items = this.getMap().getItemsAt(x, y);
         if (items) {
             if (items.length !== 1) {
                 Game.sendMessage(this, "There are several objects here.");
@@ -92,10 +92,10 @@ Game.Entity.prototype.tryMove = function(x, y) {
 }
 
 Game.Entity.prototype.tryMoveTeleport = function(x, y) {
-    var map = this.getMap();
+    const map = this.getMap();
     console.log('x: ' + x + "y: " + y)
-    var tile = map.getTile(x, y);
-    var target = map.getEntityAt(x, y);
+    let tile = map.getTile(x, y);
+    let target = map.getEntityAt(x, y);
     // If an entity was present at the tile
     if (target) {
         return false;
@@ -107,8 +107,8 @@ Game.Entity.prototype.tryMoveTeleport = function(x, y) {
 }
 
 Game.Entity.prototype.applyNewEffects = function(){
-    var map = this.getMap();
-    var tile = map.getTile(this._x, this._y);
+    const map = this.getMap();
+    let tile = map.getTile(this._x, this._y);
 
     //check if they already have it,
     // if so, change the existing duration instead of adding a new one
@@ -118,26 +118,26 @@ Game.Entity.prototype.applyNewEffects = function(){
             if (this.hasEffect('burning')){
                 this.removeEffect('burning');
             }
-            var duration = 7;
-            var name = 'burning';
-            var newEffect = new Game.Effect(duration, name);
+            let duration = 7;
+            let name = 'burning';
+            let newEffect = new Game.Effect(duration, name);
             this.setEffect(newEffect);
         } else if (tile._name === 'poisonTile'){
             if (this.hasEffect('poisoned')){
                 this.removeEffect('poisoned');
             }
-            var duration = 10;
-            var name =  'poisoned';
-            var newEffect = new Game.Effect(duration, name);
+            let duration = 10;
+            let name =  'poisoned';
+            let newEffect = new Game.Effect(duration, name);
             this.setEffect(newEffect);
         }
         else if (tile._name === 'darknessTile'){
             if (this.hasEffect('blind')){
                 this.removeEffect('blind');
             }
-            var duration = 20;
-            var name =  'blind';
-            var newEffect = new Game.Effect(duration, name);
+            let duration = 20;
+            let name =  'blind';
+            let newEffect = new Game.Effect(duration, name);
             this.setEffect(newEffect);
         }
     }

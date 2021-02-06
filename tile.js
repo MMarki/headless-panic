@@ -3,7 +3,7 @@ Game.Tile = function(properties) {
     // Call the Glyph constructor with our properties
     Game.Glyph.call(this, properties);
     // Set up the properties. We use false by default.
-    var vary = properties['vary'] || false;
+    let vary = properties['vary'] || false;
     this._walkable = properties['walkable'] || false;
     this._diggable = properties['diggable'] || false;
     this._blocksLight = (properties['blocksLight'] !== undefined) ? properties['blocksLight'] : true;
@@ -37,10 +37,10 @@ Game.Tile.prototype.getDescription = function() {
 };
 
 Game.Tile.prototype.getNeighborPositions = function() {
-    var tiles = [];
+    let tiles = [];
     // Generate all possible offsets
-    for (var dX = -1; dX < 2; dX ++) {
-        for (var dY = -1; dY < 2; dY++) {
+    for (let dX = -1; dX < 2; dX ++) {
+        for (let dY = -1; dY < 2; dY++) {
             // Make sure it isn't the same tile
             if (dX == 0 && dY == 0) {
                 continue;

@@ -8,7 +8,7 @@ Game.ItemMixins.Edible = {
         this._name = template['name'];
         this._healthValue = template['healthValue'] || 0;
         this._potionEffect = null
-        var potionEffect = template['potionEffect'] || null
+        let potionEffect = template['potionEffect'] || null
         if (potionEffect !== null){
             this._potionEffect = new Game.Effect(potionEffect.duration, potionEffect.name);
         } else {
@@ -27,38 +27,38 @@ Game.ItemMixins.Edible = {
             }
         }
         if (this._name === 'shatter potion'){
-            var x = entity.getX();
-            var y = entity.getY();
-            var map = entity.getMap();
+            let x = entity.getX();
+            let y = entity.getY();
+            let map = entity.getMap();
             map.shatter(x,y);
         } else if (this._name === 'fire potion'){
-            var x = entity.getX();
-            var y = entity.getY();
-            var map = entity.getMap();
-            var tempList = []
+            let x = entity.getX();
+            let y = entity.getY();
+            let map = entity.getMap();
+            let tempList = []
             tempList.push({x: x, y: y});
             map.cellGrow(tempList, 'fireTile', 10);
         } else if (this._name === 'poison potion'){
-            var x = entity.getX();
-            var y = entity.getY();
-            var map = entity.getMap();
-            var tempList = []
+            let x = entity.getX();
+            let y = entity.getY();
+            let map = entity.getMap();
+            let tempList = []
             tempList.push({x: x, y: y});
             map.cellGrow(tempList, 'poisonTile', 12);
         } else if (this._name === 'darkness potion'){
-            var x = entity.getX();
-            var y = entity.getY();
-            var map = entity.getMap();
-            var tempList = []
+            let x = entity.getX();
+            let y = entity.getY();
+            let map = entity.getMap();
+            let tempList = []
             tempList.push({x: x, y: y});
             map.cellGrow(tempList, 'darknessTile', 9);
         } else if (this._name === 'summoning potion'){
             entity.summon('rat');
         } else if (this._name === 'teleportation potion') {
-            var x = entity.getX();
-            var y = entity.getY();
-            var newX = 0;
-            var newY = 0;
+            let x = entity.getX();
+            let y = entity.getY();
+            let newX = 0;
+            let newY = 0;
 
             while (!entity.tryMoveTeleport(x + newX, y + newY) ){
                 newX = Math.floor(Math.random() * 80) - 40;

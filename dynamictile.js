@@ -2,8 +2,7 @@ Game.DynamicTile = function(properties) {
     properties = properties || {};
     // Call the glyph's construtor with our set of properties
     Game.DynamicGlyph.call(this, properties);
-    // Set up the properties. We use false by default.
-    var vary = properties['vary'] || false;
+    // Set up the properties
     this._name = properties['name'];
     this._walkable = properties['walkable'] || false;
     this._diggable = properties['diggable'] || false;
@@ -38,10 +37,10 @@ Game.DynamicTile.prototype.getDescription = function() {
 };
 
 Game.DynamicTile.prototype.getNeighborPositions = function() {
-    var tiles = [];
+    let tiles = [];
     // Generate all possible offsets
-    for (var dX = -1; dX < 2; dX ++) {
-        for (var dY = -1; dY < 2; dY++) {
+    for (let dX = -1; dX < 2; dX ++) {
+        for (let dY = -1; dY < 2; dY++) {
             // Make sure it isn't the same tile
             if (dX === 0 && dY === 0 || (dX === dY)) {
                 continue;
@@ -87,13 +86,13 @@ Game.DynamicTileMixins.Actor = {
         }
 
         if (this.hasMixin(Game.DynamicTileMixins.Spreadable)){
-            var neighbors = this.getNeighborPositions();
+            let neighbors = this.getNeighborPositions();
             // see if they match this._spreadSubstance
-            for (var i = 0; i < neighbors.length; i++){
-                var neighbor = neighbors[i];
-                var tile = this._map.getTile(neighbor.x, neighbor.y);
+            for (let i = 0; i < neighbors.length; i++){
+                let neighbor = neighbors[i];
+                let tile = this._map.getTile(neighbor.x, neighbor.y);
                 if (tile.isFlammable()){
-                    var newTile =  Game.DynamicTileRepository.create('fireTile')
+                    let newTile =  Game.DynamicTileRepository.create('fireTile')
                     this._map.addDynamicTile(newTile, neighbor.x, neighbor.y);
                 }
                 

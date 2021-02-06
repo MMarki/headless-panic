@@ -11,11 +11,11 @@ Game.DynamicGlyph = function(properties) {
     this._attachedMixinGroups = {};
     this._description = properties['description'] || '';
     // Setup the object's mixins
-    var mixins = properties['mixins'] || [];
-    for (var i = 0; i < mixins.length; i++) {
+    let mixins = properties['mixins'] || [];
+    for (let i = 0; i < mixins.length; i++) {
         // Copy over all properties from each mixin as long as it's not the name or the init property.
         // We also make sure not to override a property that already exists on the entity.
-        for (var key in mixins[i]) {
+        for (let key in mixins[i]) {
             if (key != 'init' && key != 'name' && !this.hasOwnProperty(key)) {
                 this[key] = mixins[i][key];
             }
@@ -57,16 +57,16 @@ Game.DynamicGlyph.prototype.describe = function() {
 };
 Game.DynamicGlyph.prototype.describeA = function(capitalize) {
     // Optional parameter to capitalize the a/an.
-    var prefixes = capitalize ? ['A', 'An'] : ['a', 'an'];
-    var string = this.describe();
-    var firstLetter = string.charAt(0).toLowerCase();
+    let prefixes = capitalize ? ['A', 'An'] : ['a', 'an'];
+    let string = this.describe();
+    let firstLetter = string.charAt(0).toLowerCase();
     // If word starts by a vowel, use an, else use a. Note that this is not perfect.
-    var prefix = 'aeiou'.indexOf(firstLetter) >= 0 ? 1 : 0;
+    let prefix = 'aeiou'.indexOf(firstLetter) >= 0 ? 1 : 0;
 
     return prefixes[prefix] + ' ' + string;
 };
 Game.DynamicGlyph.prototype.describeThe = function(capitalize) {
-    var prefix = capitalize ? 'The' : 'the';
+    const prefix = capitalize ? 'The' : 'the';
     return prefix + ' ' + this.describe();
 };
 

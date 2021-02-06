@@ -25,9 +25,9 @@ Game.Map = function(tiles, player, items) {
     this.setupFov();
 
     // 15 entities per floor
-    for (var i = 0; i < 10; i++) {
+    for (let i = 0; i < 10; i++) {
         // Add a random entity
-        var randomEntity = Game.EntityRepository.createRandomByFrequency('L' + Game.getLevel())
+        let randomEntity = Game.EntityRepository.createRandomByFrequency('L' + Game.getLevel())
         this.addEntityAtRandomPosition( randomEntity , 1);
         //how do i make it so enemies don't spawn on top of me?
         this.addEntityAtRandomPosition(Game.EntityRepository.create("barrel"), 0);
@@ -42,7 +42,7 @@ Game.Map = function(tiles, player, items) {
     }
     
     // 15 items per floor
-    for (var i = 0; i < 9; i++) {
+    for (let i = 0; i < 9; i++) {
         // Add a random entity
         this.addItemAtRandomPosition(Game.ItemRepository.createRandomConstrained(Game.getLevel()));
     }
@@ -91,8 +91,8 @@ Game.Map.prototype.getTile = function(x, y) {
 };
 
 Game.Map.prototype.shatter = function(x, y) {
-    for (var i = x-2; i <= x + 2; i++){
-        for (var j = y-2; j <= y+2; j++){
+    for (let i = x-2; i <= x + 2; i++){
+        for (let j = y-2; j <= y+2; j++){
             if (!(i < 0 || i >= this._width || j < 0 || j >= this._height)) {
                 this.dig(i,j);
             }
@@ -126,7 +126,7 @@ Game.Map.prototype.changeTile = function(x, y, template) {
 
 Game.Map.prototype.getRandomFloorPosition = function() {
     // Randomly generate a tile which is a floor
-    var x, y;
+    let x, y;
     do {
         x = Math.floor(Math.random() * this._width);
         y = Math.floor(Math.random() * this._width);
@@ -147,10 +147,10 @@ Game.Map.prototype.addEntity = function(entity) {
 
 //adds and entity on an empty floor tile
 Game.Map.prototype.addEntityAtRandomPosition = function(entity, outOfSightline) {
-    var position = this.getRandomFloorPosition();
+    let position = this.getRandomFloorPosition();
     if (outOfSightline){
         // Cache the FOV
-        var visibleCells = {};
+        let visibleCells = {};
         this.getFov().compute(
             this._player.getX(), this._player.getY(), 
             this._player.getSightRadius(), 
@@ -168,7 +168,7 @@ Game.Map.prototype.addEntityAtRandomPosition = function(entity, outOfSightline) 
 
 Game.Map.prototype.removeEntity = function(entity) {
     // Remove the entity from the map
-    var key = entity.getX() + ',' + entity.getY();
+    const key = entity.getX() + ',' + entity.getY();
     if (this._entities[key] == entity) {
         delete this._entities[key];
     }
@@ -187,13 +187,13 @@ Game.Map.prototype.isEmptyFloor = function(x, y) {
 Game.Map.prototype.getEntitiesWithinRadius = function(centerX, centerY, radius) {
     results = [];
     // Determine our bounds
-    var leftX = centerX - radius;
-    var rightX = centerX + radius;
-    var topY = centerY - radius;
-    var bottomY = centerY + radius;
+    const leftX = centerX - radius;
+    const rightX = centerX + radius;
+    const topY = centerY - radius;
+    const bottomY = centerY + radius;
     // Iterate through our entities, adding any which are within the bounds
-    for (var key in this._entities) {
-        var entity = this._entities[key];
+    for (let key in this._entities) {
+        let entity = this._entities[key];
         if (entity.getX() >= leftX &&
             entity.getX() <= rightX && 
             entity.getY() >= topY &&
@@ -206,7 +206,7 @@ Game.Map.prototype.getEntitiesWithinRadius = function(centerX, centerY, radius) 
 
 Game.Map.prototype.setupFov = function() {
     // Keep this in 'map' variable so that we don't lose it.
-    var map = this;
+    let map = this;
     
     // We need to create a callback which figures out if light can pass through a given tile.
     map._fov = new ROT.FOV.DiscreteShadowcasting(function(x, y) {
@@ -221,9 +221,9 @@ Game.Map.prototype.getFov = function() {
 }
 
 Game.Map.prototype._setupExploredArray = function() {
-    for (var x = 0; x < this._width; x++) {
+    for (let x = 0; x < this._width; x++) {
         this._explored[x] = new Array(this._height);
-        for (var y = 0; y < this._height; y++) {
+        for (let y = 0; y < this._height; y++) {
             this._explored[x][y] = false;
         }
     }
@@ -248,7 +248,7 @@ Game.Map.prototype.isExplored = function(x, y) {
 Game.Map.prototype.updateEntityPosition = function(entity, oldX, oldY) {
     // Delete the old key if it is the same entity and we have old positions.
     if (typeof(oldX) !=="undefined") {
-        var oldKey = oldX + ',' + oldY;
+        let oldKey = oldX + ',' + oldY;
         if (this._entities[oldKey] == entity) {
             delete this._entities[oldKey];
         }
@@ -259,7 +259,7 @@ Game.Map.prototype.updateEntityPosition = function(entity, oldX, oldY) {
         throw new Error("Entity's position is out of bounds.");
     }
     // Sanity check to make sure there is no entity at the new position.
-    var key = entity.getX() + ',' + entity.getY();
+    let key = entity.getX() + ',' + entity.getY();
     if (this._entities[key]) {
         throw new Error('Tried to add an entity at an occupied position.');
     }
@@ -273,7 +273,7 @@ Game.Map.prototype.getItemsAt = function(x, y) {
 
 Game.Map.prototype.setItemsAt = function(x, y, items) {
     // If our items array is empty, then delete the key from the table.
-    var key = x + ',' + y;
+    let key = x + ',' + y;
     if (items.length === 0) {
         if (this._items[key]) {
             delete this._items[key];
@@ -286,7 +286,7 @@ Game.Map.prototype.setItemsAt = function(x, y, items) {
 
 Game.Map.prototype.addItem = function(x, y, item) {
     // If we already have items at that position, simply append the item to the list of items.
-    var key = x + ',' + y;
+    let key = x + ',' + y;
     if (this._items[key]) {
         this._items[key].push(item);
     } else {
@@ -295,7 +295,7 @@ Game.Map.prototype.addItem = function(x, y, item) {
 };
 
 Game.Map.prototype.addItemAtRandomPosition = function(item) {
-    var position = this.getRandomFloorPosition();
+    let position = this.getRandomFloorPosition();
     while (this.getItemsAt(position.x, position.y)){
         position = this.getRandomFloorPosition();
     }
@@ -322,8 +322,8 @@ Game.Map.prototype.addDynamicTile = function(tile, x, y) {
 
 Game.Map.prototype.removeDynamicTile = function(tile) {
     // Remove the entity from the map
-    var x = tile.getX();
-    var y = tile.getY();
+    let x = tile.getX();
+    let y = tile.getY();
     if (this._tiles[x][y] === tile) {
         this._tiles[x][y] = Game.Tile.floorTile;
     }
@@ -337,22 +337,22 @@ Game.Map.prototype.removeDynamicTile = function(tile) {
 
 
 Game.Map.prototype.cellGrow = function(list, tileType, numberOfTiles) {
-    var growthCount = 0;
-    var i = 0;
-    var dynamic = 1;
+    let growthCount = 0;
+    let i = 0;
+    let dynamic = 1;
 
     while (growthCount < numberOfTiles){
-        var currentTile = list[i]
+        let currentTile = list[i]
         if (currentTile === undefined){
             break;
         }
-        var x = currentTile.x;
-        var y = currentTile.y;
+        let x = currentTile.x;
+        let y = currentTile.y;
 
         if (this._tiles[x - 1][y] === Game.Tile.floorTile || this._tiles[x - 1][y] === Game.Tile.bloodTile || this._tiles[x - 1][y] === Game.Tile.grassTile) {
             this._tiles[x - 1][y] = tileType;
             if (dynamic){
-                var tileObject = Game.DynamicTileRepository.create(tileType);
+                let tileObject = Game.DynamicTileRepository.create(tileType);
                 this.addDynamicTile(tileObject, x -1, y);
             }
             list.push({x: x - 1, y: y});
@@ -361,7 +361,7 @@ Game.Map.prototype.cellGrow = function(list, tileType, numberOfTiles) {
         if (this._tiles[x + 1][y] === Game.Tile.floorTile || this._tiles[x + 1][y] === Game.Tile.bloodTile || this._tiles[x + 1][y] === Game.Tile.grassTile) {
             this._tiles[x + 1][y] = tileType;
             if (dynamic){
-                var tileObject = Game.DynamicTileRepository.create(tileType);
+                let tileObject = Game.DynamicTileRepository.create(tileType);
                 this.addDynamicTile(tileObject, x + 1, y);
             }
             list.push({x: x + 1, y: y});
@@ -370,7 +370,7 @@ Game.Map.prototype.cellGrow = function(list, tileType, numberOfTiles) {
         if (this._tiles[x][y - 1] === Game.Tile.floorTile || this._tiles[x][y - 1] === Game.Tile.bloodTile || this._tiles[x][y - 1] === Game.Tile.grassTile) {
             this._tiles[x][y -1]  = tileType;
             if (dynamic){
-                var tileObject = Game.DynamicTileRepository.create(tileType);
+                let tileObject = Game.DynamicTileRepository.create(tileType);
                 this.addDynamicTile(tileObject, x, y - 1);
             }
             list.push({x: x, y: y - 1});
@@ -379,7 +379,7 @@ Game.Map.prototype.cellGrow = function(list, tileType, numberOfTiles) {
         if (this._tiles[x][y + 1] === Game.Tile.floorTile || this._tiles[x][y + 1] === Game.Tile.bloodTile || this._tiles[x][y + 1] === Game.Tile.grassTile) {
             this._tiles[x][y + 1] = tileType;
             if (dynamic){
-                var tileObject = Game.DynamicTileRepository.create(tileType);
+                let tileObject = Game.DynamicTileRepository.create(tileType);
                 this.addDynamicTile(tileObject, x, y + 1);
             }
             list.push({x: x, y: y + 1});

@@ -1,6 +1,6 @@
-Game.Effect = function(duration, name){
-    this._duration = duration || 10;
-    this._name = name || "unknown";
+Game.Effect = function(duration = 10, name = "unknown"){
+    this._duration = duration;
+    this._name = name;
     this._color = this.getEffectColor(name);
 }
 

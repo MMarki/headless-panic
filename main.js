@@ -10,8 +10,8 @@ var Game =  {
         
 	    // Create a helper function for binding to an event
 	    // and making it send it to the screen
-	    var game = this; // So that we don't lose this
-	    var bindEventToScreen = function(event) {
+	    let game = this; // So that we don't lose this
+	    let bindEventToScreen = function(event) {
             window.addEventListener(event, function(e) {
                 // When an event is received, send it to the
                 // screen if there is one
@@ -65,7 +65,7 @@ var Game =  {
 
 window.onload = function(){
     Game.init();
-    var container = Game.getDisplay().getContainer();
+    let container = Game.getDisplay().getContainer();
     document.documentElement.appendChild(container);
     //Load the start screen
     Game.switchScreen(Game.Screen.startScreen);

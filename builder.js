@@ -8,10 +8,10 @@ Game.Builder = function(width, height, level) {
     this._tiles = this._generateLevel(level);
     // Setup the regions array for each depth
     this._regions = new Array(width);
-    for (var x = 0; x < width; x++) {
+    for (let x = 0; x < width; x++) {
         this._regions[x] = new Array(height);
         // Fill with zeroes
-        for (var y = 0; y < height; y++) {
+        for (let y = 0; y < height; y++) {
             this._regions[x][y] = 0;
         }
     }
@@ -64,34 +64,36 @@ Game.Builder.prototype.getHeight = function () {
 
 Game.Builder.prototype._generateLevel = function(level) {
     // Create the empty map
-    var map = new Array(this._width);
-    for (var w = 0; w < this._width; w++) {
+    let map = new Array(this._width);
+    let options = {};
+    let generator = {};
+    for (let w = 0; w < this._width; w++) {
         map[w] = new Array(this._height);
     }
 
     if (level <= 3){
         // Set up the level generator
-        var options = {
+        options = {
             roomWidth: [4, 15],
             roomHeight: [4, 10],
             corridorLength: [0, 0],
             dugPercentage: 0.50
         }
-        var generator = new ROT.Map.Digger(this._width, this._height, options);
+        generator = new ROT.Map.Digger(this._width, this._height, options);
 
     } else if (level <=6){
          // Set up the level generator
-        var options = {
+        options = {
             roomWidth: [5, 20],
             roomHeight: [5, 12],
             corridorLength: [0, 4],
             dugPercentage: 0.45
         }
-        var generator = new ROT.Map.Digger(this._width, this._height, options);
+        generator = new ROT.Map.Digger(this._width, this._height, options);
     }
 
    
-    var setMapTile = function (x, y, value) {
+    let setMapTile = function (x, y, value) {
          if (value === 1) {
             map[x][y] = Game.Tile.wallTile;
         } else {
@@ -101,13 +103,13 @@ Game.Builder.prototype._generateLevel = function(level) {
 
     generator.create(setMapTile);
 
-    var makeDoor = function(x, y) {
+    let makeDoor = function(x, y) {
         map[x][y] = Game.Tile.doorTile;
     }
     
-    var rooms = generator.getRooms();
-    for (var i=0; i<rooms.length; i++) {
-        var room = rooms[i];
+    let rooms = generator.getRooms();
+    for (let i=0; i<rooms.length; i++) {
+        let room = rooms[i];
         //console.log(room.clearDoors());
         room.getDoors(makeDoor);
     }
@@ -128,10 +130,10 @@ Game.Builder.prototype._canFillRegion = function(x, y) {
 }
 
 Game.Builder.prototype._fillRegion = function(region, x, y) {
-    var tilesFilled = 1;
-    var tiles = [{x:x, y:y}];
-    var tile;
-    var neighbors;
+    let tilesFilled = 1;
+    let tiles = [{x:x, y:y}];
+    let tile;
+    let neighbors;
     // Update the region of the original tile
     this._regions[x][y] = region;
     // Keep looping while we still have tiles to process
@@ -158,8 +160,8 @@ Game.Builder.prototype._fillRegion = function(region, x, y) {
 // This removes all tiles at a given depth level with a region number.
 // It fills the tiles with a wall tile.
 Game.Builder.prototype._removeRegion = function(region) {
-    for (var x = 0; x < this._width; x++) {
-        for (var y = 0; y < this._height; y++) {
+    for (let x = 0; x < this._width; x++) {
+        for (let y = 0; y < this._height; y++) {
             if (this._regions[x][y] == region) {
                 // Clear the region and set the tile to a wall tile
                 this._regions[x][y] = 0;
@@ -171,11 +173,11 @@ Game.Builder.prototype._removeRegion = function(region) {
 
 // This sets up the regions for the current floor
 Game.Builder.prototype._setupRegions = function() {
-    var region = 1;
-    var tilesFilled;
+    let region = 1;
+    let tilesFilled;
     // Iterate through all tiles searching for a tile that can be used as the starting point for a flood fill
-    for (var x = 0; x < this._width; x++) {
-        for (var y = 0; y < this._height; y++) {
+    for (let x = 0; x < this._width; x++) {
+        for (let y = 0; y < this._height; y++) {
             if (this._canFillRegion(x, y)) {
                 // Try to fill
                 tilesFilled = this._fillRegion(region, x, y);
@@ -192,10 +194,10 @@ Game.Builder.prototype._setupRegions = function() {
 
 // Generates stairs at a free location
 Game.Builder.prototype._setStairs = function() {
-    var matches = [];
+    let matches = [];
     // Iterate through all tiles, checking if they are floor tiles. 
-    for (var x = 0; x < this._width; x++) {
-        for (var y = 0; y < this._height; y++) {
+    for (let x = 0; x < this._width; x++) {
+        for (let y = 0; y < this._height; y++) {
             if (this._tiles[x][y]  == Game.Tile.floorTile) {
                 matches.push({x: x, y: y});
             }
@@ -203,7 +205,7 @@ Game.Builder.prototype._setStairs = function() {
     }
     // We shuffle the list of matches to prevent bias
     while (true){
-        var match =  matches[Math.floor(Math.random() * matches.length)];
+        let match =  matches[Math.floor(Math.random() * matches.length)];
         if(this._checkAdjacent(match.x, match.y, Game.Tile.floorTile)){
             this._tiles[match.x][match.y] = Game.Tile.stairsDownTile;
             break
@@ -213,53 +215,55 @@ Game.Builder.prototype._setStairs = function() {
 
 // Generates grass at free locations
 Game.Builder.prototype._setGrass = function() {
-    var matches = [];
+    let matches = [];
     // Iterate through all tiles, checking if they are floor tiles. 
-    for (var x = 0; x < this._width; x++) {
-        for (var y = 0; y < this._height; y++) {
+    for (let x = 0; x < this._width; x++) {
+        for (let y = 0; y < this._height; y++) {
             if (this._tiles[x][y]  == Game.Tile.floorTile) {
                 matches.push({x: x, y: y});
             }
         }
     }
     // We shuffle the list of matches to prevent bias
-    var match =  matches[Math.floor(Math.random() * matches.length)];
-    var grassList = [];
+    let match =  matches[Math.floor(Math.random() * matches.length)];
+    let grassList = [];
     grassList.push(match);
     this._cellGrow(grassList, Game.Tile.grassTile, 20)
 }
 
 // Generates grass at free locations
 Game.Builder.prototype._setShallowWater = function() {
-    var matches = [];
+    let matches = [];
+    let match;
+    let waterList = [];
     // Iterate through all tiles, checking if they are floor tiles. 
-    for (var x = 0; x < this._width; x++) {
-        for (var y = 0; y < this._height; y++) {
+    for (let x = 0; x < this._width; x++) {
+        for (let y = 0; y < this._height; y++) {
             if (this._tiles[x][y]  == Game.Tile.floorTile) {
                 matches.push({x: x, y: y});
             }
         }
     }
     // We shuffle the list of matches to prevent bias
-    var match = matches[Math.floor(Math.random() * matches.length)];
-    var waterList = [];
+    match = matches[Math.floor(Math.random() * matches.length)];
     waterList.push(match);
     this._cellGrow(waterList, Game.Tile.shallowWaterTile, 20)
 }
 
 // Generates grass at free locations
 Game.Builder.prototype._setColumn = function() {
-    var matches = [];
+    let matches = [];
+    let match;
     // Iterate through all tiles, checking if they are floor tiles. 
-    for (var x = 0; x < this._width; x++) {
-        for (var y = 0; y < this._height; y++) {
+    for (let x = 0; x < this._width; x++) {
+        for (let y = 0; y < this._height; y++) {
             if (this._tiles[x][y]  == Game.Tile.floorTile) {
                 matches.push({x: x, y: y});
             }
         }
     }
     // We shuffle the list of matches to prevent bias
-    var match = matches[Math.floor(Math.random() * matches.length)];
+    match = matches[Math.floor(Math.random() * matches.length)];
     console.log(match);
     matchX = match.x;
     matchY = match.y;
@@ -279,15 +283,15 @@ Game.Builder.prototype._checkAdjacent = function(x,y,tileType) {
 
 // Generates tileType at free locations
 Game.Builder.prototype._cellGrow = function(list, tileType, numberOfTiles) {
-    var growthCount = 0;
-    var i = 0;
+    let growthCount = 0;
+    let i = 0;
     while (growthCount < numberOfTiles){
-        var currentTile = list[i]
+        let currentTile = list[i]
         if (currentTile === undefined){
             break;
         }
-        var x = currentTile.x;
-        var y = currentTile.y;
+        let x = currentTile.x;
+        let y = currentTile.y;
 
         if (this._tiles[x - 1][y]  === Game.Tile.floorTile) {
             this._tiles[x - 1][y]  = tileType;
