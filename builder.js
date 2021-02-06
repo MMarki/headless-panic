@@ -108,8 +108,7 @@ Game.Builder.prototype._generateLevel = function(level) {
     }
     
     let rooms = generator.getRooms();
-    for (let i=0; i<rooms.length; i++) {
-        let room = rooms[i];
+    for (let room of rooms) {
         //console.log(room.clearDoors());
         room.getDoors(makeDoor);
     }

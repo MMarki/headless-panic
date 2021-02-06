@@ -685,11 +685,13 @@ Game.Screen.TargetBasedScreen = function(template) {
     }
 };
 
-Game.Screen.TargetBasedScreen.prototype.setup = function(player, startX, startY, item = null, key = null) {
+Game.Screen.TargetBasedScreen.prototype.setup = function(player, startX, startY, item, key) {
     this._player = player;
     // Store original position.
     this._startX = startX;
     this._startY = startY;
+    this._item = item || null;	
+    this._key = key || null;
     // Store current cursor position
     this._cursorX = this._startX;
     this._cursorY = this._startY;

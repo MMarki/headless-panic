@@ -46,10 +46,10 @@ Game.EntityMixins.TaskActor = {
         }
 
         // Iterate through all our tasks
-        for (var i = 0; i < this._tasks.length; i++) {
-            if (this.canDoTask(this._tasks[i])) {
+        for (let task of this._tasks) {
+            if (this.canDoTask(task)) {
                 // If we can perform the task, execute the function for it.
-                this[this._tasks[i]]();
+                this[task]();
                 return;
             }
         }
@@ -651,14 +651,15 @@ Game.EntityMixins.InventoryHolder = {
     getItem: function(i) {
         return this._items[i];
     },
-    addItem: function(item) {
+    addItem: function(addedItem) {
         // Try to find a slot, returning true only if we could add the item.
-        if (item.hasMixin('Throwable')) {
-            if (item.isStackable()){
-                for (var i = 0; i < this._items.length; i++) {
-                    if (this._items[i] !== undefined && this._items[i] !== null){
-                        if (this._items[i].describe() == item.describe()) {
-                            this._items[i].setStackQuantity(this._items[i].getStackQuantity() + item.getStackQuantity());
+        if (addedItem.hasMixin('Throwable')) {
+            if (addedItem.isStackable()){
+                for (let itemSlot of this._items) {
+                    if (itemSlot !== undefined && itemSlot !== null){
+                        if (itemSlot.describe() == addedItem.describe()) {
+                            //stack the item if it's stackable and we already have one
+                            itemSlot.setStackQuantity(itemSlot.getStackQuantity() + addedItem.getStackQuantity());
                             return true;
                         }
                     }
@@ -666,9 +667,9 @@ Game.EntityMixins.InventoryHolder = {
             }
         }
         
-        for (var i = 0; i < this._items.length; i++) {
+        for (let i = 0; i < this._items.length; i++) {
             if (!this._items[i]) {
-                this._items[i] = item;
+                this._items[i] = addedItem;
                 return true;
             }
         }
