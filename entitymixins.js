@@ -153,7 +153,7 @@ Game.EntityMixins.FungusActor = {
                         this.getMap().addEntity(entity);
                         this._growthsRemaining--;
                         // Send a message nearby!
-                        Game.sendMessageNearby(this.getMap(), entity.getX(), entity.getY(),'The fungus is spreading!');
+                        Game.sendMessageNearby(this.getMap(), entity.getX(), entity.getY(),'The fungus is spreading.');
                     }
                 }
             }
@@ -238,7 +238,7 @@ Game.EntityMixins.Destructible = {
                     var headIndex = this.getHeadIndex();
                     this.unhead();
                     this.removeItem(headIndex);
-                    Game.sendMessage(this, "Your head falls off");
+                    Game.sendMessage(this, "%c{#F61067}Your head falls off!");
                     return true;
                 }
             } else {
@@ -261,7 +261,7 @@ Game.EntityMixins.Destructible = {
         // If have 0 or less HP, then remove ourseles from the map
         if (this._hp <= 0) {
             this._hp = 0;
-            Game.sendMessage(attacker, 'You kill the %s!', [this.getName()]);
+            Game.sendMessage(attacker, '%%c{#6C86FB}You kill the %s!', [this.getName()]);
             if (this.hasMixin(Game.EntityMixins.HeadDropper)) {
                 this.tryDropHead();
             }
@@ -348,8 +348,8 @@ Game.EntityMixins.Attacker = {
                 var max = Math.max(1, attack + (strengthModifier));
                 var damage = Math.ceil(Game.Utilities.randomRange(Math.ceil(max/2), max));
 
-                Game.sendMessage(this, 'You strike the %s for %d damage!', [target.getName(), damage]);
-                Game.sendMessage(target, 'The %s strikes you for %d damage!',  [this.getName(), damage]);
+                Game.sendMessage(this, 'You strike the %s for %d damage.', [target.getName(), damage]);
+                Game.sendMessage(target, 'The %s strikes you for %d damage.',  [this.getName(), damage]);
 
                 target.takeDamage(this, damage);
                 if (this.hasMixin('Poisoner') && target.hasMixin('Affectible')){
@@ -361,12 +361,12 @@ Game.EntityMixins.Attacker = {
                     if (armorIndex !== null){
                         target.unwear();
                         target.removeItem(armorIndex);
-                        Game.sendMessage(target, 'Your armor dissolves!');
+                        Game.sendMessage(target, '%c{#F61067}Your armor dissolves!');
                     }
                 } 
             } else {
-                Game.sendMessage(this, 'You miss the %s!', [target.getName()]);
-                Game.sendMessage(target, 'The %s misses you!',  [this.getName()]);
+                Game.sendMessage(this, 'You miss the %s.', [target.getName()]);
+                Game.sendMessage(target, 'The %s misses you.',  [this.getName()]);
             }
         }
     },
@@ -427,7 +427,7 @@ Game.EntityMixins.Thrower = {
         if (creatureReference !== undefined){
             this.throwAttack(item, creatureReference);
         } else{
-            Game.sendMessage(this, 'You throw a %s!',item.getName());
+            Game.sendMessage(this, 'You throw a %s.',item.getName());
         }
 
         // shatter potion effect
@@ -478,13 +478,13 @@ Game.EntityMixins.Thrower = {
                 var maxAmount = Math.max(0, item.getThrownAttackValue());
                 amount = Math.floor((Math.random() * maxAmount)) + 1;
                 if (amount > 0){
-                    Game.sendMessage(this, 'You throw a %s at the %s for %d damage.', [item.getName(),target.getName(), amount]);
+                    Game.sendMessage(this, 'You throw a %s at the %s for %d damage!', [item.getName(),target.getName(), amount]);
                     target.takeDamage(this, amount);
                 } else {
                     Game.sendMessage(this, 'You throw a %s at the %s. It misses.', [item.getName(),target.getName()]);
                 }
             } else {
-                Game.sendMessage(this, 'You throw a %s at the %s. It misses', [item.getName(),target.getName()]);
+                Game.sendMessage(this, 'You throw a %s at the %s. It misses.', [item.getName(),target.getName()]);
             }
             
         } else {
@@ -710,6 +710,7 @@ Game.EntityMixins.InventoryHolder = {
         if (this._items[i]) {
             if (this._map) {
                 this._map.addItem(this.getX(), this.getY(), this._items[i]);
+                Game.sendMessage(this, 'You drop the '+ this._items[i].describe() + ".");
             }
             this.removeItem(i);      
         }
@@ -773,7 +774,7 @@ Game.EntityMixins.Equipper = {
     wield: function(item) {
         this._weapon = item;
         if (item._strengthRequirement > this.getStrengthValue()){
-            Game.sendMessage(this, 'This is too heavy for you to wield effectively.');
+            Game.sendMessage(this, '%c{#F61067}This is too heavy for you to wield effectively.');
         }
     },
     unwield: function() {
@@ -782,7 +783,7 @@ Game.EntityMixins.Equipper = {
     wear: function(item) {
         this._armor = item;
         if (item._strengthRequirement > this.getStrengthValue()){
-            Game.sendMessage(this, 'This is too heavy for you to wear effectively.');
+            Game.sendMessage(this, '%c{#F61067}This is too heavy for you to wear effectively.');
         }
     },
     unwear: function() {
