@@ -418,7 +418,8 @@ Game.Screen.loseScreen = {
             "Avoiding fights is as good as winning them, especially if an enemy doesn't have a head to drop.",
             "Wielding a weapon with insufficient strength greatly reduces chance to hit and max hit.",
             "Wielding a weapon with excess strength increases chance to hit and max hit.",
-            "Wearing an enemy's head gives you one of their powers."
+            "Wearing an enemy's head gives you one of their powers.",
+            "The further you throw a weapon, the less likely it is to hit an enemy."
         ];
         return hintList[Math.floor(Math.random() * hintList.length)];
     }

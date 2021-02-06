@@ -409,23 +409,26 @@ Game.EntityMixins.Thrower = {
         this._throwDistance = template['throwDistance'] || 24;
     },
     throwItem: function(item, x, y, key) {
-        var startPointX= this.getX();
-        var startPointY = this.getY()
-        var endPointX = x;
-        var endPointY = y;
+        let startPointX= this.getX();
+        let startPointY = this.getY()
+        let endPointX = x;
+        let endPointY = y;
+        let throwDistance = 0;
 
         var points = Game.Geometry.getLine(startPointX, startPointY, endPointX, endPointY);
-        for (var index in points){
-            if (this._map.getTile(points[index].x, points[index].y) == Game.Tile.wallTile){
+        for (let point of points){
+            if (this._map.getTile(point.x, point.y) == Game.Tile.wallTile){
+                console.log("oi mate, we hit a wall!");
                 break;
             }            
-            endPointX = points[index].x;
-            endPointY = points[index].y;
+            endPointX = point.x;
+            endPointY = point.y;
+            throwDistance += 1;
         }
    
         var creatureReference = this.getMap().getEntityAt(x, y);
         if (creatureReference !== undefined){
-            this.throwAttack(item, creatureReference);
+            this.throwAttack(item, creatureReference, throwDistance);
         } else{
             Game.sendMessage(this, 'You throw a %s.',item.getName());
         }
@@ -466,16 +469,20 @@ Game.EntityMixins.Thrower = {
             }
         }
     },
-    throwAttack: function(item, target) {
+    throwAttack: function(item, target, throwDistance) {
         targetIsDestructible = target.hasMixin('Destructible');
         if (targetIsDestructible){
-            var defense = target.getDefenseValue();
+            let defense = target.getDefenseValue();
             if (target.hasMixin('PlayerActor')) {
                 defense = defense * 10;
             }
-            var hitProbability = 90 * Math.pow(0.987, defense);
+            let hitProbability = 90 * Math.pow(0.987, defense);
+            if (throwDistance > 6) {
+                hitProbability = hitProbability - throwDistance*3; 
+            }
+            // TO DO: it should also be harder to hit flying enemies
             if (Math.random()*100 < hitProbability){
-                var maxAmount = Math.max(0, item.getThrownAttackValue());
+                let maxAmount = Math.max(0, item.getThrownAttackValue());
                 amount = Math.floor((Math.random() * maxAmount)) + 1;
                 if (amount > 0){
                     Game.sendMessage(this, 'You throw a %s at the %s for %d damage!', [item.getName(),target.getName(), amount]);
