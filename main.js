@@ -5,8 +5,9 @@ var Game =  {
     _screenHeight: 26,
     _level: 1,
 	init: function() {
-	    // Any necessary initialization will go here.
-	    this._display = new ROT.Display({width: this._screenWidth + 24, height: this._screenHeight + 5, fontSize: 20});
+        // Any necessary initialization will go here.
+        this._display = new ROT.Display({width: this._screenWidth + 24, height: this._screenHeight + 5, fontSize: 20, fontFamily: 'Ubuntu Mono'});
+        
 	    // Create a helper function for binding to an event
 	    // and making it send it to the screen
 	    var game = this; // So that we don't lose this
