@@ -29,6 +29,8 @@ Game.Builder = function(width, height, level) {
     }
     this._setGrass();
     this._setGrass();
+    this._setFerns();
+    this._setFerns();
     //TO DO: Mines offshoot
     if (level > 3){
         for (let i = 0; i < shallowWaterAmount; i++){
@@ -236,6 +238,24 @@ Game.Builder.prototype._setGrass = function() {
     let grassList = [];
     grassList.push(match);
     this._cellGrow(grassList, Game.Tile.grassTile, 20)
+}
+
+// Generates grass at free locations
+Game.Builder.prototype._setFerns = function() {
+    let matches = [];
+    // Iterate through all tiles, checking if they are floor tiles. 
+    for (let x = 0; x < this._width; x++) {
+        for (let y = 0; y < this._height; y++) {
+            if (this._tiles[x][y]  == Game.Tile.floorTile) {
+                matches.push({x: x, y: y});
+            }
+        }
+    }
+    // We shuffle the list of matches to prevent bias
+    let match =  matches[Math.floor(Math.random() * matches.length)];
+    let grassList = [];
+    grassList.push(match);
+    this._cellGrow(grassList, Game.Tile.fernTile, 20)
 }
 
 // Generates grass at free locations

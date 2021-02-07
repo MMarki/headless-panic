@@ -89,6 +89,17 @@ Game.Tile.grassTile = new Game.Tile({
     description: 'a patch of grass'
 });
 
+Game.Tile.fernTile = new Game.Tile({
+    character: 'F',
+    foreground: "#0CCE6B",
+    background: "#080A1F",
+    walkable: true,
+    blocksLight: true,
+    flammable: true,
+    description: 'a tall fern',
+    vary: true
+});
+
 Game.Tile.ashTile = new Game.Tile({
     character: ',',
     foreground: "#777777",

@@ -123,6 +123,40 @@ Game.EntityRepository.define('toadman', {
              Game.EntityMixins.Hopper]
 });
 
+Game.EntityRepository.define('kappa', {
+    name: 'kappa',
+    character: 'K',
+    foreground: '#91C7B1',
+    maxHP: 18,
+    attackValue: 6,
+    defenseValue: 12,
+    accuracyValue: 80,
+    sightRadius: 14,
+    headHits: 1,
+    description: "A turtle-like creature. It's stronger than it looks.",
+    tasks: ['hunt', 'wander'],
+    mixins: [Game.EntityMixins.TaskActor, Game.EntityMixins.Sight,
+             Game.EntityMixins.Attacker, Game.EntityMixins.Destructible,
+             Game.EntityMixins.HeadDropper, Game.EntityMixins.Affectible]
+});
+
+Game.EntityRepository.define('mushroom man', {
+    name: 'mushroom man',
+    character: 'M',
+    foreground: '#E6C07B',
+    maxHP: 15,
+    attackValue: 9,
+    defenseValue: 4,
+    accuracyValue: 80,
+    sightRadius: 14,
+    headHits: 1,
+    description: "A large man-shaped hulk of living fungus",
+    tasks: ['hunt', 'wander'],
+    mixins: [Game.EntityMixins.TaskActor, Game.EntityMixins.Sight,
+             Game.EntityMixins.Attacker, Game.EntityMixins.Destructible,
+             Game.EntityMixins.HeadDropper, Game.EntityMixins.Affectible]
+});
+
 Game.EntityRepository.define('toad queen', {
     name: 'toad queen',
     character: 'T',
@@ -291,8 +325,8 @@ Game.EntityRepository.repoFrequency = {
     'L3': [{'rat': 2}, {'kobold': 2}, {'bat':2}, {'jackal': 1}, {'goblin': 1}, {'floater': 1}, {'slime': 1}],
     'L4': [{'rat': 2}, {'goblin': 1}, {'floater': 1}, {'slime': 2}, {'toadman': 2}, {'acid jelly': 1}],
     'L5': [{'rat': 1}, {'goblin': 1}, {'slime': 2}, {'toadman': 2}, {'acid jelly': 1}, {'poison toad': 1}],
-    'L6': [{'rat': 1}, {'goblin': 1}, {'slime': 2}, {'toadman': 2}, {'acid jelly': 1}, {'poison toad': 1}],
-    'L7': [{'goblin': 1}, {'floater': 1}, {'slime': 2}, {'acid jelly': 1}],
-    'L8': [{'goblin': 1}, {'slime': 2},  {'acid jelly': 1}, {'poison toad': 1}],
-    'L9': [{'goblin': 1}, {'slime': 2},  {'acid jelly': 1}, {'poison toad': 1}]
+    'L6': [{'rat': 1}, {'goblin': 1}, {'slime': 2}, {'toadman': 2}, {'acid jelly': 1}, {'poison toad': 2}],
+    'L7': [{'kappa': 1}, {'floater': 1}, {'slime': 2}, {'mushroom man': 1}, {'poison toad': 1}],
+    'L8': [{'kappa': 1}, {'mushroom man': 1}, {'poison toad': 1}],
+    'L9': [{'kappa': 1}, {'mushroom man': 1}, {'poison toad': 1}]
 }

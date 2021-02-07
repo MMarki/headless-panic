@@ -80,6 +80,9 @@ Game.Entity.prototype.tryMove = function(x, y) {
         if(tile === Game.Tile.doorTile) {
            this.getMap()._tiles[x][y] = Game.Tile.openDoorTile;
         }
+        if(tile === Game.Tile.fernTile) {
+            this.getMap()._tiles[x][y] = Game.Tile.grassTile;
+        }
         let items = this.getMap().getItemsAt(x, y);
         if (items) {
             if (items.length !== 1) {

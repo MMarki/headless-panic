@@ -356,6 +356,17 @@ Game.EntityMixins.Attacker = {
                     var newEffect = new Game.Effect(Math.floor(damage*1.5), 'poisoned');
                     target.setEffect(newEffect);
                 } 
+                if (this.hasMixin(Game.EntityMixins.Equipper) && target.hasMixin('Affectible')){
+                    if (this.getHead() !== null){
+                        let myHead = this.getHead()
+                        if (myHead !== null) {
+                            if (myHead.describe() === 'poison toad head'){
+                                var newEffect = new Game.Effect(Math.floor(damage*1.5), 'poisoned');
+                                target.setEffect(newEffect);
+                            }
+                        }
+                    }
+                } 
                 if (this.hasMixin('Acidic') && target.hasMixin('Affectible')){
                     var armorIndex = target.getArmorIndex();
                     if (armorIndex !== null){
