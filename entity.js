@@ -73,7 +73,7 @@ Game.Entity.prototype.tryMove = function(x, y) {
             return false;
         }
     // Check if we can walk on the tile and if so simply walk onto it
-    } else if (tile.isWalkable()) {        
+    } else if ((tile.isWalkable() && !(this.hasMixin(Game.EntityMixins.Swimmer))) || ((tile === Game.Tile.shallowWaterTile || tile === Game.Tile.shallowWaterTile ) && this.hasMixin(Game.EntityMixins.Swimmer))) {        
         // Update the entity's position
         this.setPosition(x, y);
         //open doors

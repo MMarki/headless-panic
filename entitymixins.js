@@ -145,8 +145,9 @@ Game.EntityMixins.FungusActor = {
                 if (xOffset != 0 || yOffset != 0) {
                     // Check if we can actually spawn at that location, and if so
                     // then we grow!
-                    if (this.getMap().isEmptyFloor(this.getX() + xOffset,
-                                                   this.getY() + yOffset)) {
+                    if (this.getMap().isEmptyTileOfType(this.getX() + xOffset,
+                                                   this.getY() + yOffset,
+                                                   Game.Tile.floorTile)) {
                         var entity = Game.EntityRepository.create('fungus');
                         entity.setX(this.getX() + xOffset);
                         entity.setY(this.getY() + yOffset);
@@ -400,6 +401,14 @@ Game.EntityMixins.Poisoner = {
 Game.EntityMixins.Hopper = {
     name: 'Hopper',
     groupName: 'Hopper',
+    init: function(template) {
+        template;
+    }
+}
+
+Game.EntityMixins.Swimmer = {
+    name: 'Swimmer',
+    groupName: 'Swimmer',
     init: function(template) {
         template;
     }
@@ -815,7 +824,7 @@ Game.EntityMixins.Equipper = {
             this._protected = false;
             if(this._head._name === 'goblin head'){
                 this._protected = true;
-            } else if (this._head._name === 'jackal head'){
+            } else if (this._head._name === 'jackal head' || this._head._name === 'piranha head'){
                 this._fierce = true;
             } else if (this._head._name === 'rat king head'){
                 this._ratThreaten = true;
@@ -826,7 +835,7 @@ Game.EntityMixins.Equipper = {
         if (this.hasMixin(Game.EntityMixins.PlayerActor)){
             if(this._head._name === 'goblin head'){
                 this._protected = false;
-            } else if (this._head._name === 'jackal head'){
+            } else if (this._head._name === 'jackal head' || this._head._name === 'piranha head'){
                 this._fierce = false;
             } else if (this._head._name === 'rat king head'){
                 this._ratThreaten = false;

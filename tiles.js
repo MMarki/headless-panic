@@ -90,7 +90,7 @@ Game.Tile.grassTile = new Game.Tile({
 });
 
 Game.Tile.fernTile = new Game.Tile({
-    character: 'F',
+    character: 'f',
     foreground: "#0CCE6B",
     background: "#080A1F",
     walkable: true,

@@ -125,12 +125,23 @@ Game.Map.prototype.changeTile = function(x, y, template) {
 };
 
 Game.Map.prototype.getRandomFloorPosition = function() {
-    // Randomly generate a tile which is a floor
+    // Randomly choose a tile which is a floor
     let x, y;
     do {
         x = Math.floor(Math.random() * this._width);
         y = Math.floor(Math.random() * this._width);
-    } while(!this.isEmptyFloor(x, y));
+    } while(!this.isEmptyTileOfType(x, y, Game.Tile.floorTile));
+    return {x: x, y: y};
+}
+
+
+Game.Map.prototype.getRandomWaterPosition = function() {
+    // Randomly choose a tile which is water
+    let x, y;
+    do {
+        x = Math.floor(Math.random() * this._width);
+        y = Math.floor(Math.random() * this._width);
+    } while(!this.isEmptyTileOfType(x, y, Game.Tile.shallowWaterTile));
     return {x: x, y: y};
 }
 
@@ -147,7 +158,8 @@ Game.Map.prototype.addEntity = function(entity) {
 
 //adds and entity on an empty floor tile
 Game.Map.prototype.addEntityAtRandomPosition = function(entity, outOfSightline) {
-    let position = this.getRandomFloorPosition();
+    let isSwimmer = entity.hasMixin(Game.EntityMixins.Swimmer);
+    let position = isSwimmer ? this.getRandomWaterPosition() : this.getRandomFloorPosition();
     if (outOfSightline){
         // Cache the FOV
         let visibleCells = {};
@@ -156,9 +168,10 @@ Game.Map.prototype.addEntityAtRandomPosition = function(entity, outOfSightline) 
             this._player.getSightRadius(), 
             function(x, y, radius, visibility) {
                 visibleCells[x + "," + y] = true;
-            });
+            }
+        );
         while (visibleCells[String(position.x) + ',' + String(position.y)] === true){
-            position = this.getRandomFloorPosition();
+            position = isSwimmer ? this.getRandomWaterPosition() : this.getRandomFloorPosition();
         }
     }
     entity.setX(position.x);
@@ -178,9 +191,9 @@ Game.Map.prototype.removeEntity = function(entity) {
     }
 }
 
-Game.Map.prototype.isEmptyFloor = function(x, y) {
-    // Check if the tile is floor and also has no entity
-    return this.getTile(x, y) == Game.Tile.floorTile &&
+Game.Map.prototype.isEmptyTileOfType = function(x, y, tileType) {
+    // Check if the tile is of a certain type and also has no entity
+    return this.getTile(x, y) == tileType &&
            !this.getEntityAt(x, y);
 }
 

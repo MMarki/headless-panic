@@ -72,6 +72,22 @@ Game.EntityRepository.define('jackal', {
              Game.EntityMixins.Destructible, Game.EntityMixins.Affectible]
 });
 
+Game.EntityRepository.define('piranha', {
+    name: 'piranha',
+    character: 'p',
+    foreground: '#BE5046',
+    maxHP: 6,
+    attackValue: 6,
+    accuracyValue: 80,
+    speed: 2000,
+    tasks: ['hunt', 'wander'],
+    description: "An aggressive fish who can move or attack twice each turn.",
+    mixins: [Game.EntityMixins.TaskActor, Game.EntityMixins.Sight,
+             Game.EntityMixins.HeadDropper, Game.EntityMixins.Attacker, 
+             Game.EntityMixins.Destructible, Game.EntityMixins.Affectible,
+             Game.EntityMixins.Swimmer]
+});
+
 Game.EntityRepository.define('kobold', {
     name: 'kobold',
     character: 'k',
@@ -251,7 +267,7 @@ Game.EntityRepository.define('slime', {
 
 Game.EntityRepository.define('floater', {
     name: 'floater',
-    character: 'f',
+    character: 'F',
     foreground: '#91f291',
     maxHP: 3,
     attackValue: 0,
@@ -328,5 +344,7 @@ Game.EntityRepository.repoFrequency = {
     'L6': [{'rat': 1}, {'goblin': 1}, {'slime': 2}, {'toadman': 2}, {'acid jelly': 1}, {'poison toad': 2}],
     'L7': [{'kappa': 1}, {'floater': 1}, {'slime': 2}, {'mushroom man': 1}, {'poison toad': 1}],
     'L8': [{'kappa': 1}, {'mushroom man': 1}, {'poison toad': 1}],
-    'L9': [{'kappa': 1}, {'mushroom man': 1}, {'poison toad': 1}]
+    'L9': [{'kappa': 1}, {'mushroom man': 1}, {'poison toad': 1}, {'piranha': 1}],
+    'L10': [{'kappa': 1}, {'mushroom man': 1}, {'poison toad': 1}, {'piranha': 1}],
+    'L11': [{'kappa': 1}, {'mushroom man': 1}, {'poison toad': 1}, {'piranha': 1}]
 }
