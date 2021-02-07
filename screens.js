@@ -144,7 +144,12 @@ Game.Screen.playScreen = {
         display.drawText(screenWidth + 1, 5, "%c{white}ARMR: +" + defenseValue);
         display.drawText(screenWidth + 1, 6, "%c{white}ATTK: +" + (attackValue + strengthModifier));
         display.drawText(screenWidth + 1, 7, "%c{white}STRN: " + strengthValue);
-        display.drawText(screenWidth + 1, 8, "%c{white}LVL:  Cellars " + Game.getLevel() );
+        if (Game.getLevel() < 4){
+            display.drawText(screenWidth + 1, 8, "%c{white}LVL:  " +  ("Cellars " + Game.getLevel()) );
+        } else {
+            display.drawText(screenWidth + 1, 8, "%c{white}LVL:  " +  ("Sewers " + (Game.getLevel() - 3)) );
+        }
+        
     },
     handleInput: function(inputType, inputData) {
         // If the game is over, enter will bring the user to the losing screen.

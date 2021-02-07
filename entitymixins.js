@@ -414,6 +414,22 @@ Game.EntityMixins.Swimmer = {
     }
 }
 
+Game.EntityMixins.Deflecter = {
+    name: 'Deflecter',
+    groupName: 'Deflecter',
+    init: function(template) {
+        template;
+    }
+}
+
+Game.EntityMixins.Unpoisonable = {
+    name: 'Unpoisonable',
+    groupName: 'Unpoisonable',
+    init: function(template) {
+        template;
+    }
+}
+
 Game.EntityMixins.Acidic = {
     name: 'Acidic',
     groupName: 'Acidic',
@@ -501,7 +517,9 @@ Game.EntityMixins.Thrower = {
                 hitProbability = hitProbability - throwDistance*3; 
             }
             // TO DO: it should also be harder to hit flying enemies
-            if (Math.random()*100 < hitProbability){
+            if (target.hasMixin(Game.EntityMixins.Deflecter)){
+                Game.sendMessage(this, 'You throw a %s at the %s. It deflects off its shell!', [item.getName(),target.getName()]);
+            } else if (Math.random()*100 < hitProbability){
                 let maxAmount = Math.max(0, item.getThrownAttackValue());
                 amount = Math.floor((Math.random() * maxAmount)) + 1;
                 if (amount > 0){
@@ -513,7 +531,6 @@ Game.EntityMixins.Thrower = {
             } else {
                 Game.sendMessage(this, 'You throw a %s at the %s. It misses.', [item.getName(),target.getName()]);
             }
-            
         } else {
             Game.sendMessage(this, 'throw a %s at the %s', [item.getName(),target.getName()]); 
         }
@@ -907,7 +924,11 @@ Game.EntityMixins.Affectible = {
         }
     },
     setEffect : function(effect) {
-        this._effects.push(effect);
+        if (this.hasMixin('Unpoisonable') && effect._name === 'poisoned') {
+            return;
+        } else {
+            this._effects.push(effect);
+        }
     },
     removeEffect: function(index) {
         this._effects.splice(index,1);

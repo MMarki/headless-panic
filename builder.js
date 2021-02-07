@@ -86,7 +86,7 @@ Game.Builder.prototype._generateLevel = function(level) {
             dugPercentage: 0.45
         }
         generator = new ROT.Map.Digger(this._width, this._height, options);
-    } else if (level <=9){
+    } else if (level <=11){
         setMapTile = function (x, y, value) {
             if (value === 0) {
                map[x][y] = Game.Tile.wallTile;

@@ -88,6 +88,22 @@ Game.EntityRepository.define('piranha', {
              Game.EntityMixins.Swimmer]
 });
 
+Game.EntityRepository.define('hyrdra', {
+    name: 'hydra',
+    character: 'H',
+    foreground: '#E06C75',
+    maxHP: 70,
+    attackValue: 9,
+    accuracyValue: 70,
+    speed: 1000,
+    tasks: ['hunt', 'wander'],
+    description: "A massive, many-headed serpent.",
+    mixins: [Game.EntityMixins.TaskActor, Game.EntityMixins.Sight,
+             Game.EntityMixins.HeadDropper, Game.EntityMixins.Attacker, 
+             Game.EntityMixins.Destructible, Game.EntityMixins.Affectible,
+             Game.EntityMixins.Swimmer]
+});
+
 Game.EntityRepository.define('kobold', {
     name: 'kobold',
     character: 'k',
@@ -153,7 +169,8 @@ Game.EntityRepository.define('kappa', {
     tasks: ['hunt', 'wander'],
     mixins: [Game.EntityMixins.TaskActor, Game.EntityMixins.Sight,
              Game.EntityMixins.Attacker, Game.EntityMixins.Destructible,
-             Game.EntityMixins.HeadDropper, Game.EntityMixins.Affectible]
+             Game.EntityMixins.HeadDropper, Game.EntityMixins.Affectible,
+             Game.EntityMixins.Deflecter]
 });
 
 Game.EntityRepository.define('mushroom man', {
@@ -170,7 +187,7 @@ Game.EntityRepository.define('mushroom man', {
     tasks: ['hunt', 'wander'],
     mixins: [Game.EntityMixins.TaskActor, Game.EntityMixins.Sight,
              Game.EntityMixins.Attacker, Game.EntityMixins.Destructible,
-             Game.EntityMixins.HeadDropper, Game.EntityMixins.Affectible]
+             Game.EntityMixins.Affectible, Game.EntityMixins.Unpoisonable]
 });
 
 Game.EntityRepository.define('toad queen', {
@@ -199,11 +216,11 @@ Game.EntityRepository.define('toad queen', {
 
 Game.EntityRepository.define('poison toad', {
     name: 'poison toad',
-    character: 'p',
+    character: 'P',
     foreground: '#C678DD',
     maxHP: 12,
     attackValue: 4,
-    defenseValue: 10,
+    defenseValue: 8,
     accuracyValue: 70,
     sightRadius: 12,
     headHits: 1,
@@ -212,7 +229,7 @@ Game.EntityRepository.define('poison toad', {
     mixins: [Game.EntityMixins.TaskActor, Game.EntityMixins.Sight,
              Game.EntityMixins.Attacker, Game.EntityMixins.Destructible,
              Game.EntityMixins.HeadDropper, Game.EntityMixins.Affectible,
-             Game.EntityMixins.Poisoner]
+             Game.EntityMixins.Poisoner, Game.EntityMixins.Unpoisonable]
 });
 
 Game.EntityRepository.define('acid jelly', {
@@ -342,7 +359,7 @@ Game.EntityRepository.repoFrequency = {
     'L4': [{'rat': 2}, {'goblin': 1}, {'floater': 1}, {'slime': 2}, {'toadman': 2}, {'acid jelly': 1}],
     'L5': [{'rat': 1}, {'goblin': 1}, {'slime': 2}, {'toadman': 2}, {'acid jelly': 1}, {'poison toad': 1}],
     'L6': [{'rat': 1}, {'goblin': 1}, {'slime': 2}, {'toadman': 2}, {'acid jelly': 1}, {'poison toad': 2}],
-    'L7': [{'kappa': 1}, {'floater': 1}, {'slime': 2}, {'mushroom man': 1}, {'poison toad': 1}],
+    'L7': [{'kappa': 1}, {'slime': 2}, {'mushroom man': 1}, {'poison toad': 1}],
     'L8': [{'kappa': 1}, {'mushroom man': 1}, {'poison toad': 1}],
     'L9': [{'kappa': 1}, {'mushroom man': 1}, {'poison toad': 1}, {'piranha': 1}],
     'L10': [{'kappa': 1}, {'mushroom man': 1}, {'poison toad': 1}, {'piranha': 1}],
