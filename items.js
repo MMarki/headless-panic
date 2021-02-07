@@ -109,6 +109,16 @@ Game.ItemRepository.define('head', {
     disableRandomCreation: true
 });
 
+Game.ItemRepository.define('key', {
+    name: 'key',
+    character: '-',
+    foreground: '#F2EC2D',
+    throwBreakChance: 0,
+    mixins: [Game.ItemMixins.Throwable]
+}, {
+    disableRandomCreation: true
+});
+
 // Weapons
 Game.ItemRepository.define('dart', {
     name: 'dart',

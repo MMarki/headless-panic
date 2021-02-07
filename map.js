@@ -29,7 +29,6 @@ Game.Map = function(tiles, player, items) {
         // Add a random entity
         let randomEntity = Game.EntityRepository.createRandomByFrequency('L' + Game.getLevel())
         this.addEntityAtRandomPosition( randomEntity , 1);
-        //how do i make it so enemies don't spawn on top of me?
         this.addEntityAtRandomPosition(Game.EntityRepository.create("barrel"), 0);
     }
     // if on L3, create one rat king
@@ -39,6 +38,10 @@ Game.Map = function(tiles, player, items) {
     // if on L6, create one toad queen
     if (Game.getLevel() === 6){
         this.addEntityAtRandomPosition(Game.EntityRepository.create('toad queen'), 1);
+    }
+    // if on L11, create one toad queen
+    if (Game.getLevel() === 11){
+        this.addEntityAtRandomPosition(Game.EntityRepository.create('hyrda'), 1);
     }
     
     // 15 items per floor

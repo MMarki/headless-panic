@@ -266,6 +266,9 @@ Game.EntityMixins.Destructible = {
             if (this.hasMixin(Game.EntityMixins.HeadDropper)) {
                 this.tryDropHead();
             }
+            if (this.hasMixin(Game.EntityMixins.KeyDropper)) {
+                this.dropKey();
+            }
             if (this.hasMixin(Game.EntityMixins.Exploder)) {
                 var currentPosition = {x: this.getX(), y: this.getY()}
                 var tempList = []
@@ -419,6 +422,18 @@ Game.EntityMixins.Deflecter = {
     groupName: 'Deflecter',
     init: function(template) {
         template;
+    }
+}
+
+Game.EntityMixins.KeyDropper = {
+    name: 'KeyDropper',
+    groupName: 'KeyDropper',
+    init: function(template) {
+        template;
+    },
+    dropKey: function() {
+        // Create a new key item and drop it.
+        this._map.addItem(this.getX(), this.getY(), Game.ItemRepository.create('key'));
     }
 }
 

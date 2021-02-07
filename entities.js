@@ -101,7 +101,7 @@ Game.EntityRepository.define('hyrdra', {
     mixins: [Game.EntityMixins.TaskActor, Game.EntityMixins.Sight,
              Game.EntityMixins.HeadDropper, Game.EntityMixins.Attacker, 
              Game.EntityMixins.Destructible, Game.EntityMixins.Affectible,
-             Game.EntityMixins.Swimmer]
+             Game.EntityMixins.Swimmer, Game.EntityMixins.KeyDropper]
 });
 
 Game.EntityRepository.define('kobold', {
@@ -211,7 +211,7 @@ Game.EntityRepository.define('toad queen', {
              Game.EntityMixins.Attacker, Game.EntityMixins.Destructible,
              Game.EntityMixins.HeadDropper, Game.EntityMixins.Affectible,
              Game.EntityMixins.Hopper, Game.EntityMixins.Summoner,
-             Game.EntityMixins.Exploder]
+             Game.EntityMixins.Exploder, Game.EntityMixins.KeyDropper]
 });
 
 Game.EntityRepository.define('poison toad', {
@@ -332,7 +332,7 @@ Game.EntityRepository.define('rat king', {
     mixins: [Game.EntityMixins.TaskActor, Game.EntityMixins.Sight,
              Game.EntityMixins.Attacker, Game.EntityMixins.Destructible,
              Game.EntityMixins.HeadDropper, Game.EntityMixins.Affectible,
-             Game.EntityMixins.Summoner]
+             Game.EntityMixins.Summoner, Game.EntityMixins.KeyDropper]
 });
 
 Game.EntityRepository.define('death', {
