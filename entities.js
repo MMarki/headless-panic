@@ -286,10 +286,13 @@ Game.EntityRepository.define('death', {
 
 
 Game.EntityRepository.repoFrequency = {
-    'L1': [{'rat': 3}, {'kobold': 2}, {'bat':2}, {'jackal': 1}],
-    'L2': [{'rat': 2}, {'kobold': 2}, {'bat':2}, {'jackal': 1}, {'goblin': 1}, {'floater': 1}],
+    'L1': [{'rat': 2}, {'kobold': 2}, {'bat':2}, {'jackal': 1}],
+    'L2': [{'rat': 3}, {'kobold': 2}, {'bat':2}, {'jackal': 1}, {'goblin': 1}, {'floater': 1}],
     'L3': [{'rat': 2}, {'kobold': 2}, {'bat':2}, {'jackal': 1}, {'goblin': 1}, {'floater': 1}, {'slime': 1}],
     'L4': [{'rat': 2}, {'goblin': 1}, {'floater': 1}, {'slime': 2}, {'toadman': 2}, {'acid jelly': 1}],
     'L5': [{'rat': 1}, {'goblin': 1}, {'slime': 2}, {'toadman': 2}, {'acid jelly': 1}, {'poison toad': 1}],
-    'L6': [{'rat': 1}, {'goblin': 1}, {'slime': 2}, {'toadman': 2}, {'acid jelly': 1}, {'poison toad': 1}]
+    'L6': [{'rat': 1}, {'goblin': 1}, {'slime': 2}, {'toadman': 2}, {'acid jelly': 1}, {'poison toad': 1}],
+    'L7': [{'goblin': 1}, {'floater': 1}, {'slime': 2}, {'acid jelly': 1}],
+    'L8': [{'goblin': 1}, {'slime': 2},  {'acid jelly': 1}, {'poison toad': 1}],
+    'L9': [{'goblin': 1}, {'slime': 2},  {'acid jelly': 1}, {'poison toad': 1}]
 }

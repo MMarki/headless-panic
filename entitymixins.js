@@ -261,7 +261,7 @@ Game.EntityMixins.Destructible = {
         // If have 0 or less HP, then remove ourseles from the map
         if (this._hp <= 0) {
             this._hp = 0;
-            Game.sendMessage(attacker, '%%c{#6C86FB}You kill the %s!', [this.getName()]);
+            Game.sendMessage(attacker, '%%c{#61AEEE}You kill the %s!', [this.getName()]);
             if (this.hasMixin(Game.EntityMixins.HeadDropper)) {
                 this.tryDropHead();
             }

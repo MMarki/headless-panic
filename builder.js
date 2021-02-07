@@ -16,38 +16,24 @@ Game.Builder = function(width, height, level) {
         }
     }
 
-    //this._setupRegions();
+    let grassAmount = 2;
+    let columnAmount = 20;
+    let shallowWaterAmount = 6;
     if (level <= 3){
-        this._setGrass();
-        this._setGrass();
-        this._setColumn();
-        this._setColumn();
-        this._setColumn();
-        this._setColumn();
-        this._setColumn();
-        this._setColumn();
-        this._setColumn();
-        this._setColumn();
-        this._setColumn();
-        this._setColumn();
-        this._setColumn();
-        this._setColumn();
-        this._setColumn();
-        this._setColumn();
-        this._setColumn();
-        this._setColumn();
-        this._setColumn();
-        this._setColumn();
-        this._setColumn();
+        for (let i = 0; i < grassAmount; i++){
+            this._setGrass();
+        }
+        for (let i = 0; i < columnAmount; i++){
+            this._setColumn();
+        }
     }
     this._setGrass();
     this._setGrass();
+    //TO DO: Mines offshoot
     if (level > 3){
-        this._setShallowWater();
-        this._setShallowWater();
-        this._setShallowWater();
-        this._setShallowWater();
-        this._setShallowWater();
+        for (let i = 0; i < shallowWaterAmount; i++){
+            this._setShallowWater();
+        }
     }
     this._setStairs();
 };
@@ -71,6 +57,14 @@ Game.Builder.prototype._generateLevel = function(level) {
         map[w] = new Array(this._height);
     }
 
+    let setMapTile = function (x, y, value) {
+        if (value === 1) {
+           map[x][y] = Game.Tile.wallTile;
+       } else {
+           map[x][y] = Game.Tile.floorTile;
+       }       
+   }
+
     if (level <= 3){
         // Set up the level generator
         options = {
@@ -81,7 +75,7 @@ Game.Builder.prototype._generateLevel = function(level) {
         }
         generator = new ROT.Map.Digger(this._width, this._height, options);
 
-    } else if (level <=6){
+    } else if (level > 3 && level <=6){
          // Set up the level generator
         options = {
             roomWidth: [5, 20],
@@ -90,28 +84,42 @@ Game.Builder.prototype._generateLevel = function(level) {
             dugPercentage: 0.45
         }
         generator = new ROT.Map.Digger(this._width, this._height, options);
+    } else if (level <=9){
+        setMapTile = function (x, y, value) {
+            if (value === 0) {
+               map[x][y] = Game.Tile.wallTile;
+           } else {
+               map[x][y] = Game.Tile.floorTile;
+           }       
+       }
+        // Set up the level generator
+       generator = new ROT.Map.Cellular(this._width - 1, this._height - 1);
+       generator.randomize(0.5);
     }
-
    
-    let setMapTile = function (x, y, value) {
-         if (value === 1) {
-            map[x][y] = Game.Tile.wallTile;
-        } else {
-            map[x][y] = Game.Tile.floorTile;
-        }       
-    }
 
-    generator.create(setMapTile);
+    if (level <=6){
+        generator.create(setMapTile);
 
-    let makeDoor = function(x, y) {
-        map[x][y] = Game.Tile.doorTile;
+        let makeDoor = function(x, y) {
+            map[x][y] = Game.Tile.doorTile;
+        }
+        
+        let rooms = generator.getRooms();
+        for (let room of rooms) {
+            //console.log(room.clearDoors());
+            room.getDoors(makeDoor);
+        }
+    } else {
+        generator.create(setMapTile);
+        generator.create(setMapTile);
+        generator.create(setMapTile);
+        generator.create(setMapTile);
+        generator.create(setMapTile);
+        generator.connect(setMapTile, 1);
+        map = this._makeBorder(map);
     }
     
-    let rooms = generator.getRooms();
-    for (let room of rooms) {
-        //console.log(room.clearDoors());
-        room.getDoors(makeDoor);
-    }
     return map;
 };
 
@@ -314,4 +322,17 @@ Game.Builder.prototype._cellGrow = function(list, tileType, numberOfTiles) {
         }
         i++
     }
+}
+
+Game.Builder.prototype._makeBorder = function(map) {
+    // Iterate through all tiles, checking if they are floor tiles. 
+    for (let x = 0; x < this._width; x++) {
+        for (let y = 0; y < this._height; y++) {
+            if (x == 0 || y == 0 || x == this._width - 1 || y == this._height - 1) {
+                map[x][y] = Game.Tile.wallTile;
+            }
+        }
+    }
+
+    return map;
 }

@@ -480,13 +480,13 @@ Game.Screen.ItemListScreen.prototype.render = function(display) {
             var prefix = '%c{white}';
             var suffix = '';
             if (this._items[i] === this._player.getArmor()) {
-                prefix = '%c{#6C86FB}';
+                prefix = '%c{#61AEEE}';
                 suffix = ' (wearing)';
             } else if (this._items[i] === this._player.getWeapon()) {
-                prefix = '%c{#6C86FB}';
+                prefix = '%c{#61AEEE}';
                 suffix = ' (in hand)';
             } else if (this._items[i] === this._player.getHead()) {
-                prefix = '%c{#6C86FB}';
+                prefix = '%c{#61AEEE}';
                 suffix = ' (on neck)';
             }
 
