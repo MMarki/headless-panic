@@ -244,8 +244,18 @@ Game.Screen.playScreen = {
                 let player = this._player;
                 let map = this._map;
                 let target = {};
+                let noMoreUnexplored = false;
+
+                //let's check to make sure this cell is still unexplored
+                //this way, we don't have to reach the cell if we've seen it on the way there
+                if (player._pathingTarget){
+                    if(map.isExplored(player._pathingTarget.x, player._pathingTarget.y)){
+                        player._pathingTarget = null;
+                    }
+                }
+
                 // Find an unexplored square
-                if (!player._pathingTarget){
+                if (player._pathingTarget === null){
                     for (let x = 1; x < map.getWidth() - 1; x++) {
                         for (let y = 1; y < map.getHeight() - 1; y++) {
                             if (!map.isExplored(x, y)) {
@@ -276,31 +286,41 @@ Game.Screen.playScreen = {
                         }
                     }
 
-                    //Make a path to it
-                    player._pathingTarget = target;
-                    console.log(target);
+                    //as long as there's still an unexplored tile we can reach...
+                    if (Object.keys(target).length === 0 && target.constructor === Object){
+                        noMoreUnexplored = true;
+                    } else {
+                        //Make a path to it
+                        player._pathingTarget = target;
+                        console.log(target);
+                    }
                 }
 
-                let path = new ROT.Path.AStar(player._pathingTarget.x, player._pathingTarget.y, function(x, y) {
-                    return map.getTile(x, y).isWalkable();
-                }, {topology: 4});
-                console.log(path);
-                
-                // Once we've gotten the path, we want to move to the second cell that is passed in the callback (the first is the entity's starting point)
-                let count = 0;
-                path.compute(player.getX(), player.getY(), function(x, y) {
-                    if (count == 1) {
-                        player.tryMove(x, y);
-                    }
-                    count++;
-                });
+                if (!noMoreUnexplored){
+                    let path = new ROT.Path.AStar(player._pathingTarget.x, player._pathingTarget.y, function(x, y) {
+                        return map.getTile(x, y).isWalkable();
+                    }, {topology: 4});
+                    console.log(path);
+                    
+                    // Once we've gotten the path, we want to move to the second cell that is passed in the callback (the first is the entity's starting point)
+                    let count = 0;
+                    let handleItemPickupContext = this.handleItemPickup.bind(Game.Screen.playScreen);
+                    let goDownStairsContext = this.goDownStairs.bind(Game.Screen.playScreen);
+                    path.compute(player.getX(), player.getY(), function(x, y) {
+                        if (count == 1) {
+                            player.tryMove(x, y);
+                            handleItemPickupContext()
+                            goDownStairsContext();
+                        }
+                        count++;
+                    });
 
-                if (path._todo.length === 0){
+                    if (path._todo.length === 0){
+                        player._pathingTarget = null;
+                    }
+                } else {
                     player._pathingTarget = null;
                 }
-
-                // Auto-mode
-
             }
             // Unlock the engine
             this._map.getEngine().unlock();
