@@ -41,7 +41,7 @@ Game.Map = function(tiles, player, items) {
     }
     // if on L11, create one toad queen
     if (Game.getLevel() === 11){
-        this.addEntityAtRandomPosition(Game.EntityRepository.create('hyrda'), 1);
+        this.addEntityAtRandomPosition(Game.EntityRepository.create('hydra'), 1);
     }
     
     // 15 items per floor

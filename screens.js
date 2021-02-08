@@ -261,10 +261,19 @@ Game.Screen.playScreen = {
         Game.refresh();
     },
     goDownStairs(){
-        var playerX = this._player.getX();
-        var playerY = this._player.getY();
-        var tile = this._map.getTile(playerX, playerY);
-        if (tile === Game.Tile.stairsDownTile){
+        let playerX = this._player.getX();
+        let playerY = this._player.getY();
+        let tile = this._map.getTile(playerX, playerY);
+        let items = this._player.getItems()
+        let playerHasKey = false;
+        for (let item of items){
+            if (item !== undefined && item !== null){
+                if (item.describe() === 'key'){
+                    playerHasKey = true;
+                }
+            }
+        }
+        if (tile === Game.Tile.stairsDownTile || tile === Game.Tile.stairsDownTileLocked && playerHasKey){
             var width = Game._screenWidth;
             var height = Game._screenHeight;
             // Create our map from tiles and player
@@ -274,7 +283,18 @@ Game.Screen.playScreen = {
             this._map = new Game.Map(tiles, this._player, this._player.getItems());
             // Start the map's engine
             this._map.getEngine().start();
-            Game.sendMessage(this._player, "You go down the stairs. They crumble to dust behind you.");
+            if (playerHasKey){
+                Game.sendMessage(this._player, "You use the key on the trapdoor. You go down the stairs. They crumble to dust behind you.");
+                for (let i = 0; i < items.length; i ++){
+                    if (items[i] !== undefined && items[i] !== null){
+                        if (items[i].describe() === 'key'){
+                            items[i] = null;
+                        }
+                    }
+                }
+            } else {
+                Game.sendMessage(this._player, "You go down the stairs. They crumble to dust behind you.");
+            }
         }
     },
     handleItemPickup(){

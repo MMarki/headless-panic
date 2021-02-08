@@ -263,11 +263,11 @@ Game.EntityMixins.Destructible = {
         if (this._hp <= 0) {
             this._hp = 0;
             Game.sendMessage(attacker, '%%c{#61AEEE}You kill the %s!', [this.getName()]);
-            if (this.hasMixin('HeadDropper')) {
-                this.tryDropHead();
-            }
             if (this.hasMixin('KeyDropper')) {
                 this.dropKey();
+            }
+            if (this.hasMixin('HeadDropper')) {
+                this.tryDropHead();
             }
             if (this.hasMixin('Exploder')) {
                 var currentPosition = {x: this.getX(), y: this.getY()}

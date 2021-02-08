@@ -42,6 +42,15 @@ Game.Tile.stairsDownTile = new Game.Tile({
     description: 'a staircase leading downward'
 });
 
+Game.Tile.stairsDownTileLocked = new Game.Tile({
+    character: '>',
+    foreground: '#F2EC2D',
+    background: '#480C1C',
+    walkable: true,
+    blocksLight: false,
+    description: 'a locked trapdoor leading downward'
+});
+
 Game.Tile.waterTile = new Game.Tile({
     character: '~',
     foreground: '#2191fb',

@@ -37,7 +37,7 @@ Game.Builder = function(width, height, level) {
             this._setShallowWater();
         }
     }
-    this._setStairs();
+    this._setStairs(level);
 };
 
 Game.Builder.prototype.getTiles = function () {
@@ -86,7 +86,7 @@ Game.Builder.prototype._generateLevel = function(level) {
             dugPercentage: 0.45
         }
         generator = new ROT.Map.Digger(this._width, this._height, options);
-    } else if (level <=11){
+    } else if (level > 6){
         setMapTile = function (x, y, value) {
             if (value === 0) {
                map[x][y] = Game.Tile.wallTile;
@@ -202,7 +202,7 @@ Game.Builder.prototype._setupRegions = function() {
 }
 
 // Generates stairs at a free location
-Game.Builder.prototype._setStairs = function() {
+Game.Builder.prototype._setStairs = function(levelNumber) {
     let matches = [];
     // Iterate through all tiles, checking if they are floor tiles. 
     for (let x = 0; x < this._width; x++) {
@@ -216,7 +216,12 @@ Game.Builder.prototype._setStairs = function() {
     while (true){
         let match =  matches[Math.floor(Math.random() * matches.length)];
         if(this._checkAdjacent(match.x, match.y, Game.Tile.floorTile)){
-            this._tiles[match.x][match.y] = Game.Tile.stairsDownTile;
+            if (levelNumber != 3 && levelNumber != 6 && levelNumber != 11){
+                this._tiles[match.x][match.y] = Game.Tile.stairsDownTile;
+            } else {
+                this._tiles[match.x][match.y] = Game.Tile.stairsDownTileLocked;
+            }
+            
             break
         }
     }

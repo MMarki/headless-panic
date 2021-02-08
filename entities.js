@@ -88,7 +88,7 @@ Game.EntityRepository.define('piranha', {
              Game.EntityMixins.Swimmer]
 });
 
-Game.EntityRepository.define('hyrdra', {
+Game.EntityRepository.define('hydra', {
     name: 'hydra',
     character: 'H',
     foreground: '#E06C75',
