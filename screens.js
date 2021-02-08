@@ -272,7 +272,8 @@ Game.Screen.playScreen = {
                     for (sortedTarget of sortedPathingTargets){
                         //try A*ing there
                         let path = new ROT.Path.AStar(sortedTarget.x, sortedTarget.y, function(in_x, in_y) {
-                            return map.getTile(in_x, in_y).isWalkable();
+                            let tile = map.getTile(in_x, in_y);
+                            return tile.isWalkable() && !tile._isHazard && tile !== Game.Tile.stairsDownTile;
                         }, {topology: 4});
                         path.compute(player.getX(), player.getY(), function(x, y) {});
                         
@@ -298,7 +299,8 @@ Game.Screen.playScreen = {
 
                 if (!noMoreUnexplored){
                     let path = new ROT.Path.AStar(player._pathingTarget.x, player._pathingTarget.y, function(x, y) {
-                        return map.getTile(x, y).isWalkable();
+                        let tile = map.getTile(x, y);
+                        return tile.isWalkable() && !tile._isHazard && tile !== Game.Tile.stairsDownTile;
                     }, {topology: 4});
                     console.log(path);
                     
@@ -527,7 +529,8 @@ Game.Screen.loseScreen = {
             "Wielding a weapon with insufficient strength greatly reduces chance to hit and max hit.",
             "Wielding a weapon with excess strength increases chance to hit and max hit.",
             "Wearing an enemy's head gives you one of their powers.",
-            "The further you throw a weapon, the less likely it is to hit an enemy."
+            "The further you throw a weapon, the less likely it is to hit an enemy.",
+            "Press X to eXplore automatically. It's not as smart as manual control, put it's much faster."
         ];
         return hintList[Math.floor(Math.random() * hintList.length)];
     }

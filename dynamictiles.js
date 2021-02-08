@@ -10,6 +10,7 @@ Game.DynamicTileRepository.define('fireTile', {
     blocksLight: false,
     isDynamic: true,
     lifespan: 8,
+    isHazard: true,
     description: "a dancing flame",
     mixins: [Game.DynamicTileMixins.Actor, Game.DynamicTileMixins.Spreadable]
 });
@@ -23,6 +24,7 @@ Game.DynamicTileRepository.define('poisonTile', {
     blocksLight: false,
     isDynamic: true,
     lifespan: 6,
+    isHazard: true,
     description: 'a pool of bubbling poison',
     mixins: [Game.DynamicTileMixins.Actor]
 });
@@ -47,6 +49,7 @@ Game.DynamicTileRepository.define('darknessTile', {
     blocksLight: true,
     isDynamic: true,
     lifespan: 6,
+    isHazard: true,
     description: 'a cloud of magic darkness',
     mixins: [Game.DynamicTileMixins.Actor]
 });

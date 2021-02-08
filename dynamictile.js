@@ -14,6 +14,7 @@ Game.DynamicTile = function(properties) {
     this._speed = properties['speed'] || 1000;
     this._defaultForeground = this._foreground;
     this._defaultBackground = this._background;
+    this._isHazard = properties['isHazard'] || false;
 };
 
 // Make items inherit all the functionality from glyphs
