@@ -96,7 +96,7 @@ Game.Screen.playScreen = {
             }
         }
         // Render UI 
-        display.drawText(0, screenHeight, "%c{yellow}I%c{white}nventory  %c{yellow}L%c{white}ook  %c{yellow}W%c{white}ait  %c{yellow}T%c{white}hrow  %c{yellow}E%c{white}quip  %c{yellow}A%c{white}pply");
+        display.drawText(0, screenHeight, "%c{yellow}I%c{white}nventory  %c{yellow}L%c{white}ook  %c{yellow}W%c{white}ait  %c{yellow}T%c{white}hrow  %c{yellow}E%c{white}quip  %c{yellow}A%c{white}pply  %c{yellow}D%c{white}rop");
 
         var you = '%c{white}%b{black}';
         you += "@:    You";

@@ -852,7 +852,7 @@ Game.EntityMixins.Equipper = {
             this._ratThreaten = false;
             this._toady = false;
             this._venomous = false;
-            if(this._head._name === 'goblin head'){
+            if(this._head._name === 'goblin head' || this._head._name === 'kappa head'){
                 this._protected = true;
             } else if (this._head._name === 'jackal head' || this._head._name === 'piranha head'){
                 this._fierce = true;
@@ -867,7 +867,7 @@ Game.EntityMixins.Equipper = {
     },
     unhead: function(){
         if (this.hasMixin('PlayerActor')){
-            if(this._head._name === 'goblin head'){
+            if(this._head._name === 'goblin head' || this._head._name === 'kappa head'){
                 this._protected = false;
             } else if (this._head._name === 'jackal head' || this._head._name === 'piranha head'){
                 this._fierce = false;
