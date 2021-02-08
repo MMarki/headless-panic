@@ -214,7 +214,7 @@ Game.Builder.prototype._setStairs = function(levelNumber) {
     }
     // We shuffle the list of matches to prevent bias
     while (true){
-        let match =  matches[Math.floor(Math.random() * matches.length)];
+        let match =  Game.pickRandomElement(matches);
         if(this._checkAdjacent(match.x, match.y, Game.Tile.floorTile)){
             if (levelNumber != 3 && levelNumber != 6 && levelNumber != 11){
                 this._tiles[match.x][match.y] = Game.Tile.stairsDownTile;
@@ -239,7 +239,7 @@ Game.Builder.prototype._setGrass = function() {
         }
     }
     // We shuffle the list of matches to prevent bias
-    let match =  matches[Math.floor(Math.random() * matches.length)];
+    let match =  Game.pickRandomElement(matches);
     let grassList = [];
     grassList.push(match);
     this._cellGrow(grassList, Game.Tile.grassTile, 20)
@@ -257,7 +257,7 @@ Game.Builder.prototype._setFerns = function() {
         }
     }
     // We shuffle the list of matches to prevent bias
-    let match =  matches[Math.floor(Math.random() * matches.length)];
+    let match =  Game.pickRandomElement(matches);
     let grassList = [];
     grassList.push(match);
     this._cellGrow(grassList, Game.Tile.fernTile, 20)
@@ -277,7 +277,7 @@ Game.Builder.prototype._setShallowWater = function() {
         }
     }
     // We shuffle the list of matches to prevent bias
-    match = matches[Math.floor(Math.random() * matches.length)];
+    match = Game.pickRandomElement(matches);
     waterList.push(match);
     this._cellGrow(waterList, Game.Tile.shallowWaterTile, 20)
 }
@@ -295,8 +295,7 @@ Game.Builder.prototype._setColumn = function() {
         }
     }
     // We shuffle the list of matches to prevent bias
-    match = matches[Math.floor(Math.random() * matches.length)];
-    console.log(match);
+    match =  Game.pickRandomElement(matches);
     matchX = match.x;
     matchY = match.y;
     if(this._checkAdjacent(matchX, matchY, Game.Tile.floorTile)){

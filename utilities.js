@@ -27,4 +27,10 @@ Game.randomize = function(array) {
     }
   
     return array;
-  }
+}
+
+Game.pickRandomElement = function(array){
+  let element =  array[Math.floor(Math.random() * array.length)];
+  return element;
+}
+

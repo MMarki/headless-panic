@@ -3,6 +3,10 @@ Game.EntityMixins = {};
 Game.EntityMixins.PlayerActor = {
     name: 'PlayerActor',
     groupName: 'Actor',
+    init: function(template) {
+        // Load tasks
+        this._pathingTarget = null;
+    },
     act: function() {
         if (this._acting) {
             return;

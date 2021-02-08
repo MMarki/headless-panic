@@ -220,6 +220,20 @@ Game.Map.prototype.getEntitiesWithinRadius = function(centerX, centerY, radius) 
     return results;
 }
 
+Game.Map.prototype.sortByDistance = function(x,y,locationArray) {
+    let locationDistance = [];
+    for (let location of locationArray){
+        let distance = Math.abs(x - location.x) + Math.abs(y - location.y)
+        locationDistance.push({
+            x: location.x,
+            y: location.y,
+            distance: distance
+        })
+    }
+    locationDistance.sort(function(a, b){return a.distance - b.distance;});
+    return locationDistance;
+}
+
 Game.Map.prototype.setupFov = function() {
     // Keep this in 'map' variable so that we don't lose it.
     let map = this;

@@ -96,7 +96,7 @@ Game.Screen.playScreen = {
             }
         }
         // Render UI 
-        display.drawText(0, screenHeight, "%c{yellow}I%c{white}nventory  %c{yellow}L%c{white}ook  %c{yellow}W%c{white}ait  %c{yellow}T%c{white}hrow  %c{yellow}E%c{white}quip  %c{yellow}A%c{white}pply  %c{yellow}D%c{white}rop");
+        display.drawText(0, screenHeight, "%c{yellow}I%c{white}nventory  %c{yellow}L%c{white}ook  %c{yellow}W%c{white}ait  %c{yellow}T%c{white}hrow  %c{yellow}E%c{white}quip  %c{yellow}A%c{white}pply  %c{yellow}D%c{white}rop  %c{white}e%c{yellow}X%c{white}plore");
 
         var you = '%c{white}%b{black}';
         you += "@:    You";
@@ -196,8 +196,7 @@ Game.Screen.playScreen = {
                     this.setSubScreen(Game.Screen.inventoryScreen);
                 }
                 return;
-            } 
-            else if (inputData.keyCode === ROT.KEYS.VK_D) {
+            } else if (inputData.keyCode === ROT.KEYS.VK_D) {
                 if (this._player.getItems().filter(function(x){return x;}).length === 0) {
                     // If the player has no items, send a message and don't take a turn
                     Game.sendMessage(this._player, "You have nothing to drop!");
@@ -240,6 +239,68 @@ Game.Screen.playScreen = {
                 Game.Screen.lookScreen.setup(this._player, this._player.getX(), this._player.getY());
                 this.setSubScreen(Game.Screen.lookScreen);
                 return;
+            } else if (inputData.keyCode === ROT.KEYS.VK_X) {
+                let pathingTargets = [];
+                let player = this._player;
+                let map = this._map;
+                let target = {};
+                // Find an unexplored square
+                if (!player._pathingTarget){
+                    for (let x = 1; x < map.getWidth() - 1; x++) {
+                        for (let y = 1; y < map.getHeight() - 1; y++) {
+                            if (!map.isExplored(x, y)) {
+                                pathingTargets.push({
+                                    x: x,
+                                    y: y
+                                });
+                            }
+                        }
+                    }
+                    let sortedPathingTargets = map.sortByDistance(player.getX(), player.getY(), pathingTargets);
+
+                    //find the closest reachable target
+                    for (sortedTarget of sortedPathingTargets){
+                        //try A*ing there
+                        let path = new ROT.Path.AStar(sortedTarget.x, sortedTarget.y, function(in_x, in_y) {
+                            return map.getTile(in_x, in_y).isWalkable();
+                        }, {topology: 4});
+                        path.compute(player.getX(), player.getY(), function(x, y) {});
+                        
+                        //If we can get there, go to it
+                        if(path._todo.length > 0){
+                            target = {
+                                x: sortedTarget.x,
+                                y: sortedTarget.y
+                            };
+                            break;
+                        }
+                    }
+
+                    //Make a path to it
+                    player._pathingTarget = target;
+                    console.log(target);
+                }
+
+                let path = new ROT.Path.AStar(player._pathingTarget.x, player._pathingTarget.y, function(x, y) {
+                    return map.getTile(x, y).isWalkable();
+                }, {topology: 4});
+                console.log(path);
+                
+                // Once we've gotten the path, we want to move to the second cell that is passed in the callback (the first is the entity's starting point)
+                let count = 0;
+                path.compute(player.getX(), player.getY(), function(x, y) {
+                    if (count == 1) {
+                        player.tryMove(x, y);
+                    }
+                    count++;
+                });
+
+                if (path._todo.length === 0){
+                    player._pathingTarget = null;
+                }
+
+                // Auto-mode
+
             }
             // Unlock the engine
             this._map.getEngine().unlock();
