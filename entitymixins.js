@@ -60,7 +60,8 @@ Game.EntityMixins.TaskActor = {
             return this._summonWait === 0;     
         }
         else if (task === 'hunt') {
-            return this.hasMixin('Sight') && this.canSee(this.getMap().getPlayer());
+            let player = this.getMap().getPlayer()
+            return this.hasMixin('Sight') && this.canSee(player) && !(this._name === 'rat' && player._ratThreaten === true);
         } else if (task === 'wander') {
             return true;
         } else {
@@ -319,11 +320,11 @@ Game.EntityMixins.Attacker = {
     attack: function(target) {
         // If the target is destructible, calculate the damage based on attack and defense value
         if (target.hasMixin('Destructible')) {
-            var accuracy = this.getAccuracyValue();
-            var attack = this.getAttackValue();
-            var defense = target.getDefenseValue();
-            var strengthModifier = 0;
-            var strengthGap = 0
+            let accuracy = this.getAccuracyValue();
+            let attack = this.getAttackValue();
+            let defense = target.getDefenseValue();
+            let strengthModifier = 0;
+            let strengthGap = 0
             if (target.hasMixin('PlayerActor')) {
                 defense = defense * 10;
             }
@@ -341,30 +342,32 @@ Game.EntityMixins.Attacker = {
 
             console.log(strengthModifier);
 
-            var hitProbability = Math.max(0,accuracy * Math.pow(0.987, defense) + strengthModifier*5);
+            let hitProbability = Math.max(0,accuracy * Math.pow(0.987, defense) + strengthModifier*5);
            
             console.log("def:" + defense);
             console.log("hitprob: " + hitProbability);
             if (Math.random()*100 < hitProbability){
-                var max = Math.max(1, attack + (strengthModifier));
-                var damage = Math.ceil(Game.Utilities.randomRange(Math.ceil(max/2), max));
+                let max = Math.max(1, attack + (strengthModifier));
+                let damage = Math.ceil(Game.Utilities.randomRange(Math.ceil(max/2), max));
 
                 Game.sendMessage(this, 'You strike the %s for %d damage.', [target.getName(), damage]);
                 Game.sendMessage(target, 'The %s strikes you for %d damage.',  [this.getName(), damage]);
 
                 target.takeDamage(this, damage);
                 if (this.hasMixin('Poisoner') && target.hasMixin('Affectible')){
-                    var newEffect = new Game.Effect(Math.floor(damage*1.5), 'poisoned');
+                    let newEffect = new Game.Effect(Math.floor(damage*1.5), 'poisoned');
                     target.setEffect(newEffect);
                 } 
                 if (this.hasMixin('Equipper') && target.hasMixin('Affectible')){
                     if (this._venomous){
-                        var newEffect = new Game.Effect(Math.floor(damage*1.5), 'poisoned');
-                        target.setEffect(newEffect);
+                        if (Math.random()*100 < 30){
+                            let newEffect = new Game.Effect(Math.floor(damage*1.5), 'poisoned');
+                            target.setEffect(newEffect);
+                        }
                     }
                 } 
                 if (this.hasMixin('Acidic') && target.hasMixin('Affectible')){
-                    var armorIndex = target.getArmorIndex();
+                    let armorIndex = target.getArmorIndex();
                     if (armorIndex !== null){
                         target.unwear();
                         target.removeItem(armorIndex);
@@ -844,8 +847,11 @@ Game.EntityMixins.Equipper = {
     wearHead: function(item){
         this._head = item;
         if (this.hasMixin('PlayerActor')){
-            this._fierce = false;
             this._protected = false;
+            this._fierce = false;
+            this._ratThreaten = false;
+            this._toady = false;
+            this._venomous = false;
             if(this._head._name === 'goblin head'){
                 this._protected = true;
             } else if (this._head._name === 'jackal head' || this._head._name === 'piranha head'){

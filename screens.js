@@ -146,8 +146,10 @@ Game.Screen.playScreen = {
         display.drawText(screenWidth + 1, 7, "%c{white}STRN: " + strengthValue);
         if (Game.getLevel() < 4){
             display.drawText(screenWidth + 1, 8, "%c{white}LVL:  " +  ("Cellars " + Game.getLevel()) );
-        } else {
+        } else if (Game.getLevel() < 7){
             display.drawText(screenWidth + 1, 8, "%c{white}LVL:  " +  ("Sewers " + (Game.getLevel() - 3)) );
+        } else {
+            display.drawText(screenWidth + 1, 8, "%c{white}LVL:  " +  ("Caverns " + (Game.getLevel() - 6)) );
         }
         
     },
@@ -620,7 +622,7 @@ Game.Screen.equipScreen = new Game.Screen.ItemListScreen({
                 Game.sendMessage(this._player, "You are wielding %s.", [item.describeA()]);
             } else if (item.isWearable()){
                 this._player.wear(item);
-                Game.sendMessage(this._player, "You are wearing %s.", [item.describeA()]);
+                Game.sendMessage(this._player, "You are wearing %s.", [item.describe()]);
             } else if (item.isHeadible()){
                 this._player.wearHead(item);
                 Game.sendMessage(this._player, "You are wearing %s.", [item.describeA()]);
