@@ -78,7 +78,7 @@ Game.EntityMixins.TaskActor = {
                 this.attack(player);
                 return;
             } else {
-                if (this.hasMixin(Game.EntityMixins.Exploder)) {
+                if (this.hasMixin('Exploder')) {
                     var currentPosition = {x: this.getX(), y: this.getY()}
                     var tempList = []
                     tempList.push(currentPosition)
@@ -185,7 +185,7 @@ Game.EntityMixins.Destructible = {
         var headIsToad = false;
         // If we can equip items, then have to take into 
         // consideration weapon and armor
-        if (this.hasMixin(Game.EntityMixins.Equipper)) {
+        if (this.hasMixin('Equipper')) {
             var strengthGap = 0;
             var armor = this.getArmor()
             if (armor !== null) {
@@ -207,7 +207,7 @@ Game.EntityMixins.Destructible = {
             }
         }
         
-        if (this.hasMixin(Game.EntityMixins.WetBoy) || headIsToad) {
+        if (this.hasMixin('Hopper') || headIsToad) {
             var tile = this._map.getTile(this._x, this._y);
             if (tile._isWater){
                 modifier += 1;
@@ -219,7 +219,7 @@ Game.EntityMixins.Destructible = {
         this._hp = this._hp + points;
         if (this._hp <= 0) {
             this._hp = 0;
-            if (this.hasMixin(Game.EntityMixins.PlayerActor)) {
+            if (this.hasMixin('PlayerActor')) {
                 this.act();
             } else {
                 this.getMap().removeEntity(this);
@@ -229,7 +229,7 @@ Game.EntityMixins.Destructible = {
         }
     },
     takeDamage: function(attacker, damage) {
-        if (this.hasMixin(Game.EntityMixins.Bleeder)){
+        if (this.hasMixin('Bleeder')){
             var myHead = this.getHead()
             if (myHead !== null) {
                 if (myHead._headHits > 1) {
@@ -263,19 +263,19 @@ Game.EntityMixins.Destructible = {
         if (this._hp <= 0) {
             this._hp = 0;
             Game.sendMessage(attacker, '%%c{#61AEEE}You kill the %s!', [this.getName()]);
-            if (this.hasMixin(Game.EntityMixins.HeadDropper)) {
+            if (this.hasMixin('HeadDropper')) {
                 this.tryDropHead();
             }
-            if (this.hasMixin(Game.EntityMixins.KeyDropper)) {
+            if (this.hasMixin('KeyDropper')) {
                 this.dropKey();
             }
-            if (this.hasMixin(Game.EntityMixins.Exploder)) {
+            if (this.hasMixin('Exploder')) {
                 var currentPosition = {x: this.getX(), y: this.getY()}
                 var tempList = []
                 tempList.push(currentPosition)
                 this.getMap().cellGrow(tempList, this._explodeTile, this._explodeSize);
             }
-            if (this.hasMixin(Game.EntityMixins.PlayerActor)) {
+            if (this.hasMixin('PlayerActor')) {
                 this.act();
             } else {
                 console.log("killing" + this);
@@ -299,7 +299,7 @@ Game.EntityMixins.Attacker = {
         var modifier = 0;
         // If we can equip items, then have to take into 
         // consideration weapon and armor
-        if (this.hasMixin(Game.EntityMixins.Equipper)) {
+        if (this.hasMixin('Equipper')) {
             if (this.getWeapon()) {
                 modifier += this.getWeapon().getAttackValue();
             }
@@ -312,7 +312,7 @@ Game.EntityMixins.Attacker = {
         //for player, accuracy = 100 * 1.065^(weapon net enchant)
         //Net enchantment bonus = (Excess strength) * 0.25 + (Enchant level)
         //Damage = (Regular damage) * 1.065 ^ Enchant
-        if (this.hasMixin(Game.EntityMixins.Equipper)) {
+        if (this.hasMixin('Equipper')) {
             if (this.getWeapon()) {
                 modifier = 0;
             }
@@ -327,7 +327,7 @@ Game.EntityMixins.Attacker = {
             var defense = target.getDefenseValue();
             var strengthModifier = 0;
             var strengthGap = 0
-            if (target.hasMixin(Game.EntityMixins.PlayerActor)) {
+            if (target.hasMixin('PlayerActor')) {
                 defense = defense * 10;
             }
 
@@ -360,7 +360,7 @@ Game.EntityMixins.Attacker = {
                     var newEffect = new Game.Effect(Math.floor(damage*1.5), 'poisoned');
                     target.setEffect(newEffect);
                 } 
-                if (this.hasMixin(Game.EntityMixins.Equipper) && target.hasMixin('Affectible')){
+                if (this.hasMixin('Equipper') && target.hasMixin('Affectible')){
                     if (this.getHead() !== null){
                         let myHead = this.getHead()
                         if (myHead !== null) {
@@ -503,7 +503,7 @@ Game.EntityMixins.Thrower = {
             }
         }
 
-        if (this.hasMixin(Game.EntityMixins.Equipper)) {
+        if (this.hasMixin('Equipper')) {
             if (item.hasMixin('Throwable') && item.getStackQuantity() > 1){
                 item.setStackQuantity(item.getStackQuantity() - 1);
                 if (item.setStackQuantity === 0){
@@ -532,7 +532,7 @@ Game.EntityMixins.Thrower = {
                 hitProbability = hitProbability - throwDistance*3; 
             }
             // TO DO: it should also be harder to hit flying enemies
-            if (target.hasMixin(Game.EntityMixins.Deflecter)){
+            if (target.hasMixin('Deflecter')){
                 Game.sendMessage(this, 'You throw a %s at the %s. It deflects off its shell!', [item.getName(),target.getName()]);
             } else if (Math.random()*100 < hitProbability){
                 let maxAmount = Math.max(0, item.getThrownAttackValue());
@@ -736,7 +736,7 @@ Game.EntityMixins.InventoryHolder = {
     },
     removeItem: function(i) {
         // If we can equip items, then make sure we unequip the item we are removing.
-        if (this._items[i] && this.hasMixin(Game.EntityMixins.Equipper)) {
+        if (this._items[i] && this.hasMixin('Equipper')) {
             this.unequip(this._items[i]);
         }
         // Simply clear the inventory slot.
@@ -851,7 +851,7 @@ Game.EntityMixins.Equipper = {
     },
     wearHead: function(item){
         this._head = item;
-        if (this.hasMixin(Game.EntityMixins.PlayerActor)){
+        if (this.hasMixin('PlayerActor')){
             this._fierce = false;
             this._protected = false;
             if(this._head._name === 'goblin head'){
@@ -864,7 +864,7 @@ Game.EntityMixins.Equipper = {
         }
     },
     unhead: function(){
-        if (this.hasMixin(Game.EntityMixins.PlayerActor)){
+        if (this.hasMixin('PlayerActor')){
             if(this._head._name === 'goblin head'){
                 this._protected = false;
             } else if (this._head._name === 'jackal head' || this._head._name === 'piranha head'){
@@ -970,7 +970,7 @@ Game.EntityMixins.Exploder = {
 Game.sendMessage = function(recipient, message, args) {
     // Make sure the recipient can receive the message 
     // before doing any work.
-    if (recipient.hasMixin(Game.EntityMixins.MessageRecipient)) {
+    if (recipient.hasMixin('MessageRecipient')) {
         // If args were passed, then we format the message, else
         // no formatting is necessary
         if (args) {
@@ -991,7 +991,7 @@ Game.sendMessageNearby = function(map, centerX, centerY, message, args) {
     // Iterate through nearby entities, sending the message if
     // they can receive it.
     for (var i = 0; i < entities.length; i++) {
-        if (entities[i].hasMixin(Game.EntityMixins.MessageRecipient)) {
+        if (entities[i].hasMixin('MessageRecipient')) {
             entities[i].receiveMessage(message);
         }
     }

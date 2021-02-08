@@ -60,7 +60,7 @@ Game.Entity.prototype.tryMove = function(x, y) {
     // If an entity was present at the tile
     if (target) {
         // If we are an attacker, try to attack the target
-        if ((this.hasMixin('Attacker') && (this.hasMixin(Game.EntityMixins.PlayerActor) || target.hasMixin(Game.EntityMixins.PlayerActor)))) {
+        if ((this.hasMixin('Attacker') && (this.hasMixin('PlayerActor') || target.hasMixin('PlayerActor')))) {
             this.attack(target);
             if (this._fierce && Math.random() > 0.66){
                 if (map.getEntityAt(x, y)){
@@ -73,7 +73,7 @@ Game.Entity.prototype.tryMove = function(x, y) {
             return false;
         }
     // Check if we can walk on the tile and if so simply walk onto it
-    } else if ((tile.isWalkable() && !(this.hasMixin(Game.EntityMixins.Swimmer))) || ((tile === Game.Tile.shallowWaterTile || tile === Game.Tile.shallowWaterTile ) && this.hasMixin(Game.EntityMixins.Swimmer))) {        
+    } else if ((tile.isWalkable() && !(this.hasMixin('Swimmer'))) || ((tile === Game.Tile.shallowWaterTile || tile === Game.Tile.shallowWaterTile ) && this.hasMixin('Swimmer'))) {        
         // Update the entity's position
         this.setPosition(x, y);
         //open doors
@@ -116,7 +116,7 @@ Game.Entity.prototype.applyNewEffects = function(){
     //check if they already have it,
     // if so, change the existing duration instead of adding a new one
 
-    if (this.hasMixin(Game.EntityMixins.Affectible)){
+    if (this.hasMixin('Affectible')){
         if (tile._name === 'fireTile'){
             if (this.hasEffect('burning')){
                 this.removeEffect('burning');

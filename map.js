@@ -161,7 +161,7 @@ Game.Map.prototype.addEntity = function(entity) {
 
 //adds and entity on an empty floor tile
 Game.Map.prototype.addEntityAtRandomPosition = function(entity, outOfSightline) {
-    let isSwimmer = entity.hasMixin(Game.EntityMixins.Swimmer);
+    let isSwimmer = entity.hasMixin('Swimmer');
     let position = isSwimmer ? this.getRandomWaterPosition() : this.getRandomFloorPosition();
     if (outOfSightline){
         // Cache the FOV

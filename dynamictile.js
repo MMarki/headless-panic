@@ -85,7 +85,7 @@ Game.DynamicTileMixins.Actor = {
             this.getMap().removeDynamicTile(this);
         }
 
-        if (this.hasMixin(Game.DynamicTileMixins.Spreadable)){
+        if (this.hasMixin("Spreadable")){
             let neighbors = this.getNeighborPositions();
             // see if they match this._spreadSubstance
             for (let neighbor of  neighbors){
