@@ -173,6 +173,7 @@ Game.ItemRepository.define('dagger', {
     attackValue: 3,
     thrownAttackValue: 3,
     strengthRequirement: 1,
+    throwBreakChance: 20,
     wieldable: true,
     mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable, Game.ItemMixins.Enchantable],
     itemLevel: 1
@@ -213,7 +214,7 @@ Game.ItemRepository.define('broadsword', {
     character: '\u16B5',
     foreground: '#F2EC2D',
     attackValue: 6,
-    thrownAttackValue: 3,
+    thrownAttackValue: 2,
     strengthRequirement: 3,
     wieldable: true,
     mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable, Game.ItemMixins.Enchantable],

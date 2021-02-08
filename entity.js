@@ -12,7 +12,9 @@ Game.Entity = function(properties) {
     //attribrutes
     this._fierce = properties['fierce'] || false; //can sometimes attack twice per turn
     this._protected = properties['protected'] || false; // 1 higher DEF than usual
-    this._ratThreaten = properties['ratThreaten'] || true; // rats won't attack you
+    this._ratThreaten = properties['ratThreaten'] || false; // rats won't attack you
+    this._toady = properties['toady'] || false; // better defense on water tiles
+    this._venomous = properties['venomous'] || false; // chance to poison on hit
 };
 // Make entities inherit all the functionality from glyphs
 Game.Entity.extend(Game.DynamicGlyph);

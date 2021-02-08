@@ -180,14 +180,14 @@ Game.EntityMixins.Destructible = {
         this._maxHP += amount;
     },
     getDefenseValue: function() {
-        var modifier = 0;
-        var strengthModifier = 0;
-        var headIsToad = false;
+        let modifier = 0;
+        let strengthModifier = 0;
+        let headIsToad = false;
         // If we can equip items, then have to take into 
         // consideration weapon and armor
         if (this.hasMixin('Equipper')) {
-            var strengthGap = 0;
-            var armor = this.getArmor()
+            let strengthGap = 0;
+            let armor = this.getArmor()
             if (armor !== null) {
                 strengthGap = this.getStrengthValue() - armor._strengthRequirement;
                 if (strengthGap <  0){
@@ -199,16 +199,13 @@ Game.EntityMixins.Destructible = {
                 modifier = (armor.getDefenseValue() + strengthModifier);
             }
             
-            var myHead = this.getHead()
-            if (myHead !== null) {
-                if (myHead.describe() === 'toadman head'){
-                    headIsToad = true;
-                }
+            if (this._toady){
+                headIsToad = true;
             }
         }
         
         if (this.hasMixin('Hopper') || headIsToad) {
-            var tile = this._map.getTile(this._x, this._y);
+            let tile = this._map.getTile(this._x, this._y);
             if (tile._isWater){
                 modifier += 1;
             }
@@ -361,14 +358,9 @@ Game.EntityMixins.Attacker = {
                     target.setEffect(newEffect);
                 } 
                 if (this.hasMixin('Equipper') && target.hasMixin('Affectible')){
-                    if (this.getHead() !== null){
-                        let myHead = this.getHead()
-                        if (myHead !== null) {
-                            if (myHead.describe() === 'poison toad head'){
-                                var newEffect = new Game.Effect(Math.floor(damage*1.5), 'poisoned');
-                                target.setEffect(newEffect);
-                            }
-                        }
+                    if (this._venomous){
+                        var newEffect = new Game.Effect(Math.floor(damage*1.5), 'poisoned');
+                        target.setEffect(newEffect);
                     }
                 } 
                 if (this.hasMixin('Acidic') && target.hasMixin('Affectible')){
@@ -860,6 +852,10 @@ Game.EntityMixins.Equipper = {
                 this._fierce = true;
             } else if (this._head._name === 'rat king head'){
                 this._ratThreaten = true;
+            } else if (this._head._name === 'toadman head' || this._head._name === 'toad queen head'){
+                this._toady = true;
+            } else if (this._head._name === 'poison toad head'){
+                this._venomous = true;
             }
         }
     },
@@ -871,6 +867,10 @@ Game.EntityMixins.Equipper = {
                 this._fierce = false;
             } else if (this._head._name === 'rat king head'){
                 this._ratThreaten = false;
+            } else if (this._head._name === 'toadman head' || this._head._name === 'toad queen head'){
+                this._toady = false;
+            } else if (this._head._name === 'poison toad head'){
+                this._venomous = false;
             }
         }
         this._head = null;
