@@ -153,7 +153,7 @@ Game.Screen.playScreen = {
         }
         
     },
-    handleInput: function(inputType, inputData) {
+    handleInput: function(inputType, inputData, invokedManually) {
         // If the game is over, enter will bring the user to the losing screen.
         if (this._gameEnded) {
             if (inputType === 'keydown' && inputData.keyCode === ROT.KEYS.VK_RETURN) {
@@ -256,6 +256,10 @@ Game.Screen.playScreen = {
 
                 // Find an unexplored square
                 if (player._pathingTarget === null){
+                    if (invokedManually === false){
+                        //we've hit our target in an auto-loop. Break out of the recursive function
+                        return;
+                    }
                     for (let x = 1; x < map.getWidth() - 1; x++) {
                         for (let y = 1; y < map.getHeight() - 1; y++) {
                             if (!map.isExplored(x, y)) {
@@ -326,6 +330,14 @@ Game.Screen.playScreen = {
             }
             // Unlock the engine
             this._map.getEngine().unlock();
+            if (this._player._pathingTarget){
+                let currentHead = this._player.getHead();
+                if (currentHead !== null && inputData.keyCode === ROT.KEYS.VK_X){
+                    let artificialInputData = {}
+                    artificialInputData.keyCode = ROT.KEYS.VK_X
+                    this.handleInput('keydown', artificialInputData, false);
+                }
+            }
         } else {
             // Not a valid key
             return;
