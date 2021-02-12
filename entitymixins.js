@@ -361,7 +361,11 @@ Game.EntityMixins.Attacker = {
                 if (this.hasMixin('Poisoner') && target.hasMixin('Affectible')){
                     let newEffect = new Game.Effect(Math.floor(damage*1.5), 'poisoned');
                     target.setEffect(newEffect);
-                } 
+                }
+                if (this.hasMixin('Paralyzer') && target.hasMixin('Affectible')){
+                    let newEffect = new Game.Effect(Math.floor(damage*1.5), 'paralyzed');
+                    target.setEffect(newEffect);
+                }  
                 if (this.hasMixin('Equipper') && target.hasMixin('Affectible')){
                     if (this._venomous){
                         if (Math.random()*100 < 30){
@@ -395,6 +399,14 @@ Game.EntityMixins.Attacker = {
 Game.EntityMixins.Poisoner = {
     name: 'Poisoner',
     groupName: 'Poisoner',
+    init: function(template) {
+        template;
+    }
+}
+
+Game.EntityMixins.Paralyzer = {
+    name: 'Paralyzer',
+    groupName: 'Paralyzer',
     init: function(template) {
         template;
     }

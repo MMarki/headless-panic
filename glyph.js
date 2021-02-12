@@ -3,7 +3,7 @@ Game.Glyph = function(properties) {
     properties = properties || {};
     this._char = properties['character'] || ' ';
     this._foreground = properties['foreground'] || 'white';
-    this._background = properties['background'] || 'black';
+    this._background = properties['background'] || '#080A1F';
 };
 
 // Create standard getters for glyphs

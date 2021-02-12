@@ -137,6 +137,24 @@ Game.EntityRepository.define('goblin', {
              Game.EntityMixins.HeadDropper, Game.EntityMixins.Affectible]
 });
 
+Game.EntityRepository.define('bee', {
+    name: 'giant bee',
+    character: 'B',
+    foreground: '#91C7B1',
+    maxHP: 12,
+    attackValue: 4,
+    defenseValue: 10,
+    accuracyValue: 70,
+    sightRadius: 12,
+    headHits: 1,
+    description: "A giant bee with a barbed stinger.",
+    tasks: ['hunt', 'wander'],
+    mixins: [Game.EntityMixins.TaskActor, Game.EntityMixins.Sight,
+             Game.EntityMixins.Attacker, Game.EntityMixins.Destructible,
+             Game.EntityMixins.HeadDropper, Game.EntityMixins.Affectible,
+             Game.EntityMixins.Paralyzer]
+});
+
 Game.EntityRepository.define('toadman', {
     name: 'toadman',
     character: 't',
@@ -354,14 +372,14 @@ Game.EntityRepository.define('death', {
 
 Game.EntityRepository.repoFrequency = {
     'L1': [{'rat': 2}, {'kobold': 2}, {'bat':2}, {'jackal': 1}],
-    'L2': [{'rat': 3}, {'kobold': 2}, {'bat':2}, {'jackal': 1}, {'goblin': 1}, {'floater': 1}],
+    'L2': [{'rat': 3}, {'kobold': 2}, {'bat':2}, {'jackal': 1}, {'goblin': 1}],
     'L3': [{'rat': 2}, {'kobold': 2}, {'bat':2}, {'jackal': 1}, {'goblin': 1}, {'floater': 1}, {'slime': 1}],
     'L4': [{'rat': 2}, {'goblin': 1}, {'floater': 1}, {'slime': 2}, {'toadman': 2}, {'acid jelly': 1}],
     'L5': [{'rat': 1}, {'goblin': 1}, {'slime': 2}, {'toadman': 2}, {'acid jelly': 1}, {'poison toad': 1}],
     'L6': [{'rat': 1}, {'goblin': 1}, {'slime': 2}, {'toadman': 2}, {'acid jelly': 1}, {'poison toad': 2}],
     'L7': [{'kappa': 1}, {'slime': 2}, {'mushroom man': 1}, {'poison toad': 1}],
     'L8': [{'kappa': 1}, {'mushroom man': 1}, {'poison toad': 1}],
-    'L9': [{'kappa': 1}, {'mushroom man': 1}, {'poison toad': 1}, {'piranha': 1}],
-    'L10': [{'kappa': 1}, {'mushroom man': 1}, {'poison toad': 1}, {'piranha': 1}],
-    'L11': [{'kappa': 1}, {'mushroom man': 1}, {'poison toad': 1}, {'piranha': 1}]
+    'L9': [{'kappa': 1}, {'mushroom man': 1}, {'poison toad': 1}, {'piranha': 1}, {'bee':1}],
+    'L10': [{'kappa': 1}, {'mushroom man': 1}, {'poison toad': 1}, {'piranha': 1}, {'bee':1}],
+    'L11': [{'kappa': 1}, {'mushroom man': 1}, {'poison toad': 1}, {'piranha': 1}, {'bee':1}]
 }

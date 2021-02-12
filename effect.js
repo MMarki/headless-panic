@@ -21,7 +21,7 @@ Game.Effect.prototype.getEffectColor = function(name) {
         return '#00EE00';
     } else if (name === 'burning'){
         return '#EE4411';
-    } else if (name === 'blind'){
+    } else if (name === 'blind' || name === 'paralyzed'){
         return '#EE22EE';
     } else {
         return '#4D6CFA';
