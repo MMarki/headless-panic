@@ -80,6 +80,7 @@ Game.ItemMixins.Equippable = {
     init: function(template) {
         this._attackValue = template['attackValue'] || 0;
         this._defenseValue = template['defenseValue'] || 0;
+        this._damageType = template['damageType'] || 'crush';
         this._wieldable = template['wieldable'] || false;
         this._wearable = template['wearable'] || false;
         this._headible = template['headible'] || false;
@@ -91,6 +92,9 @@ Game.ItemMixins.Equippable = {
     },
     getDefenseValue: function() {
         return this._defenseValue;
+    },
+    getDamageType: function() {
+        return this._damageType;
     },
     isWieldable: function() {
         return this._wieldable;

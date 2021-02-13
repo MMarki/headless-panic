@@ -129,6 +129,7 @@ Game.ItemRepository.define('dart', {
     throwBreakChance: 100,
     wieldable: true,
     stackable: true,
+    damageType: 'stab',
     mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable],
     itemLevel: 4
 }, {
@@ -140,11 +141,12 @@ Game.ItemRepository.define('javelin', {
     character: '\u16A8',
     foreground: '#F2EC2D',
     attackValue: 3,
-    thrownAttackValue: 6,
+    thrownAttackValue: 8,
     throwBreakChance: 100,
     strengthRequirement: 2,
     wieldable: true,
     stackable: true,
+    damageType: 'stab',
     mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable],
     itemLevel: 4
 }, {
@@ -160,6 +162,7 @@ Game.ItemRepository.define('incendiary dart', {
     throwBreakChance: 100,
     wieldable: true,
     stackable: true,
+    damageType: 'stab',
     mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable],
     itemLevel: 6
 }, {
@@ -170,25 +173,72 @@ Game.ItemRepository.define('dagger', {
     name: 'dagger',
     character: '\u07D9',
     foreground: '#F2EC2D',
-    attackValue: 3,
+    attackValue: 2,
     thrownAttackValue: 3,
     strengthRequirement: 1,
     throwBreakChance: 20,
     wieldable: true,
+    damageType: 'stab',
     mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable, Game.ItemMixins.Enchantable],
     itemLevel: 1
 }, {
     disableRandomCreation: false
 });
 
-Game.ItemRepository.define('sword', {
-    name: 'sword',
+Game.ItemRepository.define('club', {
+    name: 'club',
+    character: '\u0669',
+    foreground: '#F2EC2D',
+    attackValue: 2,
+    thrownAttackValue: 1,
+    strengthRequirement: 1,
+    wieldable: true,
+    damageType: 'crush',
+    mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable, Game.ItemMixins.Enchantable],
+    itemLevel: 1
+}, {
+    disableRandomCreation: false
+});
+
+Game.ItemRepository.define('longsword', {
+    name: 'longsword',
+    character: '\u07D9',
+    foreground: '#F2EC2D',
+    attackValue: 5,
+    thrownAttackValue: 3,
+    strengthRequirement: 2,
+    wieldable: true,
+    damageType: 'slash',
+    mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable, Game.ItemMixins.Enchantable],
+    itemLevel: 1
+}, {
+    disableRandomCreation: false
+});
+
+Game.ItemRepository.define('greatclub', {
+    name: 'greatclub',
+    character: '\u07C9',
+    foreground: '#F2EC2D',
+    attackValue: 5,
+    thrownAttackValue: 2,
+    strengthRequirement: 2,
+    wieldable: true,
+    damageType: 'crush',
+    mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable, Game.ItemMixins.Enchantable],
+    itemLevel: 1
+}, {
+    disableRandomCreation: false
+});
+
+Game.ItemRepository.define('rapier', {
+    name: 'rapier',
     character: '\u07D9',
     foreground: '#F2EC2D',
     attackValue: 5,
     thrownAttackValue: 3,
     strengthRequirement: 1,
     wieldable: true,
+    damageType: 'pierce',
     mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable, Game.ItemMixins.Enchantable],
     itemLevel: 1
 }, {
@@ -203,6 +253,7 @@ Game.ItemRepository.define('axe', {
     thrownAttackValue: 3,
     strengthRequirement: 3,
     wieldable: true,
+    damageType: 'slash',
     mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable, Game.ItemMixins.Enchantable],
     itemLevel: 2
 }, {
@@ -217,6 +268,7 @@ Game.ItemRepository.define('broadsword', {
     thrownAttackValue: 2,
     strengthRequirement: 3,
     wieldable: true,
+    damageType: 'slash',
     mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable, Game.ItemMixins.Enchantable],
     itemLevel: 3
 }, {
@@ -231,6 +283,37 @@ Game.ItemRepository.define('spear', {
     thrownAttackValue: 4,
     strengthRequirement: 1,
     wieldable: true,
+    damageType: 'stab',
+    mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable, Game.ItemMixins.Enchantable],
+    itemLevel: 1
+}, {
+    disableRandomCreation: false
+});
+
+Game.ItemRepository.define('mace', {
+    name: 'mace',
+    character: '\u07C9',
+    foreground: '#F2EC2D',
+    attackValue: 4,
+    thrownAttackValue: 2,
+    strengthRequirement: 1,
+    wieldable: true,
+    damageType: 'crush',
+    mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable, Game.ItemMixins.Enchantable],
+    itemLevel: 1
+}, {
+    disableRandomCreation: false
+});
+
+Game.ItemRepository.define('scimitar', {
+    name: 'scimitar',
+    character: '\u0692',
+    foreground: '#F2EC2D',
+    attackValue: 4,
+    thrownAttackValue: 2,
+    strengthRequirement: 1,
+    wieldable: true,
+    damageType: 'slash',
     mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable, Game.ItemMixins.Enchantable],
     itemLevel: 1
 }, {
@@ -245,6 +328,7 @@ Game.ItemRepository.define('lance', {
     thrownAttackValue: 4,
     strengthRequirement: 2,
     wieldable: true,
+    damageType: 'stab',
     mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable, Game.ItemMixins.Enchantable],
     itemLevel: 3
 }, {

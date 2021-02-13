@@ -4,7 +4,7 @@ Game.PlayerTemplate = {
     name: 'chicken knight',
     foreground: 'white',
     maxHP: 40,
-    attackValue: 3,
+    attackValue: 2,
     accuracyValue: 100,
     sightRadius: 100,
     inventorySlots: 20,
