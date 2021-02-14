@@ -328,7 +328,7 @@ Game.Screen.playScreen = {
                     let goDownStairsContext = this.goDownStairs.bind(Game.Screen.playScreen);
                     path.compute(player.getX(), player.getY(), function(x, y) {
                         if (count == 1) {
-                            if (!this._player.hasEffect('paralyzed')){
+                            if (!player.hasEffect('paralyzed')){
                                 player.tryMove(x, y);
                                 handleItemPickupContext()
                                 goDownStairsContext(); 
