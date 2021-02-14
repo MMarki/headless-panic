@@ -19,17 +19,6 @@ Game.PlayerTemplate = {
 // Create our central entity repository
 Game.EntityRepository = new Game.Repository('entities', Game.Entity);
 
-Game.EntityRepository.define('fungus', {
-    name: 'fungus',
-    character: '\u2660',
-    foreground: '#b33951',
-    maxHP: 10,
-    speed: 500,
-    description: "Fungus multiplies at an astonishing rate.",
-    mixins: [Game.EntityMixins.FungusActor, Game.EntityMixins.Destructible, 
-             Game.EntityMixins.Affectible]
-});
-
 Game.EntityRepository.define('barrel', {
     name: 'barrel',
     character: '#',

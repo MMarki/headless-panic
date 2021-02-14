@@ -307,7 +307,7 @@ Game.ItemRepository.define('mace', {
 
 Game.ItemRepository.define('scimitar', {
     name: 'scimitar',
-    character: '\u0692',
+    character: '\u1489',
     foreground: '#F2EC2D',
     attackValue: 4,
     thrownAttackValue: 2,
@@ -350,12 +350,25 @@ Game.ItemRepository.define('leather', {
     disableRandomCreation: false
 });
 
+Game.ItemRepository.define('studded', {
+    name: 'studded armor',
+    character: '[',
+    foreground: '#F2EC2D',
+    defenseValue: 3,
+    strengthRequirement: 1,
+    wearable: true,
+    mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Enchantable],
+    itemLevel: 1
+}, {
+    disableRandomCreation: false
+});
+
 Game.ItemRepository.define('scalemail', {
     name: 'scalemail',
     character: '[',
     foreground: '#F2EC2D',
     defenseValue: 4,
-    strengthRequirement: 1,
+    strengthRequirement: 2,
     wearable: true,
     mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Enchantable],
     itemLevel: 1
@@ -376,12 +389,25 @@ Game.ItemRepository.define('chainmail', {
     disableRandomCreation: false
 });
 
+Game.ItemRepository.define('splintmail', {
+    name: 'splintmail',
+    character: '[',
+    foreground: '#F2EC2D',
+    defenseValue: 7,
+    strengthRequirement: 3,
+    wearable: true,
+    mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Enchantable],
+    itemLevel: 1
+}, {
+    disableRandomCreation: false
+});
+
 Game.ItemRepository.define('platemail', {
     name: 'platemail',
     character: '[',
     foreground: '#F2EC2D',
     defenseValue: 8,
-    strengthRequirement: 3,
+    strengthRequirement: 4,
     wearable: true,
     mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Enchantable],
     itemLevel: 2
