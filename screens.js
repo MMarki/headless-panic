@@ -60,8 +60,6 @@ Game.Screen.playScreen = {
         this._player.addItem(dart);
         var dart = Game.ItemRepository.create('dart');
         this._player.addItem(dart);
-        var test = Game.ItemRepository.create('fire potion');
-        this._player.addItem(test);
         var test = Game.ItemRepository.create('knowledge potion');
         this._player.addItem(test);
         //Create map
@@ -170,21 +168,37 @@ Game.Screen.playScreen = {
         if (inputType === 'keydown') {
             // Movement
             if (inputData.keyCode === ROT.KEYS.VK_LEFT) {
-                this.move(-1, 0);
-                this.handleItemPickup()
-                this.goDownStairs();
+                if (!this._player.hasEffect('paralyzed')){
+                    this.move(-1, 0);
+                    this.handleItemPickup()
+                    this.goDownStairs();
+                } else {
+                    Game.sendMessage(this._player, "You are paralyzed!");
+                }
             } else if (inputData.keyCode === ROT.KEYS.VK_RIGHT) {
-                this.move(1, 0);
-                this.handleItemPickup()
-                this.goDownStairs();
+                if (!this._player.hasEffect('paralyzed')){
+                    this.move(1, 0);
+                    this.handleItemPickup()
+                    this.goDownStairs();
+                } else {
+                    Game.sendMessage(this._player, "You are paralyzed!");
+                }
             } else if (inputData.keyCode === ROT.KEYS.VK_UP) {
-                this.move(0, -1);
-                this.handleItemPickup()
-                this.goDownStairs();
+                if (!this._player.hasEffect('paralyzed')){
+                    this.move(0, -1);
+                    this.handleItemPickup()
+                    this.goDownStairs();
+                } else {
+                    Game.sendMessage(this._player, "You are paralyzed!");
+                }
             } else if (inputData.keyCode === ROT.KEYS.VK_DOWN) {
-                this.move(0, 1);
-                this.handleItemPickup()
-                this.goDownStairs();
+                if (!this._player.hasEffect('paralyzed')){
+                    this.move(0, 1);
+                    this.handleItemPickup()
+                    this.goDownStairs();
+                } else {
+                    Game.sendMessage(this._player, "You are paralyzed!");
+                }
             } else if (inputData.keyCode === ROT.KEYS.VK_I) {
                 if (this._player.getItems().filter(function(x){return x;}).length === 0) {
                     // If the player has no items, send a message and don't take a turn
@@ -314,9 +328,14 @@ Game.Screen.playScreen = {
                     let goDownStairsContext = this.goDownStairs.bind(Game.Screen.playScreen);
                     path.compute(player.getX(), player.getY(), function(x, y) {
                         if (count == 1) {
-                            player.tryMove(x, y);
-                            handleItemPickupContext()
-                            goDownStairsContext();
+                            if (!this._player.hasEffect('paralyzed')){
+                                player.tryMove(x, y);
+                                handleItemPickupContext()
+                                goDownStairsContext(); 
+                            } else {
+                                Game.sendMessage(this._player, "You are paralyzed!");
+                            }
+                            
                         }
                         count++;
                     });
