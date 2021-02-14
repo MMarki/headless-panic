@@ -60,7 +60,6 @@ Game.EntityMixins.TaskActor = {
     },
     canDoTask: function(task) {
         if (task === 'summonMonster') {
-            console.log(this._summonWait);
             return this._summonWait === 0;     
         }
         else if (task === 'hunt') {
@@ -135,6 +134,8 @@ Game.EntityMixins.Destructible = {
         // We allow taking in health from the template in case we want the entity to start with a different amount of HP than the  max specified.
         this._hp = template['hp'] || this._maxHP;
         this._defenseValue = template['defenseValue'] || 0;
+        this._vulnerabilities = template['vulnerabilities'] || [];
+        this._resistances = template['resistances'] || [];
     },
     getHP: function() {
         return this._hp;
@@ -144,6 +145,12 @@ Game.EntityMixins.Destructible = {
     },
     modifyMaxHPBy: function(amount) {
         this._maxHP += amount;
+    },
+    getVulnerabilities: function() {
+        return this._vulnerabilities;
+    },
+    getResistances: function() {
+        return this._resistances;
     },
     getDefenseValue: function() {
         let modifier = 0;
@@ -289,7 +296,10 @@ Game.EntityMixins.Attacker = {
             let attack = this.getAttackValue();
             let defense = target.getDefenseValue();
             let strengthModifier = 0;
-            let strengthGap = 0
+            let strengthGap = 0;
+            let damageType = 'crush';
+            let targetIsVulnerable = false;
+            let targetIsResistant = false;
             if (target.hasMixin('PlayerActor')) {
                 defense = defense * 10;
             }
@@ -302,10 +312,12 @@ Game.EntityMixins.Attacker = {
                     } else if (strengthGap > 0){
                         strengthModifier =  strengthGap;
                     }
+                    damageType = this.getWeapon().getDamageType();
                 }
             }
 
-            console.log(strengthModifier);
+            targetIsVulnerable = target.getVulnerabilities().includes(damageType);
+            targetIsResistant = target.getResistances().includes(damageType);
 
             let hitProbability = Math.max(0,accuracy * Math.pow(0.987, defense) + strengthModifier*5);
            
@@ -314,6 +326,11 @@ Game.EntityMixins.Attacker = {
             if (Math.random()*100 < hitProbability){
                 let max = Math.max(1, attack + (strengthModifier));
                 let damage = Math.ceil(Game.Utilities.randomRange(Math.ceil(max/2), max));
+                if (targetIsVulnerable) {
+                    damage *= 2;
+                } else if (targetIsResistant) {
+                    damage = Math.ceil(damage/2);
+                } 
 
                 Game.sendMessage(this, 'You strike the %s for %d damage.', [target.getName(), damage]);
                 Game.sendMessage(target, 'The %s strikes you for %d damage.',  [this.getName(), damage]);
