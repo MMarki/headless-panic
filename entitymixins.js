@@ -514,32 +514,43 @@ Game.EntityMixins.Thrower = {
         let startPointY = this.getY()
         let endPointX = x;
         let endPointY = y;
-        let throwDistance = 0;
 
-        var points = Game.Geometry.getLine(startPointX, startPointY, endPointX, endPointY);
-        for (let point of points){
-            if (this._map.getTile(point.x, point.y) == Game.Tile.wallTile){
-                console.log("oi mate, we hit a wall!");
-                break;
-            }            
-            endPointX = point.x;
-            endPointY = point.y;
-            throwDistance += 1;
-        }
-   
-        var creatureReference = this.getMap().getEntityAt(endPointX, endPointY);
-        if (creatureReference !== undefined){
-            if (item._name === "wand of blinking"){
-                this._map.shatter(endPointX, endPointY);
-            } else if (item._name === "wand of poison"){
-                let newEffect = new Game.Effect(10, 'poisoned');
-                creatureReference.setEffect(newEffect);
-            } else if (item._name === "wand of fire"){
-                let newEffect = new Game.Effect(10, 'burning');
-                creatureReference.setEffect(newEffect);
+        if (item._name === 'wand of blinking'){
+            let points = Game.Geometry.getLine(startPointX, startPointY, endPointX, endPointY);
+            for (let point of points){
+                if (this.getMap().getTile(point.x, point.y) === Game.Tile.wallTile || this.getMap().getEntityAt(point.x, point.y) && this.getMap().getEntityAt(point.x, point.y)._name !='chicken knight'){
+                    console.log("oi mate, we hit a wall!");
+                    break;
+                }            
+                endPointX = point.x;
+                endPointY = point.y;
             }
-        } else{
-            Game.sendMessage(this, 'You shoot a blast of magic from a %s.',item.getName());
+            this.setPosition(endPointX,endPointY);
+        }
+
+        if (item._name === 'wand of fire' || item._name === 'wand of poison'){
+            let points = Game.Geometry.getLine(startPointX, startPointY, endPointX, endPointY);
+            for (let point of points){
+                if (this.getMap().getTile(point.x, point.y) === Game.Tile.wallTile){
+                    console.log("oi mate, we hit a wall!");
+                    break;
+                }            
+                endPointX = point.x;
+                endPointY = point.y;
+            }
+       
+            let creatureReference = this.getMap().getEntityAt(endPointX, endPointY);
+            if (creatureReference !== undefined){
+                if (item._name === 'wand of poison'){
+                    let newEffect = new Game.Effect(10, 'poisoned');
+                    creatureReference.setEffect(newEffect);
+                } else if (item._name === 'wand of fire'){
+                    let newEffect = new Game.Effect(10, 'burning');
+                    creatureReference.setEffect(newEffect);
+                }
+            } else{
+                Game.sendMessage(this, 'You shoot a blast of magic from a %s.',item.getName());
+            }
         }
 
         if (this.hasMixin('Equipper')) {
