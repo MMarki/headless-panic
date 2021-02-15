@@ -115,7 +115,11 @@ Game.ItemMixins.Throwable = {
     name: 'Throwable',
     init: function(template) {
         this._thrownAttackValue = template['thrownAttackValue'] || 0;
-        this._throwBreakChance = template['throwBreakChance'] || 40;
+        if (template['throwBreakChance'] !== undefined){
+            this._throwBreakChance = template['throwBreakChance'];
+        } else {
+            this._throwBreakChance = 40;
+        }
         this._stackable = template['stackable'] || false;
         this._quantity = template['quantity'] || 1;
     },

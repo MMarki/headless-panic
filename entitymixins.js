@@ -694,7 +694,7 @@ Game.EntityMixins.Sight = {
     name: 'Sight',
     groupName: 'Sight',
     init: function(template) {
-        this._sightRadius = template['sightRadius'] || 5;
+        this._sightRadius = template['sightRadius'] || 7;
     },
     getSightRadius: function() {
         return this._sightRadius;
