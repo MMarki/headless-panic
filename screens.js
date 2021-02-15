@@ -222,9 +222,9 @@ Game.Screen.playScreen = {
                 }
                 return;
             }  else if (inputData.keyCode === ROT.KEYS.VK_A) {
-                // Show the eat screen
-                if (Game.Screen.eatScreen.setup(this._player, this._player.getItems())) {
-                    this.setSubScreen(Game.Screen.eatScreen);
+                // Show the apply screen
+                if (Game.Screen.applyScreen.setup(this._player, this._player.getItems())) {
+                    this.setSubScreen(Game.Screen.applyScreen);
                 } else {
                     Game.sendMessage(this._player, "You have nothing to apply!");
                     Game.refresh();
@@ -699,21 +699,27 @@ Game.Screen.ItemListScreen.prototype.handleInput = function(inputType, inputData
     }
 };
 
-Game.Screen.eatScreen = new Game.Screen.ItemListScreen({
+Game.Screen.applyScreen = new Game.Screen.ItemListScreen({
     caption: 'Apply what?',
     canSelect: true,
     canSelectMultipleItems: false,
     isAcceptable: function(item) {
-        return item && item.hasMixin('Edible');
+        return item && (item.hasMixin('Edible') || item.hasMixin('Usable'));
     },
     ok: function(selectedItems) {
         // Eat the item
         var key = Object.keys(selectedItems)[0];
         var item = selectedItems[key];
-        Game.sendMessage(this._player, "You drink %s.", [item.describeThe()]);
-        item.eat(this._player);
-        this._player.removeItem(key);
-        return true;
+        if (item.hasMixin('Edible')){
+            Game.sendMessage(this._player, "You drink %s.", [item.describeThe()]);
+            item.eat(this._player);
+            this._player.removeItem(key);
+            return true;
+        } else if (item.hasMixin('Usable')){
+            Game.Screen.aimAtScreen.setup(this._player, this._player.getX(), this._player.getY(), item, key);
+            Game.Screen.playScreen.setSubScreen(Game.Screen.aimAtScreen);            
+        }
+        
     }
 });
 
@@ -980,35 +986,45 @@ Game.Screen.lookScreen = new Game.Screen.TargetBasedScreen({
     }
 });
 
-Game.Screen.throwAtScreen = new Game.Screen.TargetBasedScreen({
-    captionFunction: function(x, y) {
-        var map = this._player.getMap();
-        // If the tile is explored, we can give a better capton
-        if (map.isExplored(x, y)) {
-            // If the tile isn't explored, we have to check if we can actually see it before testing if there's an entity or item.
-            if (this._visibleCells[x + ',' + y]) {
-                var items = map.getItemsAt(x, y);
-                // If we have items, we want to render the top most item
-                if (items) {
-                    var item = items[items.length - 1];
-                    return (item.getRepresentation() + ' - ' + item.describeA(true) + '. ' + item.getDescription());
-                // Else check if there's an entity
-                } else if (map.getEntityAt(x, y)) {
-                    var entity = map.getEntityAt(x, y);
-                    return (entity.getRepresentation() + ' - ' + entity.describeA(true) + '. ' + entity.getDescription());
-                }
+let lineCaptionFunction = function(x, y) {
+    let map = this._player.getMap();
+    // If the tile is explored, we can give a better capton
+    if (map.isExplored(x, y)) {
+        // If the tile isn't explored, we have to check if we can actually see it before testing if there's an entity or item.
+        if (this._visibleCells[x + ',' + y]) {
+            let items = map.getItemsAt(x, y);
+            // If we have items, we want to render the top most item
+            if (items) {
+                let item = items[items.length - 1];
+                return (item.getRepresentation() + ' - ' + item.describeA(true) + '. ' + item.getDescription());
+            // Else check if there's an entity
+            } else if (map.getEntityAt(x, y)) {
+                let entity = map.getEntityAt(x, y);
+                return (entity.getRepresentation() + ' - ' + entity.describeA(true) + '. ' + entity.getDescription());
             }
-            // If there was no entity/item or the tile wasn't visible, then use
-            // the tile information.
-            return map.getTile(x, y).getRepresentation() + " - " + map.getTile(x, y).getDescription();
-
-        } else {
-            // If the tile is not explored, show the null tile description.
-            return Game.Tile.nullTile.getRepresentation() + " - " + Game.Tile.nullTile.getDescription();
         }
-    },
+        // If there was no entity/item or the tile wasn't visible, then use
+        // the tile information.
+        return map.getTile(x, y).getRepresentation() + " - " + map.getTile(x, y).getDescription();
+
+    } else {
+        // If the tile is not explored, show the null tile description.
+        return Game.Tile.nullTile.getRepresentation() + " - " + Game.Tile.nullTile.getDescription();
+    }
+}
+
+Game.Screen.throwAtScreen = new Game.Screen.TargetBasedScreen({
+    captionFunction: lineCaptionFunction,
     ok: function() {    
         this._player.throwItem(this._item, this._cursorX, this._cursorY, this._key);
+        return true;
+    }
+});
+
+Game.Screen.aimAtScreen = new Game.Screen.TargetBasedScreen({
+    captionFunction: lineCaptionFunction,
+    ok: function() {    
+        this._player.shoot(this._item, this._cursorX, this._cursorY, this._key);
         return true;
     }
 });

@@ -149,3 +149,10 @@ Game.ItemMixins.Enchantable = {
         this._enchantValue += 1;
     }
 };
+
+// Uaable mixin
+Game.ItemMixins.Usable = {
+    name: 'Usable',
+    init: function(template) {
+    }
+};

@@ -335,6 +335,52 @@ Game.ItemRepository.define('lance', {
     disableRandomCreation: true
 });
 
+//wands
+Game.ItemRepository.define('wand of poison', {
+    name: 'wand of poison',
+    character: '~',
+    foreground: '#F2EC2D',
+    attackValue: 1,
+    thrownAttackValue: 1,
+    strengthRequirement: 1,
+    wieldable: true,
+    damageType: 'crush',
+    mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable, Game.ItemMixins.Enchantable, Game.ItemMixins.Usable],
+    itemLevel: 1
+}, {
+    disableRandomCreation: false
+});
+
+Game.ItemRepository.define('wand of fire', {
+    name: 'wand of fire',
+    character: '~',
+    foreground: '#F2EC2D',
+    attackValue: 1,
+    thrownAttackValue: 1,
+    strengthRequirement: 1,
+    wieldable: true,
+    damageType: 'crush',
+    mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable, Game.ItemMixins.Enchantable, Game.ItemMixins.Usable],
+    itemLevel: 1
+}, {
+    disableRandomCreation: false
+});
+
+Game.ItemRepository.define('wand of blinking', {
+    name: 'wand of blinking',
+    character: '~',
+    foreground: '#F2EC2D',
+    attackValue: 1,
+    thrownAttackValue: 1,
+    strengthRequirement: 1,
+    wieldable: true,
+    damageType: 'crush',
+    mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable, Game.ItemMixins.Enchantable, Game.ItemMixins.Usable],
+    itemLevel: 1
+}, {
+    disableRandomCreation: false
+});
+
 
 // Wearables
 Game.ItemRepository.define('leather', {

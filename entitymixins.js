@@ -466,7 +466,7 @@ Game.EntityMixins.Thrower = {
             throwDistance += 1;
         }
    
-        var creatureReference = this.getMap().getEntityAt(x, y);
+        var creatureReference = this.getMap().getEntityAt(endPointX, endPointY);
         if (creatureReference !== undefined){
             this.throwAttack(item, creatureReference, throwDistance);
         } else{
@@ -507,6 +507,50 @@ Game.EntityMixins.Thrower = {
             if (Math.random()*100 > item._throwBreakChance){
                 this._map.addItem(endPointX, endPointY, item);
             }
+        }
+    },
+    shoot: function(item, x, y, key){
+        let startPointX= this.getX();
+        let startPointY = this.getY()
+        let endPointX = x;
+        let endPointY = y;
+        let throwDistance = 0;
+
+        var points = Game.Geometry.getLine(startPointX, startPointY, endPointX, endPointY);
+        for (let point of points){
+            if (this._map.getTile(point.x, point.y) == Game.Tile.wallTile){
+                console.log("oi mate, we hit a wall!");
+                break;
+            }            
+            endPointX = point.x;
+            endPointY = point.y;
+            throwDistance += 1;
+        }
+   
+        var creatureReference = this.getMap().getEntityAt(endPointX, endPointY);
+        if (creatureReference !== undefined){
+            if (item._name === "wand of blinking"){
+                this._map.shatter(endPointX, endPointY);
+            } else if (item._name === "wand of poison"){
+                let newEffect = new Game.Effect(10, 'poisoned');
+                creatureReference.setEffect(newEffect);
+            } else if (item._name === "wand of fire"){
+                let newEffect = new Game.Effect(10, 'burning');
+                creatureReference.setEffect(newEffect);
+            }
+        } else{
+            Game.sendMessage(this, 'You shoot a blast of magic from a %s.',item.getName());
+        }
+
+        if (this.hasMixin('Equipper')) {
+            /*if (item.getStackQuantity() > 1){
+                item.setStackQuantity(item.getStackQuantity() - 1);
+                if (item.setStackQuantity === 0){
+                    this.removeItem(key);
+                }
+            } else {*/
+                this.removeItem(key);
+            //}
         }
     },
     throwAttack: function(item, target, throwDistance) {
