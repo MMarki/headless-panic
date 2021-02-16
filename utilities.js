@@ -34,3 +34,6 @@ Game.pickRandomElement = function(array){
   return element;
 }
 
+Game.sleep = function(timeInMS) {
+  return new Promise(resolve => setTimeout(resolve, timeInMS));
+}

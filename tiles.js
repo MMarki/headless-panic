@@ -99,7 +99,7 @@ Game.Tile.grassTile = new Game.Tile({
 });
 
 Game.Tile.fernTile = new Game.Tile({
-    character: 'f',
+    character: '\u01AA',
     foreground: "#0CCE6B",
     background: "#080A1F",
     walkable: true,

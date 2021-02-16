@@ -352,7 +352,7 @@ Game.Screen.playScreen = {
                 if (currentHead !== null && inputData.keyCode === ROT.KEYS.VK_X){
                     let artificialInputData = {}
                     artificialInputData.keyCode = ROT.KEYS.VK_X
-                    this.handleInput('keydown', artificialInputData, false);
+                    Game.sleep(100).then(() => { this.handleInput('keydown', artificialInputData, false) });
                 }
             }
         } else {
