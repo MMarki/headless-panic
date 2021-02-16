@@ -38,6 +38,7 @@ Game.EntityMixins.TaskActor = {
     init: function(template) {
         // Load tasks
         this._tasks = template['tasks'] || ['wander'];
+        this._hunting = false;
     },
     act: function() {
         var stopActor = this.handleEffects();
@@ -59,6 +60,7 @@ Game.EntityMixins.TaskActor = {
         }
     },
     canDoTask: function(task) {
+        this._hunting = false;
         if (task === 'summonMonster') {
             return this._summonWait === 0;     
         }
@@ -73,6 +75,7 @@ Game.EntityMixins.TaskActor = {
     },
     hunt: function() {
         var player = this.getMap().getPlayer();
+        this._hunting = true;
 
         // If we are adjacent to the player, then attack instead of hunting.
         var offsets = Math.abs(player.getX() - this.getX()) + 

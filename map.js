@@ -365,6 +365,23 @@ Game.Map.prototype.removeDynamicTile = function(tile) {
     }
 }
 
+Game.Map.prototype.areHunters = function() {
+    let nearbyEntities = [];
+    nearbyEntities = this.getEntitiesWithinRadius(this._player.getX(),this._player.getY(),16)
+    // Remove the entity from the map
+    if (nearbyEntities.length === 0) {
+        return false;
+    }
+    for (let entity of nearbyEntities){
+        if (entity.hasMixin('TaskActor')){
+            if (entity._hunting){
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 
 Game.Map.prototype.cellGrow = function(list, tileType, numberOfTiles) {
     let growthCount = 0;

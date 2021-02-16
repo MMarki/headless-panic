@@ -349,7 +349,7 @@ Game.Screen.playScreen = {
             this._map.getEngine().unlock();
             if (this._player._pathingTarget){
                 let currentHead = this._player.getHead();
-                if (currentHead !== null && inputData.keyCode === ROT.KEYS.VK_X){
+                if (currentHead !== null && inputData.keyCode === ROT.KEYS.VK_X && !this._map.areHunters()){
                     let artificialInputData = {}
                     artificialInputData.keyCode = ROT.KEYS.VK_X
                     Game.sleep(100).then(() => { this.handleInput('keydown', artificialInputData, false) });
