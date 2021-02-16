@@ -549,6 +549,11 @@ Game.EntityMixins.Thrower = {
                     creatureReference.setEffect(newEffect);
                 }
             } else{
+                if (item._name === 'wand of fire'){
+                    let tempList = []
+                    tempList.push({x: endPointX, y: endPointY});
+                    this._map.cellGrow(tempList, 'fireTile', 1);
+                }
                 Game.sendMessage(this, 'You shoot a blast of magic from a %s.',item.getName());
             }
         }
