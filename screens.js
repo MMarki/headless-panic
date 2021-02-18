@@ -30,7 +30,9 @@ Game.Screen.playScreen = {
         var width = Game._screenWidth;
         var height = Game._screenHeight;
         // Create our map from tiles and player
-        var tiles = new Game.Builder(width,height, Game.getLevel()).getTiles()
+        let builder = new Game.Builder(width,height, Game.getLevel())
+        let tiles = builder.getTiles()
+        let rooms = builder.getRooms();
         this._player = new Game.Entity(Game.PlayerTemplate);
         //starting player equipment
         var startingHead = Game.ItemRepository.create('head', {
@@ -52,12 +54,13 @@ Game.Screen.playScreen = {
         this._player.addItem(dart);
         var dart = Game.ItemRepository.create('dart');
         this._player.addItem(dart);
-        var dart = Game.ItemRepository.create('dart');
+        var dart = Game.ItemRepository.create('shatter potion');
         this._player.addItem(dart);
-        var dart = Game.ItemRepository.create('dart');
+        var dart = Game.ItemRepository.create('shatter potion');
         this._player.addItem(dart);
         //Create map
         this._map = new Game.Map(tiles, this._player);
+        this._map.getRidOfBoringRooms(rooms);
         // Start the map's engine
         this._map.getEngine().start();
      },
@@ -385,9 +388,12 @@ Game.Screen.playScreen = {
             var height = Game._screenHeight;
             // Create our map from tiles and player
             Game.incrementLevel();
-            var tiles = new Game.Builder(width,height, Game.getLevel()).getTiles()
+            let builder = new Game.Builder(width,height, Game.getLevel())
+            let tiles = builder.getTiles()
+            let rooms = builder.getRooms();
             //pass the current player and the new tiles in
             this._map = new Game.Map(tiles, this._player, this._player.getItems());
+            this._map.getRidOfBoringRooms(rooms);
             // Start the map's engine
             this._map.getEngine().start();
             if (playerHasKey){

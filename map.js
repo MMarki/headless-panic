@@ -82,6 +82,48 @@ Game.Map.prototype.getEntityAt = function(x, y){
     return this._entities[x + ',' + y];
 }
 
+Game.Map.prototype.getRidOfBoringRooms = function (rooms) {
+    for (room of rooms){
+        if (Object.keys(room._doors).length === 1){
+            let left = room.getLeft();
+            let right = room.getRight();
+            let top = room.getTop();
+            let bottom = room.getBottom();
+            let roomMatters = false;
+            for (let x = left; x <= right; x++){
+                for (let y = top; y <= bottom; y ++){
+                    //check for stairs
+                    if (this._tiles[x][y] === Game.Tile.stairsDownTile || this._tiles[x][y] === Game.Tile.stairsDownTileLocked){
+                        roomMatters = true;
+                    }
+                    //check for entities
+                    const key = x + ',' + y;
+                    if (this._entities[key] !== undefined && this._entities[key] !== null) {
+                        roomMatters = true;
+                    }
+                    //check for items
+                    if (this.getItemsAt(x,y) !== undefined && this._entities[key] !== null){
+                        roomMatters = true;
+                    } 
+                }
+            }
+            if (roomMatters === false) {
+                for (let x = left; x <= right; x++){
+                    for (let y = top; y <= bottom; y ++){
+                        this._tiles[x][y] = Game.Tile.wallTile;
+                    }
+                } 
+                for (let key in room._doors){
+                    let xy = key.split(",");
+                    let x = xy[0];
+                    let y = xy[1];
+                    this._tiles[Number(x)][Number(y)] = Game.Tile.wallTile;
+                }
+            }
+        }
+    }
+}
+
 // Gets the tile for a given coordinate set
 Game.Map.prototype.getTile = function(x, y) {
     // Make sure we are inside the bounds. If we aren't, return
@@ -381,7 +423,6 @@ Game.Map.prototype.areHunters = function() {
     }
     return false;
 }
-
 
 Game.Map.prototype.cellGrow = function(list, tileType, numberOfTiles) {
     let growthCount = 0;

@@ -3,9 +3,11 @@ Game.Builder = function(width, height, level) {
     this._height = height;
     this._tiles = {};
     this._regions = {};
+    this._rooms = {};
 
     // Create a new cave at each level
     this._tiles = this._generateLevel(level);
+
     // Setup the regions array for each depth
     this._regions = new Array(width);
     for (let x = 0; x < width; x++) {
@@ -43,6 +45,11 @@ Game.Builder = function(width, height, level) {
 Game.Builder.prototype.getTiles = function () {
     return this._tiles;
 }
+
+Game.Builder.prototype.getRooms = function () {
+    return this._rooms;
+}
+
 Game.Builder.prototype.getWidth = function () {
     return this._width;
 }
@@ -108,8 +115,10 @@ Game.Builder.prototype._generateLevel = function(level) {
         }
         
         let rooms = generator.getRooms();
+        //save for later
+        this._rooms = rooms;
+        //make doors
         for (let room of rooms) {
-            //console.log(room.clearDoors());
             room.getDoors(makeDoor);
         }
     } else {
