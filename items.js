@@ -131,7 +131,7 @@ Game.ItemRepository.define('dart', {
     stackable: true,
     damageType: 'stab',
     mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable],
-    itemLevel: 4
+    itemLevel: 3
 }, {
     disableRandomCreation: false
 });
@@ -320,21 +320,6 @@ Game.ItemRepository.define('scimitar', {
     disableRandomCreation: false
 });
 
-Game.ItemRepository.define('lance', {
-    name: 'lance',
-    character: '\u2191',
-    foreground: '#F2EC2D',
-    attackValue: 6,
-    thrownAttackValue: 4,
-    strengthRequirement: 2,
-    wieldable: true,
-    damageType: 'stab',
-    mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable, Game.ItemMixins.Enchantable],
-    itemLevel: 3
-}, {
-    disableRandomCreation: true
-});
-
 //wands
 Game.ItemRepository.define('wand of poison', {
     name: 'wand of poison',
@@ -346,7 +331,7 @@ Game.ItemRepository.define('wand of poison', {
     wieldable: true,
     damageType: 'crush',
     mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable, Game.ItemMixins.Enchantable, Game.ItemMixins.Usable],
-    itemLevel: 1
+    itemLevel: 2
 }, {
     disableRandomCreation: false
 });
@@ -361,7 +346,7 @@ Game.ItemRepository.define('wand of fire', {
     wieldable: true,
     damageType: 'crush',
     mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable, Game.ItemMixins.Enchantable, Game.ItemMixins.Usable],
-    itemLevel: 1
+    itemLevel: 3
 }, {
     disableRandomCreation: false
 });
@@ -443,7 +428,7 @@ Game.ItemRepository.define('splintmail', {
     strengthRequirement: 3,
     wearable: true,
     mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Enchantable],
-    itemLevel: 1
+    itemLevel: 2
 }, {
     disableRandomCreation: false
 });
@@ -456,7 +441,7 @@ Game.ItemRepository.define('platemail', {
     strengthRequirement: 4,
     wearable: true,
     mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Enchantable],
-    itemLevel: 2
+    itemLevel: 3
 }, {
     disableRandomCreation: false
 });

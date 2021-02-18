@@ -235,7 +235,12 @@ Game.EntityMixins.Destructible = {
         // If have 0 or less HP, then remove ourseles from the map
         if (this._hp <= 0) {
             this._hp = 0;
-            Game.sendMessage(attacker, '%%c{#61AEEE}You kill the %s!', [this.getName()]);
+            if (this.getName() != 'barrel'){
+                Game.sendMessage(attacker, '%%c{#61AEEE}You kill the %s!', [this.getName()]);
+            } else {
+                Game.sendMessage(attacker, 'You break the %s.', [this.getName()]);
+            }
+            
             if (this.hasMixin('KeyDropper')) {
                 this.dropKey();
             }

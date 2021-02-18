@@ -56,10 +56,6 @@ Game.Screen.playScreen = {
         this._player.addItem(dart);
         var dart = Game.ItemRepository.create('dart');
         this._player.addItem(dart);
-        var wand = Game.ItemRepository.create('wand of blinking');
-        this._player.addItem(wand);
-        var test = Game.ItemRepository.create('knowledge potion');
-        this._player.addItem(test);
         //Create map
         this._map = new Game.Map(tiles, this._player);
         // Start the map's engine
@@ -123,12 +119,15 @@ Game.Screen.playScreen = {
         }
         display.drawText(screenWidth + 1, 3, effectsString);
         
-        var strengthGap = 0;
-        var strengthModifier = 0;
-        var strengthValue = this._player.getStrengthValue();
-        var attackValue = this._player.getAttackValue();
-        var defenseValue = this._player.getDefenseValue();
+        let strengthGap = 0;
+        let strengthModifier = 0;
+        let damageType = 'crush';
+        let strengthValue = this._player.getStrengthValue();
+        let attackValue = this._player.getAttackValue();
+        let defenseValue = this._player.getDefenseValue();
+        let levelName = this.getLevelName(); 
         if (this._player.getWeapon() !== null){
+            damageType = this._player.getWeapon().getDamageType();
             strengthGap = strengthValue - this._player.getWeapon()._strengthRequirement
             if (strengthGap <  0){
                 strengthModifier = 4 * strengthGap;
@@ -138,16 +137,10 @@ Game.Screen.playScreen = {
         }
 
         display.drawText(screenWidth + 1, 5, "%c{white}ARMR: +" + defenseValue);
-        display.drawText(screenWidth + 1, 6, "%c{white}ATTK: +" + (attackValue + strengthModifier));
+        display.drawText(screenWidth + 1, 6, "%c{white}DMG:  +" + (attackValue + strengthModifier) + ' ' + damageType);
         display.drawText(screenWidth + 1, 7, "%c{white}STRN: " + strengthValue);
-        if (Game.getLevel() < 4){
-            display.drawText(screenWidth + 1, 8, "%c{white}LVL:  " +  ("Cellars " + Game.getLevel()) );
-        } else if (Game.getLevel() < 7){
-            display.drawText(screenWidth + 1, 8, "%c{white}LVL:  " +  ("Sewers " + (Game.getLevel() - 3)) );
-        } else {
-            display.drawText(screenWidth + 1, 8, "%c{white}LVL:  " +  ("Caverns " + (Game.getLevel() - 6)) );
-        }
-        
+           
+        display.drawText(screenWidth + 1, 8, "%c{white}LVL:  " + levelName );   
     },
     handleInput: function(inputType, inputData, invokedManually) {
         // If the game is over, enter will bring the user to the losing screen.
@@ -515,6 +508,15 @@ Game.Screen.playScreen = {
                 }
                 display.drawText(screenWidth + 1, 12 + 2*i + i + j, effectsString);
             }
+        }
+    },
+    getLevelName(){
+        if (Game.getLevel() < 4){
+            return "Cellars " + Game.getLevel();
+        } else if (Game.getLevel() < 7){
+            return "Sewers " + (Game.getLevel() - 3);
+        } else {
+            return "Caverns " + (Game.getLevel() - 6);
         }
     }
 }
