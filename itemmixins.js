@@ -154,9 +154,17 @@ Game.ItemMixins.Enchantable = {
     }
 };
 
-// Uaable mixin
+// Usable mixin
 Game.ItemMixins.Usable = {
     name: 'Usable',
     init: function(template) {
+        this._maxUses = Game.pickRandomElement(template['useRange']) || 1;
+        this._uses = this._maxUses;
+    },
+    getUses: function() {
+        return this._uses;
+    },
+    setUses: function(inUses) {
+        this._uses = inUses;
     }
 };

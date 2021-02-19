@@ -85,6 +85,11 @@ Game.Entity.prototype.tryMove = function(x, y) {
         if(tile === Game.Tile.fernTile) {
             this.getMap()._tiles[x][y] = Game.Tile.grassTile;
         }
+        if((this.hasMixin('Affectible')) && this.hasEffect('burning') && tile === Game.Tile.grassTile) {
+            let tempList = [];
+            tempList.push({x: x, y: y});
+            this._map.cellGrow(tempList, 'fireTile', 1);
+        }
         let items = this.getMap().getItemsAt(x, y);
         if (items) {
             if (items.length !== 1) {

@@ -330,6 +330,7 @@ Game.ItemRepository.define('wand of poison', {
     strengthRequirement: 1,
     wieldable: true,
     damageType: 'crush',
+    useRange: [1,2],
     mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable, Game.ItemMixins.Enchantable, Game.ItemMixins.Usable],
     itemLevel: 2
 }, {
@@ -345,6 +346,7 @@ Game.ItemRepository.define('wand of fire', {
     strengthRequirement: 1,
     wieldable: true,
     damageType: 'crush',
+    useRange: [1,1],
     mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable, Game.ItemMixins.Enchantable, Game.ItemMixins.Usable],
     itemLevel: 3
 }, {
@@ -360,12 +362,12 @@ Game.ItemRepository.define('wand of blinking', {
     strengthRequirement: 1,
     wieldable: true,
     damageType: 'crush',
+    useRange: [2,3],
     mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable, Game.ItemMixins.Enchantable, Game.ItemMixins.Usable],
     itemLevel: 1
 }, {
     disableRandomCreation: false
 });
-
 
 // Wearables
 Game.ItemRepository.define('leather', {

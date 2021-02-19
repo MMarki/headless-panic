@@ -54,9 +54,9 @@ Game.Screen.playScreen = {
         this._player.addItem(dart);
         var dart = Game.ItemRepository.create('dart');
         this._player.addItem(dart);
-        var dart = Game.ItemRepository.create('shatter potion');
+        var dart = Game.ItemRepository.create('dart');
         this._player.addItem(dart);
-        var dart = Game.ItemRepository.create('shatter potion');
+        var dart = Game.ItemRepository.create('dart');
         this._player.addItem(dart);
         //Create map
         this._map = new Game.Map(tiles, this._player);
@@ -640,6 +640,9 @@ Game.Screen.ItemListScreen.prototype.render = function(display) {
 
             if (this._items[i].hasMixin('Throwable') && this._items[i].isStackable()) {
                 suffix += ' (x' + this._items[i].getStackQuantity() + ')';
+            }
+            if (this._items[i].hasMixin('Usable')) {
+                suffix += ' (x' + this._items[i].getUses() + ')';
             }
             // Render at the correct row and add 2.
             display.drawText(0, 2 + row,  letter + ' ' + selectionState + ' ' + '%c{'+ foreground +'}' + glyph + ' ' + prefix + this._items[i].describe() + suffix);
