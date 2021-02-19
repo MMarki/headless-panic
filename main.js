@@ -1,12 +1,12 @@
 var Game =  {
 	_display: null,
     _currentScreen: null,
-    _screenWidth: 76,
-    _screenHeight: 26,
+    _screenWidth: 72,
+    _screenHeight: 24,
     _level: 1,
 	init: function() {
         // Any necessary initialization will go here.
-        this._display = new ROT.Display({width: this._screenWidth + 24, height: this._screenHeight + 5, fontSize: 24, fontFamily: "'Ubuntu Mono', monospace"});
+        this._display = new ROT.Display({width: this._screenWidth + 24, height: this._screenHeight + 5, fontSize: 24, fontFamily: "'Ubuntu Mono', monospace", spacing: 1.2});
         
 	    // Create a helper function for binding to an event
 	    // and making it send it to the screen
