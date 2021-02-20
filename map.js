@@ -67,12 +67,9 @@ Game.Map = function(tiles, player, items) {
         this.addItemAtRandomPosition(Game.ItemRepository.createRandomConstrained(Game.getLevel()));
     }
     this.addItemAtRandomPosition(Game.GatedItemRepository.createRandom());
-    
-    // Add weapons and armor to the map in random positions
-    /*var templates = ['dagger', 'axe', 'dart', 'sword', 'spear', 'leather', 'scalemail', 'chainmail', 'platemail'];
-    for (var i = 0; i < templates.length; i++) {
-        this.addItemAtRandomPosition(Game.ItemRepository.create(templates[i]));
-    }*/
+    let floorPosition = this.getRandomFloorPosition();
+    this._tiles[floorPosition.x][floorPosition.y] = Game.Tile.altarTile;
+
     //set up the explored array
     this._explored = new Array(this._width);
     this._setupExploredArray();

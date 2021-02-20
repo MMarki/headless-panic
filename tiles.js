@@ -25,6 +25,15 @@ Game.Tile.bloodTile = new Game.Tile({
     description: 'a pool of blood'
 });
 
+Game.Tile.altarTile = new Game.Tile({
+    character: '|',
+    foreground: "#fff",
+    background: "#232121",
+    walkable: true,
+    blocksLight: false,
+    description: 'an altar where you can charge a magic item'
+});
+
 Game.Tile.wallTile = new Game.Tile({
     character: '#',
     foreground: '#232121',

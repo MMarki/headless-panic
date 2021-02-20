@@ -567,7 +567,13 @@ Game.Screen.loseScreen = {
             "Wielding a weapon with excess strength increases chance to hit and max hit.",
             "Wearing an enemy's head gives you one of their powers.",
             "The further you throw a weapon, the less likely it is to hit an enemy.",
-            "Press X to eXplore automatically. It's not as smart as manual control, put it's much faster."
+            "Press X to eXplore automatically. It's not as smart as manual control, put it's much faster.",
+            "Press L to Look at new monsters to learn something about them.",
+            "The only way to raise your Strength (STR) is by drinking a Potion of Strength",
+            "Weapons and armor have a Strength requirement. If you don't meet this requirement, the weapons and armor will perform MUCH worse.",
+            "Weapons and armor have a Strength requirement. If you exceed this requirement, the performance of these items will scale with your strength.",
+            "Weapons each have a damage type (crush, slash, or stab). Certain enemies are resistant to or vulnerable to certain damage types.",
+            "Keep trying! Knowledge of monsters and items will drastically improve your chances of survival.",
         ];
         return hintList[Math.floor(Math.random() * hintList.length)];
     }
