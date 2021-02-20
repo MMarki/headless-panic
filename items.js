@@ -31,6 +31,8 @@ Game.ItemRepository.define('poison potion', {
     name: 'poison potion',
     character: '!',
     foreground: '#F2EC2D',
+    rarity: 'COMMON',
+    depth: 'ANY',
     mixins: [Game.ItemMixins.Edible, Game.ItemMixins.Throwable],
     itemLevel: 1
 });
@@ -39,6 +41,8 @@ Game.ItemRepository.define('fire potion', {
     name: 'fire potion',
     character: '!',
     foreground: '#F2EC2D',
+    rarity: 'COMMON',
+    depth: 'ANY',
     mixins: [Game.ItemMixins.Edible, Game.ItemMixins.Throwable],
     itemLevel: 1
 });
@@ -56,6 +60,8 @@ Game.ItemRepository.define('teleportation potion', {
     character: '!',
     foreground: '#F2EC2D',
     potionEffect: null,
+    rarity: 'COMMON',
+    depth: 'ANY',
     mixins: [Game.ItemMixins.Edible, Game.ItemMixins.Throwable],
     itemLevel: 1
 });
@@ -68,6 +74,8 @@ Game.ItemRepository.define('knowledge potion', {
         duration: 30,
         name: "knowledgeable"
     },
+    rarity: 'COMMON',
+    depth: 'ANY',
     mixins: [Game.ItemMixins.Edible, Game.ItemMixins.Throwable],
     itemLevel: 2
 });
@@ -78,6 +86,8 @@ Game.ItemRepository.define('health potion', {
     foreground: '#F2EC2D',
     healthValue: 40,
     potionEffect: null,
+    rarity: 'COMMON',
+    depth: 'BAND',
     mixins: [Game.ItemMixins.Edible, Game.ItemMixins.Throwable],
     itemLevel: 1
 });
@@ -87,6 +97,8 @@ Game.ItemRepository.define('shatter potion', {
     character: '!',
     foreground: '#F2EC2D',
     potionEffect: null,
+    rarity: 'COMMON',
+    depth: 'ANY',
     mixins: [Game.ItemMixins.Edible, Game.ItemMixins.Throwable],
     itemLevel: 1
 });
@@ -96,6 +108,8 @@ Game.ItemRepository.define('darkness potion', {
     character: '!',
     foreground: '#F2EC2D',
     potionEffect: null,
+    rarity: 'COMMON',
+    depth: 'ANY',
     mixins: [Game.ItemMixins.Edible, Game.ItemMixins.Throwable],
     itemLevel: 1
 });
@@ -130,6 +144,8 @@ Game.ItemRepository.define('dart', {
     wieldable: true,
     stackable: true,
     damageType: 'stab',
+    rarity: 'COMMON',
+    depth: 'ANY',
     mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable],
     itemLevel: 3
 }, {
@@ -147,6 +163,8 @@ Game.ItemRepository.define('javelin', {
     wieldable: true,
     stackable: true,
     damageType: 'stab',
+    rarity: 'COMMON',
+    depth: 'ANY',
     mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable],
     itemLevel: 4
 }, {
@@ -163,6 +181,8 @@ Game.ItemRepository.define('incendiary dart', {
     wieldable: true,
     stackable: true,
     damageType: 'stab',
+    rarity: 'COMMON',
+    depth: 'ANY',
     mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable],
     itemLevel: 6
 }, {
@@ -179,6 +199,8 @@ Game.ItemRepository.define('dagger', {
     throwBreakChance: 20,
     wieldable: true,
     damageType: 'stab',
+    rarity: 'UNCOM',
+    depth: 'BAND',
     mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable, Game.ItemMixins.Enchantable],
     itemLevel: 1
 }, {
@@ -194,6 +216,8 @@ Game.ItemRepository.define('club', {
     strengthRequirement: 1,
     wieldable: true,
     damageType: 'crush',
+    rarity: 'UNCOM',
+    depth: 'BAND',
     mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable, Game.ItemMixins.Enchantable],
     itemLevel: 1
 }, {
@@ -209,6 +233,8 @@ Game.ItemRepository.define('longsword', {
     strengthRequirement: 2,
     wieldable: true,
     damageType: 'slash',
+    rarity: 'UNCOM',
+    depth: 'ANY',
     mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable, Game.ItemMixins.Enchantable],
     itemLevel: 1
 }, {
@@ -224,6 +250,8 @@ Game.ItemRepository.define('greatclub', {
     strengthRequirement: 2,
     wieldable: true,
     damageType: 'crush',
+    rarity: 'UNCOM',
+    depth: 'ANY',
     mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable, Game.ItemMixins.Enchantable],
     itemLevel: 1
 }, {
@@ -239,6 +267,8 @@ Game.ItemRepository.define('rapier', {
     strengthRequirement: 1,
     wieldable: true,
     damageType: 'pierce',
+    rarity: 'UNCOM',
+    depth: 'ANY',
     mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable, Game.ItemMixins.Enchantable],
     itemLevel: 1
 }, {
@@ -254,6 +284,8 @@ Game.ItemRepository.define('axe', {
     strengthRequirement: 3,
     wieldable: true,
     damageType: 'slash',
+    rarity: 'UNCOM',
+    depth: 'ANY',
     mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable, Game.ItemMixins.Enchantable],
     itemLevel: 2
 }, {
@@ -269,6 +301,8 @@ Game.ItemRepository.define('broadsword', {
     strengthRequirement: 3,
     wieldable: true,
     damageType: 'slash',
+    rarity: 'UNCOM',
+    depth: 'ANY',
     mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable, Game.ItemMixins.Enchantable],
     itemLevel: 3
 }, {
@@ -284,6 +318,8 @@ Game.ItemRepository.define('spear', {
     strengthRequirement: 1,
     wieldable: true,
     damageType: 'stab',
+    rarity: 'UNCOM',
+    depth: 'ANY',
     mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable, Game.ItemMixins.Enchantable],
     itemLevel: 1
 }, {
@@ -299,6 +335,8 @@ Game.ItemRepository.define('mace', {
     strengthRequirement: 1,
     wieldable: true,
     damageType: 'crush',
+    rarity: 'UNCOM',
+    depth: 'BAND',
     mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable, Game.ItemMixins.Enchantable],
     itemLevel: 1
 }, {
@@ -314,6 +352,8 @@ Game.ItemRepository.define('scimitar', {
     strengthRequirement: 1,
     wieldable: true,
     damageType: 'slash',
+    rarity: 'UNCOM',
+    depth: 'BAND',
     mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable, Game.ItemMixins.Enchantable],
     itemLevel: 1
 }, {
@@ -331,6 +371,8 @@ Game.ItemRepository.define('wand of poison', {
     wieldable: true,
     damageType: 'crush',
     useRange: [1,2],
+    rarity: 'RARE',
+    depth: 'ANY',
     mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable, Game.ItemMixins.Enchantable, Game.ItemMixins.Usable],
     itemLevel: 2
 }, {
@@ -347,6 +389,8 @@ Game.ItemRepository.define('wand of fire', {
     wieldable: true,
     damageType: 'crush',
     useRange: [1,1],
+    rarity: 'RARE',
+    depth: 'ANY',
     mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable, Game.ItemMixins.Enchantable, Game.ItemMixins.Usable],
     itemLevel: 3
 }, {
@@ -363,6 +407,8 @@ Game.ItemRepository.define('wand of blinking', {
     wieldable: true,
     damageType: 'crush',
     useRange: [2,3],
+    rarity: 'RARE',
+    depth: 'ANY',
     mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable, Game.ItemMixins.Enchantable, Game.ItemMixins.Usable],
     itemLevel: 1
 }, {
@@ -377,6 +423,8 @@ Game.ItemRepository.define('leather', {
     defenseValue: 2,
     strengthRequirement: 1,
     wearable: true,
+    rarity: 'UNCOM',
+    depth: 'BAND',
     mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Enchantable],
     itemLevel: 1
 }, {
@@ -390,6 +438,8 @@ Game.ItemRepository.define('studded', {
     defenseValue: 3,
     strengthRequirement: 1,
     wearable: true,
+    rarity: 'UNCOM',
+    depth: 'ANY',
     mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Enchantable],
     itemLevel: 1
 }, {
@@ -403,6 +453,8 @@ Game.ItemRepository.define('scalemail', {
     defenseValue: 4,
     strengthRequirement: 2,
     wearable: true,
+    rarity: 'UNCOM',
+    depth: 'ANY',
     mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Enchantable],
     itemLevel: 1
 }, {
@@ -416,6 +468,8 @@ Game.ItemRepository.define('chainmail', {
     defenseValue: 6,
     strengthRequirement: 2,
     wearable: true,
+    rarity: 'UNCOM',
+    depth: 'BAND',
     mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Enchantable],
     itemLevel: 1
 }, {
@@ -429,6 +483,8 @@ Game.ItemRepository.define('splintmail', {
     defenseValue: 7,
     strengthRequirement: 3,
     wearable: true,
+    rarity: 'UNCOM',
+    depth: 'ANY',
     mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Enchantable],
     itemLevel: 2
 }, {
@@ -442,6 +498,8 @@ Game.ItemRepository.define('platemail', {
     defenseValue: 8,
     strengthRequirement: 4,
     wearable: true,
+    rarity: 'UNCOM',
+    depth: 'ANY',
     mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Enchantable],
     itemLevel: 3
 }, {

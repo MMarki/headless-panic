@@ -348,7 +348,7 @@ Game.Screen.playScreen = {
                 if (currentHead !== null && inputData.keyCode === ROT.KEYS.VK_X && !this._map.areHunters()){
                     let artificialInputData = {}
                     artificialInputData.keyCode = ROT.KEYS.VK_X
-                    Game.sleep(100).then(() => { this.handleInput('keydown', artificialInputData, false) });
+                    Game.sleep(80).then(() => { this.handleInput('keydown', artificialInputData, false) });
                 }
             }
         } else {
@@ -1127,7 +1127,6 @@ Game.Screen.ItemScreen.prototype.handleInput = function(inputType, inputData) {
         }
     }
 };
-
 
 Game.Screen.itemScreenGeneric = new Game.Screen.ItemScreen({
     caption: 'What do you want to do with this item?',

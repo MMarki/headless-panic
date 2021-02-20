@@ -44,6 +44,23 @@ Game.Map = function(tiles, player, items) {
         this.addEntityAtRandomPosition(Game.EntityRepository.create('hydra'), 1);
     }
     
+    let emptyItemList = [];
+    let emptyItemCount = {};
+    for (let i =0; i < 10000; i++){
+        emptyItemList.push(Game.ItemRepository.createRandomConstrained(Game.getLevel())._name);
+        emptyItemList.sort();
+    }
+       
+    for (let item of emptyItemList) {
+        if( Object.keys(emptyItemCount).includes(item) ){
+            emptyItemCount[item] = emptyItemCount[item] + 1;
+        }  else {
+            emptyItemCount[item] = 1;
+        }
+    }
+
+    console.log(emptyItemCount);
+
     // 15 items per floor
     for (let i = 0; i < 9; i++) {
         // Add a random entity
