@@ -648,7 +648,7 @@ Game.Screen.ItemListScreen.prototype.render = function(display) {
                 suffix += ' (x' + this._items[i].getStackQuantity() + ')';
             }
             if (this._items[i].hasMixin('Usable')) {
-                suffix += ' (x' + this._items[i].getUses() + ')';
+                suffix += ' (' + this._items[i].getUses() + '/' + this._items[i].getMaxUses() + ')';
             }
             // Render at the correct row and add 2.
             display.drawText(0, 2 + row,  letter + ' ' + selectionState + ' ' + '%c{'+ foreground +'}' + glyph + ' ' + prefix + this._items[i].describe() + suffix);
@@ -730,11 +730,13 @@ Game.Screen.applyScreen = new Game.Screen.ItemListScreen({
             item.eat(this._player);
             this._player.removeItem(key);
             return true;
-        } else if (item.hasMixin('Usable')){
+        } else if (item.hasMixin('Usable') && item.getUses() > 0){
             Game.Screen.aimAtScreen.setup(this._player, this._player.getX(), this._player.getY(), item, key);
             Game.Screen.playScreen.setSubScreen(Game.Screen.aimAtScreen);            
+        } else if (item.hasMixin('Usable') && item.getUses() === 0){
+            Game.sendMessage(this._player, "The %s is out of charges.", [item.describe()]);
+            console.log(".")   
         }
-        
     }
 });
 

@@ -407,7 +407,7 @@ Game.ItemRepository.define('wand of blinking', {
     wieldable: true,
     damageType: 'crush',
     useRange: [2,3],
-    rarity: 'RARE',
+    rarity: 'UNCOM',
     depth: 'ANY',
     mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable, Game.ItemMixins.Enchantable, Game.ItemMixins.Usable],
     itemLevel: 1

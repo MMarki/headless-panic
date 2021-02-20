@@ -46,7 +46,7 @@ Game.Map = function(tiles, player, items) {
     
     let emptyItemList = [];
     let emptyItemCount = {};
-    for (let i =0; i < 10000; i++){
+    for (let i =0; i < 1000; i++){
         emptyItemList.push(Game.ItemRepository.createRandomConstrained(Game.getLevel())._name);
         emptyItemList.sort();
     }
@@ -66,9 +66,12 @@ Game.Map = function(tiles, player, items) {
         // Add a random entity
         this.addItemAtRandomPosition(Game.ItemRepository.createRandomConstrained(Game.getLevel()));
     }
-    this.addItemAtRandomPosition(Game.GatedItemRepository.createRandom());
-    let floorPosition = this.getRandomFloorPosition();
-    this._tiles[floorPosition.x][floorPosition.y] = Game.Tile.altarTile;
+    if (Math.random()*100 > 33){
+        this.addItemAtRandomPosition(Game.GatedItemRepository.createRandom());
+    } else {
+        let floorPosition = this.getRandomFloorPosition();
+        this._tiles[floorPosition.x][floorPosition.y] = Game.Tile.altarTile;
+    }
 
     //set up the explored array
     this._explored = new Array(this._width);

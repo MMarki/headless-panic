@@ -164,6 +164,9 @@ Game.ItemMixins.Usable = {
     getUses: function() {
         return this._uses;
     },
+    getMaxUses: function() {
+        return this._maxUses;
+    },
     setUses: function(inUses) {
         this._uses = inUses;
     }

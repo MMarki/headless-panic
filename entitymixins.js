@@ -567,14 +567,7 @@ Game.EntityMixins.Thrower = {
         }
 
         if (this.hasMixin('Equipper')) {
-            if (item.getUses() > 1){
-                item.setUses(item.getUses() - 1);
-                if (item.getUses() === 0){
-                    this.removeItem(key);
-                }
-            } else {
-                this.removeItem(key);
-            }
+            item.setUses(item.getUses() - 1);
         }
     },
     throwAttack: function(item, target, throwDistance) {

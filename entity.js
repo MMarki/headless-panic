@@ -59,6 +59,13 @@ Game.Entity.prototype.tryMove = function(x, y) {
     const map = this.getMap();
     const tile = map.getTile(x, y);
     const target = map.getEntityAt(x, y);
+    if (this.hasMixin('PlayerActor')) {
+        let map = this.getMap();
+        if (map._tiles[x][y] === Game.Tile.altarTile){
+            console.log("wand!");
+            map._tiles[x][y] = Game.Tile.floorTile;
+        }
+    }
     // If an entity was present at the tile
     if (target) {
         // If we are an attacker, try to attack the target
