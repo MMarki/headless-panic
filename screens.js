@@ -164,7 +164,7 @@ Game.Screen.playScreen = {
             if (inputData.keyCode === ROT.KEYS.VK_LEFT) {
                 if (!this._player.hasEffect('paralyzed')){
                     this.move(-1, 0);
-                    this.handleItemPickup()
+                    this.handleItemPickup();
                     this.goDownStairs();
                 } else {
                     Game.sendMessage(this._player, "You are paralyzed!");
@@ -172,7 +172,7 @@ Game.Screen.playScreen = {
             } else if (inputData.keyCode === ROT.KEYS.VK_RIGHT) {
                 if (!this._player.hasEffect('paralyzed')){
                     this.move(1, 0);
-                    this.handleItemPickup()
+                    this.handleItemPickup();
                     this.goDownStairs();
                 } else {
                     Game.sendMessage(this._player, "You are paralyzed!");
@@ -180,7 +180,7 @@ Game.Screen.playScreen = {
             } else if (inputData.keyCode === ROT.KEYS.VK_UP) {
                 if (!this._player.hasEffect('paralyzed')){
                     this.move(0, -1);
-                    this.handleItemPickup()
+                    this.handleItemPickup();
                     this.goDownStairs();
                 } else {
                     Game.sendMessage(this._player, "You are paralyzed!");
@@ -188,8 +188,9 @@ Game.Screen.playScreen = {
             } else if (inputData.keyCode === ROT.KEYS.VK_DOWN) {
                 if (!this._player.hasEffect('paralyzed')){
                     this.move(0, 1);
-                    this.handleItemPickup()
+                    this.handleItemPickup();
                     this.goDownStairs();
+                    
                 } else {
                     Game.sendMessage(this._player, "You are paralyzed!");
                 }
@@ -362,8 +363,21 @@ Game.Screen.playScreen = {
     move: function(dX, dY) {
         var newX = this._player.getX() + dX;
         var newY = this._player.getY() + dY;
+        this.handleAltarUse(newX,newY);
         // Try to move to the new cell
         this._player.tryMove(newX, newY);
+    },
+    handleAltarUse: function(newX, newY) {
+        let map = this._map;
+        if (map._tiles[newX][newY] === Game.Tile.altarTile){
+            if (Game.Screen.altarScreen.setup(this._player, this._player.getItems())) {
+                map._tiles[newX][newY] = Game.Tile.rubbleTile;
+                this.setSubScreen(Game.Screen.altarScreen);
+            } else {
+                Game.sendMessage(this._player, "You have nothing to put on the altar.");
+            }
+            
+        }
     },
     setSubScreen: function(subScreen) {
         this._subScreen = subScreen;
@@ -765,6 +779,27 @@ Game.Screen.equipScreen = new Game.Screen.ItemListScreen({
                 this._player.wearHead(item);
                 Game.sendMessage(this._player, "You are wearing %s.", [item.describeA()]);
             } 
+        }
+        return true;
+    }
+});
+
+Game.Screen.altarScreen = new Game.Screen.ItemListScreen({
+    caption: 'Which wand do you want to put on the altar?',
+    canSelect: true,
+    canSelectMultipleItems: false,
+    isAcceptable: function(item) {
+        return item && item.hasMixin('Usable')
+    },
+    ok: function(selectedItems) {
+        // Check if we selected 'no item'
+        var keys = Object.keys(selectedItems);
+        if (keys.length === 0) {
+            Game.sendMessage(this._player, "You don't have any wands.")
+        } else {
+            var item = selectedItems[keys[0]];
+            item.setUses(item.getMaxUses());
+            Game.sendMessage(this._player, "You put your wand on the altar. There is a flash of light and the altar crumbles!");
         }
         return true;
     }
