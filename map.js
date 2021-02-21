@@ -47,7 +47,7 @@ Game.Map = function(tiles, player, items) {
     let emptyItemList = [];
     let emptyItemCount = {};
     for (let i =0; i < 1000; i++){
-        emptyItemList.push(Game.ItemRepository.createRandomConstrained(Game.getLevel())._name);
+        emptyItemList.push(Game.ItemRepository.createRandomConstrained(Game.getLevel()));
         emptyItemList.sort();
     }
        

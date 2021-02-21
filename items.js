@@ -267,7 +267,7 @@ Game.ItemRepository.define('rapier', {
     strengthRequirement: 1,
     wieldable: true,
     damageType: 'pierce',
-    rarity: 'UNCOM',
+    rarity: 'RARE',
     depth: 'ANY',
     mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable, Game.ItemMixins.Enchantable],
     itemLevel: 1
