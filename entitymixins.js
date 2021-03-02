@@ -465,7 +465,8 @@ Game.EntityMixins.Thrower = {
 
         var points = Game.Geometry.getLine(startPointX, startPointY, endPointX, endPointY);
         for (let point of points){
-            if (this._map.getTile(point.x, point.y) == Game.Tile.wallTile){
+            let tileType = this._map.getTile(point.x, point.y)
+            if (tileType == Game.Tile.wallTile || tileType === Game.Tile.doorTile){
                 console.log("oi mate, we hit a wall!");
                 break;
             }            
@@ -526,7 +527,7 @@ Game.EntityMixins.Thrower = {
         if (item._name === 'wand of blinking'){
             let points = Game.Geometry.getLine(startPointX, startPointY, endPointX, endPointY);
             for (let point of points){
-                if (this.getMap().getTile(point.x, point.y) === Game.Tile.wallTile || this.getMap().getEntityAt(point.x, point.y) && this.getMap().getEntityAt(point.x, point.y)._name !='chicken knight'){
+                if (this.getMap().getTile(point.x, point.y) === Game.Tile.wallTile || this.getMap().getTile(point.x, point.y) === Game.Tile.doorTile || this.getMap().getEntityAt(point.x, point.y) && this.getMap().getEntityAt(point.x, point.y)._name !='chicken knight'){
                     console.log("oi mate, we hit a wall!");
                     break;
                 }            
@@ -539,7 +540,7 @@ Game.EntityMixins.Thrower = {
         if (item._name === 'wand of fire' || item._name === 'wand of poison'){
             let points = Game.Geometry.getLine(startPointX, startPointY, endPointX, endPointY);
             for (let point of points){
-                if (this.getMap().getTile(point.x, point.y) === Game.Tile.wallTile){
+                if (this.getMap().getTile(point.x, point.y) === Game.Tile.wallTile || this.getMap().getTile(point.x, point.y) === Game.Tile.doorTile){
                     console.log("oi mate, we hit a wall!");
                     break;
                 }            

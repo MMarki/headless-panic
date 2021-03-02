@@ -84,6 +84,7 @@ Game.Tile.doorTile = new Game.Tile({
     foreground: '#FFF',
     background: '#480C1C',
     walkable: true,
+    unthrowable: false,
     blocksLight: true,
     description: 'a closed door'
 });
