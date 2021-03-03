@@ -347,9 +347,26 @@ Game.Screen.playScreen = {
             if (this._player._pathingTarget){
                 let currentHead = this._player.getHead();
                 if (currentHead !== null && inputData.keyCode === ROT.KEYS.VK_X && !this._map.areHunters()){
-                    let artificialInputData = {}
-                    artificialInputData.keyCode = ROT.KEYS.VK_X
-                    Game.sleep(80).then(() => { this.handleInput('keydown', artificialInputData, false) });
+                    let thisReference = this;
+                    let canSeeMonster = false;
+
+                    this._map.getFov().compute(
+                        this._player.getX(), this._player.getY(), 
+                        this._player.getSightRadius(), 
+                        function(x, y, radius, visibility) {
+                            let key = x + ',' + y;
+                            if (thisReference._map._entities[key] !== undefined && thisReference._map._entities[key]._name !== 'barrel' && thisReference._map._entities[key]._name !== 'chicken knight') {
+                                console.log(thisReference._map._entities[key]);
+                                canSeeMonster = true;
+                            }
+                            
+                        }
+                    );
+                    if (!canSeeMonster){
+                        let artificialInputData = {}
+                        artificialInputData.keyCode = ROT.KEYS.VK_X
+                        Game.sleep(60).then(() => { this.handleInput('keydown', artificialInputData, false) });
+                    }
                 }
             }
         } else {
