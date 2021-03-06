@@ -19,7 +19,7 @@ Game.EntityMixins.PlayerActor = {
         if (this.getHP() < 1) {
             Game.Screen.playScreen.setGameEnded(true);
             // Send a last message to the player
-            Game.sendMessage(this, 'You have died... Press [Enter] to continue!');
+            Game.sendMessage(this, '%c{#F61067}You have died... Press [Enter] to continue!');
         }
         // Re-render the screen
         Game.refresh();
@@ -92,6 +92,7 @@ Game.EntityMixins.TaskActor = {
                     var map = this.getMap();
                     map.cellGrow(tempList, this._explodeTile, this._explodeSize);
                     map.removeEntity(this);
+                    Game.sendMessage(player, "The " + this._name + " explodes into a pool of poison!");  
                 }
             }
         }
