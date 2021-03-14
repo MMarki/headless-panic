@@ -1128,6 +1128,11 @@ Game.Screen.ItemScreen.prototype.render = function(display) {
     }
     if(this._item.hasMixin('Equippable')){
         display.drawText(0, rowCount + 3, "%c{yellow}E%c{white}quip");
+        //conditionally show unequip for equipped items
+        if (this._player.checkIfEquipped(this._item)){
+            display.drawText(0, rowCount + 3 + 1, "%c{yellow}U%c{white}nequip");
+            rowCount += 1;
+        }
         rowCount += 1;
     }
     if(this._item.hasMixin('Throwable')){
@@ -1172,33 +1177,39 @@ Game.Screen.ItemScreen.prototype.handleInput = function(inputType, inputData) {
             this._player.dropItem(this._key);
             this.executeOkFunction();
         } else if (inputData.keyCode === ROT.KEYS.VK_E){
-            if (this._item.isWieldable()){
-                this._player.wield(this._item);
-                Game.sendMessage(this._player, "You are wielding %s.", [this._item.describeA()]);
-            } else if (this._item.isWearable()){
-                this._player.wear(this._item);
-                Game.sendMessage(this._player, "You are wearing %s.", [this._item.describeA()]);
-            } else if (this._item.isHeadible()){
-                this._player.wearHead(this._item);
-                Game.sendMessage(this._player, "You are wearing %s.", [this._item.describeA()]);
+            if(this._item.hasMixin('Equippable')){
+                if (this._item.isWieldable()){
+                    this._player.wield(this._item);
+                    Game.sendMessage(this._player, "You are wielding %s.", [this._item.describeA()]);
+                } else if (this._item.isWearable()){
+                    this._player.wear(this._item);
+                    Game.sendMessage(this._player, "You are wearing %s.", [this._item.describeA()]);
+                } else if (this._item.isHeadible()){
+                    this._player.wearHead(this._item);
+                    Game.sendMessage(this._player, "You are wearing %s.", [this._item.describeA()]);
+                }
+                this.executeOkFunction();
             }
-            this.executeOkFunction();
+        } else if (inputData.keyCode === ROT.KEYS.VK_U){
+            if(this._item.hasMixin('Equippable')){
+                if (this._item.isWieldable() && this._player.checkIfEquipped(this._item)){
+                    this._player.unequip(this._item);
+                    Game.sendMessage(this._player, "You are no longer wielding %s.", [this._item.describeA()]);
+                    this.executeOkFunction();
+                } else if (this._item.isWearable() && this._player.checkIfEquipped(this._item)){
+                    this._player.unequip(this._item);
+                    Game.sendMessage(this._player, "You are no longer wearing %s.", [this._item.describeA()]);
+                    this.executeOkFunction();
+                } else if (this._item.isHeadible() && this._player.checkIfEquipped(this._item)){
+                    this._player.unequip(this._item);
+                    Game.sendMessage(this._player, "You are not longe wearing %s.", [this._item.describeA()]);
+                    this.executeOkFunction();
+                }
+            }
         } else if (inputData.keyCode === ROT.KEYS.VK_T){
             Game.Screen.throwAtScreen.setup(this._player, this._player.getX(), this._player.getY(), this._item, this._key);
             Game.Screen.playScreen.setSubScreen(Game.Screen.throwAtScreen);
             // if we go to throw screen, it handles okaying itself and closing out.
-        } else if (inputData.keyCode === ROT.KEYS.VK_U){
-            if (this._item.isWieldable()){
-                this._player.unwield();
-                Game.sendMessage(this._player, "You put away %s.", [this._item.describeThe()]);
-            } else if (this._item.isWearable()){
-                this._player.unwear();
-                Game.sendMessage(this._player, "You take off %s.", [this._item.describeThe()]);
-            } else if (this._item.isHeadible()){
-                this._player.unHead();
-                Game.sendMessage(this._player, "You take off %s.", [this._item.describeThe()]);
-            } 
-            this.executeOkFunction();
         }
     }
 };

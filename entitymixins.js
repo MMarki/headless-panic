@@ -970,6 +970,13 @@ Game.EntityMixins.Equipper = {
         }
         return null;
     },
+    checkIfEquipped(item){
+        if (this._weapon === item || this._armor === item || this._head === item){
+            return true;
+        } else {
+            return false;
+        }
+    }
 };
 
 Game.EntityMixins.Affectible = {
