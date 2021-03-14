@@ -29,6 +29,12 @@ Game.EntityMixins.PlayerActor = {
         // Clear the message queue
         this.clearMessages();
         this._acting = false; 
+    },
+    getPathingTarget: function(){
+        return this._pathingTarget;
+    },
+    setPathingTarget: function(newPath){
+        this._pathingTarget = newPath;
     }
 }
 

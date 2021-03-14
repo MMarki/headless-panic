@@ -107,6 +107,12 @@ Game.ItemMixins.Equippable = {
     },
     describe: function() {
         return this._name;
+    },
+    getHeadHits() {
+        return this._headHits;
+    },
+    getStrengthRequirement() {
+        return this._strengthRequirement;
     }
 };
 

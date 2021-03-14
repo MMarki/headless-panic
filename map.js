@@ -152,6 +152,11 @@ Game.Map.prototype.getTile = function(x, y) {
     }
 };
 
+// Gets the full tile array
+Game.Map.prototype.getTiles = function() {
+    return this._tiles;
+};
+
 Game.Map.prototype.shatter = function(x, y) {
     for (let i = x-2; i <= x + 2; i++){
         for (let j = y-2; j <= y+2; j++){

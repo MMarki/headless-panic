@@ -44,6 +44,10 @@ Game.Entity.prototype.getSpeed = function() {
     return this._speed;
 };
 
+Game.Entity.prototype.isNotMonster = function() {
+    return this._notMonster;
+}
+
 Game.Entity.prototype.setPosition = function(x, y) {
     let oldX = this._x;
     let oldY = this._y;

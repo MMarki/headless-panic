@@ -103,8 +103,8 @@ Game.Screen.playScreen = {
 
         var currentHead = this._player.getHead();
         if (currentHead !== null){
-            display.drawText(screenWidth + 1, 2, "%c{white}HEAD: " +  "%c{" + currentHead._foreground + "}"+ currentHead._name);
-            var numberOfHeadHits = currentHead._headHits;
+            display.drawText(screenWidth + 1, 2, "%c{white}HEAD: " +  "%c{" + currentHead._foreground + "}"+ currentHead.getName());
+            var numberOfHeadHits = currentHead.getHeadHits();
             for (var h = 0; h < numberOfHeadHits; h++){
                 healthString +=  " \u2665";
             }
@@ -131,7 +131,7 @@ Game.Screen.playScreen = {
         let levelName = this.getLevelName(); 
         if (this._player.getWeapon() !== null){
             damageType = this._player.getWeapon().getDamageType();
-            strengthGap = strengthValue - this._player.getWeapon()._strengthRequirement
+            strengthGap = strengthValue - this._player.getWeapon().getStrengthRequirement();
             if (strengthGap <  0){
                 strengthModifier = 4 * strengthGap;
             } else if (strengthGap > 0){
@@ -257,14 +257,14 @@ Game.Screen.playScreen = {
 
                 //let's check to make sure this cell is still unexplored
                 //this way, we don't have to reach the cell if we've seen it on the way there
-                if (player._pathingTarget){
-                    if(map.isExplored(player._pathingTarget.x, player._pathingTarget.y)){
-                        player._pathingTarget = null;
+                if (player.getPathingTarget()){
+                    if(map.isExplored(player.getPathingTarget().x, player.getPathingTarget().y)){
+                        player.setPathingTarget(null);
                     }
                 }
 
                 // Find an unexplored square
-                if (player._pathingTarget === null){
+                if (player.getPathingTarget() === null){
                     if (invokedManually === false){
                         //we've hit our target in an auto-loop. Break out of the recursive function
                         return;
@@ -305,13 +305,13 @@ Game.Screen.playScreen = {
                         noMoreUnexplored = true;
                     } else {
                         //Make a path to it
-                        player._pathingTarget = target;
+                        player.setPathingTarget(target);
                         console.log(target);
                     }
                 }
 
                 if (!noMoreUnexplored){
-                    let path = new ROT.Path.AStar(player._pathingTarget.x, player._pathingTarget.y, function(x, y) {
+                    let path = new ROT.Path.AStar(player.getPathingTarget().x, player.getPathingTarget().y, function(x, y) {
                         let tile = map.getTile(x, y);
                         return tile.isWalkable() && !tile._isHazard && tile !== Game.Tile.stairsDownTile;
                     }, {topology: 4});
@@ -336,15 +336,15 @@ Game.Screen.playScreen = {
                     });
 
                     if (path._todo.length === 0){
-                        player._pathingTarget = null;
+                        player.setPathingTarget(null);
                     }
                 } else {
-                    player._pathingTarget = null;
+                    player.setPathingTarget(null);
                 }
             }
             // Unlock the engine
             this._map.getEngine().unlock();
-            if (this._player._pathingTarget){
+            if (this._player.getPathingTarget()){
                 let currentHead = this._player.getHead();
                 if (currentHead !== null && inputData.keyCode === ROT.KEYS.VK_X && !this._map.areHunters()){
                     let thisReference = this;
@@ -355,8 +355,8 @@ Game.Screen.playScreen = {
                         this._player.getSightRadius(), 
                         function(x, y, radius, visibility) {
                             let key = x + ',' + y;
-                            if (thisReference._map._entities[key] !== undefined && thisReference._map._entities[key]._name !== 'barrel' && thisReference._map._entities[key]._name !== 'chicken knight') {
-                                console.log(thisReference._map._entities[key]);
+                            if (thisReference._map.getEntities()[key] !== undefined && thisReference._map.getEntities()[key].getName() !== 'barrel' && thisReference._map.getEntities()[key].getName() !== 'chicken knight') {
+                                console.log(thisReference._map.getEntities()[key]);
                                 canSeeMonster = true;
                             }
                             
@@ -386,9 +386,9 @@ Game.Screen.playScreen = {
     },
     handleAltarUse: function(newX, newY) {
         let map = this._map;
-        if (map._tiles[newX][newY] === Game.Tile.altarTile){
+        if (map.getTiles()[newX][newY] === Game.Tile.altarTile){
             if (Game.Screen.altarScreen.setup(this._player, this._player.getItems())) {
-                map._tiles[newX][newY] = Game.Tile.rubbleTile;
+                map.getTiles()[newX][newY] = Game.Tile.rubbleTile;
                 this.setSubScreen(Game.Screen.altarScreen);
             } else {
                 Game.sendMessage(this._player, "You have nothing to put on the altar.");
@@ -525,9 +525,9 @@ Game.Screen.playScreen = {
 
             for (var key in entities) {
                 var entity = entities[key];
-                if (visibleCells[entity.getX() + ',' + entity.getY()] || (this._player.hasEffect('knowledgeable') && entity._notMonster == false)) {
+                if (visibleCells[entity.getX() + ',' + entity.getY()] || (this._player.hasEffect('knowledgeable') && entity.isNotMonster() == false)) {
                     display.draw(entity.getX(), entity.getY(), entity.getChar(), entity.getForeground(), entity.getBackground());
-                    if (!entity.hasMixin('PlayerActor') && entity._notMonster === false){
+                    if (!entity.hasMixin('PlayerActor') && entity.isNotMonster() === false){
                         visibleEntities.push(entity);
                     }
                 }
@@ -1043,7 +1043,7 @@ Game.Screen.lookScreen = new Game.Screen.TargetBasedScreen({
                 } else if (map.getEntityAt(x, y)) {
                     var entity = map.getEntityAt(x, y);
                     let hpSuffix = '';
-                    if (entity.hasMixin('Destructible') && entity._name != 'barrel'){
+                    if (entity.hasMixin('Destructible') && entity.getName() != 'barrel'){
                         hpSuffix = ' HP: ' + entity.getHP() + '/' + entity.getMaxHP();
                     }
                     return (entity.getRepresentation() + ' - ' + entity.describeA(true) + '. ' + entity.getDescription() + hpSuffix);
