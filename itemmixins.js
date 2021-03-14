@@ -54,7 +54,7 @@ Game.ItemMixins.Edible = {
             map.cellGrow(tempList, 'darknessTile', 9);
         } else if (this._name === 'summoning potion'){
             entity.summon('rat');
-        } else if (this._name === 'teleportation potion') {
+        } else if (this._name === 'teleport potion') {
             let x = entity.getX();
             let y = entity.getY();
             let newX = 0;
@@ -64,7 +64,7 @@ Game.ItemMixins.Edible = {
                 newX = Math.floor(Math.random() * 80) - 40;
                 newY = Math.floor(Math.random() * 40) - 20;
             }
-
+            
             entity.setPosition(x + newX, y + newY);
         } else if (entity.hasMixin('Attacker') && this._name === 'strength potion'){
             entity.incrementStrength();
