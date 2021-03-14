@@ -495,8 +495,8 @@ Game.Screen.playScreen = {
                         let tile = map.getTile(x,y);
                         //If we have stairs, we want to render them in the sidebar
                         if (tile === Game.Tile.stairsDownTileLocked || tile === Game.Tile.stairsDownTile) {
-                            display.drawText(screenWidth + 1, 10 + j , '%c{' + tile._foreground + '}' + tile._char + ':  ' + tile._description);
-                            j+=2;
+                            display.drawText(screenWidth + 1, 10 + j , '%c{' + tile._foreground + '}' + tile._char + ':  ' + 'stairs down');
+                            j+=1;
                         }
                         // If we have items, we want to render the top most item
                         if (items) {
@@ -557,7 +557,7 @@ Game.Screen.playScreen = {
             for (var i=0; i < visibleEntities.length; i++){
                 var visibleEntity = visibleEntities[i]
                 display.drawText(screenWidth + 1, 10 + 2*i + i + j , '%c{' + visibleEntity.getForeground() + '}' + visibleEntity.getChar() + ':  ' + visibleEntity.getName());
-                display.drawText(screenWidth + 1, 11 + 2*i + i + j, 'HP: ' + visibleEntity.getHP() + '/' + visibleEntity.getMaxHP());
+                display.drawText(screenWidth + 1, 11 + 2*i + i + j, '%c{' + visibleEntity.getForeground() + '}HP: ' + visibleEntity.getHP() + '/' + visibleEntity.getMaxHP());
             
                 var effectsList = visibleEntity.getEffects();
                 var effectsString = '';
@@ -702,6 +702,13 @@ Game.Screen.ItemListScreen.prototype.render = function(display) {
             if (this._items[i].hasMixin('Usable')) {
                 suffix += ' (' + this._items[i].getUses() + '/' + this._items[i].getMaxUses() + ')';
             }
+            if (this._items[i].hasMixin('Equippable')) {
+                let strengthReq = this._items[i].getStrengthRequirement()
+                if (strengthReq > 1){
+                    suffix += ' [' + strengthReq +  ']';
+                } 
+            }
+
             // Render at the correct row and add 2.
             display.drawText(0, 2 + row,  letter + ' ' + selectionState + ' ' + '%c{'+ foreground +'}' + glyph + ' ' + prefix + this._items[i].describe() + suffix);
             row++;
