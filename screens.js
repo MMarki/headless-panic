@@ -666,25 +666,30 @@ Game.Screen.ItemListScreen.prototype.setup = function(player, items) {
 };
 
 Game.Screen.ItemListScreen.prototype.render = function(display) {
-    var letters = 'abcdefghijklmnopqrstuvwxyz';
+    let letters = 'abcdefghijklmnopqrstuvwxyz';
     // Render the caption in the top row
     display.drawText(0, 0, this._caption);
-    var row = 0;
-    for (var i = 0; i < this._items.length; i++) {
+    let row = 0;
+    let itemSortList = [];
+    for (let i = 0; i < this._items.length; i++) {
         // If we have an item, we want to render it.
+        let isWearable = false;
+        let isWieldable = false;
+        let isHeadible = false;
+        let isUsable = false;
         if (this._items[i]) {
             // Get the letter matching the item's index
-            var letter = letters.substring(i, i + 1);
+            let letter = letters.substring(i, i + 1);
             // If we have selected an item, show a +, else show a dash between
             // the letter and the item's name.
-            var selectionState = (this._canSelectItem && this._canSelectMultipleItems &&
+            let selectionState = (this._canSelectItem && this._canSelectMultipleItems &&
                 this._selectedIndices[i]) ? '+' : '-';
             // Render at the correct row and add 2.
             // Check if the item is worn or wielded
-            var glyph = this._items[i].getChar()
-            var foreground = this._items[i].getForeground(); 
-            var prefix = '%c{white}';
-            var suffix = '';
+            let glyph = this._items[i].getChar()
+            let foreground = this._items[i].getForeground(); 
+            let prefix = '%c{white}';
+            let suffix = '';
             if (this._items[i] === this._player.getArmor()) {
                 prefix = '%c{#61AEEE}';
                 suffix = ' (wearing)';
@@ -700,20 +705,38 @@ Game.Screen.ItemListScreen.prototype.render = function(display) {
                 suffix += ' (x' + this._items[i].getStackQuantity() + ')';
             }
             if (this._items[i].hasMixin('Usable')) {
+                isUsable = true;
                 suffix += ' (' + this._items[i].getUses() + '/' + this._items[i].getMaxUses() + ')';
             }
             if (this._items[i].hasMixin('Equippable')) {
+                isWearable = this._items[i].isWearable();
+                isWieldable = this._items[i].isWieldable();
+                isHeadible = this._items[i].isHeadible();
                 let strengthReq = this._items[i].getStrengthRequirement()
                 if (strengthReq > 1){
                     suffix += ' [' + strengthReq +  ']';
                 } 
             }
 
-            // Render at the correct row and add 2.
-            display.drawText(0, 2 + row,  letter + ' ' + selectionState + ' ' + '%c{'+ foreground +'}' + glyph + ' ' + prefix + this._items[i].describe() + suffix);
-            row++;
+            itemSortList[i] = {
+                string: letter + ' ' + selectionState + ' ' + '%c{'+ foreground +'}' + glyph + ' ' + prefix + this._items[i].describe() + suffix,
+                isUsable: isUsable,
+                isWearable: isWearable,
+                isWieldable: isWieldable,
+                isHeadible: isHeadible,
+                itemName: this._items[i].describe()
+            } 
         } 
     }
+
+    itemSortList = this.sortItemsByType(itemSortList);
+
+    for (let i = 0; i < itemSortList.length; i++) {
+        // Render at the correct row and add 2.
+        display.drawText(0, 2 + row,  itemSortList[i].string);
+        row++;
+    }
+
     if (this._canSelectMultipleItems){
         display.drawText(0, 2 + row + 1, '%c{yellow}[ENTER]');
     }
@@ -731,6 +754,29 @@ Game.Screen.ItemListScreen.prototype.executeOkFunction = function() {
     if (this._okFunction(selectedItems)) {
         this._player.getMap().getEngine().unlock();
     }
+};
+
+Game.Screen.ItemListScreen.prototype.sortItemsByType = function(itemList) {
+    let headArray = itemList.filter(item => item.isHeadible);
+    let wearArray = itemList.filter(item => item.isWearable);
+    let wieldArray = itemList.filter(item => item.isWieldable && !item.isUsable);
+    let useArray = itemList.filter(item => item.isUsable);
+    let otherArray = itemList.filter(item => !item.isHeadible && !item.isWearable && !item.isWieldable && !item.isUsable);
+    
+    let sortByName = function(objList){
+        objList.sort((a, b) => (a.itemName > b.itemName) ? 1 : -1);
+        return objList;
+    }
+
+    headArray = sortByName(headArray);
+    wearArray = sortByName(wearArray);
+    wieldArray = sortByName(wieldArray);
+    useArray = sortByName(useArray);
+    otherArray = sortByName(otherArray);
+
+    let out_array = headArray.concat(wearArray).concat(wieldArray).concat(useArray).concat(otherArray);
+
+    return out_array;
 };
 
 Game.Screen.ItemListScreen.prototype.handleInput = function(inputType, inputData) {

@@ -19,7 +19,7 @@ Game.EntityMixins.PlayerActor = {
         if (this.getHP() < 1) {
             Game.Screen.playScreen.setGameEnded(true);
             // Send a last message to the player
-            Game.sendMessage(this, '%c{#F61067}You have died... Press [Enter] to continue!');
+            Game.sendMessage(this, '%c{#F61067}You have died... Press %c{yellow}[Enter] %c{#F61067}to continue!');
         }
         // Re-render the screen
         Game.refresh();
