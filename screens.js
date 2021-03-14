@@ -8,7 +8,8 @@ Game.Screen.startScreen = {
         // Render our prompt to the screen
         display.drawText(1,1, "%c{yellow}Headless Panic");
         display.drawText(1,3, "%c{white}Betrayed. Beheaded. Thrown into the ancient cellars below the castle.");
-        display.drawText(1,5, "%c{white}Press %c{yellow}[Enter] %c{white}to start!");
+        display.drawText(1,4, "%c{white}You pick your head up, put it on your neck, and try to get your bearings.");
+        display.drawText(1,6, "%c{white}Press %c{yellow}[Enter] %c{white}to start!");
     },
     handleInput: function(inputType, inputData) {
         // When [Enter] is pressed, go to the play screen
@@ -995,6 +996,7 @@ Game.Screen.TargetBasedScreen.prototype.render = function(display) {
 
     // Render the caption at the bottom.
     display.drawText(0, Game.getScreenHeight(), this._captionFunction(this._cursorX , this._cursorY));
+    display.drawText(0, Game.getScreenHeight()+1, '%c{yellow}[ENTER]');
 };
 
 Game.Screen.TargetBasedScreen.prototype.handleInput = function(inputType, inputData) {
