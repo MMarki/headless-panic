@@ -428,7 +428,7 @@ Game.Screen.playScreen = {
             // Start the map's engine
             this._map.getEngine().start();
             if (playerHasKey){
-                Game.sendMessage(this._player, "You use the key on the trapdoor. You go down the stairs. They crumble to dust behind you.");
+                Game.sendMessage(this._player, "%c{#61AEEE}You use the key on the trapdoor. You go down the stairs. They crumble to dust behind you.");
                 for (let i = 0; i < items.length; i ++){
                     if (items[i] !== undefined && items[i] !== null){
                         if (items[i].describe() === 'key'){
@@ -437,7 +437,7 @@ Game.Screen.playScreen = {
                     }
                 }
             } else {
-                Game.sendMessage(this._player, "You go down the stairs. They crumble to dust behind you.");
+                Game.sendMessage(this._player, "%c{#61AEEE}You go down the stairs. They crumble to dust behind you.");
             }
         }
     },
@@ -768,6 +768,7 @@ Game.Screen.applyScreen = new Game.Screen.ItemListScreen({
             Game.sendMessage(this._player, "The %s is out of charges.", [item.describe()]);
             console.log(".")   
         }
+        return true;
     }
 });
 
@@ -876,7 +877,7 @@ Game.Screen.throwScreen = new Game.Screen.ItemListScreen({
     }
 });
 
-//This needs its own OK function
+//This needs its own OK function because throwing takes 2 screens, unlike a normal executeOkFunction
 Game.Screen.throwScreen.executeOkFunction = function(){
     // Gather the selected items.
     var selectedItems = {};
@@ -1084,7 +1085,7 @@ let lineCaptionFunction = function(x, y) {
 
 Game.Screen.throwAtScreen = new Game.Screen.TargetBasedScreen({
     captionFunction: lineCaptionFunction,
-    ok: function() {    
+    ok: function() {  
         this._player.throwItem(this._item, this._cursorX, this._cursorY, this._key);
         return true;
     }
@@ -1117,7 +1118,7 @@ Game.Screen.ItemScreen.prototype.render = function(display) {
     display.drawText(0, 1, this._item.describe());
     var rowCount = 0;
     //open an item modal with:
-    if(this._item.hasMixin('Edible')){
+    if(this._item.hasMixin('Edible') || this._item.hasMixin('Usable')){
         display.drawText(0, rowCount + 3, "%c{yellow}A%c{white}pply");
         rowCount += 1;
     }
@@ -1149,10 +1150,20 @@ Game.Screen.ItemScreen.prototype.handleInput = function(inputType, inputData) {
             Game.Screen.playScreen.setSubScreen(this._priorSubscreen);
         // Handle pressing a letter if we can select
         } else if (inputData.keyCode === ROT.KEYS.VK_A) {
-            Game.sendMessage(this._player, "You drink %s.", [this._item.describeThe()]);
-            this._item.eat(this._player);
-            this._player.removeItem(this._key);
-            this.executeOkFunction();
+            let item = this._item;
+            if(item.hasMixin('Edible')){
+                Game.sendMessage(this._player, "You drink %s.", [item.describeThe()]);
+                item.eat(this._player);
+                this._player.removeItem(this._key);
+                this.executeOkFunction();
+            } else if (item.hasMixin('Usable') && item.getUses() > 0){
+                Game.Screen.aimAtScreen.setup(this._player, this._player.getX(), this._player.getY(), item, this._key);
+                Game.Screen.playScreen.setSubScreen(Game.Screen.aimAtScreen);     
+                // if we go to aim screen, it handles okaying itself and closing out.       
+            } else if (item.hasMixin('Usable') && item.getUses() === 0){
+                Game.sendMessage(this._player, "The %s is out of charges.", [item.describe()]); 
+                // if we go to aim screen, it handles okaying itself and closing out.
+            }
         } else if (inputData.keyCode === ROT.KEYS.VK_D){
             this._player.dropItem(this._key);
             this.executeOkFunction();
