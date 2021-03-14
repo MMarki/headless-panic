@@ -56,7 +56,7 @@ Game.ItemRepository.define('fire potion', {
 }); */
 
 Game.ItemRepository.define('teleportation potion', {
-    name: 'teleportation potion',
+    name: 'teleport potion',
     character: '!',
     foreground: '#F2EC2D',
     potionEffect: null,

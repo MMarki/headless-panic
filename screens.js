@@ -482,15 +482,21 @@ Game.Screen.playScreen = {
             for (var y = 0; y < this._map.getHeight(); y++) {
                 if (map.isExplored(x, y)) {
                     // Fetch the glyph for the tile and render it to the screen
-                    var glyph = this._map.getTile(x, y);
-                    var foreground = glyph.getForeground();
-                    var tile = this._map.getTile(x, y);
-                    var background = tile.getBackground();
+                    let glyph = this._map.getTile(x, y);
+                    let foreground = glyph.getForeground();
+                    let tile = this._map.getTile(x, y);
+                    let background = tile.getBackground();
                     // If we are at a cell that is in the field of vision, we need
                     // to check if there are items or entities.
                     if (visibleCells[x + ',' + y]) {
                         // Check for items first to draw over the floor
-                        var items = map.getItemsAt(x, y);
+                        let items = map.getItemsAt(x, y);
+                        let tile = map.getTile(x,y);
+                        //If we have stairs, we want to render them in the sidebar
+                        if (tile === Game.Tile.stairsDownTileLocked || tile === Game.Tile.stairsDownTile) {
+                            display.drawText(screenWidth + 1, 10 + j , '%c{' + tile._foreground + '}' + tile._char + ':  ' + tile._description);
+                            j+=2;
+                        }
                         // If we have items, we want to render the top most item
                         if (items) {
                             glyph = items[items.length - 1];
@@ -500,7 +506,7 @@ Game.Screen.playScreen = {
                         // Update the foreground color in case our glyph changed
                         foreground = glyph.getForeground();
                     } else {
-                        var items = map.getItemsAt(x, y);
+                        let items = map.getItemsAt(x, y);
                         // If we have items, we want to render the top most item
                         if (items) {
                             glyph = items[items.length - 1];
