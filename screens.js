@@ -1042,7 +1042,11 @@ Game.Screen.lookScreen = new Game.Screen.TargetBasedScreen({
                 // Else check if there's an entity
                 } else if (map.getEntityAt(x, y)) {
                     var entity = map.getEntityAt(x, y);
-                    return (entity.getRepresentation() + ' - ' + entity.describeA(true) + '. ' + entity.getDescription());
+                    let hpSuffix = '';
+                    if (entity.hasMixin('Destructible') && entity._name != 'barrel'){
+                        hpSuffix = ' HP: ' + entity.getHP() + '/' + entity.getMaxHP();
+                    }
+                    return (entity.getRepresentation() + ' - ' + entity.describeA(true) + '. ' + entity.getDescription() + hpSuffix);
                 }
             }
             // If there was no entity/item or the tile wasn't visible, then use
