@@ -526,14 +526,28 @@ Game.Screen.playScreen = {
         }
         // Render the entities
         if (!this._player.hasEffect('blind')){
-            var entities = this._map.getEntities();
-            var visibleEntities = [];
+            let entities = this._map.getEntities();
+            let visibleEntities = [];
+            let currentHead = this._player.getHead();
+
             //var screenWidth = Game.getScreenWidth();
 
-            for (var key in entities) {
-                var entity = entities[key];
+            for (let key in entities) {
+                let entity = entities[key];
+                let tile = this._map.getTile(entity.getX(), entity.getY());
+                let background = tile.getBackground();
                 if (visibleCells[entity.getX() + ',' + entity.getY()] || (this._player.hasEffect('knowledgeable') && entity.isNotMonster() == false)) {
-                    display.draw(entity.getX(), entity.getY(), entity.getChar(), entity.getForeground(), entity.getBackground());
+                    if(entity.hasMixin('PlayerActor')){
+                        if (currentHead !== null){
+                            display.draw(entity.getX(), entity.getY(), entity.getChar(), entity.getForeground(), background);
+                        } else {
+                            display.draw(entity.getX(), entity.getY(), entity.getChar(), '#F61067', background);
+                        }
+                    } else if (!entity.isNotMonster()) {
+                        display.draw(entity.getX(), entity.getY(), entity.getChar(), entity.getForeground(), background);
+                    } else {
+                        display.draw(entity.getX(), entity.getY(), entity.getChar(), entity.getForeground(), entity.getBackground());
+                    }
                     if (!entity.hasMixin('PlayerActor') && entity.isNotMonster() === false){
                         visibleEntities.push(entity);
                     }
