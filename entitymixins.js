@@ -208,10 +208,10 @@ Game.EntityMixins.Destructible = {
             this._hp = this._maxHP;
         }
     },
-    takeDamage: function(attacker, damage) {
+    takeDamage: function(attacker, damage, isKnockDamage) {
         if (this.hasMixin('Bleeder')){
             var myHead = this.getHead()
-            if (myHead !== null) {
+            if (myHead !== null && isKnockDamage) {
                 if (myHead._headHits > 1) {
                     myHead._headHits -= 1;
                 } else {
@@ -350,7 +350,7 @@ Game.EntityMixins.Attacker = {
                 Game.sendMessage(this, 'You strike the %s for %d damage.', [target.getName(), damage]);
                 Game.sendMessage(target, 'The %s strikes you for %d damage.',  [this.getName(), damage]);
 
-                target.takeDamage(this, damage);
+                target.takeDamage(this, damage, true);
                 if (this.hasMixin('Poisoner') && target.hasMixin('Affectible')){
                     let newEffect = new Game.Effect(Math.floor(damage*1.5), 'poisoned');
                     target.setEffect(newEffect);
@@ -597,7 +597,7 @@ Game.EntityMixins.Thrower = {
                 amount = Math.floor((Math.random() * maxAmount)) + 1;
                 if (amount > 0){
                     Game.sendMessage(this, 'You throw a %s at the %s for %d damage!', [item.getName(),target.getName(), amount]);
-                    target.takeDamage(this, amount);
+                    target.takeDamage(this, amount, true);
                 } else {
                     Game.sendMessage(this, 'You throw a %s at the %s. It misses.', [item.getName(),target.getName()]);
                 }
@@ -846,7 +846,7 @@ Game.EntityMixins.Bleeder = {
         if (this._head === null){
             this.modifyHPBy(-this._bleedRate);
             this.getMap().changeTile(this.getX(),this.getY(), Game.Tile.bloodTile);
-        } else {
+        } else if(!this.hasEffect('burning') && !this.hasEffect('poisoned')) {
             this.modifyHPBy(this._bleedRate);
         }
         
@@ -1009,9 +1009,9 @@ Game.EntityMixins.Affectible = {
     },
     applyEffect: function(effectName) {
         if (effectName === "poisoned" && this.hasMixin('Destructible')){
-            return this.takeDamage(this, 1);
+            return this.takeDamage(this, 1, false);
         } else if (effectName === "burning" && this.hasMixin('Destructible')){
-            return this.takeDamage(this, 1);
+            return this.takeDamage(this, 1, false);
         }
     },
     setEffect : function(effect) {
