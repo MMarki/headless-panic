@@ -385,7 +385,11 @@ Game.EntityMixins.Attacker = {
         this._strengthValue += 1;
     },
     getStrengthValue: function(){
-        return this._strengthValue;
+        let strengthened = false;
+        if (this.hasMixin('Equipper')) {
+            strengthened = this._strengthened;
+        }
+        return strengthened ? this._strengthValue + 1 : this._strengthValue;
     }
 }
 
@@ -915,6 +919,7 @@ Game.EntityMixins.Equipper = {
             this._ratThreaten = false;
             this._toady = false;
             this._venomous = false;
+            this._strengthened = false;
             if(this._head._name === 'goblin head' || this._head._name === 'kappa head'){
                 this._protected = true;
             } else if (this._head._name === 'jackal head' || this._head._name === 'piranha head'){
@@ -925,6 +930,8 @@ Game.EntityMixins.Equipper = {
                 this._toady = true;
             } else if (this._head._name === 'poison toad head'){
                 this._venomous = true;
+            } else if (this._head._name === 'hydra head'){
+                this._strengthened = true;
             }
         }
     },
