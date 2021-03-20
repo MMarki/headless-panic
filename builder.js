@@ -19,7 +19,7 @@ Game.Builder = function(width, height, level) {
     }
 
     let grassAmount = 2;
-    let columnAmount = 20;
+    let columnAmount = 16;
     let shallowWaterAmount = 6;
     if (level <= 3){
         for (let i = 0; i < grassAmount; i++){
@@ -29,6 +29,9 @@ Game.Builder = function(width, height, level) {
             this._setColumn();
         }
     }
+    this._setPrefab(prefabs.arena);
+    this._setPrefab(prefabs.columns);
+    this._setPrefab(prefabs.garden);
     this._setGrass();
     this._setGrass();
     this._setFerns();
@@ -270,6 +273,46 @@ Game.Builder.prototype._setFerns = function() {
     let grassList = [];
     grassList.push(match);
     this._cellGrow(grassList, Game.Tile.fernTile, 20)
+}
+
+// Generates grass at free locations
+Game.Builder.prototype._setPrefab = function(in_object) {
+    let matches = [];
+    // Iterate through all tiles, checking if they are floor tiles. 
+    for (let x = 0; x < this._width; x++) {
+        for (let y = 0; y < this._height; y++) {
+            if (this._tiles[x][y]  == Game.Tile.floorTile) {
+                matches.push({x: x, y: y});
+            }
+        }
+    }
+    // We shuffle the list of matches to prevent bias
+    let match =  Game.pickRandomElement(matches);
+    let prefabHeight = in_object.length;
+    let prefabWidth = in_object[0].length;
+    let rowCount = 0;
+    let columnCount = 0;
+
+    for (let row of in_object){
+        columnCount = 0;
+        for (let column of row){
+            if (column === '.'){
+                this._tiles[match.x - Math.floor(prefabWidth/2) + columnCount][match.y - Math.floor(prefabHeight/2) + rowCount] = Game.Tile.floorTile;
+            } else if (column === '#'){
+                this._tiles[match.x - Math.floor(prefabWidth/2) + columnCount][match.y - Math.floor(prefabHeight/2) + rowCount] = Game.Tile.wallTile;
+            } else if (column === '+'){
+                this._tiles[match.x - Math.floor(prefabWidth/2) + columnCount][match.y - Math.floor(prefabHeight/2) + rowCount] = Game.Tile.doorTile;
+            } else if (column === 'b'){
+                this._tiles[match.x - Math.floor(prefabWidth/2) + columnCount][match.y - Math.floor(prefabHeight/2) + rowCount] = Game.Tile.shallowWaterTile;
+            } else if (column === ','){
+                this._tiles[match.x - Math.floor(prefabWidth/2) + columnCount][match.y - Math.floor(prefabHeight/2) + rowCount] = Game.Tile.rubbleTile;
+            } else if (column === '"'){
+                this._tiles[match.x - Math.floor(prefabWidth/2) + columnCount][match.y - Math.floor(prefabHeight/2) + rowCount] = Game.Tile.grassTile;
+            }
+            columnCount++
+        }
+        rowCount++;
+    }
 }
 
 // Generates grass at free locations
