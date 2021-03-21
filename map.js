@@ -39,7 +39,7 @@ Game.Map = function(tiles, player, items) {
     if (Game.getLevel() === 6){
         this.addEntityAtRandomPosition(Game.EntityRepository.create('toad queen'), 1);
     }
-    // if on L11, create one toad queen
+    // if on L11, create one hydra
     if (Game.getLevel() === 11){
         this.addEntityAtRandomPosition(Game.EntityRepository.create('hydra'), 1);
     }

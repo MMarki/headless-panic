@@ -237,6 +237,34 @@ Game.EntityMixins.Destructible = {
                 }
                 this._hp = Math.ceil(this._hp/2);
             }
+            if( this._hp > 0 && this.hasMixin('MultiHeaded')){
+                if (this._hp < this._headsBreakpoints[this._headsBreakpoints.length - 1]){
+                    if (this._headsRemaining === this._heads) {
+                        this._headsRemaining--;
+                        this.tryDropHead();
+                        console.log("first drop!: ", this._hp);
+                    }
+                } if (this._hp < this._headsBreakpoints[this._headsBreakpoints.length - 2]){
+                    if (this._headsRemaining === this._heads - 1) {
+                        this._headsRemaining--;
+                        this.tryDropHead();
+                        console.log("second drop!: ", this._hp);
+                    }
+                } if (this._hp < this._headsBreakpoints[this._headsBreakpoints.length - 3]){
+                    if (this._headsRemaining === this._heads - 2) {
+                        this._headsRemaining--;
+                        this.tryDropHead();
+                        console.log("third drop!: ", this._hp);
+                    }
+                } if (this._hp < this._headsBreakpoints[this._headsBreakpoints.length - 4]){
+                    if (this._headsRemaining === this._heads - 3) {
+                        this._headsRemaining--;
+                        this.tryDropHead();
+                        console.log("fourth drop!: ", this._hp);
+                    }
+                }
+                
+            } 
         }
         
         // If have 0 or less HP, then remove ourseles from the map
@@ -430,6 +458,21 @@ Game.EntityMixins.Deflecter = {
     groupName: 'Deflecter',
     init: function(template) {
         template;
+    }
+}
+
+Game.EntityMixins.MultiHeaded = {
+    name: 'MultiHeaded',
+    groupName: 'MultiHeaded',
+    init: function(template) {
+        this._heads = template['heads'] || 1;
+        this._headsRemaining = this._heads;
+        this._headsBreakpoints = [];
+        let hpIncrement = this._maxHP/this._heads;
+        for (let i = 0; i < this._heads; i++){
+            this._headsBreakpoints.push(i * hpIncrement)
+            console.log(i*hpIncrement);
+        }
     }
 }
 

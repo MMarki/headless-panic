@@ -67,7 +67,7 @@ Game.EntityRepository.define('piranha', {
     foreground: '#BE5046',
     maxHP: 6,
     attackValue: 6,
-    accuracyValue: 80,
+    accuracyValue: 90,
     speed: 2000,
     tasks: ['hunt', 'wander'],
     description: "An aggressive fish who can move or attack twice each turn.",
@@ -86,12 +86,14 @@ Game.EntityRepository.define('hydra', {
     defenseValue: 18,
     accuracyValue: 80,
     speed: 1000,
+    heads: 5,
     tasks: ['hunt', 'wander'],
     description: "A massive, many-headed serpent.",
     mixins: [Game.EntityMixins.TaskActor, Game.EntityMixins.Sight,
              Game.EntityMixins.HeadDropper, Game.EntityMixins.Attacker, 
              Game.EntityMixins.Destructible, Game.EntityMixins.Affectible,
-             Game.EntityMixins.Swimmer, Game.EntityMixins.KeyDropper]
+             Game.EntityMixins.Swimmer, Game.EntityMixins.KeyDropper,
+             Game.EntityMixins.MultiHeaded]
 });
 
 Game.EntityRepository.define('kobold', {
