@@ -32,6 +32,7 @@ Game.Builder = function(width, height, level) {
     this._setPrefab(prefabs.arena);
     this._setPrefab(prefabs.columns);
     this._setPrefab(prefabs.garden);
+    this._setPrefab(prefabs.cistern);
     this._setGrass();
     this._setGrass();
     this._setFerns();
@@ -296,18 +297,25 @@ Game.Builder.prototype._setPrefab = function(in_object) {
     for (let row of in_object){
         columnCount = 0;
         for (let column of row){
-            if (column === '.'){
-                this._tiles[match.x - Math.floor(prefabWidth/2) + columnCount][match.y - Math.floor(prefabHeight/2) + rowCount] = Game.Tile.floorTile;
-            } else if (column === '#'){
-                this._tiles[match.x - Math.floor(prefabWidth/2) + columnCount][match.y - Math.floor(prefabHeight/2) + rowCount] = Game.Tile.wallTile;
-            } else if (column === '+'){
-                this._tiles[match.x - Math.floor(prefabWidth/2) + columnCount][match.y - Math.floor(prefabHeight/2) + rowCount] = Game.Tile.doorTile;
-            } else if (column === 'b'){
-                this._tiles[match.x - Math.floor(prefabWidth/2) + columnCount][match.y - Math.floor(prefabHeight/2) + rowCount] = Game.Tile.shallowWaterTile;
-            } else if (column === ','){
-                this._tiles[match.x - Math.floor(prefabWidth/2) + columnCount][match.y - Math.floor(prefabHeight/2) + rowCount] = Game.Tile.rubbleTile;
-            } else if (column === '"'){
-                this._tiles[match.x - Math.floor(prefabWidth/2) + columnCount][match.y - Math.floor(prefabHeight/2) + rowCount] = Game.Tile.grassTile;
+            let tileX = match.x - Math.floor(prefabWidth/2) + columnCount;
+            let tileY = match.y - Math.floor(prefabHeight/2) + rowCount;
+
+            if (!(tileX < 1 || tileX >= this._width - 1 || tileY < 1 || tileY >= this._height - 1)){
+                if (column === '.'){
+                    this._tiles[tileX][tileY] = Game.Tile.floorTile;
+                } else if (column === '#'){
+                    this._tiles[tileX][tileY] = Game.Tile.wallTile;
+                } else if (column === '+'){
+                    this._tiles[tileX][tileY] = Game.Tile.doorTile;
+                } else if (column === 'b'){
+                    this._tiles[tileX][tileY] = Game.Tile.shallowWaterTile;
+                } else if (column === ','){
+                    this._tiles[tileX][tileY] = Game.Tile.rubbleTile;
+                } else if (column === '"'){
+                    this._tiles[tileX][tileY] = Game.Tile.grassTile;
+                } else if (column === 'd'){
+                    this._tiles[tileX][tileY] = Game.Tile.waterTile;
+                }
             }
             columnCount++
         }
