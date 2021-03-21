@@ -18,6 +18,12 @@ Game.Builder = function(width, height, level) {
         }
     }
 
+    let prefabsByArea = {
+        'cellars': [prefabs.arena, prefabs.columns, prefabs.garden],
+        'sewers': [prefabs.arena, prefabs.garden, prefabs.cistern],
+        'caverns': [prefabs.arena]
+    }
+
     let grassAmount = 2;
     let columnAmount = 16;
     let shallowWaterAmount = 6;
@@ -28,11 +34,9 @@ Game.Builder = function(width, height, level) {
         for (let i = 0; i < columnAmount; i++){
             this._setColumn();
         }
+        console.log(Game.pickRandomElement(prefabsByArea['cellars']));
+        this._setPrefab(Game.pickRandomElement(prefabsByArea['cellars']));
     }
-    this._setPrefab(prefabs.arena);
-    this._setPrefab(prefabs.columns);
-    this._setPrefab(prefabs.garden);
-    this._setPrefab(prefabs.cistern);
     this._setGrass();
     this._setGrass();
     this._setFerns();
@@ -42,7 +46,16 @@ Game.Builder = function(width, height, level) {
         for (let i = 0; i < shallowWaterAmount; i++){
             this._setShallowWater();
         }
+        if (level <= 6){
+            console.log(Game.pickRandomElement(prefabsByArea['sewers']));
+            this._setPrefab(Game.pickRandomElement(prefabsByArea['sewers']));
+        } else {
+            console.log(Game.pickRandomElement(prefabsByArea['caverns']));
+            this._setPrefab(Game.pickRandomElement(prefabsByArea['caverns']));
+        }
+        
     }
+    this._setPrefab(prefabs.arena);
     this._setStairs(level);
 };
 

@@ -263,7 +263,6 @@ Game.EntityMixins.Destructible = {
                         console.log("fourth drop!: ", this._hp);
                     }
                 }
-                
             } 
         }
         
