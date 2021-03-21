@@ -426,7 +426,9 @@ Game.Screen.playScreen = {
             let rooms = builder.getRooms();
             //pass the current player and the new tiles in
             this._map = new Game.Map(tiles, this._player, this._player.getItems());
-            this._map.getRidOfBoringRooms(rooms);
+            if (Game.getLevel() <= 6){
+                this._map.getRidOfBoringRooms(rooms);
+            }
             this._map.cleanUpDoors();
             // Start the map's engine
             this._map.getEngine().start();

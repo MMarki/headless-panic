@@ -95,7 +95,7 @@ Game.Entity.prototype.tryMove = function(x, y) {
             tempList.push({x: x, y: y});
             this._map.cellGrow(tempList, 'fireTile', 1);
         }
-        if((this.hasMixin('Affectible')) && this.hasEffect('burning') && (tile === Game.Tile.shallowWaterTile || tile === Game.Tile.waterTile)) {
+        if((this.hasMixin('Affectible')) && this.hasEffect('burning') && (tile === Game.Tile.shallowWaterTile || tile === Game.Tile.waterTile || tile === Game.Tile.wineTile)) {
             if (this.hasEffect('burning')){
                 var effects = this._effects;
                 for (var i = 0; i < effects.length; i++){

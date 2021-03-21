@@ -47,14 +47,6 @@ Game.ItemRepository.define('fire potion', {
     itemLevel: 1
 });
 
-/* Game.ItemRepository.define('summoning potion', {
-    name: 'summoning potion',
-    character: '!',
-    foreground: '#F2EC2D',
-    potionEffect: null,
-    mixins: [Game.ItemMixins.Edible, Game.ItemMixins.Throwable]
-}); */
-
 Game.ItemRepository.define('teleportation potion', {
     name: 'teleport potion',
     character: '!',

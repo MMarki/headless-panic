@@ -52,8 +52,6 @@ Game.ItemMixins.Edible = {
             let tempList = []
             tempList.push({x: x, y: y});
             map.cellGrow(tempList, 'darknessTile', 9);
-        } else if (this._name === 'summoning potion'){
-            entity.summon('rat');
         } else if (this._name === 'teleport potion') {
             let x = entity.getX();
             let y = entity.getY();

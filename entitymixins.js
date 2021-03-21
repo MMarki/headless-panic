@@ -493,7 +493,7 @@ Game.EntityMixins.Thrower = {
             Game.sendMessage(this, 'You throw a %s.',item.getName());
         }
 
-        // shatter potion effect
+        // potion effects
         if (item.hasMixin(Game.ItemMixins.Edible)) {
             if (item._name === "shatter potion"){
                 this._map.shatter(endPointX, endPointY);
