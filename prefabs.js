@@ -28,7 +28,7 @@ prefabs.wineCellar.push(['.','#','#','#','#','#','.']);
 prefabs.wineCellar.push(['.','.','.','.','.','.','.']);
 
 prefabs.garden = [];
-prefabs.garden.push([',',',',',',',',',',',',',']);
+prefabs.garden.push(['.',',','.',',','.',',','.']);
 prefabs.garden.push(['.','"','"','"','"','"',',']);
 prefabs.garden.push([',','"','"','"','"','"','']);
 prefabs.garden.push([',','"','"','b','"','"',',']);

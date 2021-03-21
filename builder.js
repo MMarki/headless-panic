@@ -34,7 +34,6 @@ Game.Builder = function(width, height, level) {
         for (let i = 0; i < columnAmount; i++){
             this._setColumn();
         }
-        console.log(Game.pickRandomElement(prefabsByArea['cellars']));
         this._setPrefab(Game.pickRandomElement(prefabsByArea['cellars']));
     }
     this._setGrass();
@@ -47,10 +46,8 @@ Game.Builder = function(width, height, level) {
             this._setShallowWater();
         }
         if (level <= 6){
-            console.log(Game.pickRandomElement(prefabsByArea['sewers']));
             this._setPrefab(Game.pickRandomElement(prefabsByArea['sewers']));
         } else {
-            console.log(Game.pickRandomElement(prefabsByArea['caverns']));
             this._setPrefab(Game.pickRandomElement(prefabsByArea['caverns']));
         }
         
@@ -102,7 +99,7 @@ Game.Builder.prototype._generateLevel = function(level) {
         generator = new ROT.Map.Digger(this._width, this._height, options);
 
     } else if (level > 3 && level <=6){
-         // Set up the level generator
+        // Set up the level generator
         options = {
             roomWidth: [5, 20],
             roomHeight: [5, 12],
@@ -110,7 +107,7 @@ Game.Builder.prototype._generateLevel = function(level) {
             dugPercentage: 0.45
         }
         generator = new ROT.Map.Digger(this._width, this._height, options);
-    } else if (level > 6){
+    } else if (level > 6 && level <= 11){
         setMapTile = function (x, y, value) {
             if (value === 0) {
                map[x][y] = Game.Tile.wallTile;
@@ -120,11 +117,20 @@ Game.Builder.prototype._generateLevel = function(level) {
        }
         // Set up the level generator
        generator = new ROT.Map.Cellular(this._width - 1, this._height - 1);
-       generator.randomize(0.5);
+       generator.randomize(0.4);
+    } else if (level > 11 && level <= 14) {
+        // Set up the level generator
+        options = {
+            roomWidth: [5, 15],
+            roomHeight: [5, 7],
+            corridorLength: [0, 6],
+            dugPercentage: 0.55
+        }
+        generator = new ROT.Map.Digger(this._width, this._height, options);
     }
    
 
-    if (level <=6){
+    if (level <=6 || level > 11){
         generator.create(setMapTile);
 
         let makeDoor = function(x, y) {

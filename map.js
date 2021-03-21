@@ -25,11 +25,20 @@ Game.Map = function(tiles, player, items) {
     this.setupFov();
 
     // 15 entities per floor
-    for (let i = 0; i < 10; i++) {
+    let entitiesPerArea = 10
+    if (Game.getLevel() > 6){
+        entitiesPerArea = 15;
+    }
+    if (Game.getLevel() > 11){
+        entitiesPerArea = 20;
+    }
+    for (let i = 0; i < entitiesPerArea; i++) {
         // Add a random entity
         let randomEntity = Game.EntityRepository.createRandomByFrequency('L' + Game.getLevel())
         this.addEntityAtRandomPosition( randomEntity , 1);
-        this.addEntityAtRandomPosition(Game.EntityRepository.create("barrel"), 0);
+        if (Game.getLevel() <= 3){
+            this.addEntityAtRandomPosition(Game.EntityRepository.create("barrel"), 0);
+        }
     }
     // if on L3, create one rat king
     if (Game.getLevel() === 3){
@@ -42,6 +51,10 @@ Game.Map = function(tiles, player, items) {
     // if on L11, create one hydra
     if (Game.getLevel() === 11){
         this.addEntityAtRandomPosition(Game.EntityRepository.create('hydra'), 1);
+    }
+    // if on L13, create one vampire
+    if (Game.getLevel() === 11){
+        this.addEntityAtRandomPosition(Game.EntityRepository.create('vampire'), 1);
     }
     
     let emptyItemList = [];

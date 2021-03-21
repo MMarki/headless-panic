@@ -170,8 +170,8 @@ Game.EntityRepository.define('kappa', {
     character: 'K',
     foreground: '#91C7B1',
     maxHP: 18,
-    attackValue: 6,
-    defenseValue: 12,
+    attackValue: 8,
+    defenseValue: 13,
     accuracyValue: 80,
     sightRadius: 14,
     headHits: 1,
@@ -188,7 +188,7 @@ Game.EntityRepository.define('mushroom man', {
     character: 'M',
     foreground: '#E6C07B',
     maxHP: 15,
-    attackValue: 9,
+    attackValue: 10,
     defenseValue: 4,
     accuracyValue: 80,
     sightRadius: 14,
@@ -259,17 +259,76 @@ Game.EntityRepository.define('acid jelly', {
              Game.EntityMixins.Affectible, Game.EntityMixins.Acidic]
 });
 
-Game.EntityRepository.define('giant zombie', {
+Game.EntityRepository.define('zombie', {
     name: 'zombie', 
-    character: 'Z',
+    character: 'z',
     foreground: 'teal',
-    maxHP: 10,
-    attackValue: 5,
+    maxHP: 30,
+    attackValue: 8,
     defenseValue: 10,
     accuracyValue: 70,
     sightRadius: 8,
-    headHits: 2,
+    headHits: 1,
     description: "A shambling undead monster that smells of decay.",
+    tasks: ['hunt', 'wander'],
+    mixins: [Game.EntityMixins.TaskActor, Game.EntityMixins.Sight,
+             Game.EntityMixins.Attacker, Game.EntityMixins.Destructible,
+             Game.EntityMixins.HeadDropper, Game.EntityMixins.Affectible]
+});
+
+Game.EntityRepository.define('skeleton', {
+    name: 'skeleton', 
+    character: 's',
+    foreground: 'white',
+    maxHP: 10,
+    attackValue: 6,
+    defenseValue: 0,
+    accuracyValue: 80,
+    sightRadius: 8,
+    headHits: 1,
+    resistances: ['stab'],
+    vulnerabilities: ['crush'],
+    description: "An reanimated skeleton warrior.",
+    tasks: ['hunt', 'wander'],
+    mixins: [Game.EntityMixins.TaskActor, Game.EntityMixins.Sight,
+             Game.EntityMixins.Attacker, Game.EntityMixins.Destructible,
+             Game.EntityMixins.Affectible]
+});
+
+Game.EntityRepository.define('golem', {
+    name: 'golem', 
+    character: 'G',
+    foreground: 'teal',
+    maxHP: 50,
+    attackValue: 20,
+    defenseValue: 14,
+    accuracyValue: 80,
+    sightRadius: 9,
+    headHits: 1,
+    resistances: ['stab'],
+    vulnerabilities: ['crush'],
+    speed: 500,
+    description: "A big rock monster.",
+    tasks: ['hunt', 'wander'],
+    mixins: [Game.EntityMixins.TaskActor, Game.EntityMixins.Sight,
+             Game.EntityMixins.Attacker, Game.EntityMixins.Destructible,
+             Game.EntityMixins.HeadDropper, Game.EntityMixins.Affectible, 
+             Game.EntityMixins.Unpoisonable]
+});
+
+Game.EntityRepository.define('vampire', {
+    name: 'vampire', 
+    character: 'V',
+    foreground: 'white',
+    maxHP: 30,
+    attackValue: 20,
+    defenseValue: 12,
+    accuracyValue: 90,
+    sightRadius: 12,
+    headHits: 2,
+    vulnerabilities: ['stab'],
+    speed: 2000,
+    description: "A pale fanged humanoid in a tattered cloak.",
     tasks: ['hunt', 'wander'],
     mixins: [Game.EntityMixins.TaskActor, Game.EntityMixins.Sight,
              Game.EntityMixins.Attacker, Game.EntityMixins.Destructible,
@@ -278,7 +337,7 @@ Game.EntityRepository.define('giant zombie', {
 
 Game.EntityRepository.define('slime', {
     name: 'slime',
-    character: 's',
+    character: 'S',
     foreground: 'lightGreen',
     maxHP: 25,
     attackValue: 3,
@@ -376,5 +435,8 @@ Game.EntityRepository.repoFrequency = {
     'L8': [{'kappa': 1}, {'mushroom man': 1}, {'poison toad': 1}],
     'L9': [{'kappa': 1}, {'mushroom man': 1}, {'poison toad': 1}, {'piranha': 1}, {'bee':1}],
     'L10': [{'kappa': 1}, {'mushroom man': 1}, {'poison toad': 1}, {'piranha': 1}, {'bee':1}],
-    'L11': [{'kappa': 1}, {'mushroom man': 1}, {'poison toad': 1}, {'piranha': 1}, {'bee':1}]
+    'L11': [{'kappa': 1}, {'mushroom man': 1}, {'poison toad': 1}, {'piranha': 1}, {'bee':1}],
+    'L12': [{'zombie': 2}, {'slime': 1}, {'skeleton': 6}, {'golem': 1}],
+    'L13': [{'zombie': 2}, {'slime': 1}, {'skeleton': 6}, {'golem': 2}, {'bat': 2}],
+    'L14': [{'zombie': 2}, {'slime': 1}, {'skeleton': 6}, {'golem': 2}]
 }
