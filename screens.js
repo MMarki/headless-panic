@@ -62,6 +62,7 @@ Game.Screen.playScreen = {
         //Create map
         this._map = new Game.Map(tiles, this._player);
         this._map.getRidOfBoringRooms(rooms);
+        this._map.cleanUpDoors();
         // Start the map's engine
         this._map.getEngine().start();
      },
@@ -426,6 +427,7 @@ Game.Screen.playScreen = {
             //pass the current player and the new tiles in
             this._map = new Game.Map(tiles, this._player, this._player.getItems());
             this._map.getRidOfBoringRooms(rooms);
+            this._map.cleanUpDoors();
             // Start the map's engine
             this._map.getEngine().start();
             if (playerHasKey){

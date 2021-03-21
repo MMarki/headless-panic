@@ -99,6 +99,59 @@ Game.Map.prototype.getEntityAt = function(x, y){
     return this._entities[x + ',' + y];
 }
 
+Game.Map.prototype.cleanUpDoors = function(){
+    let doorList = this.getAllTlesOfType(Game.Tile.doorTile);
+
+    for (let door of doorList){
+        if (this.checkAdjacentNumber(door.x, door.y, Game.Tile.wallTile) !== 2){
+            this._tiles[door.x][door.y] = Game.Tile.floorTile;
+            console.log('changing door');
+        }
+    }
+}
+
+Game.Map.prototype.getAllTlesOfType = function(tileType){
+    let tileTypeList = [];
+    let rowCount = 0;
+    let columnCount = 0;
+    for (let row of this._tiles) {
+        columnCount = 0;
+        for (let tile of row){
+            if (tile === tileType){
+                tileTypeList.push(
+                    {
+                        x: rowCount,
+                        y: columnCount
+                    }
+                )
+            }
+            columnCount++;
+        }
+        rowCount++;
+    }
+
+    return tileTypeList;
+}
+
+Game.Map.prototype.checkAdjacentNumber = function(x,y,tileType) {
+    let adjacentCount = 0;
+    
+    if (this._tiles[x - 1][y]  === tileType){
+        adjacentCount++;
+    }
+    if (this._tiles[x + 1][y]  === tileType){
+        adjacentCount++;
+    }
+    if (this._tiles[x][y - 1]  === tileType){
+        adjacentCount++;
+    }
+    if (this._tiles[x][y + 1]  === tileType) {
+        adjacentCount++;
+    } 
+    
+    return adjacentCount;
+}
+
 Game.Map.prototype.getRidOfBoringRooms = function (rooms) {
     for (room of rooms){
         if (Object.keys(room._doors).length === 1){
@@ -422,7 +475,6 @@ Game.Map.prototype.removeDynamicTile = function(tile) {
         this._tiles[x][y] = Game.Tile.floorTile;
     }
 
-    console.log("removing!");
     // If the entity is an actor, remove them from the scheduler
     if (tile.hasMixin('Actor')) {
         this._scheduler.remove(tile);
