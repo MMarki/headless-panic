@@ -429,6 +429,9 @@ Game.Screen.playScreen = {
             if (Game.getLevel() <= 6){
                 this._map.getRidOfBoringRooms(rooms);
             }
+            if (Game.getLevel() <= 6 && Game.getLevel() > 3){
+                this._map.deleteHalfOfDoors();
+            }
             this._map.cleanUpDoors();
             // Start the map's engine
             this._map.getEngine().start();

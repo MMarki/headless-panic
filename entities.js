@@ -132,7 +132,7 @@ Game.EntityRepository.define('goblin', {
 Game.EntityRepository.define('bee', {
     name: 'giant bee',
     character: 'B',
-    foreground: '#91C7B1',
+    foreground: '#D19A66',
     maxHP: 12,
     attackValue: 4,
     defenseValue: 10,

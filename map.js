@@ -123,6 +123,16 @@ Game.Map.prototype.cleanUpDoors = function(){
     }
 }
 
+Game.Map.prototype.deleteHalfOfDoors = function(){
+    let doorList = this.getAllTlesOfType(Game.Tile.doorTile);
+    let doorsToDelete = Math.floor(doorList.length/2);
+
+    for (let i = 0; i < doorsToDelete; i++){
+        let door = Game.pickRandomElement(doorList)
+        this._tiles[door.x][door.y] = Game.Tile.floorTile;
+    }
+}
+
 Game.Map.prototype.getAllTlesOfType = function(tileType){
     let tileTypeList = [];
     let rowCount = 0;

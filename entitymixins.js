@@ -392,6 +392,15 @@ Game.EntityMixins.Attacker = {
                             let newEffect = new Game.Effect(Math.floor(damage*1.5), 'poisoned');
                             target.setEffect(newEffect);
                         }
+                    } else if (this._paralytic){
+                        if (Math.random()*100 < 10){
+                            let newEffect = new Game.Effect(Math.floor(damage*1.5), 'paralyzed');
+                            target.setEffect(newEffect);
+                        }
+                    } else if (this._pusher){
+                        if (Math.random()*100 < 50){
+                           console.log("this will push the target, once we get that working.")
+                        }
                     }
                 } 
                 if (this.hasMixin('Acidic') && target.hasMixin('Affectible')){
@@ -962,6 +971,8 @@ Game.EntityMixins.Equipper = {
             this._toady = false;
             this._venomous = false;
             this._strengthened = false;
+            this._paralytic = false;
+            this._pusher = false;
             if(this._head._name === 'goblin head' || this._head._name === 'kappa head'){
                 this._protected = true;
             } else if (this._head._name === 'jackal head' || this._head._name === 'piranha head'){
@@ -974,6 +985,10 @@ Game.EntityMixins.Equipper = {
                 this._venomous = true;
             } else if (this._head._name === 'hydra head'){
                 this._strengthened = true;
+            } else if (this._head._name === 'bee head'){
+                this._paralytic = true;
+            } else if (this._head._name === 'golem head'){
+                this._pusher = true;
             }
         }
     },
@@ -989,6 +1004,10 @@ Game.EntityMixins.Equipper = {
                 this._toady = false;
             } else if (this._head._name === 'poison toad head'){
                 this._venomous = false;
+            } else if (this._head._name === 'bee head'){
+                this._paralytic = false;
+            } else if (this._head._name === 'golem head'){
+                this._pusher = false;
             }
         }
         this._head = null;
