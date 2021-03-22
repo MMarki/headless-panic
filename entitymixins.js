@@ -670,7 +670,7 @@ Game.EntityMixins.Thrower = {
         } else if (item._name === "health potion" & targetIsDestructible === true){
             target.modifyHPBy(item._healthValue);
         } else if (item._name === "life potion" & targetIsDestructible === true){
-            target.modifyMaxHPBy(Math.floor(target.getMaxHP()/4));
+            target.modifyMaxHPBy(Math.floor(target.getMaxHP()/5));
             target.modifyHPBy(item._healthValue);
         } else if (item._name === 'teleportation potion'){
             var x = target.getX();

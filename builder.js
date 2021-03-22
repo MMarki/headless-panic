@@ -20,7 +20,7 @@ Game.Builder = function(width, height, level) {
 
     let prefabsByArea = {
         'cellars': [prefabs.arena, prefabs.columns, prefabs.garden],
-        'sewers': [prefabs.arena, prefabs.garden, prefabs.cistern],
+        'sewers': [prefabs.arena, prefabs.garden],
         'caverns': [prefabs.arena]
     }
 
