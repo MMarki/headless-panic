@@ -380,7 +380,7 @@ Game.EntityRepository.define('rat', {
     attackValue: 1,
     accuracyValue: 30,
     sightRadius: 10,
-    description: "A mean little denizen of cellars and sewers. Its head is too small to fit your body.",
+    description: "Its head is too small to fit your body.",
     tasks: ['hunt', 'wander'],
     mixins: [Game.EntityMixins.TaskActor, Game.EntityMixins.Sight,
              Game.EntityMixins.Attacker, Game.EntityMixins.Destructible,

@@ -21,7 +21,8 @@ Game.Builder = function(width, height, level) {
     let prefabsByArea = {
         'cellars': [prefabs.arena, prefabs.columns, prefabs.garden],
         'sewers': [prefabs.arena, prefabs.garden],
-        'caverns': [prefabs.arena]
+        'caverns': [prefabs.arena],
+        'catacombs': [prefabs.arena, prefabs.columns]
     }
 
     let grassAmount = 2;
@@ -36,19 +37,26 @@ Game.Builder = function(width, height, level) {
         }
         this._setPrefab(Game.pickRandomElement(prefabsByArea['cellars']));
     }
-    this._setGrass();
-    this._setGrass();
-    this._setFerns();
-    this._setFerns();
+    if (level <= 11){
+        this._setGrass();
+        this._setGrass();
+        this._setFerns();
+        this._setFerns();
+    }
     //TO DO: Mines offshoot
     if (level > 3){
-        for (let i = 0; i < shallowWaterAmount; i++){
-            this._setShallowWater();
-        }
         if (level <= 6){
+            for (let i = 0; i < shallowWaterAmount; i++){
+                this._setShallowWater();
+            }
             this._setPrefab(Game.pickRandomElement(prefabsByArea['sewers']));
-        } else {
+        } else if (level <= 11) {
+            for (let i = 0; i < shallowWaterAmount; i++){
+                this._setShallowWater();
+            }
             this._setPrefab(Game.pickRandomElement(prefabsByArea['caverns']));
+        } else {
+            this._setPrefab(Game.pickRandomElement(prefabsByArea['catacombs']));
         }
         
     }
@@ -121,10 +129,10 @@ Game.Builder.prototype._generateLevel = function(level) {
     } else if (level > 11 && level <= 14) {
         // Set up the level generator
         options = {
-            roomWidth: [5, 15],
+            roomWidth: [5, 14],
             roomHeight: [5, 7],
             corridorLength: [0, 6],
-            dugPercentage: 0.55
+            dugPercentage: 0.35
         }
         generator = new ROT.Map.Digger(this._width, this._height, options);
     }

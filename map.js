@@ -30,7 +30,7 @@ Game.Map = function(tiles, player, items) {
         entitiesPerArea = 15;
     }
     if (Game.getLevel() > 11){
-        entitiesPerArea = 20;
+        entitiesPerArea = 22;
     }
     for (let i = 0; i < entitiesPerArea; i++) {
         // Add a random entity
@@ -53,7 +53,7 @@ Game.Map = function(tiles, player, items) {
         this.addEntityAtRandomPosition(Game.EntityRepository.create('hydra'), 1);
     }
     // if on L13, create one vampire
-    if (Game.getLevel() === 11){
+    if (Game.getLevel() === 13){
         this.addEntityAtRandomPosition(Game.EntityRepository.create('vampire'), 1);
     }
     

@@ -580,8 +580,10 @@ Game.Screen.playScreen = {
             return "Cellars " + Game.getLevel();
         } else if (Game.getLevel() < 7){
             return "Sewers " + (Game.getLevel() - 3);
-        } else {
+        } else if (Game.getLevel() < 12) {
             return "Caverns " + (Game.getLevel() - 6);
+        } else {
+            return "Catacombs " + (Game.getLevel() - 11);
         }
     }
 }
