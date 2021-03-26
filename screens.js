@@ -505,10 +505,19 @@ Game.Screen.playScreen = {
                             display.drawText(screenWidth + 1, 10 + j , '%c{' + tile._foreground + '}' + tile._char + ':  ' + 'stairs down');
                             j+=1;
                         }
+                        if (tile === Game.Tile.altarTile) {
+                            display.drawText(screenWidth + 1, 10 + j , '%c{' + tile._foreground + '}' + tile._char + ':  ' + 'wand altar');
+                            j+=1;
+                        }
                         // If we have items, we want to render the top most item
                         if (items) {
                             glyph = items[items.length - 1];
-                            display.drawText(screenWidth + 1, 10 + j , '%c{' + glyph._foreground + '}' + glyph._char + ':  ' + glyph._name);
+                            let strSuffix = '';
+                            console.log(glyph)
+                            if (glyph.hasMixin('Equippable')){
+                                strSuffix = (glyph.getStrengthRequirement() > 1 ? ' [' + glyph.getStrengthRequirement() + ']' : '');
+                            }
+                            display.drawText(screenWidth + 1, 10 + j , '%c{' + glyph._foreground + '}' + glyph._char + ':  ' + glyph._name + strSuffix);
                             j++;
                         }
                         // Update the foreground color in case our glyph changed

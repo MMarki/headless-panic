@@ -125,7 +125,7 @@ Game.Builder.prototype._generateLevel = function(level) {
        }
         // Set up the level generator
        generator = new ROT.Map.Cellular(this._width - 1, this._height - 1);
-       generator.randomize(0.4);
+       generator.randomize(0.45);
     } else if (level > 11 && level <= 14) {
         // Set up the level generator
         options = {
