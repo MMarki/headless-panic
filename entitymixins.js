@@ -386,6 +386,15 @@ Game.EntityMixins.Attacker = {
                     let newEffect = new Game.Effect(Math.floor(damage*1.5), 'paralyzed');
                     target.setEffect(newEffect);
                 }  
+                if (this.hasMixin('Sucker')){
+                    this.suck(damage/2);
+                }
+                if (this._sucker){
+                    this.modifyHPBy(damage/2);
+                }
+                if (this.hasMixin('Pusher') || this._pusher){
+                    this.push(target);
+                } 
                 if (this.hasMixin('Equipper') && target.hasMixin('Affectible')){
                     if (this._venomous){
                         if (Math.random()*100 < 30){
@@ -501,6 +510,33 @@ Game.EntityMixins.Unpoisonable = {
     groupName: 'Unpoisonable',
     init: function(template) {
         template;
+    }
+}
+
+Game.EntityMixins.Sucker = {
+    name: 'Sucker',
+    groupName: 'Sucker',
+    init: function(template) {
+        template;
+    },
+    suck: function(in_healAmount){
+        this.modifyHPBy(in_healAmount)
+    }
+}
+
+Game.EntityMixins.Pusher = {
+    name: 'Pusher',
+    groupName: 'Pusher',
+    init: function(template) {
+        template;
+    },
+    push: function(entity){
+        //get this position
+        //get entity position
+        //get difference in x and y
+        //use that to determine adjacency
+        //pus in oppositve direction, if it's walkable
+        console.log('pushing!')
     }
 }
 
@@ -973,6 +1009,7 @@ Game.EntityMixins.Equipper = {
             this._strengthened = false;
             this._paralytic = false;
             this._pusher = false;
+            this._sucker = false;
             if(this._head._name === 'goblin head' || this._head._name === 'kappa head'){
                 this._protected = true;
             } else if (this._head._name === 'jackal head' || this._head._name === 'piranha head'){
@@ -989,6 +1026,8 @@ Game.EntityMixins.Equipper = {
                 this._paralytic = true;
             } else if (this._head._name === 'golem head'){
                 this._pusher = true;
+            } else if (this._head._name === 'vampire head'){
+                this._sucker = true;
             }
         }
     },
@@ -1008,6 +1047,8 @@ Game.EntityMixins.Equipper = {
                 this._paralytic = false;
             } else if (this._head._name === 'golem head'){
                 this._pusher = false;
+            } else if (this._head._name === 'vampire head'){
+                this._sucker= false;
             }
         }
         this._head = null;

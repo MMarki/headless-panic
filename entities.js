@@ -313,14 +313,14 @@ Game.EntityRepository.define('golem', {
     mixins: [Game.EntityMixins.TaskActor, Game.EntityMixins.Sight,
              Game.EntityMixins.Attacker, Game.EntityMixins.Destructible,
              Game.EntityMixins.HeadDropper, Game.EntityMixins.Affectible, 
-             Game.EntityMixins.Unpoisonable]
+             Game.EntityMixins.Unpoisonable, Game.EntityMixins.Pusher]
 });
 
 Game.EntityRepository.define('vampire', {
     name: 'vampire', 
     character: 'V',
     foreground: 'white',
-    maxHP: 30,
+    maxHP: 40,
     attackValue: 20,
     defenseValue: 12,
     accuracyValue: 90,
@@ -332,7 +332,8 @@ Game.EntityRepository.define('vampire', {
     tasks: ['hunt', 'wander'],
     mixins: [Game.EntityMixins.TaskActor, Game.EntityMixins.Sight,
              Game.EntityMixins.Attacker, Game.EntityMixins.Destructible,
-             Game.EntityMixins.HeadDropper, Game.EntityMixins.Affectible]
+             Game.EntityMixins.HeadDropper, Game.EntityMixins.Affectible,
+             Game.EntityMixins.Sucker]
 });
 
 Game.EntityRepository.define('slime', {
