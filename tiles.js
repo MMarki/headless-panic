@@ -86,6 +86,7 @@ Game.Tile.doorTile = new Game.Tile({
     walkable: true,
     unthrowable: false,
     blocksLight: true,
+    diggable: true,
     description: 'a closed door'
 });
 
@@ -95,6 +96,7 @@ Game.Tile.openDoorTile = new Game.Tile({
     background: '#480C1C',
     walkable: true,
     blocksLight: false,
+    diggable: true,
     description: 'an open door'
 });
 

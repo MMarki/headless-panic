@@ -31,6 +31,7 @@ Game.ItemMixins.Edible = {
             let y = entity.getY();
             let map = entity.getMap();
             map.shatter(x,y);
+            Game.sendMessage(entity, 'The %s creates a shockwave!', this._name);
         } else if (this._name === 'fire potion'){
             let x = entity.getX();
             let y = entity.getY();

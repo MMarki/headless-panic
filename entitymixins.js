@@ -602,6 +602,7 @@ Game.EntityMixins.Thrower = {
         if (item.hasMixin(Game.ItemMixins.Edible)) {
             if (item._name === "shatter potion"){
                 this._map.shatter(endPointX, endPointY);
+                Game.sendMessage(this, 'The %s creates a shockwave!',item.getName());
             } else if (item._name === "poison potion"){
                 var tempList = []
                 tempList.push({x: endPointX, y: endPointY});

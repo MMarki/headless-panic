@@ -260,6 +260,12 @@ Game.Map.prototype.dig = function(x, y) {
     if (this.getTile(x, y).isDiggable()) {
         this._tiles[x][y] = Game.Tile.rubbleTile;
     }
+    const entity = this.getEntityAt(x, y);
+    if (entity){
+        if (entity.isNotMonster()){
+            entity.takeDamage(entity, 1, false);
+        }
+    }
 };
 
 Game.Map.prototype.changeTile = function(x, y, template) {
