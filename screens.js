@@ -513,7 +513,6 @@ Game.Screen.playScreen = {
                         if (items) {
                             glyph = items[items.length - 1];
                             let strSuffix = '';
-                            console.log(glyph)
                             if (glyph.hasMixin('Equippable')){
                                 strSuffix = (glyph.getStrengthRequirement() > 1 ? ' [' + glyph.getStrengthRequirement() + ']' : '');
                             }
@@ -852,17 +851,34 @@ Game.Screen.applyScreen = new Game.Screen.ItemListScreen({
             Game.sendMessage(this._player, "You drink %s.", [item.describeThe()]);
             item.eat(this._player);
             this._player.removeItem(key);
-            return true;
+            return false;
         } else if (item.hasMixin('Usable') && item.getUses() > 0){
             Game.Screen.aimAtScreen.setup(this._player, this._player.getX(), this._player.getY(), item, key);
             Game.Screen.playScreen.setSubScreen(Game.Screen.aimAtScreen);            
         } else if (item.hasMixin('Usable') && item.getUses() === 0){
             Game.sendMessage(this._player, "The %s is out of charges.", [item.describe()]);
-            console.log(".")   
         }
         return true;
     }
 });
+
+//This needs its own OK function because shooting a wand takes 2 screens, unlike a normal executeOkFunction
+Game.Screen.applyScreen.executeOkFunction = function(){
+    // Gather the selected items.
+    var selectedItems = {};
+    for (var key in this._selectedIndices) {
+        selectedItems[key] = this._items[key];
+    }
+    // Switch back to the play screen.
+    Game.Screen.playScreen.setSubScreen(undefined);
+    // Call the OK function and move to the aim screen WITHOUT ending the player's turn if returns true;
+    if (this._okFunction(selectedItems)) {
+        var blah;
+    } else {
+        // if it's edible, the _okayFunction will false and we'll unlock the map
+        this._player.getMap().getEngine().unlock();
+    }
+}
 
 Game.Screen.equipScreen = new Game.Screen.ItemListScreen({
     caption: 'Equip what?',
@@ -1215,7 +1231,7 @@ Game.Screen.ItemScreen.prototype.render = function(display) {
     display.drawText(0, 1, this._item.describe());
     var rowCount = 0;
     //open an item modal with:
-    if(this._item.hasMixin('Edible') || this._item.hasMixin('Usable')){
+    if(this._item.hasMixin('Edible') || (this._item.hasMixin('Usable') && this._item.getUses() > 0) ){
         display.drawText(0, rowCount + 3, "%c{yellow}A%c{white}pply");
         rowCount += 1;
     }
@@ -1260,7 +1276,7 @@ Game.Screen.ItemScreen.prototype.handleInput = function(inputType, inputData) {
                 this.executeOkFunction();
             } else if (item.hasMixin('Usable') && item.getUses() > 0){
                 Game.Screen.aimAtScreen.setup(this._player, this._player.getX(), this._player.getY(), item, this._key);
-                Game.Screen.playScreen.setSubScreen(Game.Screen.aimAtScreen);     
+                Game.Screen.playScreen.setSubScreen(Game.Screen.aimAtScreen);    
                 // if we go to aim screen, it handles okaying itself and closing out.       
             } else if (item.hasMixin('Usable') && item.getUses() === 0){
                 Game.sendMessage(this._player, "The %s is out of charges.", [item.describe()]); 
