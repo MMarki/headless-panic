@@ -633,16 +633,19 @@ Game.Screen.loseScreen = {
         var hintList = [
             "Avoiding fights is as good as winning them, especially if an enemy doesn't have a head to drop.",
             "Wielding a weapon with insufficient strength greatly reduces chance to hit and max hit.",
+            "Weapons and armor with Strength requirements show the required Strength level in brackets ([]).",
             "Wielding a weapon with excess strength increases chance to hit and max hit.",
             "Wearing an enemy's head gives you one of their powers.",
             "The further you throw a weapon, the less likely it is to hit an enemy.",
-            "Press X to eXplore automatically. It's not as smart as manual control, put it's much faster.",
+            "Press X to eXplore automatically. It's not as smart as manual control, but it's easier on your fingers.",
             "Press L to Look at new monsters to learn something about them.",
-            "The only way to raise your Strength (STR) is by drinking a Potion of Strength",
+            "The only way to raise your Strength (STR) is by drinking a Strength Potion.",
             "Weapons and armor have a Strength requirement. If you don't meet this requirement, the weapons and armor will perform MUCH worse.",
             "Weapons and armor have a Strength requirement. If you exceed this requirement, the performance of these items will scale with your strength.",
             "Weapons each have a damage type (crush, slash, or stab). Certain enemies are resistant to or vulnerable to certain damage types.",
             "Keep trying! Knowledge of monsters and items will drastically improve your chances of survival.",
+            "Strength Potions, Life Potions, and Altars are the most important items for tackling the dungeon.",
+            "When aiming a projectile, it's sometimes possible to hit targets that seem out of reach. Try adjusting the targeting reticule to a position behind them.",
         ];
         return hintList[Math.floor(Math.random() * hintList.length)];
     }
