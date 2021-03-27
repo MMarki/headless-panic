@@ -227,7 +227,7 @@ Game.EntityMixins.Destructible = {
             }
         } else {
             this._hp -= damage;
-            if( this._hp > 0 && this.hasMixin('Summoner') && this._splitOnHit === 1) {
+            if( this._hp > 0 && this.hasMixin('Summoner') && this._splitOnHit === 1 && this._summonWait === 0) {
                 var creature = this.summon('slime');
                 if (creature !== null){
                     creature._hp = Math.ceil(this._hp/2);

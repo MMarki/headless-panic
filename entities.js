@@ -346,6 +346,7 @@ Game.EntityRepository.define('slime', {
     sightRadius: 6,
     splitOnHit: 1,
     summonCount: 1,
+    summonWaitMax: 1,
     resistances: ['slash'],
     description: "A sentient blob of jelly that divides when hit.",
     tasks: ['hunt', 'wander'],
