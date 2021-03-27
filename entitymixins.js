@@ -299,6 +299,31 @@ Game.EntityMixins.Destructible = {
     }
 }
 
+let pushFunction = function(target){
+    targetPosition = '';
+    const targetX = target.getX();
+    const targetY = target.getY();
+    const thisX = this.getX();
+    const thisY = this.getY();
+
+    const xOffset = (targetX - thisX);
+    const yOffset = (targetY - thisY);
+
+    if (xOffset < 0){
+        target.tryMove(targetX - 1, targetY)
+    }
+    if (xOffset > 0){
+        target.tryMove(targetX + 1, targetY)
+    }
+    if (yOffset < 0){
+        target.tryMove(targetX, targetY - 1)
+    }
+    if (yOffset > 0){
+        target.tryMove(targetX, targetY + 1)
+    }
+    console.log('pushing!')
+}
+
 Game.EntityMixins.Attacker = {
     name: 'Attacker',
     groupName: 'Attacker',
@@ -386,14 +411,14 @@ Game.EntityMixins.Attacker = {
                     let newEffect = new Game.Effect(Math.floor(damage*1.5), 'paralyzed');
                     target.setEffect(newEffect);
                 }  
-                if (this.hasMixin('Sucker')){
+                if (this.hasMixin('Sucker') && target.hasMixin('Affectible')){
                     this.suck(damage/2);
                 }
-                if (this._sucker){
+                if (this._sucker && target.hasMixin('Affectible')){
                     this.modifyHPBy(damage/2);
                 }
-                if (this.hasMixin('Pusher') || this._pusher){
-                    this.push(target);
+                if (this.hasMixin('Pusher') && target.hasMixin('Affectible') && target.getHP() > 0){
+                    this.pushEntity(target);
                 } 
                 if (this.hasMixin('Equipper') && target.hasMixin('Affectible')){
                     if (this._venomous){
@@ -406,9 +431,9 @@ Game.EntityMixins.Attacker = {
                             let newEffect = new Game.Effect(Math.floor(damage*1.5), 'paralyzed');
                             target.setEffect(newEffect);
                         }
-                    } else if (this._pusher){
+                    } else if (this._pusher && target.getHP() > 0){
                         if (Math.random()*100 < 50){
-                           console.log("this will push the target, once we get that working.")
+                            this.pushEntity(target);
                         }
                     }
                 } 
@@ -530,14 +555,7 @@ Game.EntityMixins.Pusher = {
     init: function(template) {
         template;
     },
-    push: function(entity){
-        //get this position
-        //get entity position
-        //get difference in x and y
-        //use that to determine adjacency
-        //pus in oppositve direction, if it's walkable
-        console.log('pushing!')
-    }
+    pushEntity: pushFunction
 }
 
 Game.EntityMixins.Acidic = {
@@ -1026,6 +1044,9 @@ Game.EntityMixins.Equipper = {
                 this._paralytic = true;
             } else if (this._head._name === 'golem head'){
                 this._pusher = true;
+                if (!this.pushEntity){
+                    this.pushEntity = pushFunction;
+                }
             } else if (this._head._name === 'vampire head'){
                 this._sucker = true;
             }
