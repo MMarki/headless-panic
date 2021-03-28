@@ -408,8 +408,10 @@ Game.EntityMixins.Attacker = {
                     target.setEffect(newEffect);
                 }
                 if (this.hasMixin('Paralyzer') && target.hasMixin('Affectible')){
-                    let newEffect = new Game.Effect(Math.floor(damage*1.5), 'paralyzed');
-                    target.setEffect(newEffect);
+                    if (Math.random()*100 < 50){
+                        let newEffect = new Game.Effect(Math.floor(damage*1.5), 'paralyzed');
+                        target.setEffect(newEffect);
+                    }
                 }  
                 if (this.hasMixin('Sucker') && target.hasMixin('Affectible')){
                     this.suck(damage/2);
