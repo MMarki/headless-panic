@@ -34,6 +34,7 @@ Game.Screen.playScreen = {
         let builder = new Game.Builder(width,height, Game.getLevel())
         let tiles = builder.getTiles()
         let rooms = builder.getRooms();
+        let stairs = builder.getStairs();
         this._player = new Game.Entity(Game.PlayerTemplate);
         //starting player equipment
         var startingHead = Game.ItemRepository.create('head', {
@@ -60,7 +61,7 @@ Game.Screen.playScreen = {
         var dart = Game.ItemRepository.create('dart');
         this._player.addItem(dart);
         //Create map
-        this._map = new Game.Map(tiles, this._player);
+        this._map = new Game.Map(tiles, this._player, null, stairs);
         this._map.getRidOfBoringRooms(rooms);
         this._map.cleanUpDoors();
         // Start the map's engine
@@ -271,6 +272,7 @@ Game.Screen.playScreen = {
                         //we've hit our target in an auto-loop. Break out of the recursive function
                         return;
                     }
+                    // if we've manually pressed explore and we have no target, find a new target
                     for (let x = 1; x < map.getWidth() - 1; x++) {
                         for (let y = 1; y < map.getHeight() - 1; y++) {
                             if (!map.isExplored(x, y)) {
@@ -341,7 +343,37 @@ Game.Screen.playScreen = {
                         player.setPathingTarget(null);
                     }
                 } else {
-                    player.setPathingTarget(null);
+                    //if there are no more unexplored, start going to the stairs
+                    let nextToStairs = map.getWalkableByStairs()
+
+                    console.log(map._stairs);
+                    console.log(nextToStairs)
+
+                    let path = new ROT.Path.AStar(nextToStairs[0].x, nextToStairs[0].y, function(x, y) {
+                        let tile = map.getTile(x, y);
+                        return tile.isWalkable() && !tile._isHazard && tile !== Game.Tile.stairsDownTile;
+                    }, {topology: 4});
+
+                    let count = 0;
+                    let handleItemPickupContext = this.handleItemPickup.bind(Game.Screen.playScreen);
+                    let goDownStairsContext = this.goDownStairs.bind(Game.Screen.playScreen);
+                    path.compute(player.getX(), player.getY(), function(x, y) {
+                        if (count == 1) {
+                            if (!player.hasEffect('paralyzed')){
+                                player.tryMove(x, y);
+                                handleItemPickupContext()
+                                goDownStairsContext(); 
+                            } else {
+                                Game.sendMessage(this._player, "You are paralyzed!");
+                            }
+                        }
+                        count++;
+                    });
+
+                    if (path._todo.length !== 0){
+                        player.setPathingTarget(nextToStairs[0]);
+                    }
+                    
                 }
             }
             // Unlock the engine
@@ -424,8 +456,9 @@ Game.Screen.playScreen = {
             let builder = new Game.Builder(width,height, Game.getLevel())
             let tiles = builder.getTiles()
             let rooms = builder.getRooms();
+            let stairs = builder.getStairs();
             //pass the current player and the new tiles in
-            this._map = new Game.Map(tiles, this._player, this._player.getItems());
+            this._map = new Game.Map(tiles, this._player, this._player.getItems(), stairs);
             if (Game.getLevel() <= 6){
                 this._map.getRidOfBoringRooms(rooms);
             }

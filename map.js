@@ -1,14 +1,15 @@
-Game.Map = function(tiles, player, items) {
+Game.Map = function(tiles, player, items, stairs) {
     this._tiles = tiles;
     // cache the width and height based
     // on the length of the dimensions of
     // the tiles array
     this._width = tiles.length;
     this._height = tiles[0].length;
+    this._stairs = stairs;
     // create a hash table which will hold the entities
     this._entities = {};
     // Create a table which will hold the items
-    if (items <= null){
+    if (items !== null){
         this._items = items;
     } else {
         this._items = {};
@@ -97,6 +98,38 @@ Game.Map.prototype.getWidth = function() {
 };
 Game.Map.prototype.getHeight = function() {
     return this._height;
+};
+Game.Map.prototype.getWalkableByStairs = function() {
+    walkableByStairs = []
+    let x = this._stairs.x
+    let y = this._stairs.y
+    
+    if (this._tiles[x - 1][y].isWalkable()){
+        walkableByStairs.push({
+            x: x - 1,
+            y: y
+        }); 
+    }
+    if (this._tiles[x + 1][y].isWalkable()){
+        walkableByStairs.push({
+            x: x + 1,
+            y: y
+        }); 
+    }
+    if (this._tiles[x][y - 1].isWalkable()){
+        walkableByStairs.push({
+            x: x,
+            y: y - 1
+        }); 
+    }
+    if (this._tiles[x][y + 1].isWalkable()) {
+        walkableByStairs.push({
+            x: x,
+            y: y + 1
+        }); 
+    }
+    
+    return walkableByStairs;
 };
 Game.Map.prototype.getEngine = function() {
     return this._engine;

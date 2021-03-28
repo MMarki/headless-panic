@@ -4,6 +4,7 @@ Game.Builder = function(width, height, level) {
     this._tiles = {};
     this._regions = {};
     this._rooms = {};
+    this._stairs = {};
 
     // Create a new cave at each level
     this._tiles = this._generateLevel(level);
@@ -63,6 +64,10 @@ Game.Builder = function(width, height, level) {
     this._setPrefab(prefabs.arena);
     this._setStairs(level);
 };
+
+Game.Builder.prototype.getStairs = function () {
+    return this._stairs;
+}
 
 Game.Builder.prototype.getTiles = function () {
     return this._tiles;
@@ -258,8 +263,16 @@ Game.Builder.prototype._setStairs = function(levelNumber) {
         if(this._checkAdjacent(match.x, match.y, Game.Tile.floorTile)){
             if (levelNumber != 3 && levelNumber != 6 && levelNumber != 11){
                 this._tiles[match.x][match.y] = Game.Tile.stairsDownTile;
+                this._stairs = {
+                    x: match.x,
+                    y: match.y
+                }
             } else {
                 this._tiles[match.x][match.y] = Game.Tile.stairsDownTileLocked;
+                this._stairs = {
+                    x: match.x,
+                    y: match.y
+                }
             }
             
             break
