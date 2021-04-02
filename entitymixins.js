@@ -380,6 +380,8 @@ Game.EntityMixins.Attacker = {
                         strengthModifier =  strengthGap;
                     }
                     damageType = this.getWeapon().getDamageType();
+                } else {
+                    strengthModifier = this.getStrengthValue();
                 }
             }
 
@@ -721,15 +723,16 @@ Game.EntityMixins.Thrower = {
         }
         
         //handle thrown potions
+        console.log("itemname:" + item._name);
         if( item._potionEffect !== null && item._potionEffect !== undefined){
             console.log("setting potion effect:" + item._potionEffect);
             target.setEffect(item._potionEffect);
-        } else if (item._name === "health potion" & targetIsDestructible === true){
+        } else if (item._name === "health potion" && targetIsDestructible === true){
             target.modifyHPBy(item._healthValue);
-        } else if (item._name === "life potion" & targetIsDestructible === true){
+        } else if (item._name === "life potion" && targetIsDestructible === true){
             target.modifyMaxHPBy(Math.floor(target.getMaxHP()/5));
             target.modifyHPBy(item._healthValue);
-        } else if (item._name === 'teleportation potion'){
+        } else if (item._name === 'teleport potion'){
             var x = target.getX();
             var y = target.getY();
             var newX = 0;
