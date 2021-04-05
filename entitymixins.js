@@ -786,28 +786,43 @@ Game.EntityMixins.Summoner = {
         }
         var map = this.getMap();
         var alreadySummoned = 0; 
-        for (var x = -1; x < 2; x++){
-            for (var y = -1; y < 2; y++){
-                if (alreadySummoned >= this._summonCount) {
-                    break;
-                }
-                var newX = this.getX() + x;
-                var newY = this.getY() + y;
 
-                if (x == 0 && y == 0 || map.getEntityAt(newX, newY) != null){
-                    continue;
-                }
+        let orderedSummonCoordinates = [
+            [0,1],
+            [0,-1],
+            [1,0],
+            [-1,0],
+            [1,1],
+            [1,-1],
+            [-1,1],
+            [-1,-1]
+        ]
 
-                var creature = Game.EntityRepository.create(entityName);
+        for (coords of orderedSummonCoordinates){
+            let x = coords[0];
+            let y = coords[1];
 
-                map.addEntity(creature)
-                
-                if (!creature.tryMove(newX, newY)){
-                    map.removeEntity(creature);
-                    continue;
-                }
-                alreadySummoned++;
+            if (alreadySummoned >= this._summonCount) {
+                break;
             }
+
+            let newX = this.getX() + x;
+            let newY = this.getY() + y;
+
+            if (x == 0 && y == 0 || map.getEntityAt(newX, newY) != null){
+                continue;
+            }
+
+            var creature = Game.EntityRepository.create(entityName);
+
+            map.addEntity(creature);
+            
+            if (!creature.tryMove(newX, newY)){
+                map.removeEntity(creature);
+                continue;
+            }
+
+            alreadySummoned++;
         }
         this._summonWait = this._summonWaitMax;
         if (creature !== undefined){
