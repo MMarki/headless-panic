@@ -495,10 +495,14 @@ Game.Screen.playScreen = {
                 Game.sendMessage(this._player, "Your inventory is full! Nothing was picked up.");
             }
         } else {
+            if (this._player.getFilledItems() != 20){
                 // Show the pickup screen if there are any items
                 Game.Screen.pickupScreen.setup(this._player, items);
                 this.setSubScreen(Game.Screen.pickupScreen);
                 return;
+            } else {
+                Game.sendMessage(this._player, "Your inventory is full! Nothing was picked up.");
+            }      
         }
     },
     renderTiles(display){
@@ -730,6 +734,7 @@ Game.Screen.ItemListScreen.prototype.render = function(display) {
         let isWieldable = false;
         let isHeadible = false;
         let isUsable = false;
+        let isEdible = false;
         if (this._items[i]) {
             // Get the letter matching the item's index
             let letter = letters.substring(i, i + 1);
@@ -761,6 +766,9 @@ Game.Screen.ItemListScreen.prototype.render = function(display) {
                 isUsable = true;
                 suffix += ' (' + this._items[i].getUses() + '/' + this._items[i].getMaxUses() + ')';
             }
+            if (this._items[i].hasMixin('Edible')) {
+                isEdible = true;
+            }
             if (this._items[i].hasMixin('Equippable')) {
                 isWearable = this._items[i].isWearable();
                 isWieldable = this._items[i].isWieldable();
@@ -777,6 +785,7 @@ Game.Screen.ItemListScreen.prototype.render = function(display) {
                 isWearable: isWearable,
                 isWieldable: isWieldable,
                 isHeadible: isHeadible,
+                isEdible: isEdible,
                 itemName: this._items[i].describe()
             } 
         } 
@@ -814,7 +823,8 @@ Game.Screen.ItemListScreen.prototype.sortItemsByType = function(itemList) {
     let wearArray = itemList.filter(item => item.isWearable);
     let wieldArray = itemList.filter(item => item.isWieldable && !item.isUsable);
     let useArray = itemList.filter(item => item.isUsable);
-    let otherArray = itemList.filter(item => !item.isHeadible && !item.isWearable && !item.isWieldable && !item.isUsable);
+    let potionArray = itemList.filter(item => !item.isHeadible && !item.isWearable && !item.isWieldable && !item.isUsable && item.isEdible);
+    let otherArray = itemList.filter(item => !item.isHeadible && !item.isWearable && !item.isWieldable && !item.isUsable && !item.isEdible);
     
     let sortByName = function(objList){
         objList.sort((a, b) => (a.itemName > b.itemName) ? 1 : -1);
@@ -825,6 +835,7 @@ Game.Screen.ItemListScreen.prototype.sortItemsByType = function(itemList) {
     wearArray = sortByName(wearArray);
     wieldArray = sortByName(wieldArray);
     useArray = sortByName(useArray);
+    potionArray = sortByName(potionArray);
     otherArray = sortByName(otherArray);
 
     if (headArray.length > 0) {
@@ -839,14 +850,14 @@ Game.Screen.ItemListScreen.prototype.sortItemsByType = function(itemList) {
     if (useArray.length > 0) {
         useArray.unshift({string: '%c{#CCCCCC}WANDS'})
     }
+    if (potionArray.length > 0) {
+        potionArray.unshift({string: '%c{#CCCCCC}POTIONS'})
+    }
     if (otherArray.length > 0) {
-        otherArray.unshift({string: '%c{#CCCCCC}POTIONS'})
+        otherArray.unshift({string: '%c{#CCCCCC}OTHER'})
     }
 
-    let out_array = headArray.concat(wearArray).concat(wieldArray).concat(useArray).concat(otherArray);
-
-        console.log(out_array);
-
+    let out_array = headArray.concat(wearArray).concat(wieldArray).concat(useArray).concat(potionArray).concat(otherArray);
     return out_array;
 };
 

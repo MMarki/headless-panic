@@ -895,6 +895,15 @@ Game.EntityMixins.InventoryHolder = {
     getItems: function() {
         return this._items;
     },
+    getFilledItems: function() {
+        let filledItems = 0;
+        for (let itemSlot of this._items){
+            if (itemSlot !== null && itemSlot !== undefined){
+                filledItems += 1;
+            }
+        }
+        return filledItems;
+    },
     getItem: function(i) {
         return this._items[i];
     },
