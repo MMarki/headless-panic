@@ -495,10 +495,10 @@ Game.Screen.playScreen = {
                 Game.sendMessage(this._player, "Your inventory is full! Nothing was picked up.");
             }
         } else {
-            // Show the pickup screen if there are any items
-            Game.Screen.pickupScreen.setup(this._player, items);
-            this.setSubScreen(Game.Screen.pickupScreen);
-            return;
+                // Show the pickup screen if there are any items
+                Game.Screen.pickupScreen.setup(this._player, items);
+                this.setSubScreen(Game.Screen.pickupScreen);
+                return;
         }
     },
     renderTiles(display){
@@ -827,7 +827,25 @@ Game.Screen.ItemListScreen.prototype.sortItemsByType = function(itemList) {
     useArray = sortByName(useArray);
     otherArray = sortByName(otherArray);
 
+    if (headArray.length > 0) {
+        headArray.unshift({string: '%c{#CCCCCC}HEADS'})
+    }
+    if (wearArray.length > 0) {
+        wearArray.unshift({string: '%c{#CCCCCC}ARMOR'})
+    }
+    if (wieldArray.length > 0) {
+        wieldArray.unshift({string: '%c{#CCCCCC}WEAPONS'})
+    }
+    if (useArray.length > 0) {
+        useArray.unshift({string: '%c{#CCCCCC}WANDS'})
+    }
+    if (otherArray.length > 0) {
+        otherArray.unshift({string: '%c{#CCCCCC}POTIONS'})
+    }
+
     let out_array = headArray.concat(wearArray).concat(wieldArray).concat(useArray).concat(otherArray);
+
+        console.log(out_array);
 
     return out_array;
 };
