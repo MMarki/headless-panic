@@ -71,8 +71,8 @@ Game.Map = function(tiles, player, items, stairs) {
 
     console.log(emptyItemCount);
 
-    // 15 items per floor
-    for (let i = 0; i < 9; i++) {
+    // 8 items per floor
+    for (let i = 0; i < 8; i++) {
         // Add a random entity
         this.addItemAtRandomPosition(Game.ItemRepository.createRandomConstrained(Game.getLevel()));
     }
