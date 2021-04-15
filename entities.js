@@ -401,7 +401,7 @@ Game.EntityRepository.define('rat king', {
     sightRadius: 15,
     headHits: 3,
     summonWaitMax: 25,
-    description: "A giant rat nestled in a ball of its dead rivals",
+    description: "A huge rat nestled in a ball of its dead rivals",
     tasks: ['summonMonster', 'hunt', 'wander'],
     mixins: [Game.EntityMixins.TaskActor, Game.EntityMixins.Sight,
              Game.EntityMixins.Attacker, Game.EntityMixins.Destructible,

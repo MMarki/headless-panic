@@ -538,8 +538,12 @@ Game.Screen.playScreen = {
                         let items = map.getItemsAt(x, y);
                         let tile = map.getTile(x,y);
                         //If we have stairs, we want to render them in the sidebar
-                        if (tile === Game.Tile.stairsDownTileLocked || tile === Game.Tile.stairsDownTile) {
+                        if ( tile === Game.Tile.stairsDownTile) {
                             display.drawText(screenWidth + 1, 10 + j , '%c{' + tile._foreground + '}' + tile._char + ':  ' + 'stairs down');
+                            j+=1;
+                        }
+                        if ( tile === Game.Tile.stairsDownTileLocked) {
+                            display.drawText(screenWidth + 1, 10 + j , '%c{' + tile._foreground + '}' + tile._char + ':  ' + 'locked stairs down');
                             j+=1;
                         }
                         if (tile === Game.Tile.altarTile) {
