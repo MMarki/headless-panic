@@ -252,7 +252,7 @@ Game.EntityRepository.define('acid jelly', {
     accuracyValue: 80,
     sightRadius: 12,
     resistances: ['slash'],
-    description: "A caustic, lurching pile of jelly.",
+    description: "A caustic, lurching pile. Melts armor.",
     tasks: ['hunt', 'wander'],
     mixins: [Game.EntityMixins.TaskActor, Game.EntityMixins.Sight,
              Game.EntityMixins.Attacker, Game.EntityMixins.Destructible,

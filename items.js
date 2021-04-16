@@ -365,7 +365,7 @@ Game.ItemRepository.define('wand of poison', {
     useRange: [1,2],
     rarity: 'RARE',
     depth: 'ANY',
-    mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable, Game.ItemMixins.Enchantable, Game.ItemMixins.Usable],
+    mixins: [Game.ItemMixins.Throwable, Game.ItemMixins.Enchantable, Game.ItemMixins.Usable],
     itemLevel: 2
 }, {
     disableRandomCreation: false
@@ -383,7 +383,7 @@ Game.ItemRepository.define('wand of fire', {
     useRange: [1,1],
     rarity: 'RARE',
     depth: 'ANY',
-    mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable, Game.ItemMixins.Enchantable, Game.ItemMixins.Usable],
+    mixins: [Game.ItemMixins.Throwable, Game.ItemMixins.Enchantable, Game.ItemMixins.Usable],
     itemLevel: 3
 }, {
     disableRandomCreation: false
@@ -401,7 +401,7 @@ Game.ItemRepository.define('wand of blinking', {
     useRange: [2,3],
     rarity: 'UNCOM',
     depth: 'ANY',
-    mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable, Game.ItemMixins.Enchantable, Game.ItemMixins.Usable],
+    mixins: [Game.ItemMixins.Throwable, Game.ItemMixins.Enchantable, Game.ItemMixins.Usable],
     itemLevel: 1
 }, {
     disableRandomCreation: false
