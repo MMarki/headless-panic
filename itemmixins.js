@@ -84,6 +84,7 @@ Game.ItemMixins.Equippable = {
         this._wearable = template['wearable'] || false;
         this._headible = template['headible'] || false;
         this._headHits = template['headHits'] || 1;
+        this._power = template['power'] || '';
         this._strengthRequirement = template['strengthRequirement'] || 1;
     },
     getAttackValue: function() {
@@ -112,6 +113,9 @@ Game.ItemMixins.Equippable = {
     },
     getStrengthRequirement() {
         return this._strengthRequirement;
+    },
+    getPowerDescription() {
+        return this._power;
     }
 };
 

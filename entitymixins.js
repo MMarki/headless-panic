@@ -1007,6 +1007,7 @@ Game.EntityMixins.HeadDropper = {
     init: function(template) {
         this._headDropRate = 100;
         this._headHits = template["headHits"] || 1;
+        this._headPower = template["headPower"] || '';
     },
     tryDropHead: function() {
         if (Math.round(Math.random() * 100) < this._headDropRate) {
@@ -1015,7 +1016,8 @@ Game.EntityMixins.HeadDropper = {
                 Game.ItemRepository.create('head', {
                     name: this._name + ' head',
                     foreground: this._foreground,
-                    headHits: this._headHits
+                    headHits: this._headHits, 
+                    power: this._headPower
                 }));
         }
     }

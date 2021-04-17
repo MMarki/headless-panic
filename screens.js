@@ -1318,6 +1318,10 @@ Game.Screen.ItemScreen.prototype.render = function(display) {
         rowCount += 1;
     }
     display.drawText(0,rowCount + 3, "%c{yellow}D%c{white}rop");
+    rowCount += 1;
+    if (this._item.isHeadible()){
+        display.drawText(0,rowCount + 4, this._item.getPowerDescription());
+    }
 };
 
 Game.Screen.ItemScreen.prototype.executeOkFunction = function() {

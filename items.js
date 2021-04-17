@@ -110,7 +110,8 @@ Game.ItemRepository.define('head', {
     name: 'head',
     character: '\u25CB',
     headible: true,
-    mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable]
+    mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable],
+    power: ''
 }, {
     disableRandomCreation: true
 });
