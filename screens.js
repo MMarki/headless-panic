@@ -152,6 +152,28 @@ Game.Screen.playScreen = {
         // If the game is over, enter will bring the user to the losing screen.
         if (this._gameEnded) {
             if (inputType === 'keydown' && inputData.keyCode === ROT.KEYS.VK_RETURN) {
+                Game.Screen.loseScreen.deathInfo.maxHP = this._player.getMaxHP();
+        
+                let strengthGap = 0;
+                let strengthModifier = 0;
+                let damageType = 'crush';
+                let strengthValue = this._player.getStrengthValue();
+                let attackValue = this._player.getAttackValue();
+                let defenseValue = this._player.getDefenseValue();
+                if (this._player.getWeapon() !== null){
+                    damageType = this._player.getWeapon().getDamageType();
+                    strengthGap = strengthValue - this._player.getWeapon().getStrengthRequirement();
+                    if (strengthGap <  0){
+                        strengthModifier = 4 * strengthGap;
+                    } else if (strengthGap > 0){
+                        strengthModifier =  strengthGap;
+                    }
+                }
+
+                Game.Screen.loseScreen.deathInfo.strength = strengthValue;
+                Game.Screen.loseScreen.deathInfo.armor = defenseValue;
+                Game.Screen.loseScreen.deathInfo.weapon = ((attackValue + strengthModifier) + ' ' + damageType);
+        
                 Game.switchScreen(Game.Screen.loseScreen);
             }
             // Return to make sure the user can't still play
@@ -449,6 +471,12 @@ Game.Screen.playScreen = {
             }
         }
         if (tile === Game.Tile.stairsDownTile || tile === Game.Tile.stairsDownTileLocked && playerHasKey){
+            if (Game.getLevel() === 1){
+                Game.switchScreen(Game.Screen.winScreen);
+                Game.refresh();
+                return;
+            }
+            
             var width = Game._screenWidth;
             var height = Game._screenHeight;
             // Create our map from tiles and player
@@ -639,18 +667,13 @@ Game.Screen.playScreen = {
 
 // Define our winning screen
 Game.Screen.winScreen = {
-    enter: function() {    console.log("Entered win screen."); },
+    enter: function() { console.log("Entered win screen."); },
     exit: function() { console.log("Exited win screen."); },
     render: function(display) {
         // Render our prompt to the screen
-        for (var i = 0; i < 22; i++) {
-            // Generate random background colors
-            var r = Math.round(Math.random() * 255);
-            var g = Math.round(Math.random() * 255);
-            var b = Math.round(Math.random() * 255);
-            var background = ROT.Color.toRGB([r, g, b]);
-            display.drawText(2, i + 1, "%b{" + background + "}You win!");
-        }
+        display.drawText(2, 1, "%c{yellow}You win the Headless Panic Beta!");
+        display.drawText(2, 3, "Thank you for playing!");
+        display.drawText(2, 5, "Come back to play the expanded game next month.");
     },
     handleInput: function(inputType, inputData) {
         // Nothing to do here      
@@ -663,12 +686,23 @@ Game.Screen.loseScreen = {
     exit: function() { console.log("Exited lose screen."); },
     render: function(display) {
         // Render our prompt to the screen
-        display.drawText(2, 1, "You died.");
-        display.drawText(2, 3, this.chooseHint());
-        display.drawText(2, 5, "%c{yellow}Refresh your browser tab to restart.");
+        display.drawText(2, 1, "You died on LVL " + this.deathInfo.level + " of 14.");
+        display.drawText(2, 3, "STRN: " + this.deathInfo.strength);
+        display.drawText(2, 4, "MAX HP: " + this.deathInfo.maxHP);
+        display.drawText(2, 5, "DMG: " + this.deathInfo.weapon);
+        display.drawText(2, 6, "ARMR: " + this.deathInfo.armor);
+        display.drawText(2, 8, this.chooseHint());
+        display.drawText(2, 10, "%c{yellow}Refresh your browser tab to restart.");
     },
     handleInput: function(inputType, inputData) {
         // Nothing to do here      
+    },
+    deathInfo: {
+        strength: 1,
+        maxHP: 40,
+        level: 1,
+        weapon: 0,
+        armor: 0
     },
     chooseHint: function(){
         var hintList = [
