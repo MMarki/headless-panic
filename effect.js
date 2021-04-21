@@ -18,12 +18,12 @@ Game.Effect.prototype.update = function() {
 
 Game.Effect.prototype.getEffectColor = function(name) {
     if (name === 'poisoned'){
-        return '#00EE00';
+        return Game.Colors.poisonColor;
     } else if (name === 'burning'){
-        return '#EE4411';
+        return Game.Colors.burningColor;
     } else if (name === 'blind' || name === 'paralyzed'){
-        return '#EE22EE';
+        return Game.Colors.blindColor;
     } else {
-        return '#4D6CFA';
+        return Game.Colors.effectDefault;
     }
 }

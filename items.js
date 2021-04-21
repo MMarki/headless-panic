@@ -8,12 +8,11 @@ Game.ItemRepository = new Game.Repository('items', Game.Item);
 
 // Magic Sensitivity
 // Holy Potion, clears curses from items in inventory
-// Protection potion
 
 Game.GatedItemRepository.define('life potion', {
     name: 'life potion',
     character: '!',
-    foreground: '#F2EC2D',
+    foreground: Game.Colors.yellow,
     healthValue: 100,
     potionEffect: null,
     mixins: [Game.ItemMixins.Edible, Game.ItemMixins.Throwable]
@@ -22,7 +21,7 @@ Game.GatedItemRepository.define('life potion', {
 Game.GatedItemRepository.define('strength potion', {
     name: 'strength potion',
     character: '!',
-    foreground: '#F2EC2D',
+    foreground: Game.Colors.yellow,
     potionEffect: null,
     mixins: [Game.ItemMixins.Edible, Game.ItemMixins.Throwable]
 });
@@ -30,7 +29,7 @@ Game.GatedItemRepository.define('strength potion', {
 Game.ItemRepository.define('poison potion', {
     name: 'poison potion',
     character: '!',
-    foreground: '#F2EC2D',
+    foreground: Game.Colors.yellow,
     rarity: 'COMMON',
     depth: 'ANY',
     mixins: [Game.ItemMixins.Edible, Game.ItemMixins.Throwable],
@@ -40,7 +39,7 @@ Game.ItemRepository.define('poison potion', {
 Game.ItemRepository.define('fire potion', {
     name: 'fire potion',
     character: '!',
-    foreground: '#F2EC2D',
+    foreground: Game.Colors.yellow,
     rarity: 'COMMON',
     depth: 'ANY',
     mixins: [Game.ItemMixins.Edible, Game.ItemMixins.Throwable],
@@ -50,7 +49,7 @@ Game.ItemRepository.define('fire potion', {
 Game.ItemRepository.define('teleportation potion', {
     name: 'teleport potion',
     character: '!',
-    foreground: '#F2EC2D',
+    foreground: Game.Colors.yellow,
     potionEffect: null,
     rarity: 'COMMON',
     depth: 'ANY',
@@ -61,7 +60,7 @@ Game.ItemRepository.define('teleportation potion', {
 Game.ItemRepository.define('knowledge potion', {
     name: 'knowledge potion',
     character: '!',
-    foreground: '#F2EC2D',
+    foreground: Game.Colors.yellow,
     potionEffect: {
         duration: 30,
         name: "knowledgeable"
@@ -75,7 +74,7 @@ Game.ItemRepository.define('knowledge potion', {
 Game.ItemRepository.define('health potion', {
     name: 'health potion',
     character: '!',
-    foreground: '#F2EC2D',
+    foreground: Game.Colors.yellow,
     healthValue: 40,
     potionEffect: null,
     rarity: 'COMMON',
@@ -87,7 +86,7 @@ Game.ItemRepository.define('health potion', {
 Game.ItemRepository.define('shatter potion', {
     name: 'shatter potion',
     character: '!',
-    foreground: '#F2EC2D',
+    foreground: Game.Colors.yellow,
     potionEffect: null,
     rarity: 'COMMON',
     depth: 'ANY',
@@ -98,7 +97,7 @@ Game.ItemRepository.define('shatter potion', {
 Game.ItemRepository.define('darkness potion', {
     name: 'darkness potion',
     character: '!',
-    foreground: '#F2EC2D',
+    foreground: Game.Colors.yellow,
     potionEffect: null,
     rarity: 'COMMON',
     depth: 'ANY',
@@ -119,7 +118,7 @@ Game.ItemRepository.define('head', {
 Game.ItemRepository.define('key', {
     name: 'key',
     character: '-',
-    foreground: '#F2EC2D',
+    foreground: Game.Colors.yellow,
     throwBreakChance: 0,
     mixins: [Game.ItemMixins.Throwable]
 }, {
@@ -130,7 +129,7 @@ Game.ItemRepository.define('key', {
 Game.ItemRepository.define('dart', {
     name: 'dart',
     character: '\u16DA',
-    foreground: '#F2EC2D',
+    foreground: Game.Colors.yellow,
     attackValue: 1,
     thrownAttackValue: 4,
     throwBreakChance: 100,
@@ -148,7 +147,7 @@ Game.ItemRepository.define('dart', {
 Game.ItemRepository.define('javelin', {
     name: 'javelin',
     character: '\u16A8',
-    foreground: '#F2EC2D',
+    foreground: Game.Colors.yellow,
     attackValue: 3,
     thrownAttackValue: 8,
     throwBreakChance: 100,
@@ -167,7 +166,7 @@ Game.ItemRepository.define('javelin', {
 Game.ItemRepository.define('incendiary dart', {
     name: 'incendiary dart',
     character: '\u16DB',
-    foreground: '#F2EC2D',
+    foreground: Game.Colors.yellow,
     attackValue: 1,
     thrownAttackValue: 4,
     throwBreakChance: 100,
@@ -185,7 +184,7 @@ Game.ItemRepository.define('incendiary dart', {
 Game.ItemRepository.define('dagger', {
     name: 'dagger',
     character: '\u07D9',
-    foreground: '#F2EC2D',
+    foreground: Game.Colors.yellow,
     attackValue: 2,
     thrownAttackValue: 3,
     strengthRequirement: 1,
@@ -203,7 +202,7 @@ Game.ItemRepository.define('dagger', {
 Game.ItemRepository.define('club', {
     name: 'club',
     character: '\u0669',
-    foreground: '#F2EC2D',
+    foreground: Game.Colors.yellow,
     attackValue: 2,
     thrownAttackValue: 1,
     strengthRequirement: 1,
@@ -220,7 +219,7 @@ Game.ItemRepository.define('club', {
 Game.ItemRepository.define('longsword', {
     name: 'longsword',
     character: '\u07D9',
-    foreground: '#F2EC2D',
+    foreground: Game.Colors.yellow,
     attackValue: 5,
     thrownAttackValue: 3,
     strengthRequirement: 2,
@@ -237,7 +236,7 @@ Game.ItemRepository.define('longsword', {
 Game.ItemRepository.define('greatclub', {
     name: 'greatclub',
     character: '\u07C9',
-    foreground: '#F2EC2D',
+    foreground: Game.Colors.yellow,
     attackValue: 5,
     thrownAttackValue: 2,
     strengthRequirement: 2,
@@ -254,7 +253,7 @@ Game.ItemRepository.define('greatclub', {
 Game.ItemRepository.define('rapier', {
     name: 'rapier',
     character: '\u07D9',
-    foreground: '#F2EC2D',
+    foreground: Game.Colors.yellow,
     attackValue: 5,
     thrownAttackValue: 3,
     strengthRequirement: 1,
@@ -271,7 +270,7 @@ Game.ItemRepository.define('rapier', {
 Game.ItemRepository.define('axe', {
     name: 'axe',
     character: '\u16B5',
-    foreground: '#F2EC2D',
+    foreground: Game.Colors.yellow,
     attackValue: 6,
     thrownAttackValue: 3,
     strengthRequirement: 3,
@@ -288,7 +287,7 @@ Game.ItemRepository.define('axe', {
 Game.ItemRepository.define('broadsword', {
     name: 'broadsword',
     character: '\u16B5',
-    foreground: '#F2EC2D',
+    foreground: Game.Colors.yellow,
     attackValue: 6,
     thrownAttackValue: 2,
     strengthRequirement: 3,
@@ -305,7 +304,7 @@ Game.ItemRepository.define('broadsword', {
 Game.ItemRepository.define('spear', {
     name: 'spear',
     character: '\u2191',
-    foreground: '#F2EC2D',
+    foreground: Game.Colors.yellow,
     attackValue: 4,
     thrownAttackValue: 4,
     strengthRequirement: 1,
@@ -322,7 +321,7 @@ Game.ItemRepository.define('spear', {
 Game.ItemRepository.define('mace', {
     name: 'mace',
     character: '\u07C9',
-    foreground: '#F2EC2D',
+    foreground: Game.Colors.yellow,
     attackValue: 4,
     thrownAttackValue: 2,
     strengthRequirement: 1,
@@ -339,7 +338,7 @@ Game.ItemRepository.define('mace', {
 Game.ItemRepository.define('scimitar', {
     name: 'scimitar',
     character: '\u1489',
-    foreground: '#F2EC2D',
+    foreground: Game.Colors.yellow,
     attackValue: 4,
     thrownAttackValue: 2,
     strengthRequirement: 1,
@@ -357,7 +356,7 @@ Game.ItemRepository.define('scimitar', {
 Game.ItemRepository.define('wand of poison', {
     name: 'wand of poison',
     character: '~',
-    foreground: '#F2EC2D',
+    foreground: Game.Colors.yellow,
     attackValue: 1,
     thrownAttackValue: 1,
     strengthRequirement: 1,
@@ -375,7 +374,7 @@ Game.ItemRepository.define('wand of poison', {
 Game.ItemRepository.define('wand of fire', {
     name: 'wand of fire',
     character: '~',
-    foreground: '#F2EC2D',
+    foreground: Game.Colors.yellow,
     attackValue: 1,
     thrownAttackValue: 1,
     strengthRequirement: 1,
@@ -393,7 +392,7 @@ Game.ItemRepository.define('wand of fire', {
 Game.ItemRepository.define('wand of blinking', {
     name: 'wand of blinking',
     character: '~',
-    foreground: '#F2EC2D',
+    foreground: Game.Colors.yellow,
     attackValue: 1,
     thrownAttackValue: 1,
     strengthRequirement: 1,
@@ -412,7 +411,7 @@ Game.ItemRepository.define('wand of blinking', {
 Game.ItemRepository.define('leather', {
     name: 'leather armor',
     character: '[',
-    foreground: '#F2EC2D',
+    foreground: Game.Colors.yellow,
     defenseValue: 2,
     strengthRequirement: 1,
     wearable: true,
@@ -427,7 +426,7 @@ Game.ItemRepository.define('leather', {
 Game.ItemRepository.define('studded', {
     name: 'studded armor',
     character: '[',
-    foreground: '#F2EC2D',
+    foreground: Game.Colors.yellow,
     defenseValue: 3,
     strengthRequirement: 1,
     wearable: true,
@@ -442,7 +441,7 @@ Game.ItemRepository.define('studded', {
 Game.ItemRepository.define('scalemail', {
     name: 'scalemail',
     character: '[',
-    foreground: '#F2EC2D',
+    foreground: Game.Colors.yellow,
     defenseValue: 4,
     strengthRequirement: 2,
     wearable: true,
@@ -457,7 +456,7 @@ Game.ItemRepository.define('scalemail', {
 Game.ItemRepository.define('chainmail', {
     name: 'chainmail',
     character: '[',
-    foreground: '#F2EC2D',
+    foreground: Game.Colors.yellow,
     defenseValue: 6,
     strengthRequirement: 2,
     wearable: true,
@@ -472,7 +471,7 @@ Game.ItemRepository.define('chainmail', {
 Game.ItemRepository.define('splintmail', {
     name: 'splintmail',
     character: '[',
-    foreground: '#F2EC2D',
+    foreground: Game.Colors.yellow,
     defenseValue: 7,
     strengthRequirement: 3,
     wearable: true,
@@ -487,7 +486,7 @@ Game.ItemRepository.define('splintmail', {
 Game.ItemRepository.define('platemail', {
     name: 'platemail',
     character: '[',
-    foreground: '#F2EC2D',
+    foreground: Game.Colors.yellow,
     defenseValue: 8,
     strengthRequirement: 4,
     wearable: true,

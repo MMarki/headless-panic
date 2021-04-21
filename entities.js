@@ -23,7 +23,7 @@ Game.EntityRepository.define('barrel', {
     name: 'barrel',
     character: '#',
     foreground: "#C4B9AC",
-    background: "#B57F50",
+    background: Game.Colors.barrelColor,
     explodeTile: 'wineTile',
     explodeSize: 6,
     maxHP: 1,
@@ -35,7 +35,7 @@ Game.EntityRepository.define('barrel', {
 Game.EntityRepository.define('bat', {
     name: 'bat',
     character: 'b',
-    foreground: '#f1f7ed',
+    foreground: Game.Colors.batColor,
     maxHP: 5,
     attackValue: 4,
     accuracyValue: 50,
@@ -49,7 +49,7 @@ Game.EntityRepository.define('bat', {
 Game.EntityRepository.define('jackal', {
     name: 'jackal',
     character: 'j',
-    foreground: '#D19A66',
+    foreground: Game.Colors.jackalColor,
     maxHP: 5,
     attackValue: 4,
     accuracyValue: 70,
@@ -65,7 +65,7 @@ Game.EntityRepository.define('jackal', {
 Game.EntityRepository.define('piranha', {
     name: 'piranha',
     character: 'p',
-    foreground: '#BE5046',
+    foreground: Game.Colors.piranhaColor,
     maxHP: 6,
     attackValue: 6,
     accuracyValue: 90,
@@ -82,7 +82,7 @@ Game.EntityRepository.define('piranha', {
 Game.EntityRepository.define('hydra', {
     name: 'hydra',
     character: 'H',
-    foreground: '#E06C75',
+    foreground: Game.Colors.hydraColor,
     maxHP: 90,
     attackValue: 10,
     defenseValue: 18,
@@ -102,7 +102,7 @@ Game.EntityRepository.define('hydra', {
 Game.EntityRepository.define('kobold', {
     name: 'kobold',
     character: 'k',
-    foreground: '#c06e52',
+    foreground: Game.Colors.koboldColor,
     maxHP: 6,
     attackValue: 3,
     defenseValue: 0,
@@ -118,7 +118,7 @@ Game.EntityRepository.define('kobold', {
 Game.EntityRepository.define('goblin', {
     name: 'goblin',
     character: 'g',
-    foreground: '#91C7B1',
+    foreground: Game.Colors.goblinColor,
     maxHP: 8,
     attackValue: 5,
     defenseValue: 10,
@@ -136,7 +136,7 @@ Game.EntityRepository.define('goblin', {
 Game.EntityRepository.define('bee', {
     name: 'giant bee',
     character: 'B',
-    foreground: '#D19A66',
+    foreground: Game.Colors.beeColor,
     maxHP: 12,
     attackValue: 4,
     defenseValue: 10,
@@ -155,7 +155,7 @@ Game.EntityRepository.define('bee', {
 Game.EntityRepository.define('toadman', {
     name: 'toadman',
     character: 't',
-    foreground: '#98C379',
+    foreground: Game.Colors.toadColor,
     maxHP: 10,
     attackValue: 6,
     defenseValue: 10,
@@ -174,7 +174,7 @@ Game.EntityRepository.define('toadman', {
 Game.EntityRepository.define('kappa', {
     name: 'kappa',
     character: 'K',
-    foreground: '#91C7B1',
+    foreground: Game.Colors.goblinColor,
     maxHP: 18,
     attackValue: 8,
     defenseValue: 13,
@@ -193,7 +193,7 @@ Game.EntityRepository.define('kappa', {
 Game.EntityRepository.define('mushroom man', {
     name: 'mushroom man',
     character: 'M',
-    foreground: '#E6C07B',
+    foreground: Game.Colors.mushroomColor,
     maxHP: 15,
     attackValue: 10,
     defenseValue: 4,
@@ -210,7 +210,7 @@ Game.EntityRepository.define('mushroom man', {
 Game.EntityRepository.define('toad queen', {
     name: 'toad queen',
     character: 'T',
-    foreground: '#98C379',
+    foreground: Game.Colors.toadColor,
     maxHP: 50,
     attackValue: 7,
     defenseValue: 10,
@@ -235,7 +235,7 @@ Game.EntityRepository.define('toad queen', {
 Game.EntityRepository.define('poison toad', {
     name: 'poison toad',
     character: 'P',
-    foreground: '#C678DD',
+    foreground: Game.Colors.poisonToadColor,
     maxHP: 12,
     attackValue: 4,
     defenseValue: 8,
@@ -254,7 +254,7 @@ Game.EntityRepository.define('poison toad', {
 Game.EntityRepository.define('acid jelly', {
     name: 'acid jelly',
     character: 'a',
-    foreground: '#91f291',
+    foreground: Game.Colors.floaterColor,
     maxHP: 8,
     attackValue: 4,
     defenseValue: 10,
@@ -369,7 +369,7 @@ Game.EntityRepository.define('slime', {
 Game.EntityRepository.define('floater', {
     name: 'floater',
     character: 'F',
-    foreground: '#91f291',
+    foreground: Game.Colors.floaterColor,
     maxHP: 3,
     attackValue: 0,
     accuracyValue: 70,
@@ -387,7 +387,7 @@ Game.EntityRepository.define('floater', {
 Game.EntityRepository.define('rat', {
     name: 'rat',
     character: 'r',
-    foreground: '#e3d081',
+    foreground: Game.Colors.ratColor,
     maxHP: 3,
     defenseValue: 0,
     attackValue: 1,
@@ -404,7 +404,7 @@ Game.EntityRepository.define('rat', {
 Game.EntityRepository.define('rat king', {
     name: 'rat king',
     character: 'R',
-    foreground: '#e3d081',
+    foreground: Game.Colors.ratColor,
     maxHP: 30,
     defenseValue: 15,
     attackValue: 6,

@@ -2,7 +2,7 @@ Game.Tile.nullTile = new Game.Tile({})
 
 Game.Tile.floorTile = new Game.Tile({
     character: '.',
-    background: "#080A1F",
+    background: Game.Colors.floorColor,
     walkable: true,
     blocksLight: false,
     description: 'a cave floor'
@@ -10,7 +10,7 @@ Game.Tile.floorTile = new Game.Tile({
 
 Game.Tile.rubbleTile = new Game.Tile({
     character: ',',
-    background: "#080A1F",
+    background: Game.Colors.floorColor,
     walkable: true,
     blocksLight: false,
     description: 'a small pile of rubble'
@@ -18,8 +18,8 @@ Game.Tile.rubbleTile = new Game.Tile({
 
 Game.Tile.bloodTile = new Game.Tile({
     character: '.',
-    foreground: "#F61067",
-    background: "#080A1F",
+    foreground: Game.Colors.red,
+    background: Game.Colors.floorColor,
     walkable: true,
     blocksLight: false,
     description: 'a pool of blood'
@@ -28,7 +28,7 @@ Game.Tile.bloodTile = new Game.Tile({
 Game.Tile.altarTile = new Game.Tile({
     character: '|',
     foreground: "#fff",
-    background: "#232121",
+    background: Game.Colors.charcoalColor,
     walkable: true,
     blocksLight: false,
     description: 'an altar where you can charge a magic item'
@@ -36,8 +36,8 @@ Game.Tile.altarTile = new Game.Tile({
 
 Game.Tile.wallTile = new Game.Tile({
     character: '#',
-    foreground: '#232121',
-    background: "#C4B9AC",
+    foreground: Game.Colors.charcoalColor,
+    background: Game.Colors.wallColor,
     diggable: true,
     description: 'a stone wall',
     vary: true
@@ -45,7 +45,7 @@ Game.Tile.wallTile = new Game.Tile({
 
 Game.Tile.stairsDownTile = new Game.Tile({
     character: '>',
-    foreground: '#F2EC2D',
+    foreground: Game.Colors.yellow,
     walkable: true,
     blocksLight: false,
     description: 'a staircase leading downward'
@@ -53,8 +53,8 @@ Game.Tile.stairsDownTile = new Game.Tile({
 
 Game.Tile.stairsDownTileLocked = new Game.Tile({
     character: '>',
-    foreground: '#F2EC2D',
-    background: '#480C1C',
+    foreground: Game.Colors.yellow,
+    background: Game.Colors.doorColor,
     walkable: true,
     blocksLight: false,
     description: 'a locked trapdoor leading downward'
@@ -82,7 +82,7 @@ Game.Tile.shallowWaterTile = new Game.Tile({
 Game.Tile.doorTile = new Game.Tile({
     character: '+', //'
     foreground: '#FFF',
-    background: '#480C1C',
+    background: Game.Colors.doorColor,
     walkable: true,
     unthrowable: false,
     blocksLight: true,
@@ -93,7 +93,7 @@ Game.Tile.doorTile = new Game.Tile({
 Game.Tile.openDoorTile = new Game.Tile({
     character: '-', //'
     foreground: '#FFF',
-    background: '#480C1C',
+    background: Game.Colors.doorColor,
     walkable: true,
     blocksLight: false,
     diggable: true,
@@ -102,8 +102,8 @@ Game.Tile.openDoorTile = new Game.Tile({
 
 Game.Tile.grassTile = new Game.Tile({
     character: '"',
-    foreground: "#0CCE6B",
-    background: "#080A1F",
+    foreground: Game.Colors.green,
+    background: Game.Colors.floorColor,
     walkable: true,
     blocksLight: false,
     flammable: true,
@@ -112,8 +112,8 @@ Game.Tile.grassTile = new Game.Tile({
 
 Game.Tile.fernTile = new Game.Tile({
     character: '\u01AA',
-    foreground: "#0CCE6B",
-    background: "#080A1F",
+    foreground: Game.Colors.green,
+    background: Game.Colors.floorColor,
     walkable: true,
     blocksLight: true,
     flammable: true,
