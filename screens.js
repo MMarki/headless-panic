@@ -471,7 +471,7 @@ Game.Screen.playScreen = {
             }
         }
         if (tile === Game.Tile.stairsDownTile || tile === Game.Tile.stairsDownTileLocked && playerHasKey){
-            if (Game.getLevel() === 15){
+            if (Game.getLevel() === 14){
                 Game.switchScreen(Game.Screen.winScreen);
                 Game.refresh();
                 return;

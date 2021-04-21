@@ -26,8 +26,8 @@ Game.Colors.barrelColor =   '#B57F50';
 //monsters
 Game.Colors.ratColor =          '#E3D081';
 Game.Colors.jackalColor =       '#D19A66';
-Game.Colors.goblinColor =       '#480C1C';
-Game.Colors.floaterColor =      '#91f291';
+Game.Colors.goblinColor =       '#91C7B1';
+Game.Colors.floaterColor =      '#91F291';
 Game.Colors.toadColor =         '#98C379';
 Game.Colors.mushroomColor =     '#E6C07B';
 Game.Colors.koboldColor =       '#C06E52';

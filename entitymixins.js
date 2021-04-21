@@ -416,10 +416,10 @@ Game.EntityMixins.Attacker = {
                     }
                 }  
                 if (this.hasMixin('Sucker') && target.hasMixin('Affectible')){
-                    this.suck(damage/2);
+                    this.suck(Math.floor(damage/2));
                 }
                 if (this._sucker && target.hasMixin('Affectible')){
-                    this.modifyHPBy(damage/2);
+                    this.modifyHPBy(Math.floor(damage/2));
                 }
                 if (this.hasMixin('Pusher') && target.hasMixin('Affectible') && target.getHP() > 0){
                     this.pushEntity(target);
