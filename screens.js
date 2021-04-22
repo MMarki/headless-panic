@@ -566,30 +566,32 @@ Game.Screen.playScreen = {
                         let items = map.getItemsAt(x, y);
                         let tile = map.getTile(x,y);
                         //If we have stairs, we want to render them in the sidebar
-                        if ( tile === Game.Tile.stairsDownTile) {
-                            display.drawText(screenWidth + 1, 10 + j , '%c{' + tile._foreground + '}' + tile._char + ':  ' + 'stairs down');
-                            j+=1;
-                        }
-                        if ( tile === Game.Tile.stairsDownTileLocked) {
-                            display.drawText(screenWidth + 1, 10 + j , '%c{' + tile._foreground + '}' + tile._char + ':  ' + 'locked stairs down');
-                            j+=1;
-                        }
-                        if (tile === Game.Tile.altarTile) {
-                            display.drawText(screenWidth + 1, 10 + j , '%c{' + tile._foreground + '}' + tile._char + ':  ' + 'wand altar');
-                            j+=1;
-                        }
-                        // If we have items, we want to render the top most item
-                        if (items) {
-                            glyph = items[items.length - 1];
-                            let strSuffix = '';
-                            if (glyph.hasMixin('Equippable')){
-                                strSuffix = (glyph.getStrengthRequirement() > 1 ? ' [' + glyph.getStrengthRequirement() + ']' : '');
+                        if (!this._player.hasEffect('blind')){
+                            if ( tile === Game.Tile.stairsDownTile) {
+                                display.drawText(screenWidth + 1, 10 + j , '%c{' + tile._foreground + '}' + tile._char + ':  ' + 'stairs down');
+                                j+=1;
                             }
-                            display.drawText(screenWidth + 1, 10 + j , '%c{' + glyph._foreground + '}' + glyph._char + ':  ' + glyph._name + strSuffix);
-                            j++;
+                            if ( tile === Game.Tile.stairsDownTileLocked) {
+                                display.drawText(screenWidth + 1, 10 + j , '%c{' + tile._foreground + '}' + tile._char + ':  ' + 'locked stairs down');
+                                j+=1;
+                            }
+                            if (tile === Game.Tile.altarTile) {
+                                display.drawText(screenWidth + 1, 10 + j , '%c{' + tile._foreground + '}' + tile._char + ':  ' + 'wand altar');
+                                j+=1;
+                            }
+                            // If we have items, we want to render the top most item
+                            if (items) {
+                                glyph = items[items.length - 1];
+                                let strSuffix = '';
+                                if (glyph.hasMixin('Equippable')){
+                                    strSuffix = (glyph.getStrengthRequirement() > 1 ? ' [' + glyph.getStrengthRequirement() + ']' : '');
+                                }
+                                display.drawText(screenWidth + 1, 10 + j , '%c{' + glyph._foreground + '}' + glyph._char + ':  ' + glyph._name + strSuffix);
+                                j++;
+                            }
+                            // Update the foreground color in case our glyph changed
+                            foreground = glyph.getForeground();
                         }
-                        // Update the foreground color in case our glyph changed
-                        foreground = glyph.getForeground();
                     } else {
                         let items = map.getItemsAt(x, y);
                         // If we have items, we want to render the top most item
