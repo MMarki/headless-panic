@@ -120,7 +120,7 @@ Game.Entity.prototype.tryMove = function(x, y) {
 
 Game.Entity.prototype.tryMoveTeleport = function(x, y) {
     const map = this.getMap();
-    console.log('x: ' + x + "y: " + y)
+    //console.log('x: ' + x + "y: " + y)
     let tile = map.getTile(x, y);
     let target = map.getEntityAt(x, y);
     // If an entity was present at the tile

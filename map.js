@@ -53,6 +53,10 @@ Game.Map = function(tiles, player, items, stairs) {
     if (Game.getLevel() === 13){
         this.addEntityAtRandomPosition(Game.EntityRepository.create('vampire'), 1);
     }
+    // if on L14, create one lich
+    if (Game.getLevel() === 14){
+        this.addEntityAtRandomPosition(Game.EntityRepository.create('lich'), 1);
+    }
     
     let emptyItemList = [];
     let emptyItemCount = {};
@@ -69,7 +73,7 @@ Game.Map = function(tiles, player, items, stairs) {
         }
     }
 
-    console.log(emptyItemCount);
+    //console.log(emptyItemCount);
 
     // 8 items per floor
     for (let i = 0; i < 8; i++) {
@@ -147,7 +151,7 @@ Game.Map.prototype.cleanUpDoors = function(){
     for (let door of doorList){
         if (this.checkAdjacentNumber(door.x, door.y, Game.Tile.wallTile) !== 2){
             this._tiles[door.x][door.y] = Game.Tile.floorTile;
-            console.log('changing door');
+            //console.log('changing door');
         }
     }
 }
@@ -569,7 +573,7 @@ Game.Map.prototype.cellGrow = function(list, tileType, numberOfTiles) {
         let x = currentTile.x;
         let y = currentTile.y;
 
-        if (this._tiles[x - 1][y] === Game.Tile.floorTile || this._tiles[x - 1][y] === Game.Tile.bloodTile || this._tiles[x - 1][y] === Game.Tile.grassTile || this._tiles[x - 1][y] === Game.Tile.rubbleTile) {
+        if (this._tiles[x - 1][y] === Game.Tile.floorTile || this._tiles[x - 1][y] === Game.Tile.bloodTile || this._tiles[x - 1][y] === Game.Tile.grassTile || this._tiles[x - 1][y] === Game.Tile.rubbleTile || this._tiles[x - 1][y] === Game.Tile.openDoorTile) {
             this._tiles[x - 1][y] = tileType;
             if (dynamic){
                 let tileObject = Game.DynamicTileRepository.create(tileType);
@@ -578,7 +582,7 @@ Game.Map.prototype.cellGrow = function(list, tileType, numberOfTiles) {
             list.push({x: x - 1, y: y});
             growthCount ++;
         }
-        if (this._tiles[x + 1][y] === Game.Tile.floorTile || this._tiles[x + 1][y] === Game.Tile.bloodTile || this._tiles[x + 1][y] === Game.Tile.grassTile || this._tiles[x + 1][y] === Game.Tile.rubbleTile) {
+        if (this._tiles[x + 1][y] === Game.Tile.floorTile || this._tiles[x + 1][y] === Game.Tile.bloodTile || this._tiles[x + 1][y] === Game.Tile.grassTile || this._tiles[x + 1][y] === Game.Tile.rubbleTile || this._tiles[x - 1][y] === Game.Tile.openDoorTile) {
             this._tiles[x + 1][y] = tileType;
             if (dynamic){
                 let tileObject = Game.DynamicTileRepository.create(tileType);
@@ -587,7 +591,7 @@ Game.Map.prototype.cellGrow = function(list, tileType, numberOfTiles) {
             list.push({x: x + 1, y: y});
             growthCount ++;
         }
-        if (this._tiles[x][y - 1] === Game.Tile.floorTile || this._tiles[x][y - 1] === Game.Tile.bloodTile || this._tiles[x][y - 1] === Game.Tile.grassTile || this._tiles[x][y - 1] === Game.Tile.rubbleTile) {
+        if (this._tiles[x][y - 1] === Game.Tile.floorTile || this._tiles[x][y - 1] === Game.Tile.bloodTile || this._tiles[x][y - 1] === Game.Tile.grassTile || this._tiles[x][y - 1] === Game.Tile.rubbleTile || this._tiles[x - 1][y] === Game.Tile.openDoorTile) {
             this._tiles[x][y -1]  = tileType;
             if (dynamic){
                 let tileObject = Game.DynamicTileRepository.create(tileType);
@@ -596,7 +600,7 @@ Game.Map.prototype.cellGrow = function(list, tileType, numberOfTiles) {
             list.push({x: x, y: y - 1});
             growthCount ++;
         }
-        if (this._tiles[x][y + 1] === Game.Tile.floorTile || this._tiles[x][y + 1] === Game.Tile.bloodTile || this._tiles[x][y + 1] === Game.Tile.grassTile || this._tiles[x][y + 1] === Game.Tile.rubbleTile) {
+        if (this._tiles[x][y + 1] === Game.Tile.floorTile || this._tiles[x][y + 1] === Game.Tile.bloodTile || this._tiles[x][y + 1] === Game.Tile.grassTile || this._tiles[x][y + 1] === Game.Tile.rubbleTile || this._tiles[x - 1][y] === Game.Tile.openDoorTile) {
             this._tiles[x][y + 1] = tileType;
             if (dynamic){
                 let tileObject = Game.DynamicTileRepository.create(tileType);

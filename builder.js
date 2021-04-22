@@ -261,7 +261,7 @@ Game.Builder.prototype._setStairs = function(levelNumber) {
     while (true){
         let match =  Game.pickRandomElement(matches);
         if(this._checkAdjacent(match.x, match.y, Game.Tile.floorTile)){
-            if (levelNumber != 3 && levelNumber != 6 && levelNumber != 11){
+            if (levelNumber != 3 && levelNumber != 6 && levelNumber != 11 && levelNumber != 14){
                 this._tiles[match.x][match.y] = Game.Tile.stairsDownTile;
                 this._stairs = {
                     x: match.x,

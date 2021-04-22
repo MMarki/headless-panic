@@ -332,7 +332,7 @@ Game.Screen.playScreen = {
                     } else {
                         //Make a path to it
                         player.setPathingTarget(target);
-                        console.log(target);
+                        //console.log(target);
                     }
                 }
 
@@ -341,7 +341,7 @@ Game.Screen.playScreen = {
                         let tile = map.getTile(x, y);
                         return tile.isWalkable() && !tile._isHazard && tile !== Game.Tile.stairsDownTile;
                     }, {topology: 4});
-                    console.log(path);
+                    //console.log(path);
                     
                     // Once we've gotten the path, we want to move to the second cell that is passed in the callback (the first is the entity's starting point)
                     let count = 0;
@@ -368,8 +368,8 @@ Game.Screen.playScreen = {
                     //if there are no more unexplored, start going to the stairs
                     let nextToStairs = map.getWalkableByStairs()
 
-                    console.log(map._stairs);
-                    console.log(nextToStairs)
+                    //console.log(map._stairs);
+                    //console.log(nextToStairs)
 
                     let path = new ROT.Path.AStar(nextToStairs[0].x, nextToStairs[0].y, function(x, y) {
                         let tile = map.getTile(x, y);
@@ -412,7 +412,7 @@ Game.Screen.playScreen = {
                         function(x, y, radius, visibility) {
                             let key = x + ',' + y;
                             if (thisReference._map.getEntities()[key] !== undefined && thisReference._map.getEntities()[key].getName() !== 'barrel' && thisReference._map.getEntities()[key].getName() !== 'chicken knight') {
-                                console.log(thisReference._map.getEntities()[key]);
+                                //console.log(thisReference._map.getEntities()[key]);
                                 canSeeMonster = true;
                             }
                             
@@ -710,7 +710,7 @@ Game.Screen.loseScreen = {
         var hintList = [
             "Avoiding fights is as good as winning them, especially if an enemy doesn't have a head to drop.",
             "Wielding a weapon with insufficient strength greatly reduces chance to hit and max hit.",
-            "Weapons and armor with Strength requirements show the required Strength level in brackets ([]).",
+            "Weapons and armor with Strength requirements show the required Strength level in brackets.",
             "Wielding a weapon with excess strength increases chance to hit and max hit.",
             "Wearing an enemy's head gives you one of their powers.",
             "The further you throw a weapon, the less likely it is to hit an enemy.",
@@ -722,7 +722,7 @@ Game.Screen.loseScreen = {
             "Weapons each have a damage type (crush, slash, or stab). Certain enemies are resistant to or vulnerable to certain damage types.",
             "Keep trying! Knowledge of monsters and items will drastically improve your chances of survival.",
             "Strength Potions, Life Potions, and Altars are the most important items for tackling the dungeon.",
-            "When aiming a projectile, it's sometimes possible to hit targets that seem out of reach. Try adjusting the targeting reticule to a position behind them.",
+            /*"When aiming a projectile, it's sometimes possible to hit targets that seem out of reach. Try adjusting the targeting reticule to a position behind them.",*/
         ];
         return hintList[Math.floor(Math.random() * hintList.length)];
     }

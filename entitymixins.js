@@ -242,25 +242,25 @@ Game.EntityMixins.Destructible = {
                     if (this._headsRemaining === this._heads) {
                         this._headsRemaining--;
                         this.tryDropHead();
-                        console.log("first drop!: ", this._hp);
+                        //console.log("first drop!: ", this._hp);
                     }
                 } if (this._hp < this._headsBreakpoints[this._headsBreakpoints.length - 2]){
                     if (this._headsRemaining === this._heads - 1) {
                         this._headsRemaining--;
                         this.tryDropHead();
-                        console.log("second drop!: ", this._hp);
+                        //console.log("second drop!: ", this._hp);
                     }
                 } if (this._hp < this._headsBreakpoints[this._headsBreakpoints.length - 3]){
                     if (this._headsRemaining === this._heads - 2) {
                         this._headsRemaining--;
                         this.tryDropHead();
-                        console.log("third drop!: ", this._hp);
+                        //console.log("third drop!: ", this._hp);
                     }
                 } if (this._hp < this._headsBreakpoints[this._headsBreakpoints.length - 4]){
                     if (this._headsRemaining === this._heads - 3) {
                         this._headsRemaining--;
                         this.tryDropHead();
-                        console.log("fourth drop!: ", this._hp);
+                        //console.log("fourth drop!: ", this._hp);
                     }
                 }
             } 
@@ -290,7 +290,6 @@ Game.EntityMixins.Destructible = {
             if (this.hasMixin('PlayerActor')) {
                 this.act();
             } else {
-                console.log("killing" + this);
                 this.getMap().removeEntity(this);
             }
             return 1;
@@ -321,7 +320,7 @@ let pushFunction = function(target){
     if (yOffset > 0){
         target.tryMove(targetX, targetY + 1)
     }
-    console.log('pushing!')
+    //console.log('pushing!')
 }
 
 Game.EntityMixins.Attacker = {
@@ -390,8 +389,8 @@ Game.EntityMixins.Attacker = {
 
             let hitProbability = Math.max(0,accuracy * Math.pow(0.987, defense) + strengthModifier*5);
            
-            console.log("def:" + defense);
-            console.log("hitprob: " + hitProbability);
+            //console.log("def:" + defense);
+            //console.log("hitprob: " + hitProbability);
             if (Math.random()*100 < hitProbability){
                 let max = Math.max(1, attack + (strengthModifier));
                 let damage = Math.ceil(Game.Utilities.randomRange(Math.ceil(max/2), max));
@@ -517,7 +516,7 @@ Game.EntityMixins.MultiHeaded = {
         let hpIncrement = this._maxHP/this._heads;
         for (let i = 0; i < this._heads; i++){
             this._headsBreakpoints.push(i * hpIncrement)
-            console.log(i*hpIncrement);
+            //console.log(i*hpIncrement);
         }
     }
 }
@@ -587,7 +586,7 @@ Game.EntityMixins.Thrower = {
         for (let point of points){
             let tileType = this._map.getTile(point.x, point.y)
             if (tileType == Game.Tile.wallTile || tileType === Game.Tile.doorTile){
-                console.log("oi mate, we hit a wall!");
+                //console.log("oi mate, we hit a wall!");
                 break;
             }            
             endPointX = point.x;
@@ -649,7 +648,7 @@ Game.EntityMixins.Thrower = {
             let points = Game.Geometry.getLine(startPointX, startPointY, endPointX, endPointY);
             for (let point of points){
                 if (this.getMap().getTile(point.x, point.y) === Game.Tile.wallTile || this.getMap().getTile(point.x, point.y) === Game.Tile.doorTile || this.getMap().getEntityAt(point.x, point.y) && this.getMap().getEntityAt(point.x, point.y)._name !='chicken knight'){
-                    console.log("oi mate, we hit a wall!");
+                    //console.log("oi mate, we hit a wall!");
                     break;
                 }            
                 endPointX = point.x;
@@ -662,7 +661,7 @@ Game.EntityMixins.Thrower = {
             let points = Game.Geometry.getLine(startPointX, startPointY, endPointX, endPointY);
             for (let point of points){
                 if (this.getMap().getTile(point.x, point.y) === Game.Tile.wallTile || this.getMap().getTile(point.x, point.y) === Game.Tile.doorTile){
-                    console.log("oi mate, we hit a wall!");
+                    //console.log("oi mate, we hit a wall!");
                     break;
                 }            
                 endPointX = point.x;
@@ -723,9 +722,9 @@ Game.EntityMixins.Thrower = {
         }
         
         //handle thrown potions
-        console.log("itemname:" + item._name);
+        //console.log("itemname:" + item._name);
         if( item._potionEffect !== null && item._potionEffect !== undefined){
-            console.log("setting potion effect:" + item._potionEffect);
+            //console.log("setting potion effect:" + item._potionEffect);
             target.setEffect(item._potionEffect);
         } else if (item._name === "health potion" && targetIsDestructible === true){
             target.modifyHPBy(item._healthValue);
