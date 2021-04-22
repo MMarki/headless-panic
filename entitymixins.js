@@ -1071,7 +1071,7 @@ Game.EntityMixins.Equipper = {
                 this._venomous = true;
             } else if (this._head._name === 'hydra head'){
                 this._strengthened = true;
-            } else if (this._head._name === 'bee head'){
+            } else if (this._head._name === 'giant bee head'){
                 this._paralytic = true;
             } else if (this._head._name === 'golem head'){
                 this._pusher = true;
@@ -1095,7 +1095,7 @@ Game.EntityMixins.Equipper = {
                 this._toady = false;
             } else if (this._head._name === 'poison toad head'){
                 this._venomous = false;
-            } else if (this._head._name === 'bee head'){
+            } else if (this._head._name === 'giant bee head'){
                 this._paralytic = false;
             } else if (this._head._name === 'golem head'){
                 this._pusher = false;
