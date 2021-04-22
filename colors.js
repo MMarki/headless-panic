@@ -6,6 +6,10 @@ Game.Colors.yellow =        '#F2EC2D';
 Game.Colors.green =         '#0CCE6B';
 Game.Colors.red =           '#F61067';
 Game.Colors.charcoalColor = '#232121';
+Game.Colors.darkGray =      '#282C34';
+Game.Colors.lightGray =     '#ABB2BF';
+Game.Colors.coral =         '#FF8A5B';
+
 
 //effects
 Game.Colors.poisonColor =   '#00EE00';
@@ -36,6 +40,7 @@ Game.Colors.piranhaColor =      '#BE5046';
 Game.Colors.hydraColor =        '#E06C75';
 Game.Colors.beeColor =          '#D19A66';
 Game.Colors.poisonToadColor =   '#C678DD';
+Game.Colors.lichColor =         '#F42272';
 
 
 

@@ -347,6 +347,28 @@ Game.EntityRepository.define('vampire', {
              Game.EntityMixins.Sucker]
 });
 
+Game.EntityRepository.define('lich', {
+    name: 'lich',
+    character: 'L',
+    foreground: Game.Colors.lichColor,
+    maxHP: 100,
+    attackValue: 10,
+    defenseValue: 16,
+    accuracyValue: 80,
+    sightRadius: 13,
+    headHits: 2,
+    description: "A robed skeletal figure with a staff.",
+    summonWaitMax: 30,
+    summonCount: 3,
+    summonName: 'skeleton',
+    resistances: ['poison'],
+    tasks: ['summonMonster', 'hunt', 'wander'],
+    mixins: [Game.EntityMixins.TaskActor, Game.EntityMixins.Sight,
+             Game.EntityMixins.Attacker, Game.EntityMixins.Destructible,
+             Game.EntityMixins.Affectible, Game.EntityMixins.Summoner,
+             Game.EntityMixins.KeyDropper]
+});
+
 Game.EntityRepository.define('slime', {
     name: 'slime',
     character: 'S',
