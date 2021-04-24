@@ -1170,9 +1170,19 @@ Game.EntityMixins.Affectible = {
     },
     applyEffect: function(effectName) {
         if (effectName === "poisoned" && this.hasMixin('Destructible')){
-            return this.takeDamage(this, 1, false);
+            let targetIsVulnerable = this.getVulnerabilities().includes('poison');
+            if (targetIsVulnerable){
+                return this.takeDamage(this, 2, false);
+            } else {
+                return this.takeDamage(this, 1, false);
+            }      
         } else if (effectName === "burning" && this.hasMixin('Destructible')){
-            return this.takeDamage(this, 1, false);
+            let targetIsVulnerable = this.getVulnerabilities().includes('fire');
+            if (targetIsVulnerable){
+                return this.takeDamage(this, 2, false);
+            } else {
+                return this.takeDamage(this, 1, false);
+            }  
         }
     },
     setEffect : function(effect) {

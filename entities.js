@@ -301,7 +301,7 @@ Game.EntityRepository.define('skeleton', {
     tasks: ['hunt', 'wander'],
     mixins: [Game.EntityMixins.TaskActor, Game.EntityMixins.Sight,
              Game.EntityMixins.Attacker, Game.EntityMixins.Destructible,
-             Game.EntityMixins.Affectible]
+             Game.EntityMixins.Affectible, Game.EntityMixins.Unpoisonable]
 });
 
 Game.EntityRepository.define('golem', {
@@ -361,12 +361,11 @@ Game.EntityRepository.define('lich', {
     summonWaitMax: 30,
     summonCount: 3,
     summonName: 'skeleton',
-    resistances: ['poison'],
     tasks: ['summonMonster', 'hunt', 'wander'],
     mixins: [Game.EntityMixins.TaskActor, Game.EntityMixins.Sight,
              Game.EntityMixins.Attacker, Game.EntityMixins.Destructible,
              Game.EntityMixins.Affectible, Game.EntityMixins.Summoner,
-             Game.EntityMixins.KeyDropper]
+             Game.EntityMixins.KeyDropper, Game.EntityMixins.Unpoisonable]
 });
 
 Game.EntityRepository.define('slime', {
