@@ -320,7 +320,6 @@ let pushFunction = function(target){
     if (yOffset > 0){
         target.tryMove(targetX, targetY + 1)
     }
-    //console.log('pushing!')
 }
 
 Game.EntityMixins.Attacker = {
@@ -387,9 +386,10 @@ Game.EntityMixins.Attacker = {
             targetIsVulnerable = target.getVulnerabilities().includes(damageType);
             targetIsResistant = target.getResistances().includes(damageType);
 
-            let hitProbability = Math.max(0,accuracy * Math.pow(0.987, defense) + strengthModifier*5);
+            let hitProbability = Math.max(0,accuracy * Math.pow(0.988, defense) + strengthModifier*4);
            
             //console.log("def:" + defense);
+            //console.log("StrengthMod:" + strengthModifier);
             //console.log("hitprob: " + hitProbability);
             if (Math.random()*100 < hitProbability){
                 let max = Math.max(1, attack + (strengthModifier));
@@ -698,7 +698,7 @@ Game.EntityMixins.Thrower = {
             if (target.hasMixin('PlayerActor')) {
                 defense = defense * 10;
             }
-            let hitProbability = 90 * Math.pow(0.987, defense);
+            let hitProbability = 90 * Math.pow(0.988, defense);
             if (throwDistance > 6) {
                 hitProbability = hitProbability - throwDistance*3; 
             }
