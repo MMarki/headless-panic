@@ -296,7 +296,7 @@ Game.Map.prototype.dig = function(x, y) {
     const entity = this.getEntityAt(x, y);
     if (entity){
         if (entity.isNotMonster() || entity.getName() === 'golem'){
-            entity.takeDamage(entity, 30, false);
+            entity.takeDamage(entity, 50, false);
         }
     }
 };
