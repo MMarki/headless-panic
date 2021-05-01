@@ -27,6 +27,7 @@ Game.Screen.playScreen = {
     _player: null,
     _gameEnded: false,
     _subScreen: null,
+    _lastTarget: null,
     enter: function() {  
         var width = Game._screenWidth;
         var height = Game._screenHeight;
@@ -1124,9 +1125,6 @@ Game.Screen.TargetBasedScreen.prototype.setup = function(player, startX, startY,
     this._startY = startY;
     this._item = item || null;	
     this._key = key || null;
-    // Store current cursor position
-    this._cursorX = this._startX;
-    this._cursorY = this._startY;
     // Cache the FOV
     var visibleCells = {};
     this._player.getMap().getFov().compute(
@@ -1136,6 +1134,27 @@ Game.Screen.TargetBasedScreen.prototype.setup = function(player, startX, startY,
             visibleCells[x + "," + y] = true;
         });
     this._visibleCells = visibleCells;
+
+    // Store current cursor position
+    let lastTargetX = 0;
+    let lastTargetY = 0;
+    let lastTarget = Game.Screen.playScreen._lastTarget;
+
+    if (lastTarget !== null){
+        if (this._visibleCells[lastTarget.getX() + ',' + lastTarget.getY()]){
+            lastTargetX = lastTarget.getX()
+            lastTargetY = lastTarget.getY()
+        } else {
+            Game.Screen.playScreen._lastTarget = null;
+            lastTargetX = this._startX;
+            lastTargetY = this._startY;
+        }
+    } else {
+        lastTargetX = this._startX;
+        lastTargetY = this._startY;
+    }
+    this._cursorX = lastTargetX;
+    this._cursorY = lastTargetY;
 };
 
 Game.Screen.TargetBasedScreen.prototype.render = function(display) {

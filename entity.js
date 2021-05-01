@@ -18,6 +18,7 @@ Game.Entity = function(properties) {
     this._strengthened = properties['strengthened'] || false; // additional strength from heads
     this._paralytic = properties['paralytic'] || false; // chance to paralyze on hit
     this._pusher = properties['pusher'] || false; // chance to knock back enemy on hit
+    this._isThrowTarget = false;
 };
 // Make entities inherit all the functionality from glyphs
 Game.Entity.extend(Game.DynamicGlyph);

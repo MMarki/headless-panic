@@ -269,6 +269,10 @@ Game.EntityMixins.Destructible = {
         // If have 0 or less HP, then remove ourseles from the map
         if (this._hp <= 0) {
             this._hp = 0;
+            if (this._isThrowTarget){
+                Game.Screen.playScreen._lastTarget = null;
+            }
+
             if (this.getName() != 'barrel'){
                 Game.sendMessage(attacker, '%%c{#61AEEE}You kill the %s!', [this.getName()]);
             } else {
@@ -692,6 +696,8 @@ Game.EntityMixins.Thrower = {
         }
     },
     throwAttack: function(item, target, throwDistance) {
+        Game.Screen.playScreen._lastTarget = target;
+        target._isThrowTarget = true;
         targetIsDestructible = target.hasMixin('Destructible');
         if (targetIsDestructible){
             let defense = target.getDefenseValue();
