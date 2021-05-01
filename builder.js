@@ -20,10 +20,10 @@ Game.Builder = function(width, height, level) {
     }
 
     let prefabsByArea = {
-        'cellars': [prefabs.arena, prefabs.columns, prefabs.garden],
-        'sewers': [prefabs.arena, prefabs.garden],
+        'cellars': [prefabs.arena, prefabs.columns, prefabs.garden, prefabs.tetris],
+        'sewers': [prefabs.arena, prefabs.garden, prefabs.tetris],
         'caverns': [prefabs.arena],
-        'catacombs': [prefabs.arena, prefabs.columns]
+        'catacombs': [prefabs.arena, prefabs.columns, prefabs.tetris]
     }
 
     let grassAmount = 2;
@@ -56,7 +56,9 @@ Game.Builder = function(width, height, level) {
                 this._setShallowWater();
             }
             this._setPrefab(Game.pickRandomElement(prefabsByArea['caverns']));
+            this._setPrefab(Game.pickRandomElement(prefabsByArea['caverns']));
         } else {
+            this._setPrefab(Game.pickRandomElement(prefabsByArea['catacombs']));
             this._setPrefab(Game.pickRandomElement(prefabsByArea['catacombs']));
         }
         
