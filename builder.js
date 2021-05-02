@@ -86,6 +86,22 @@ Game.Builder.prototype.getHeight = function () {
     return this._height;
 }
 
+Game.Builder.prototype.makeEmptyGasMap = function () {
+     // Create the empty map
+     let gasMap = new Array(this._width);
+     for (let w = 0; w < this._width; w++) {
+        gasMap[w] = new Array(this._height);
+     }
+
+     for (let w = 0; w < this._width; w++){
+        for (let h = 0; h < this._height; h++){
+            gasMap[w][h] = null;
+        }
+    }
+
+    return gasMap;
+}
+
 Game.Builder.prototype._generateLevel = function(level) {
     // Create the empty map
     let map = new Array(this._width);

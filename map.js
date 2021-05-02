@@ -1,4 +1,4 @@
-Game.Map = function(tiles, player, items, stairs) {
+Game.Map = function(tiles, player, items, stairs, gasMap) {
     this._tiles = tiles;
     // cache the width and height based
     // on the length of the dimensions of
@@ -15,6 +15,7 @@ Game.Map = function(tiles, player, items, stairs) {
     this._engine = new ROT.Engine(this._scheduler);
     // add the player
     this._player = player;
+    this._gasMap = gasMap;
     this.addEntityAtRandomPosition(player, 0);
 
     //set up the field of vision

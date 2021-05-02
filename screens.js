@@ -34,6 +34,7 @@ Game.Screen.playScreen = {
         // Create our map from tiles and player
         let builder = new Game.Builder(width,height, Game.getLevel())
         let tiles = builder.getTiles()
+        let gasMap = builder.makeEmptyGasMap();
         let rooms = builder.getRooms();
         let stairs = builder.getStairs();
         this._player = new Game.Entity(Game.PlayerTemplate);
@@ -62,7 +63,7 @@ Game.Screen.playScreen = {
         var dart = Game.ItemRepository.create('dart');
         this._player.addItem(dart);
         //Create map
-        this._map = new Game.Map(tiles, this._player, null, stairs);
+        this._map = new Game.Map(tiles, this._player, null, stairs, gasMap);
         this._map.getRidOfBoringRooms(rooms);
         this._map.cleanUpDoors();
         // Start the map's engine
@@ -486,8 +487,9 @@ Game.Screen.playScreen = {
             let tiles = builder.getTiles()
             let rooms = builder.getRooms();
             let stairs = builder.getStairs();
+            let gasMap = builder.makeEmptyGasMap();
             //pass the current player and the new tiles in
-            this._map = new Game.Map(tiles, this._player, this._player.getItems(), stairs);
+            this._map = new Game.Map(tiles, this._player, this._player.getItems(), stairs, gasMap);
             if (Game.getLevel() <= 6){
                 this._map.getRidOfBoringRooms(rooms);
             }

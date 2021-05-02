@@ -9,7 +9,6 @@ Game.Tile = function(properties) {
     this._blocksLight = (properties['blocksLight'] !== undefined) ? properties['blocksLight'] : true;
     this._description = properties['description'] || '';
     this._flammable = properties['flammable'] || false;
-    this._isDynamic = properties['isDynamic'] || false;
     this._lifespan = properties['lifespan'] || 0;
     this._isWater = properties['isWater'] || false;
     if (vary) {

@@ -9,7 +9,6 @@ Game.DynamicTile = function(properties) {
     this._blocksLight = (properties['blocksLight'] !== undefined) ? properties['blocksLight'] : true;
     this._description = properties['description'] || '';
     this._flammable = properties['flammable'] || false;
-    this._isDynamic = properties['isDynamic'] || true;
     this._lifespan = properties['lifespan'] || 5;
     this._speed = properties['speed'] || 1000;
     this._defaultForeground = this._foreground;
