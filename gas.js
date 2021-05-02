@@ -1,15 +1,20 @@
 Game.Gas = function(properties) {
     properties = properties || {};
+    // Call the glyph's construtor with our set of properties
+    Game.Glyph.call(this, properties);
     // Set up the properties
     this._name = properties['name'];
     this._blocksLight = (properties['blocksLight'] !== undefined) ? properties['blocksLight'] : true;
     this._description = properties['description'] || '';
     this._flammable = properties['flammable'] || false;
     this._lifespan = properties['lifespan'] || 5;
+    this._speed = properties['speed'] || 1000;
     this._defaultForeground = this._foreground;
     this._defaultBackground = this._background;
     this._isHazard = properties['isHazard'] || false;
 };
+
+Game.Gas.extend(Game.Glyph);
 
 // Standard getters
 Game.Gas.prototype.isBlockingLight = function() {
@@ -20,6 +25,10 @@ Game.Gas.prototype.isFlammable = function() {
 }
 Game.Gas.prototype.getDescription = function() {
     return this._description;
+};
+
+Game.Gas.prototype.getSpeed = function() {
+    return this._speed;
 };
 
 Game.Gas.prototype.getNeighborPositions = function() {

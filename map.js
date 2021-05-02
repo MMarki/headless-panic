@@ -530,6 +530,22 @@ Game.Map.prototype.addDynamicTile = function(tile, x, y) {
     }
 };
 
+Game.Map.prototype.addGas = function(gas, x, y) {
+    // Update the gas's map
+    gas.setMap(this);
+    // Make sure the tile's position is within bounds
+    if (x < 0 || x >= this._width || y < 0 || y >= this._height ) {
+        throw new Error("Gas's position is out of bounds.");
+    }
+    // Add the tile to the table of tiles
+    this._gasMap[x][y] = gas;
+    gas.setX(x);
+    gas.setY(y);
+
+    // Add gas to the scheduler
+    this._scheduler.add(gas, true);
+};
+
 Game.Map.prototype.removeDynamicTile = function(tile) {
     // Remove the entity from the map
     let x = tile.getX();
@@ -542,6 +558,18 @@ Game.Map.prototype.removeDynamicTile = function(tile) {
     if (tile.hasMixin('Actor')) {
         this._scheduler.remove(tile);
     }
+}
+
+Game.Map.prototype.removeGas = function(gas) {
+    // Remove the entity from the map
+    let x = gas.getX();
+    let y = gas.getY();
+    if (this._gasMap[x][y] === gas) {
+        this._gasMap[x][y] = null;
+    }
+
+    // Remove them from the scheduler
+    this._scheduler.remove(gas);
 }
 
 Game.Map.prototype.areHunters = function() {
@@ -564,7 +592,6 @@ Game.Map.prototype.areHunters = function() {
 Game.Map.prototype.cellGrow = function(list, tileType, numberOfTiles) {
     let growthCount = 0;
     let i = 0;
-    let dynamic = 1;
 
     while (growthCount < numberOfTiles){
         let currentTile = list[i]
@@ -576,39 +603,75 @@ Game.Map.prototype.cellGrow = function(list, tileType, numberOfTiles) {
 
         if (this._tiles[x - 1][y] === Game.Tile.floorTile || this._tiles[x - 1][y] === Game.Tile.bloodTile || this._tiles[x - 1][y] === Game.Tile.grassTile || this._tiles[x - 1][y] === Game.Tile.rubbleTile || this._tiles[x - 1][y] === Game.Tile.openDoorTile) {
             this._tiles[x - 1][y] = tileType;
-            if (dynamic){
-                let tileObject = Game.DynamicTileRepository.create(tileType);
-                this.addDynamicTile(tileObject, x -1, y);
-            }
+            let tileObject = Game.DynamicTileRepository.create(tileType);
+            this.addDynamicTile(tileObject, x -1, y);
             list.push({x: x - 1, y: y});
             growthCount ++;
         }
         if (this._tiles[x + 1][y] === Game.Tile.floorTile || this._tiles[x + 1][y] === Game.Tile.bloodTile || this._tiles[x + 1][y] === Game.Tile.grassTile || this._tiles[x + 1][y] === Game.Tile.rubbleTile || this._tiles[x + 1][y] === Game.Tile.openDoorTile) {
             this._tiles[x + 1][y] = tileType;
-            if (dynamic){
-                let tileObject = Game.DynamicTileRepository.create(tileType);
-                this.addDynamicTile(tileObject, x + 1, y);
-            }
+            let tileObject = Game.DynamicTileRepository.create(tileType);
+            this.addDynamicTile(tileObject, x + 1, y);
             list.push({x: x + 1, y: y});
             growthCount ++;
         }
         if (this._tiles[x][y - 1] === Game.Tile.floorTile || this._tiles[x][y - 1] === Game.Tile.bloodTile || this._tiles[x][y - 1] === Game.Tile.grassTile || this._tiles[x][y - 1] === Game.Tile.rubbleTile || this._tiles[x][y - 1] === Game.Tile.openDoorTile) {
             this._tiles[x][y -1]  = tileType;
-            if (dynamic){
-                let tileObject = Game.DynamicTileRepository.create(tileType);
-                this.addDynamicTile(tileObject, x, y - 1);
-            }
+            let tileObject = Game.DynamicTileRepository.create(tileType);
+            this.addDynamicTile(tileObject, x, y - 1);
             list.push({x: x, y: y - 1});
             growthCount ++;
         }
         if (this._tiles[x][y + 1] === Game.Tile.floorTile || this._tiles[x][y + 1] === Game.Tile.bloodTile || this._tiles[x][y + 1] === Game.Tile.grassTile || this._tiles[x][y + 1] === Game.Tile.rubbleTile || this._tiles[x][y + 1] === Game.Tile.openDoorTile) {
             this._tiles[x][y + 1] = tileType;
-            if (dynamic){
-                let tileObject = Game.DynamicTileRepository.create(tileType);
-                this.addDynamicTile(tileObject, x, y + 1);
-            }
+            let tileObject = Game.DynamicTileRepository.create(tileType);
+            this.addDynamicTile(tileObject, x, y + 1);
             list.push({x: x, y: y + 1});
             growthCount ++;
+        }
+        i++
+    }
+};
+
+Game.Map.prototype.gasGrow = function(list, gasType, numberOfCells) {
+    let growthCount = 0;
+    let i = 0;
+
+    while (growthCount < numberOfCells){
+        let currentTile = list[i]
+        if (currentTile === undefined){
+            break;
+        }
+        let x = currentTile.x;
+        let y = currentTile.y;
+
+        if (this._tiles[x - 1][y] !== Game.Tile.wallTile && this._tiles[x - 1][y] !== Game.Tile.doorTile) {
+            this._gasMap[x - 1][y] = gasType;
+            let gasObject = Game.GasRepository.create(gasType);
+            this.addGas(gasObject, x -1, y);
+            list.push({x: x - 1, y: y});
+            growthCount++;
+        }
+        if (this._tiles[x - 1][y] !== Game.Tile.wallTile && this._tiles[x - 1][y] !== Game.Tile.doorTile) {
+            this._gasMap[x + 1][y] = gasType;
+            let gasObject = Game.GasRepository.create(gasType);
+            this.addGas(gasObject, x + 1, y);
+            list.push({x: x + 1, y: y});
+            growthCount++;
+        }
+        if (this._tiles[x - 1][y] !== Game.Tile.wallTile && this._tiles[x - 1][y] !== Game.Tile.doorTile) {
+            this._gasMap[x][y -1]  = gasType;
+            let gasObject = Game.GasRepository.create(gasType);
+            this.addGas(gasObject, x, y - 1);
+            list.push({x: x, y: y - 1});
+            growthCount++;
+        }
+        if (this._tiles[x - 1][y] !== Game.Tile.wallTile && this._tiles[x - 1][y] !== Game.Tile.doorTile) {
+            this._gasMap[x][y + 1] = gasType;
+            let gasObject = Game.GasRepository.create(gasType);
+            this.addGas(gasObject, x, y + 1);
+            list.push({x: x, y: y + 1});
+            growthCount++;
         }
         i++
     }

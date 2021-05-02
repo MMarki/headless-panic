@@ -96,7 +96,7 @@ Game.EntityMixins.TaskActor = {
                     var tempList = []
                     tempList.push(currentPosition)
                     var map = this.getMap();
-                    map.cellGrow(tempList, this._explodeTile, this._explodeSize);
+                    map.gasGrow(tempList, this._explodeTile, this._explodeSize);
                     map.removeEntity(this);
                     Game.sendMessage(player, "The " + this._name + " explodes into a pool of poison!");  
                 }
@@ -289,7 +289,11 @@ Game.EntityMixins.Destructible = {
                 var currentPosition = {x: this.getX(), y: this.getY()}
                 var tempList = []
                 tempList.push(currentPosition)
-                this.getMap().cellGrow(tempList, this._explodeTile, this._explodeSize);
+                if (this.getName() !== 'barrel') {
+                    this.getMap().gasGrow(tempList, this._explodeTile, this._explodeSize);
+                } else {
+                    this.getMap().cellGrow(tempList, this._explodeTile, this._explodeSize);
+                }
             }
             if (this.hasMixin('PlayerActor')) {
                 this.act();
@@ -613,7 +617,7 @@ Game.EntityMixins.Thrower = {
             } else if (item._name === "poison potion"){
                 var tempList = []
                 tempList.push({x: endPointX, y: endPointY});
-                this._map.cellGrow(tempList, 'poisonTile', 12);
+                this._map.gasGrow(tempList, 'poisonTile', 12);
             } else if (item._name === "fire potion"){
                 var tempList = []
                 tempList.push({x: endPointX, y: endPointY});
@@ -621,7 +625,7 @@ Game.EntityMixins.Thrower = {
             } else if (item._name === "darkness potion"){
                 var tempList = []
                 tempList.push({x: endPointX, y: endPointY});
-                this._map.cellGrow(tempList, 'darknessTile', 10);
+                this._map.gasGrow(tempList, 'darknessTile', 10);
             }
         }
 

@@ -1,5 +1,5 @@
 // Create our central entity repository
-Game.GasRepository = new Game.Repository('dynamicTiles', Game.DynamicTile);
+Game.GasRepository = new Game.Repository('Gasses', Game.Gas);
 
 Game.GasRepository.define('poisonTile', {
     character: '.',
