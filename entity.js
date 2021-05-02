@@ -68,53 +68,55 @@ Game.Entity.prototype.tryMove = function(x, y) {
     const tile = map.getTile(x, y);
     const target = map.getEntityAt(x, y);
     // If an entity was present at the tile
-    if (target) {
-        // If we are an attacker, try to attack the target
-        if ((this.hasMixin('Attacker') && (this.hasMixin('PlayerActor') || target.hasMixin('PlayerActor')))) {
-            this.attack(target);
-            if (this._fierce && Math.random() > 0.66){
-                if (map.getEntityAt(x, y)){
-                    this.attack(target);
+    if (!this.hasEffect('paralyzed')){
+        if (target) {
+            // If we are an attacker, try to attack the target
+            if ((this.hasMixin('Attacker') && (this.hasMixin('PlayerActor') || target.hasMixin('PlayerActor')))) {
+                this.attack(target);
+                if (this._fierce && Math.random() > 0.66){
+                    if (map.getEntityAt(x, y)){
+                        this.attack(target);
+                    }
                 }
+                return true;
+            } else {
+                // If not, nothing we can do, but we can't move to the tile
+                return false;
             }
-            return true;
-        } else {
-            // If not, nothing we can do, but we can't move to the tile
-            return false;
-        }
-    // Check if we can walk on the tile and if so simply walk onto it
-    } else if ((tile.isWalkable() && !(this.hasMixin('Swimmer'))) || ((tile === Game.Tile.shallowWaterTile || tile === Game.Tile.shallowWaterTile ) && this.hasMixin('Swimmer'))) {        
-        // Update the entity's position
-        this.setPosition(x, y);
-        //open doors
-        if(tile === Game.Tile.doorTile) {
-           this.getMap()._tiles[x][y] = Game.Tile.openDoorTile;
-        }
-        if(tile === Game.Tile.fernTile) {
-            this.getMap()._tiles[x][y] = Game.Tile.grassTile;
-        }
-        if((this.hasMixin('Affectible')) && this.hasEffect('burning') && tile === Game.Tile.grassTile) {
-            let tempList = [];
-            tempList.push({x: x, y: y});
-            this._map.cellGrow(tempList, 'fireTile', 1);
-        }
-        if((this.hasMixin('Affectible')) && this.hasEffect('burning') && (tile === Game.Tile.shallowWaterTile || tile === Game.Tile.waterTile || tile === Game.Tile.wineTile)) {
-            if (this.hasEffect('burning')){
-                var effects = this._effects;
-                for (var i = 0; i < effects.length; i++){
-                    if ('burning' === effects[i].getName()){
-                        this.removeEffect(i)
+        // Check if we can walk on the tile and if so simply walk onto it
+        } else if ((tile.isWalkable() && !(this.hasMixin('Swimmer'))) || ((tile === Game.Tile.shallowWaterTile || tile === Game.Tile.shallowWaterTile ) && this.hasMixin('Swimmer'))) {        
+            // Update the entity's position
+            this.setPosition(x, y);
+            //open doors
+            if(tile === Game.Tile.doorTile) {
+               this.getMap()._tiles[x][y] = Game.Tile.openDoorTile;
+            }
+            if(tile === Game.Tile.fernTile) {
+                this.getMap()._tiles[x][y] = Game.Tile.grassTile;
+            }
+            if((this.hasMixin('Affectible')) && this.hasEffect('burning') && tile === Game.Tile.grassTile) {
+                let tempList = [];
+                tempList.push({x: x, y: y});
+                this._map.cellGrow(tempList, 'fireTile', 1);
+            }
+            if((this.hasMixin('Affectible')) && this.hasEffect('burning') && (tile === Game.Tile.shallowWaterTile || tile === Game.Tile.waterTile || tile === Game.Tile.wineTile)) {
+                if (this.hasEffect('burning')){
+                    var effects = this._effects;
+                    for (var i = 0; i < effects.length; i++){
+                        if ('burning' === effects[i].getName()){
+                            this.removeEffect(i)
+                        }
                     }
                 }
             }
-        }
-        let items = this.getMap().getItemsAt(x, y);
-        if (items) {
-            if (items.length !== 1) {
-                Game.sendMessage(this, "There are several objects here.");
+            let items = this.getMap().getItemsAt(x, y);
+            if (items) {
+                if (items.length !== 1) {
+                    Game.sendMessage(this, "There are several objects here.");
+                }
             }
+            return true;
         }
-        return true;
     }
     return false;
 }
@@ -155,7 +157,7 @@ Game.Entity.prototype.applyNewEffects = function(){
             if (this.hasEffect('poisoned')){
                 this.removeEffect('poisoned');
             }
-            let duration = 10;
+            let duration = 14;
             let name =  'poisoned';
             let newEffect = new Game.Effect(duration, name);
             this.setEffect(newEffect);

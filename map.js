@@ -59,7 +59,7 @@ Game.Map = function(tiles, player, items, stairs, gasMap) {
         this.addEntityAtRandomPosition(Game.EntityRepository.create('lich'), 1);
     }
     
-    let emptyItemList = [];
+    /*let emptyItemList = [];
     let emptyItemCount = {};
     for (let i =0; i < 1000; i++){
         emptyItemList.push(Game.ItemRepository.createRandomConstrained(Game.getLevel()));
@@ -74,10 +74,18 @@ Game.Map = function(tiles, player, items, stairs, gasMap) {
         }
     }
 
-    //console.log(emptyItemCount);
+    console.log(emptyItemCount);*/
 
-    // 8 items per floor
-    for (let i = 0; i < 8; i++) {
+    // Items per floor
+    let itemsPerArea = 8
+    if (Game.getLevel() > 6){
+        itemsPerArea = 6;
+    }
+    if (Game.getLevel() > 11){
+        itemsPerArea = 5;
+    }
+    
+    for (let i = 0; i < itemsPerArea; i++) {
         // Add a random entity
         this.addItemAtRandomPosition(Game.ItemRepository.createRandomConstrained(Game.getLevel()));
     }

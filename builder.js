@@ -152,10 +152,10 @@ Game.Builder.prototype._generateLevel = function(level) {
     } else if (level > 11 && level <= 14) {
         // Set up the level generator
         options = {
-            roomWidth: [5, 12],
-            roomHeight: [5, 7],
+            roomWidth: [4, 12],
+            roomHeight: [4, 7],
             corridorLength: [0, 6],
-            dugPercentage: 0.32
+            dugPercentage: 0.31
         }
         generator = new ROT.Map.Digger(this._width, this._height, options);
     }
