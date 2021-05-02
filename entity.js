@@ -137,6 +137,7 @@ Game.Entity.prototype.tryMoveTeleport = function(x, y) {
 Game.Entity.prototype.applyNewEffects = function(){
     const map = this.getMap();
     let tile = map.getTile(this._x, this._y);
+    let gas = map.getGas(this._x, this._y);
 
     //check if they already have it,
     // if so, change the existing duration instead of adding a new one
@@ -150,7 +151,7 @@ Game.Entity.prototype.applyNewEffects = function(){
             let name = 'burning';
             let newEffect = new Game.Effect(duration, name);
             this.setEffect(newEffect);
-        } else if (tile._name === 'poisonTile'){
+        } else if (gas !== null && gas._name === 'poisonTile'){
             if (this.hasEffect('poisoned')){
                 this.removeEffect('poisoned');
             }
@@ -159,7 +160,7 @@ Game.Entity.prototype.applyNewEffects = function(){
             let newEffect = new Game.Effect(duration, name);
             this.setEffect(newEffect);
         }
-        else if (tile._name === 'darknessTile'){
+        else if (gas !== null && gas._name === 'darknessTile'){
             if (this.hasEffect('blind')){
                 this.removeEffect('blind');
             }

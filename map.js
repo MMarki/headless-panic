@@ -526,16 +526,7 @@ Game.Map.prototype.addItemAtRandomPosition = function(item) {
 };
 
 Game.Map.prototype.addDynamicTile = function(tile, x, y) {
-    // Update the tile's map
-    tile.setMap(this);
-    // Make sure the tile's position is within bounds
-    if (x < 0 || x >= this._width || y < 0 || y >= this._height ) {
-        throw new Error("Tile's position is out of bounds.");
-    }
-    // Add the tile to the table of tiles
-    this._tiles[x][y] = tile;
-    tile.setX(x);
-    tile.setY(y);
+    this.addCell(tile, x, y, true);
 
     // Check if this tile is an actor, and if so add them to the scheduler
     if (tile.hasMixin('Actor')) {
@@ -544,23 +535,31 @@ Game.Map.prototype.addDynamicTile = function(tile, x, y) {
 };
 
 Game.Map.prototype.addGas = function(gas, x, y) {
-    // Update the gas's map
-    gas.setMap(this);
-    // Make sure the tile's position is within bounds
-    if (x < 0 || x >= this._width || y < 0 || y >= this._height ) {
-        throw new Error("Gas's position is out of bounds.");
-    }
-    // Add the tile to the table of tiles
-    this._gasMap[x][y] = gas;
-    gas.setX(x);
-    gas.setY(y);
+    this.addCell(gas, x, y, false);
 
     // Add gas to the scheduler
     this._scheduler.add(gas, true);
 };
 
+Game.Map.prototype.addCell = function (cell, x, y, isTile){
+    cell.setMap(this);
+    // Make sure the cell's position is within bounds
+    if (x < 0 || x >= this._width || y < 0 || y >= this._height ) {
+        throw new Error("Cell's position is out of bounds.");
+    }
+    // Add the cell to the table of cells (tiles or gas)
+    if (isTile) {
+        this._tiles[x][y] = cell;
+    } else {
+        this._gasMap[x][y] = cell;
+    }
+
+    cell.setX(x);
+    cell.setY(y);
+}
+
 Game.Map.prototype.removeDynamicTile = function(tile) {
-    // Remove the entity from the map
+    // Remove the dynamic tile from the map
     let x = tile.getX();
     let y = tile.getY();
     if (this._tiles[x][y] === tile) {
@@ -574,7 +573,7 @@ Game.Map.prototype.removeDynamicTile = function(tile) {
 }
 
 Game.Map.prototype.removeGas = function(gas) {
-    // Remove the entity from the map
+    // Remove the gas from the map
     let x = gas.getX();
     let y = gas.getY();
     if (this._gasMap[x][y] === gas) {
@@ -665,21 +664,21 @@ Game.Map.prototype.gasGrow = function(list, gasType, numberOfCells) {
             list.push({x: x - 1, y: y});
             growthCount++;
         }
-        if (this._tiles[x - 1][y] !== Game.Tile.wallTile && this._tiles[x - 1][y] !== Game.Tile.doorTile) {
+        if (this._tiles[x + 1][y] !== Game.Tile.wallTile && this._tiles[x + 1][y] !== Game.Tile.doorTile) {
             this._gasMap[x + 1][y] = gasType;
             let gasObject = Game.GasRepository.create(gasType);
             this.addGas(gasObject, x + 1, y);
             list.push({x: x + 1, y: y});
             growthCount++;
         }
-        if (this._tiles[x - 1][y] !== Game.Tile.wallTile && this._tiles[x - 1][y] !== Game.Tile.doorTile) {
+        if (this._tiles[x][y - 1] !== Game.Tile.wallTile && this._tiles[x][y - 1] !== Game.Tile.doorTile) {
             this._gasMap[x][y -1]  = gasType;
             let gasObject = Game.GasRepository.create(gasType);
             this.addGas(gasObject, x, y - 1);
             list.push({x: x, y: y - 1});
             growthCount++;
         }
-        if (this._tiles[x - 1][y] !== Game.Tile.wallTile && this._tiles[x - 1][y] !== Game.Tile.doorTile) {
+        if (this._tiles[x][y + 1] !== Game.Tile.wallTile && this._tiles[x][y + 1] !== Game.Tile.doorTile) {
             this._gasMap[x][y + 1] = gasType;
             let gasObject = Game.GasRepository.create(gasType);
             this.addGas(gasObject, x, y + 1);

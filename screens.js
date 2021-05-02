@@ -58,9 +58,9 @@ Game.Screen.playScreen = {
         this._player.addItem(dart);
         var dart = Game.ItemRepository.create('dart');
         this._player.addItem(dart);
-        var dart = Game.ItemRepository.create('darkness potion');
+        var dart = Game.ItemRepository.create('dart');
         this._player.addItem(dart);
-        var dart = Game.ItemRepository.create('poison potion');
+        var dart = Game.ItemRepository.create('dart');
         this._player.addItem(dart);
         //Create map
         this._map = new Game.Map(tiles, this._player, null, stairs, gasMap);
