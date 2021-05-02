@@ -58,9 +58,9 @@ Game.Screen.playScreen = {
         this._player.addItem(dart);
         var dart = Game.ItemRepository.create('dart');
         this._player.addItem(dart);
-        var dart = Game.ItemRepository.create('dart');
+        var dart = Game.ItemRepository.create('darkness potion');
         this._player.addItem(dart);
-        var dart = Game.ItemRepository.create('dart');
+        var dart = Game.ItemRepository.create('poison potion');
         this._player.addItem(dart);
         //Create map
         this._map = new Game.Map(tiles, this._player, null, stairs, gasMap);
@@ -568,6 +568,7 @@ Game.Screen.playScreen = {
                         // Check for items first to draw over the floor
                         let items = map.getItemsAt(x, y);
                         let tile = map.getTile(x,y);
+                        let gas = map.getGas(x,y)
                         //If we have stairs, we want to render them in the sidebar
                         if (!this._player.hasEffect('blind')){
                             if ( tile === Game.Tile.stairsDownTile) {
@@ -591,9 +592,14 @@ Game.Screen.playScreen = {
                                 }
                                 display.drawText(screenWidth + 1, 10 + j , '%c{' + glyph._foreground + '}' + glyph._char + ':  ' + glyph._name + strSuffix);
                                 j++;
+                                // Update the foreground color in case our glyph changed
+                                foreground = glyph.getForeground();
                             }
-                            // Update the foreground color in case our glyph changed
-                            foreground = glyph.getForeground();
+                            //If we have gasses, we want to render them over the background
+                            if (gas !== null) {
+                                foreground = gas.getForeground()
+                                background = gas.getBackground()
+                            }
                         }
                     } else {
                         let items = map.getItemsAt(x, y);
@@ -624,7 +630,8 @@ Game.Screen.playScreen = {
             for (let key in entities) {
                 let entity = entities[key];
                 let tile = this._map.getTile(entity.getX(), entity.getY());
-                let background = tile.getBackground();
+                let gas = this._map.getGas(entity.getX(), entity.getY());
+                let background = gas !== null ? gas.getBackground() : tile.getBackground();
                 if (visibleCells[entity.getX() + ',' + entity.getY()] || (this._player.hasEffect('knowledgeable') && entity.isNotMonster() == false)) {
                     if(entity.hasMixin('PlayerActor')){
                         if (currentHead !== null){

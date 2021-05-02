@@ -262,6 +262,18 @@ Game.Map.prototype.getTile = function(x, y) {
     }
 };
 
+// Gets the tile for a given coordinate set
+Game.Map.prototype.getGas = function(x, y) {
+    // Make sure we are inside the bounds. If we aren't, return
+    // null tile.
+    if (x < 0 || x >= this._width || y < 0 || y >= this._height) {
+        return  null;
+    } else {
+        return this._gasMap[x][y] || null;
+    }
+};
+
+
 // Gets the full tile array
 Game.Map.prototype.getTiles = function() {
     return this._tiles;
@@ -420,7 +432,8 @@ Game.Map.prototype.setupFov = function() {
     
     // We need to create a callback which figures out if light can pass through a given tile.
     map._fov = new ROT.FOV.DiscreteShadowcasting(function(x, y) {
-        return !map.getTile(x, y).isBlockingLight();
+        var gas = map.getGas(x,y);
+        return !map.getTile(x,y).isBlockingLight() && (gas === null || !gas.isBlockingLight());
     }, 
     {topology: 4}
     );
