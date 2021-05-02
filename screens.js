@@ -14,7 +14,7 @@ Game.Screen.startScreen = {
     handleInput: function(inputType, inputData) {
         // When [Enter] is pressed, go to the play screen
         if (inputType === 'keydown') {
-            if (inputData.keyCode === ROT.KEYS.VK_RETURN) {
+            if (inputData.keyCode === ROT.KEYS.VK_RETURN || inputData.keyCode === ROT.KEYS.VK_SPACE) {
                 Game.switchScreen(Game.Screen.playScreen);
             }
         }
