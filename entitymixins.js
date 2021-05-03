@@ -717,6 +717,19 @@ Game.EntityMixins.Thrower = {
                 Game.sendMessage(this, 'You throw a %s at the %s. It deflects off its shell!', [item.getName(),target.getName()]);
             } else if (Math.random()*100 < hitProbability){
                 let maxAmount = Math.max(0, item.getThrownAttackValue());
+                if (this.hasMixin('PlayerActor')) {
+                    if (item.getDamageType != undefined){
+                        let damageType = item.getDamageType();
+                        let targetIsVulnerable = target.getVulnerabilities().includes(damageType);
+                        if (targetIsVulnerable){
+                            maxAmount *= 2;
+                        }
+                        let targetIsResistant = target.getResistances().includes(damageType);
+                        if (targetIsResistant){
+                            maxAmount = Math.ceil(maxAmount / 2);
+                        } 
+                    } 
+                }
                 amount = Math.floor((Math.random() * maxAmount)) + 1;
                 if (amount > 0){
                     Game.sendMessage(this, 'You throw a %s at the %s for %d damage!', [item.getName(),target.getName(), amount]);
