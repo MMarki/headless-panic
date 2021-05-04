@@ -433,12 +433,12 @@ Game.EntityMixins.Attacker = {
                 } 
                 if (this.hasMixin('Equipper') && target.hasMixin('Affectible')){
                     if (this._venomous){
-                        if (Math.random()*100 < 30){
+                        if (Math.random()*100 < 40){
                             let newEffect = new Game.Effect(Math.floor(damage*1.5), 'poisoned');
                             target.setEffect(newEffect);
                         }
                     } else if (this._paralytic){
-                        if (Math.random()*100 < 10){
+                        if (Math.random()*100 < 20){
                             let newEffect = new Game.Effect(Math.floor(damage*1.5), 'paralyzed');
                             target.setEffect(newEffect);
                         }

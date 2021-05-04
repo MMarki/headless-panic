@@ -73,7 +73,7 @@ Game.Entity.prototype.tryMove = function(x, y) {
             // If we are an attacker, try to attack the target
             if ((this.hasMixin('Attacker') && (this.hasMixin('PlayerActor') || target.hasMixin('PlayerActor')))) {
                 this.attack(target);
-                if (this._fierce && Math.random() > 0.66){
+                if (this._fierce && Math.random() > 0.50){
                     if (map.getEntityAt(x, y)){
                         this.attack(target);
                     }
