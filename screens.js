@@ -971,7 +971,7 @@ Game.Screen.applyScreen = new Game.Screen.ItemListScreen({
             Game.Screen.aimAtScreen.setup(this._player, this._player.getX(), this._player.getY(), item, key);
             Game.Screen.playScreen.setSubScreen(Game.Screen.aimAtScreen);            
         } else if (item.hasMixin('Usable') && item.getUses() === 0){
-            Game.sendMessage(this._player, "The %s is out of charges.", [item.describe()]);
+            Game.sendMessage(this._player, "%c{#F61067}The %s is out of charges.", [item.describe()]);
         }
         return true;
     }
@@ -1416,7 +1416,7 @@ Game.Screen.ItemScreen.prototype.handleInput = function(inputType, inputData) {
                 Game.Screen.playScreen.setSubScreen(Game.Screen.aimAtScreen);    
                 // if we go to aim screen, it handles okaying itself and closing out.       
             } else if (item.hasMixin('Usable') && item.getUses() === 0){
-                Game.sendMessage(this._player, "The %s is out of charges.", [item.describe()]); 
+                Game.sendMessage(this._player, "%c{#F61067}The %s is out of charges.", [item.describe()]); 
                 // if we go to aim screen, it handles okaying itself and closing out.
             }
         } else if (inputData.keyCode === ROT.KEYS.VK_D){
