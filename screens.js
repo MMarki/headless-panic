@@ -172,6 +172,7 @@ Game.Screen.playScreen = {
                     }
                 }
 
+                Game.Screen.loseScreen.deathInfo.level = Game.getLevel();
                 Game.Screen.loseScreen.deathInfo.strength = strengthValue;
                 Game.Screen.loseScreen.deathInfo.armor = defenseValue;
                 Game.Screen.loseScreen.deathInfo.weapon = ((attackValue + strengthModifier) + ' ' + damageType);
