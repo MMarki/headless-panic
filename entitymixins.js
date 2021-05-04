@@ -595,6 +595,8 @@ Game.EntityMixins.Thrower = {
             let tileType = this._map.getTile(point.x, point.y)
             if (tileType == Game.Tile.wallTile || tileType === Game.Tile.doorTile){
                 //console.log("oi mate, we hit a wall!");
+                this.handleThrowDrop(item, true, this._map, point.x, point.y)
+                Game.sendMessage(this, 'You throw a %s.',item.getName());
                 break;
             }            
             endPointX = point.x;
@@ -605,8 +607,10 @@ Game.EntityMixins.Thrower = {
         var creatureReference = this.getMap().getEntityAt(endPointX, endPointY);
         if (creatureReference !== undefined){
             this.throwAttack(item, creatureReference, throwDistance);
+            this.handleThrowDrop(item, true, this._map, endPointX, endPointY)
         } else{
             Game.sendMessage(this, 'You throw a %s.',item.getName());
+            this.handleThrowDrop(item, false, this._map, endPointX, endPointY)
         }
 
         // potion effects
@@ -639,10 +643,22 @@ Game.EntityMixins.Thrower = {
                 this.removeItem(key);
             }
         }
-
-        if (!item.hasMixin(Game.ItemMixins.Edible)) {
-            if (Math.random()*100 > item._throwBreakChance){
-                this._map.addItem(endPointX, endPointY, item);
+    },
+    isItemBrokenByThrow: function(item, hitMonster){
+        if (item.hasMixin(Game.ItemMixins.Edible)) {
+            return true;
+        } else if (Math.random()*100 < item._throwBreakChance && hitMonster){
+            return true
+        }
+        return false;
+    },
+    handleThrowDrop: function(item, hitMonster, mapRef, dropX, dropY){
+        if (!this.isItemBrokenByThrow(item, hitMonster)){
+            if (item.hasMixin("Usable") || item.isHeadible()){
+                mapRef.addItem(dropX, dropY, item);
+            } else {
+                let droppedItem = Game.ItemRepository.create(item.getName());
+                mapRef.addItem(dropX, dropY, droppedItem);
             }
         }
     },
