@@ -78,23 +78,22 @@ Game.Map = function(tiles, player, items, stairs, gasMap) {
 
     // Items per floor
     let itemsPerArea = 8
+    if (Game.getLevel() > 3){
+        itemsPerArea = 7;
+    }
     if (Game.getLevel() > 6){
-        itemsPerArea = 6;
+        itemsPerArea = 5;
     }
     if (Game.getLevel() > 11){
-        itemsPerArea = 5;
+        itemsPerArea = 4;
     }
     
     for (let i = 0; i < itemsPerArea; i++) {
         // Add a random entity
         this.addItemAtRandomPosition(Game.ItemRepository.createRandomConstrained(Game.getLevel()));
     }
-    if (Math.random()*100 > 33){
-        this.addItemAtRandomPosition(Game.GatedItemRepository.createRandom());
-    } else {
-        let floorPosition = this.getRandomFloorPosition();
-        this._tiles[floorPosition.x][floorPosition.y] = Game.Tile.altarTile;
-    }
+
+    this.addGatedItem();
 
     //set up the explored array
     this._explored = new Array(this._width);
@@ -153,6 +152,54 @@ Game.Map.prototype.getEntityAt = function(x, y){
     // Iterate through all entities searching for one with matching position
     return this._entities[x + ',' + y];
 }
+
+Game.Map.prototype.addGatedItem = function() {
+    const randNum = Math.random()*100;
+    let chosenItem = ''
+    let alreadyGotList = Game.Screen.playScreen.alreadyGotList;
+    if (alreadyGotList.length === 3 || alreadyGotList.length === 0){
+        if ( randNum > 66){
+            chosenItem = 'strength potion';
+        } else if (randNum > 33) {
+            chosenItem = 'altar';
+        } else {
+            chosenItem = 'life potion';
+        }
+        Game.Screen.playScreen.alreadyGotList = [];
+        Game.Screen.playScreen.alreadyGotList.push(chosenItem)
+    } else if (alreadyGotList.length === 2){
+        //find the missing item
+        if (!alreadyGotList.includes("strength potion")) chosenItem = 'strength potion';
+        else if (!alreadyGotList.includes("altar")) chosenItem = 'altar';
+        else if (!alreadyGotList.includes("life potion")) chosenItem = 'life potion';
+        Game.Screen.playScreen.alreadyGotList.push(chosenItem);
+    } else if (alreadyGotList.length === 1){
+        //find the missing two, use those on a 50% chance
+        if (alreadyGotList.includes("altar")){
+            firstOption = 'strength potion';
+            secondOption = 'life potion';
+        } else if (alreadyGotList.includes("strength potion")){
+            firstOption = 'altar';
+            secondOption = 'life potion';
+        } else if (alreadyGotList.includes("life potion")){
+            firstOption = 'strength potion';
+            secondOption = 'altar';
+        }
+        chosenItem = (randNum > 50) ? firstOption : secondOption;
+        Game.Screen.playScreen.alreadyGotList.push(chosenItem);
+    }
+
+    this.spawnGatedItem(chosenItem);
+};
+
+Game.Map.prototype.spawnGatedItem = function(in_string) {
+    if (in_string === 'altar'){
+        let floorPosition = this.getRandomFloorPosition();
+        this._tiles[floorPosition.x][floorPosition.y] = Game.Tile.altarTile;
+    } else {
+        this.addItemAtRandomPosition(Game.GatedItemRepository.create(in_string));
+    }
+};
 
 Game.Map.prototype.cleanUpDoors = function(){
     let doorList = this.getAllTlesOfType(Game.Tile.doorTile);

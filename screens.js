@@ -28,6 +28,7 @@ Game.Screen.playScreen = {
     _gameEnded: false,
     _subScreen: null,
     _lastTarget: null,
+    alreadyGotList: [],
     enter: function() {  
         var width = Game._screenWidth;
         var height = Game._screenHeight;
