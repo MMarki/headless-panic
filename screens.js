@@ -1282,7 +1282,7 @@ Game.Screen.lookScreen = new Game.Screen.TargetBasedScreen({
                 // If we have items, we want to render the top most item
                 if (items) {
                     var item = items[items.length - 1];
-                    return (item.getRepresentation() + ' - ' + item.describeA(true) + '. ' + item.getDescription());
+                    return (item.getRepresentation() + ' - ' + item.describeA(true) + '. ' + item.getDescription() + (item.hasMixin('Equippable') ? item.getPowerDescription() : ''));
                 // Else check if there's an entity
                 } else if (map.getEntityAt(x, y)) {
                     var entity = map.getEntityAt(x, y);
