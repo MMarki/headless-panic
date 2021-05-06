@@ -22,6 +22,11 @@ Game.Map = function(tiles, player, items, stairs, gasMap) {
     this._fov = {};
     this.setupFov();
 
+    this.setRune('protectTile');
+    this.setRune('protectTile');
+    this.setRune('vulnerabilityTile');
+    this.setRune('vulnerabilityTile');
+
     // 15 entities per floor
     let entitiesPerArea = 10
     if (Game.getLevel() > 6){
@@ -280,11 +285,11 @@ Game.Map.prototype.getRidOfBoringRooms = function (rooms) {
                     }
                     //check for entities
                     const key = x + ',' + y;
-                    if (this._entities[key] !== undefined && this._entities[key] !== null) {
+                    if (this._entities[key] !== undefined && this._entities[key] !== null && this._entities[key].getName() !== 'barrel') {
                         roomMatters = true;
                     }
                     //check for items
-                    if (this.getItemsAt(x,y) !== undefined && this._entities[key] !== null){
+                    if (this.getItemsAt(x,y) !== undefined){
                         roomMatters = true;
                     } 
                 }
@@ -314,6 +319,17 @@ Game.Map.prototype.getTile = function(x, y) {
         return Game.Tile.nullTile;
     } else {
         return this._tiles[x][y] || Game.Tile.nullTile;
+    }
+};
+
+// Set the tile for a given coordinate set
+Game.Map.prototype.setTile = function(x, y, tileType) {
+    // Make sure we are inside the bounds. If we aren't, return
+    // null tile.
+    if (x < 0 || x >= this._width || y < 0 || y >= this._height) {
+        console.log('out of bounds!');
+    } else {
+        this._tiles[x][y] = tileType;
     }
 };
 
@@ -465,6 +481,22 @@ Game.Map.prototype.getEntitiesWithinRadius = function(centerX, centerY, radius) 
         }
     }
     return results;
+}
+
+Game.Map.prototype.setRune = function(runeName) {
+    let matches = [];
+    // Iterate through all tiles, checking if they are floor tiles. 
+    for (let x = 0; x < this._width; x++) {
+        for (let y = 0; y < this._height; y++) {
+            if (this._tiles[x][y]  == Game.Tile.floorTile) {
+                matches.push({x: x, y: y});
+            }
+        }
+    }
+    // We shuffle the list of matches to prevent bias
+    let match =  Game.pickRandomElement(matches);
+    let tileObject = Game.DynamicTileRepository.create(runeName);
+    this.addDynamicTile(tileObject, match.x, match.y)
 }
 
 Game.Map.prototype.sortByDistance = function(x,y,locationArray) {

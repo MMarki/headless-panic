@@ -316,7 +316,7 @@ Game.Builder.prototype._setGrass = function() {
     this._cellGrow(grassList, Game.Tile.grassTile, 20)
 }
 
-// Generates grass at free locations
+// Generates ferns at free locations
 Game.Builder.prototype._setFerns = function() {
     let matches = [];
     // Iterate through all tiles, checking if they are floor tiles. 

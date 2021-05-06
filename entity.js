@@ -153,21 +153,40 @@ Game.Entity.prototype.applyNewEffects = function(){
             let name = 'burning';
             let newEffect = new Game.Effect(duration, name);
             this.setEffect(newEffect);
+        } else if (tile._name === 'protectTile'){
+            if (this.hasEffect('protected')){
+                this.removeEffect('protected');
+            }
+            let duration = 3;
+            let name = 'protected';
+            let newEffect = new Game.Effect(duration, name);
+            this.setEffect(newEffect);
+            map.setTile(this._x, this._y, Game.Tile.floorTile);
+        }  else if (tile._name === 'vulnerabilityTile'){
+            if (this.hasEffect('vulnerable')){
+                this.removeEffect('vulnerable');
+            }
+            let duration = 3;
+            let name = 'vulnerable';
+            let newEffect = new Game.Effect(duration, name);
+            this.setEffect(newEffect);
+            map.setTile(this._x, this._y, Game.Tile.floorTile);
+        }
+
+        if (gas !== null && gas._name === 'darknessTile'){
+            if (this.hasEffect('blind')){
+                this.removeEffect('blind');
+            }
+            let duration = 20;
+            let name =  'blind';
+            let newEffect = new Game.Effect(duration, name);
+            this.setEffect(newEffect);
         } else if (gas !== null && gas._name === 'poisonTile'){
             if (this.hasEffect('poisoned')){
                 this.removeEffect('poisoned');
             }
             let duration = 14;
             let name =  'poisoned';
-            let newEffect = new Game.Effect(duration, name);
-            this.setEffect(newEffect);
-        }
-        else if (gas !== null && gas._name === 'darknessTile'){
-            if (this.hasEffect('blind')){
-                this.removeEffect('blind');
-            }
-            let duration = 20;
-            let name =  'blind';
             let newEffect = new Game.Effect(duration, name);
             this.setEffect(newEffect);
         }

@@ -23,6 +23,8 @@ Game.Effect.prototype.getEffectColor = function(name) {
         return Game.Colors.burningColor;
     } else if (name === 'blind' || name === 'paralyzed'){
         return Game.Colors.blindColor;
+    } else if (name === 'vulnerable'){
+        return Game.Colors.lichColor;
     } else {
         return Game.Colors.effectDefault;
     }

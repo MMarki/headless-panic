@@ -24,3 +24,23 @@ Game.DynamicTileRepository.define('wineTile', {
     description: 'a pool of wine',
 });
 
+Game.DynamicTileRepository.define('protectTile', {
+    character: '\u00A4',
+    name: 'protectTile',
+    foreground: Game.Colors.effectDefault,
+    background: Game.Colors.floorColor,
+    walkable: true,
+    blocksLight: false,
+    description: 'a rune of protection',
+});
+
+Game.DynamicTileRepository.define('vulnerabilityTile', {
+    character: '\u00A4',
+    name: 'vulnerabilityTile',
+    foreground: Game.Colors.lichColor,
+    background: Game.Colors.floorColor,
+    walkable: true,
+    blocksLight: false,
+    description: 'a rune of vulnerability',
+});
+
