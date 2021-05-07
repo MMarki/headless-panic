@@ -45,6 +45,8 @@ Game.EntityMixins.TaskActor = {
         // Load tasks
         this._tasks = template['tasks'] || ['wander'];
         this._hunting = false;
+        this._castWaitMax = template['castWaitMax'] || 5;
+        this._castWait = this._castWaitMax;
     },
     act: function() {
         var stopActor = this.handleEffects();
@@ -54,6 +56,10 @@ Game.EntityMixins.TaskActor = {
 
         if (this.hasMixin('Summoner') && this._summonWait > 0) {
             this._summonWait -=1;
+        }
+
+        if (this._castWait !== undefined && this._castWait > 0){
+            this._castWait -=1;
         }
 
         // Iterate through all our tasks
@@ -69,8 +75,10 @@ Game.EntityMixins.TaskActor = {
         this._hunting = false;
         if (task === 'summonMonster') {
             return this._summonWait === 0;     
-        }
-        else if (task === 'hunt') {
+        } else if (task === 'castRune') {   
+            let player = this.getMap().getPlayer()
+            return this.hasMixin('Sight') && this.canSee(player) && this._castWait === 0;;
+        } else if (task === 'hunt') {
             let player = this.getMap().getPlayer()
             return this.hasMixin('Sight') && this.canSee(player) && !(this._name === 'rat' && player._ratThreaten === true);
         } else if (task === 'wander') {
@@ -134,6 +142,31 @@ Game.EntityMixins.TaskActor = {
     },
     summonMonster: function(){
         this.summon();
+    },
+    castRune: function(){
+        let map = this.getMap();
+        let player = map.getPlayer();
+        let x = 0;
+        let y = 0;
+        let i = 0;
+        while(i < 10){
+            const xOffset = Math.random() > .5 ? -1 : 1;
+            const yOffset = Math.random() > .5 ? -1 : 1;
+
+            x = player.getX() + xOffset;
+            y = player.getY() + yOffset;
+
+            if (map._tiles[x][y].isWalkable() && x >= 0 && x < map._width && y >= 0 && y < map._height){
+                break;
+            }
+            i++;
+        }     
+
+        if (map._tiles[x][y].isWalkable()){
+            map.setRunePosition('vulnerabilityTile', x, y);
+            Game.sendMessage(player, "%c{#F61067}The " + this._name + " casts a spell!");
+            this._castWait = this._castWaitMax;
+        }
     }
 };
 

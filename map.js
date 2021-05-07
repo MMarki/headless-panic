@@ -483,6 +483,11 @@ Game.Map.prototype.getEntitiesWithinRadius = function(centerX, centerY, radius) 
     return results;
 }
 
+Game.Map.prototype.setRunePosition = function(runeName, x, y){
+    let tileObject = Game.DynamicTileRepository.create(runeName);
+    this.addDynamicTile(tileObject, x, y);
+}
+
 Game.Map.prototype.setRune = function(runeName) {
     let matches = [];
     // Iterate through all tiles, checking if they are floor tiles. 
@@ -495,8 +500,8 @@ Game.Map.prototype.setRune = function(runeName) {
     }
     // We shuffle the list of matches to prevent bias
     let match =  Game.pickRandomElement(matches);
-    let tileObject = Game.DynamicTileRepository.create(runeName);
-    this.addDynamicTile(tileObject, match.x, match.y)
+    this.setRunePosition(runeName, match.x, match.y);
+    
 }
 
 Game.Map.prototype.sortByDistance = function(x,y,locationArray) {
