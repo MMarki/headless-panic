@@ -11,7 +11,7 @@ Game.Entity = function(properties) {
     this._notMonster = properties['notMonster'] || false;
     //attribrutes
     this._fierce = properties['fierce'] || false; //can sometimes attack twice per turn
-    this._protected = properties['protected'] || false; // 1 higher DEF than usual
+    this._armored = properties['armored'] || false; // 1 higher DEF than usual
     this._ratThreaten = properties['ratThreaten'] || false; // rats won't attack you
     this._toady = properties['toady'] || false; // better defense on water tiles
     this._venomous = properties['venomous'] || false; // chance to poison on hit
@@ -153,7 +153,7 @@ Game.Entity.prototype.applyNewEffects = function(){
             let name = 'burning';
             let newEffect = new Game.Effect(duration, name);
             this.setEffect(newEffect);
-        } else if (tile._name === 'protectTile'){
+        } else if (this.hasMixin('PlayerActor') && tile._name === 'protectTile'){
             if (this.hasEffect('protected')){
                 this.removeEffect('protected');
             }
@@ -162,7 +162,7 @@ Game.Entity.prototype.applyNewEffects = function(){
             let newEffect = new Game.Effect(duration, name);
             this.setEffect(newEffect);
             map.setTile(this._x, this._y, Game.Tile.floorTile);
-        }  else if (tile._name === 'vulnerabilityTile'){
+        }  else if (this.hasMixin('PlayerActor') && tile._name === 'vulnerabilityTile'){
             if (this.hasEffect('vulnerable')){
                 this.removeEffect('vulnerable');
             }

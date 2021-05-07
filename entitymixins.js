@@ -166,6 +166,8 @@ Game.EntityMixins.Destructible = {
         let modifier = 0;
         let strengthModifier = 0;
         let headIsToad = false;
+        const isProtected =  this.hasMixin('Affectible') ? this.hasEffect('protected') : false;
+        const isVulnerable = this.hasMixin('Affectible') ? this.hasEffect('vulnerable') : false;
         // If we can equip items, then have to take into 
         // consideration weapon and armor
         if (this.hasMixin('Equipper')) {
@@ -192,8 +194,14 @@ Game.EntityMixins.Destructible = {
             if (tile._isWater){
                 modifier += 1;
             }
+        } 
+        if (isProtected) {
+            modifier +=2;
         }
-        return Math.max(this._defenseValue + modifier + (this._protected ? 1: 0), 0);
+        if (isVulnerable) {
+            modifier -=2;
+        }
+        return Math.max(this._defenseValue + modifier + (this._armored ? 1: 0), 0);
     },
     modifyHPBy: function(points) {
         this._hp = this._hp + points;
@@ -1089,7 +1097,7 @@ Game.EntityMixins.Equipper = {
     wearHead: function(item){
         this._head = item;
         if (this.hasMixin('PlayerActor')){
-            this._protected = false;
+            this._armored = false;
             this._fierce = false;
             this._ratThreaten = false;
             this._toady = false;
@@ -1099,7 +1107,7 @@ Game.EntityMixins.Equipper = {
             this._pusher = false;
             this._sucker = false;
             if(this._head._name === 'goblin head' || this._head._name === 'kappa head'){
-                this._protected = true;
+                this._armored = true;
             } else if (this._head._name === 'jackal head' || this._head._name === 'piranha head'){
                 this._fierce = true;
             } else if (this._head._name === 'rat king head'){
@@ -1125,7 +1133,7 @@ Game.EntityMixins.Equipper = {
     unhead: function(){
         if (this.hasMixin('PlayerActor')){
             if(this._head._name === 'goblin head' || this._head._name === 'kappa head'){
-                this._protected = false;
+                this._armored = false;
             } else if (this._head._name === 'jackal head' || this._head._name === 'piranha head'){
                 this._fierce = false;
             } else if (this._head._name === 'rat king head'){
