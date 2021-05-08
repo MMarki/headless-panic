@@ -22,10 +22,15 @@ Game.Map = function(tiles, player, items, stairs, gasMap) {
     this._fov = {};
     this.setupFov();
 
+    //runes
     this.setRune('protectTile');
     this.setRune('protectTile');
     this.setRune('vulnerabilityTile');
     this.setRune('vulnerabilityTile');
+    if (Game.getLevel() > 6){
+        this.setRune('vulnerabilityTile');
+        this.setRune('vulnerabilityTile');
+    }
 
     // 15 entities per floor
     let entitiesPerArea = 10
@@ -82,9 +87,9 @@ Game.Map = function(tiles, player, items, stairs, gasMap) {
     console.log(emptyItemCount);*/
 
     // Items per floor
-    let itemsPerArea = 8
+    let itemsPerArea = 7
     if (Game.getLevel() > 3){
-        itemsPerArea = 7;
+        itemsPerArea = 6;
     }
     if (Game.getLevel() > 6){
         itemsPerArea = 5;
