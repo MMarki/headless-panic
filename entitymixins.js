@@ -79,6 +79,9 @@ Game.EntityMixins.TaskActor = {
         } else if (task === 'castRune') {   
             let player = this.getMap().getPlayer()
             return this.hasMixin('Sight') && this.canSee(player) && this._castWait === 0;;
+        } else if (task === 'charge') {
+            let player = this.getMap().getPlayer()
+            return (this.hasMixin('Sight') && this.canSee(player)) || this.getChargeDirection() !=='none';
         } else if (task === 'hunt') {
             let player = this.getMap().getPlayer()
             return this.hasMixin('Sight') && this.canSee(player) && !(this._name === 'rat' && player._ratThreaten === true) && !(this._name === 'wraith' && player._hasNotMovedThisTurn === true);
@@ -130,6 +133,77 @@ Game.EntityMixins.TaskActor = {
             }
             count++;
         });
+    },
+    charge: function() {
+        let player = this.getMap().getPlayer();
+        this._hunting = true;
+
+        let xOffset = player.getX() - this.getX();
+        let yOffset = player.getY() - this.getY();
+        let chargeDirection = this.getChargeDirection();
+
+        if (chargeDirection === 'none'){
+            if (xOffset === 0) {
+                // charge vertically (up or down)
+                if (yOffset > 0) {
+                    this.setChargeDirection('down');
+                    Game.sendMessage(player, "The " + this.getName() + " is charging!");
+                } else {
+                    this.setChargeDirection('up');
+                    Game.sendMessage(player, "The " + this.getName() + " is charging!");
+                }
+            } else if (yOffset === 0){
+                if (xOffset > 0) {
+                    this.setChargeDirection('right');
+                    Game.sendMessage(player, "The " + this.getName() + " is charging!");
+                } else {
+                    this.setChargeDirection('left');
+                    Game.sendMessage(player, "The " + this.getName() + " is charging!");
+                }
+            }
+        }
+
+        let moveSuccess = true;
+        let hasMoved = false;
+        
+        if (chargeDirection === 'up') {
+            moveSuccess = this.tryMove(this.getX(), this.getY() - 1);
+            hasMoved = true;
+        } else if (chargeDirection === 'down') {
+            moveSuccess = this.tryMove(this.getX(), this.getY() + 1);
+            hasMoved = true;
+        } else if (chargeDirection === 'left') {
+            moveSuccess = this.tryMove(this.getX() - 1, this.getY());
+            hasMoved = true;
+        } else if (chargeDirection === 'right'){
+            moveSuccess = this.tryMove(this.getX() + 1, this.getY());
+            hasMoved = true;
+        }
+
+        if (!moveSuccess){
+            this.setChargeDirection('none');
+        };
+
+        if (!hasMoved){
+            // Generate the path and move to the first tile.
+            var source = this;
+            var path = new ROT.Path.AStar(player.getX(), player.getY(), function(x, y) {
+                // If an entity is present at the tile, can't move there.
+                var entity = source.getMap().getEntityAt(x, y);
+                if (entity && entity !== player && entity !== source) {
+                    return false;
+                }
+                return source.getMap().getTile(x, y).isWalkable();
+            }, {topology: 4});
+            // Once we've gotten the path, we want to move to the second cell that is passed in the callback (the first is the entity's starting point)
+            var count = 0;
+            path.compute(source.getX(), source.getY(), function(x, y) {
+                if (count == 1) {
+                    source.tryMove(x, y);
+                }
+                count++;
+            });
+        }
     },
     wander: function() {
         // Flip coin to determine if moving by 1 in the positive or negative direction
@@ -910,6 +984,19 @@ Game.EntityMixins.Summoner = {
         } else {
             return null;
         }
+    }
+}
+
+Game.EntityMixins.Charger = {
+    name: 'Charger',
+    init: function(template) {
+        this._chargeDirection = 'none';
+    },
+    getChargeDirection: function(){
+        return this._chargeDirection
+    },
+    setChargeDirection: function(in_string){
+        this._chargeDirection = in_string;
     }
 }
 

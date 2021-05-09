@@ -192,7 +192,7 @@ Game.EntityRepository.define('kappa', {
 
 Game.EntityRepository.define('mushroom man', {
     name: 'mushroom man',
-    character: 'M',
+    character: 'm',
     foreground: Game.Colors.mushroomColor,
     maxHP: 15,
     attackValue: 10,
@@ -343,6 +343,23 @@ Game.EntityRepository.define('wraith', {
              Game.EntityMixins.Destructible, Game.EntityMixins.Affectible]
 });
 
+Game.EntityRepository.define('minotaur', {
+    name: 'minotaur',
+    character: 'M',
+    foreground: Game.Colors.koboldColor,
+    maxHP: 50,
+    attackValue: 40,
+    defenseValue: 12,
+    accuracyValue: 100,
+    sightRadius: 18,
+    description: "A burly man with a bull's head.",
+    tasks: ['charge', 'wander'],
+    mixins: [Game.EntityMixins.TaskActor, Game.EntityMixins.Sight,
+             Game.EntityMixins.Attacker, Game.EntityMixins.Destructible,
+             Game.EntityMixins.HeadDropper, Game.EntityMixins.Affectible,
+             Game.EntityMixins.Charger]
+});
+
 Game.EntityRepository.define('vampire', {
     name: 'vampire', 
     character: 'V',
@@ -489,7 +506,7 @@ Game.EntityRepository.repoFrequency = {
     'L9': [{'kappa': 1}, {'mushroom man': 1}, {'poison toad': 1}, {'piranha': 1}, {'bee':1}],
     'L10': [{'kappa': 1}, {'mushroom man': 1}, {'poison toad': 1}, {'piranha': 1}, {'bee':1}],
     'L11': [{'kappa': 1}, {'mushroom man': 1}, {'poison toad': 1}, {'piranha': 2}, {'bee':1}],
-    'L12': [{'zombie': 2}, {'slime': 1}, {'skeleton': 6}, {'golem': 1}, {'wraith': 1}],
-    'L13': [{'zombie': 2}, {'slime': 1}, {'skeleton': 6}, {'golem': 2}, {'bat': 2}, {'wraith': 1}],
-    'L14': [{'zombie': 1}, {'slime': 1}, {'skeleton': 6}, {'golem': 2}, {'wraith': 1}]
+    'L12': [{'zombie': 2}, {'slime': 1}, {'skeleton': 6}, {'golem': 1}, {'wraith': 1}, {'minotaur': 2}],
+    'L13': [{'zombie': 2}, {'slime': 1}, {'skeleton': 6}, {'golem': 2}, {'bat': 2}, {'wraith': 1}, {'minotaur': 1}],
+    'L14': [{'zombie': 1}, {'slime': 1}, {'skeleton': 6}, {'golem': 2}, {'wraith': 1}, {'minotaur': 2}]
 }
