@@ -657,8 +657,7 @@ Game.Screen.playScreen = {
             
             for (var i=0; i < visibleEntities.length; i++){
                 var visibleEntity = visibleEntities[i]
-                display.drawText(screenWidth + 1, 10 + 2*i + i + j , '%c{' + visibleEntity.getForeground() + '}' + visibleEntity.getChar() + ':  ' + visibleEntity.getName());
-                display.drawText(screenWidth + 1, 11 + 2*i + i + j, '%c{' + visibleEntity.getForeground() + '}HP: ' + visibleEntity.getHP() + '/' + visibleEntity.getMaxHP());
+                display.drawText(screenWidth + 1, 10 + 2*i + j , '%c{' + visibleEntity.getForeground() + '}' + visibleEntity.getChar() + ':  ' + visibleEntity.getName() + '%c{' + visibleEntity.getForeground() + '} '  + visibleEntity.getHP() + '/' + visibleEntity.getMaxHP());
             
                 var effectsList = visibleEntity.getEffects();
                 var effectsString = '';
