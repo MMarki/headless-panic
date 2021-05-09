@@ -188,6 +188,9 @@ Game.Screen.playScreen = {
             this._subScreen.handleInput(inputType, inputData);
             return;
         }
+
+        this._player._hasNotMovedThisTurn = true;
+
         if (inputType === 'keydown') {
             // Movement
             if (inputData.keyCode === ROT.KEYS.VK_LEFT) {

@@ -6,6 +6,7 @@ Game.EntityMixins.PlayerActor = {
     init: function(template) {
         // Load tasks
         this._pathingTarget = null;
+        this._hasNotMovedThisTurn = true;
     },
     act: function() {
         if (this._acting) {
@@ -80,7 +81,7 @@ Game.EntityMixins.TaskActor = {
             return this.hasMixin('Sight') && this.canSee(player) && this._castWait === 0;;
         } else if (task === 'hunt') {
             let player = this.getMap().getPlayer()
-            return this.hasMixin('Sight') && this.canSee(player) && !(this._name === 'rat' && player._ratThreaten === true);
+            return this.hasMixin('Sight') && this.canSee(player) && !(this._name === 'rat' && player._ratThreaten === true) && !(this._name === 'wraith' && player._hasNotMovedThisTurn === true);
         } else if (task === 'wander') {
             return true;
         } else {
@@ -736,10 +737,10 @@ Game.EntityMixins.Thrower = {
             let creatureReference = this.getMap().getEntityAt(endPointX, endPointY);
             if (creatureReference !== undefined){
                 if (item._name === 'wand of poison'){
-                    let newEffect = new Game.Effect(10, 'poisoned');
+                    let newEffect = new Game.Effect(12, 'poisoned');
                     creatureReference.setEffect(newEffect);
                 } else if (item._name === 'wand of fire'){
-                    let newEffect = new Game.Effect(10, 'burning');
+                    let newEffect = new Game.Effect(12, 'burning');
                     creatureReference.setEffect(newEffect);
                 }
             } else{

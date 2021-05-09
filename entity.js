@@ -87,6 +87,9 @@ Game.Entity.prototype.tryMove = function(x, y) {
         } else if ((tile.isWalkable() && !(this.hasMixin('Swimmer'))) || ((tile === Game.Tile.shallowWaterTile || tile === Game.Tile.shallowWaterTile ) && this.hasMixin('Swimmer'))) {        
             // Update the entity's position
             this.setPosition(x, y);
+            if(this.hasMixin('PlayerActor')){
+                this._hasNotMovedThisTurn = false;
+            }
             //open doors
             if(tile === Game.Tile.doorTile) {
                this.getMap()._tiles[x][y] = Game.Tile.openDoorTile;

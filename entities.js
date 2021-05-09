@@ -309,10 +309,10 @@ Game.EntityRepository.define('golem', {
     character: 'G',
     foreground: 'teal',
     maxHP: 50,
-    attackValue: 22,
+    attackValue: 30,
     defenseValue: 14,
     accuracyValue: 90,
-    sightRadius: 10,
+    sightRadius: 13,
     headHits: 1,
     resistances: ['stab'],
     vulnerabilities: ['crush'],
@@ -324,6 +324,23 @@ Game.EntityRepository.define('golem', {
              Game.EntityMixins.Attacker, Game.EntityMixins.Destructible,
              Game.EntityMixins.HeadDropper, Game.EntityMixins.Affectible, 
              Game.EntityMixins.Unpoisonable, Game.EntityMixins.Pusher]
+});
+
+Game.EntityRepository.define('wraith', {
+    name: 'wraith',
+    character: 'W',
+    foreground: Game.Colors.hydraColor,
+    maxHP: 40,
+    attackValue: 20,
+    accuracyValue: 90,
+    sightRadius: 14,
+    speed: 2000,
+    tasks: ['hunt', 'wander'],
+    description: "An quick-moving monster who can sense movement.",
+    headPower: '50% chance to attack twice',
+    mixins: [Game.EntityMixins.TaskActor, Game.EntityMixins.Sight,
+             Game.EntityMixins.HeadDropper, Game.EntityMixins.Attacker, 
+             Game.EntityMixins.Destructible, Game.EntityMixins.Affectible]
 });
 
 Game.EntityRepository.define('vampire', {
@@ -338,7 +355,7 @@ Game.EntityRepository.define('vampire', {
     headHits: 2,
     vulnerabilities: ['stab'],
     speed: 2000,
-    description: "A pale fanged humanoid in a tattered cloak.",
+    description: "A pale, fanged humanoid in a tattered cloak.",
     tasks: ['hunt', 'wander'],
     headPower: 'Regains health on hit',
     mixins: [Game.EntityMixins.TaskActor, Game.EntityMixins.Sight,
@@ -472,7 +489,7 @@ Game.EntityRepository.repoFrequency = {
     'L9': [{'kappa': 1}, {'mushroom man': 1}, {'poison toad': 1}, {'piranha': 1}, {'bee':1}],
     'L10': [{'kappa': 1}, {'mushroom man': 1}, {'poison toad': 1}, {'piranha': 1}, {'bee':1}],
     'L11': [{'kappa': 1}, {'mushroom man': 1}, {'poison toad': 1}, {'piranha': 2}, {'bee':1}],
-    'L12': [{'zombie': 2}, {'slime': 1}, {'skeleton': 6}, {'golem': 1}],
-    'L13': [{'zombie': 2}, {'slime': 1}, {'skeleton': 6}, {'golem': 2}, {'bat': 2}],
-    'L14': [{'zombie': 2}, {'slime': 1}, {'skeleton': 6}, {'golem': 2}]
+    'L12': [{'zombie': 2}, {'slime': 1}, {'skeleton': 6}, {'golem': 1}, {'wraith': 1}],
+    'L13': [{'zombie': 2}, {'slime': 1}, {'skeleton': 6}, {'golem': 2}, {'bat': 2}, {'wraith': 1}],
+    'L14': [{'zombie': 1}, {'slime': 1}, {'skeleton': 6}, {'golem': 2}, {'wraith': 1}]
 }
