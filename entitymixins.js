@@ -795,6 +795,8 @@ Game.EntityMixins.Thrower = {
                 endPointY = point.y;
             }
             this.setPosition(endPointX,endPointY);
+            Game.Screen.playScreen.handleItemPickup()
+            Game.Screen.playScreen.goDownStairs(); 
         }
 
         if (item._name === 'wand of fire' || item._name === 'wand of poison'){
