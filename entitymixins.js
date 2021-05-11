@@ -662,7 +662,8 @@ Game.EntityMixins.KeyDropper = {
     },
     dropKey: function() {
         // Create a new key item and drop it.
-        this._map.addItem(this.getX(), this.getY(), Game.ItemRepository.create('key'));
+        const coords = mapRef.findFreeTile(this.getX(), this.getY(),);
+        this._map.addItem(coords.x, coords.y, Game.ItemRepository.create('key'));
     }
 }
 
@@ -779,11 +780,12 @@ Game.EntityMixins.Thrower = {
     },
     handleThrowDrop: function(item, hitMonster, mapRef, dropX, dropY){
         if (!this.isItemBrokenByThrow(item, hitMonster)){
+            const coords = mapRef.findFreeTile(dropX, dropY);
             if (item.hasMixin("Usable") || item.isHeadible()){
-                mapRef.addItem(dropX, dropY, item);
+                mapRef.addItem(coords.x, coords.y, item);
             } else {
                 let droppedItem = Game.ItemRepository.create(item.getName());
-                mapRef.addItem(dropX, dropY, droppedItem);
+                mapRef.addItem(coords.x, coords.y, droppedItem);
             }
         }
     },
@@ -1148,7 +1150,8 @@ Game.EntityMixins.InventoryHolder = {
         // Drops an item to the current map tile
         if (this._items[i]) {
             if (this._map) {
-                this._map.addItem(this.getX(), this.getY(), this._items[i]);
+                const coords = this._map.findFreeTile(this.getX(), this.getY());
+                this._map.addItem(coords.x, coords.y, this._items[i]);
                 Game.sendMessage(this, 'You drop the '+ this._items[i].describe() + ".");
             }
             this.removeItem(i);      
@@ -1194,7 +1197,8 @@ Game.EntityMixins.HeadDropper = {
     tryDropHead: function() {
         if (Math.round(Math.random() * 100) < this._headDropRate) {
             // Create a new head item and drop it.
-            this._map.addItem(this.getX(), this.getY(),
+            const coords = this._map.findFreeTile(this.getX(), this.getY());
+            this._map.addItem(coords.x, coords.y,
                 Game.ItemRepository.create('head', {
                     name: this._name + ' head',
                     foreground: this._foreground,

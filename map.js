@@ -587,6 +587,51 @@ Game.Map.prototype.updateEntityPosition = function(entity, oldX, oldY) {
     this._entities[key] = entity;
 };
 
+//find a tile with not item on it
+Game.Map.prototype.findFreeTile = function(x, y){
+    let radius = 0;
+    let maxRadius = 4;
+    while (radius <= maxRadius){
+        // Iterate through our tiles, escaping for the first one that is item-free
+
+        // Do the cross first
+        for (let i = 0 - radius; i <= radius; i++) {
+            let items = this._items[(x + i) + ',' + y];
+            if (items === undefined || items.length === 0){
+                return {
+                    x: x + i,
+                    y: y
+                };
+            } 
+        }
+        for (let j = 0 - radius; j <= radius; j++) {
+            let items = this._items[x + ',' + (y + j)];
+            if (items === undefined || items.length === 0){
+                return {
+                    x: x,
+                    y: y + j
+                };
+            } 
+        }
+
+        //Then the rest of the cells in the current radius
+        for (let i = 0 - radius; i <= radius; i++) {
+            for (let j = 0 - radius; j <= radius; j++){
+                let items = this._items[(x + i) + ',' + (y + j)];
+                if (items === undefined || items.length === 0){
+                    return {
+                        x: x + i,
+                        y: y + j
+                    };
+                } 
+            }
+        }
+        radius ++;
+    }   
+    //last resort is a stack
+    return {x:x, y:y}; 
+}
+
 Game.Map.prototype.getItemsAt = function(x, y) {
     return this._items[x + ',' + y];
 };
