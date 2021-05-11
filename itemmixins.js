@@ -65,6 +65,7 @@ Game.ItemMixins.Edible = {
             }
             
             entity.setPosition(x + newX, y + newY);
+            Game.sendMessage(entity, 'You are teleported!');
         } else if (entity.hasMixin('Attacker') && this._name === 'strength potion'){
             entity.incrementStrength();
         }

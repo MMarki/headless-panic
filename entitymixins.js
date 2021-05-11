@@ -325,6 +325,7 @@ Game.EntityMixins.Destructible = {
         }
     },
     takeDamage: function(attacker, damage, isKnockDamage) {
+        let returnMessage = '';
         if (this.hasMixin('Bleeder')){
             var myHead = this.getHead()
             if (myHead !== null && isKnockDamage) {
@@ -335,8 +336,9 @@ Game.EntityMixins.Destructible = {
                     var headIndex = this.getHeadIndex();
                     this.unhead();
                     this.removeItem(headIndex);
-                    Game.sendMessage(this, "%c{#F61067}Your head falls off!");
-                    return true;
+                    returnMessage = " %%c{#F61067}Your head falls off!";
+                    //Game.sendMessage(this, "%c{#F61067}Your head falls off!");
+                    return returnMessage;
                 }
             } else {
                 this._hp -= damage;
@@ -390,9 +392,11 @@ Game.EntityMixins.Destructible = {
             }
 
             if (this.getName() != 'barrel'){
-                Game.sendMessage(attacker, '%%c{#61AEEE}You kill the %s!', [this.getName()]);
+                returnMessage = ' %%c{#61AEEE}You kill the ' + this.getName() + '.';
+                //Game.sendMessage(attacker, '%%c{#61AEEE}You kill the %s!', [this.getName()]);
             } else {
-                Game.sendMessage(attacker, 'You break the %s.', [this.getName()]);
+                returnMessage = ' You break the ' + this.getName() + '.';
+                //Game.sendMessage(attacker, 'You break the %s.', [this.getName()]);
             }
             
             if (this.hasMixin('KeyDropper')) {
@@ -416,9 +420,9 @@ Game.EntityMixins.Destructible = {
             } else {
                 this.getMap().removeEntity(this);
             }
-            return 1;
+            return returnMessage;
         }
-        return 0;
+        return '';
     }
 }
 
@@ -524,10 +528,15 @@ Game.EntityMixins.Attacker = {
                     damage = Math.ceil(damage/2);
                 } 
 
-                Game.sendMessage(this, 'You strike the %s for %d damage.', [target.getName(), damage]);
-                Game.sendMessage(target, 'The %s strikes you for %d damage.',  [this.getName(), damage]);
-
-                target.takeDamage(this, damage, true);
+                let returnMessage = target.takeDamage(this, damage, true);
+                if (returnMessage.length > 0){
+                    Game.sendMessage(this, 'You strike the %s for %d damage.' + returnMessage, [target.getName(), damage]);
+                    Game.sendMessage(target, 'The %s strikes you for %d damage.' + returnMessage,  [this.getName(), damage]);
+                } else {
+                    Game.sendMessage(this, 'You strike the %s for %d damage.', [target.getName(), damage]);
+                    Game.sendMessage(target, 'The %s strikes you for %d damage.',  [this.getName(), damage]);
+                }
+               
                 if (this.hasMixin('Poisoner') && target.hasMixin('Affectible')){
                     let newEffect = new Game.Effect(Math.floor(damage*1.5), 'poisoned');
                     target.setEffect(newEffect);
@@ -866,8 +875,12 @@ Game.EntityMixins.Thrower = {
                 }
                 amount = Math.floor((Math.random() * maxAmount)) + 1;
                 if (amount > 0){
-                    Game.sendMessage(this, 'You throw a %s at the %s for %d damage!', [item.getName(),target.getName(), amount]);
-                    target.takeDamage(this, amount, true);
+                    let returnMessage = target.takeDamage(this, amount, true);
+                    if (returnMessage.length > 0){
+                        Game.sendMessage(this, 'You throw a %s at the %s for %d damage!' + returnMessage, [item.getName(),target.getName(), amount]);
+                    } else {
+                        Game.sendMessage(this, 'You throw a %s at the %s for %d damage!', [item.getName(),target.getName(), amount]);
+                    }
                 } else {
                     Game.sendMessage(this, 'You throw a %s at the %s. It misses.', [item.getName(),target.getName()]);
                 }
@@ -1331,7 +1344,7 @@ Game.EntityMixins.Affectible = {
             if (!effects[i].isDone()){
                 stopActor = this.applyEffect(effects[i].getName());
                 effects[i].update();
-                if (stopActor === 1) {return 1};
+                if (stopActor) {return 1};
             } else {
                 this.removeEffect(i)
             }
@@ -1342,16 +1355,20 @@ Game.EntityMixins.Affectible = {
         if (effectName === "poisoned" && this.hasMixin('Destructible')){
             let targetIsVulnerable = this.getVulnerabilities().includes('poison');
             if (targetIsVulnerable){
-                return this.takeDamage(this, 2, false);
+                let string = this.takeDamage(this, 2, false);
+                return string.length > 0 ? true : false;
             } else {
-                return this.takeDamage(this, 1, false);
+                let string = this.takeDamage(this, 1, false);
+                return string.length > 0 ? true : false;
             }      
         } else if (effectName === "burning" && this.hasMixin('Destructible')){
             let targetIsVulnerable = this.getVulnerabilities().includes('fire');
             if (targetIsVulnerable){
-                return this.takeDamage(this, 2, false);
+                let string = this.takeDamage(this, 2, false);
+                return string.length > 0 ? true : false;
             } else {
-                return this.takeDamage(this, 1, false);
+                let string = this.takeDamage(this, 1, false);
+                return string.length > 0 ? true : false;
             }  
         }
     },
@@ -1385,11 +1402,9 @@ Game.EntityMixins.Exploder = {
 }
 
 Game.sendMessage = function(recipient, message, args) {
-    // Make sure the recipient can receive the message 
-    // before doing any work.
+    // Make sure the recipient can receive the message before doing any work.
     if (recipient.hasMixin('MessageRecipient')) {
-        // If args were passed, then we format the message, else
-        // no formatting is necessary
+        // If args were passed, then we format the message, else no formatting is necessary
         if (args) {
             message = vsprintf(message, args);
         }
