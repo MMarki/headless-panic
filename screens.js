@@ -198,6 +198,7 @@ Game.Screen.playScreen = {
                     this.move(-1, 0);
                     this.handleItemPickup();
                     this.goDownStairs();
+                    this._player.setPathingTarget(null);
                 } else {
                     Game.sendMessage(this._player, "You are paralyzed!");
                 }
@@ -206,6 +207,7 @@ Game.Screen.playScreen = {
                     this.move(1, 0);
                     this.handleItemPickup();
                     this.goDownStairs();
+                    this._player.setPathingTarget(null);
                 } else {
                     Game.sendMessage(this._player, "You are paralyzed!");
                 }
@@ -214,6 +216,7 @@ Game.Screen.playScreen = {
                     this.move(0, -1);
                     this.handleItemPickup();
                     this.goDownStairs();
+                    this._player.setPathingTarget(null);
                 } else {
                     Game.sendMessage(this._player, "You are paralyzed!");
                 }
@@ -222,6 +225,7 @@ Game.Screen.playScreen = {
                     this.move(0, 1);
                     this.handleItemPickup();
                     this.goDownStairs();
+                    this._player.setPathingTarget(null);
                     
                 } else {
                     Game.sendMessage(this._player, "You are paralyzed!");
