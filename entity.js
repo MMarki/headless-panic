@@ -126,6 +126,8 @@ Game.Entity.prototype.tryMove = function(x, y) {
 
 Game.Entity.prototype.tryMoveTeleport = function(x, y) {
     const map = this.getMap();
+    if (x > Game.getScreenWidth() || x < 0) return false;
+    if (y > Game.getScreenHeight() || y < 0) return false;
     //console.log('x: ' + x + "y: " + y)
     let tile = map.getTile(x, y);
     let target = map.getEntityAt(x, y);

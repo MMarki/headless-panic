@@ -59,7 +59,7 @@ Game.ItemMixins.Edible = {
             let newX = 0;
             let newY = 0;
 
-            while (!entity.tryMoveTeleport(x + newX, y + newY) ){
+            while (!entity.tryMoveTeleport(x + newX, y + newY) || Math.abs(newX) < 4 || Math.abs(newY) < 4){
                 newX = Math.floor(Math.random() * 80) - 40;
                 newY = Math.floor(Math.random() * 40) - 20;
             }

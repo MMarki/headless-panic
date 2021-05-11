@@ -907,7 +907,7 @@ Game.EntityMixins.Thrower = {
             var newX = 0;
             var newY = 0;
 
-            while (!target.tryMoveTeleport(x + newX, y + newY) ){
+            while (!target.tryMoveTeleport(x + newX, y + newY) || Math.abs(newX) < 4 || Math.abs(newY) < 4){
                 newX = Math.floor(Math.random() * 80) - 40;
                 newY = Math.floor(Math.random() * 40) - 20;
             }
