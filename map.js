@@ -597,7 +597,7 @@ Game.Map.prototype.findFreeTile = function(x, y){
         // Do the cross first
         for (let i = 0 - radius; i <= radius; i++) {
             let items = this._items[(x + i) + ',' + y];
-            if (items === undefined || items.length === 0){
+            if ( (items === undefined || items.length === 0) && this._tiles[x+i][y].isWalkable()){
                 return {
                     x: x + i,
                     y: y
@@ -606,7 +606,7 @@ Game.Map.prototype.findFreeTile = function(x, y){
         }
         for (let j = 0 - radius; j <= radius; j++) {
             let items = this._items[x + ',' + (y + j)];
-            if (items === undefined || items.length === 0){
+            if ( (items === undefined || items.length === 0) && this._tiles[x][y+j].isWalkable()){
                 return {
                     x: x,
                     y: y + j
@@ -618,7 +618,7 @@ Game.Map.prototype.findFreeTile = function(x, y){
         for (let i = 0 - radius; i <= radius; i++) {
             for (let j = 0 - radius; j <= radius; j++){
                 let items = this._items[(x + i) + ',' + (y + j)];
-                if (items === undefined || items.length === 0){
+                if ( (items === undefined || items.length === 0) && this._tiles[x+i][y+j].isWalkable()){
                     return {
                         x: x + i,
                         y: y + j
