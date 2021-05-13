@@ -36,6 +36,7 @@ Game.Screen.playScreen = {
         weapon: 0,
         armor: 0
     },
+    turnCount: 0,
     enter: function() {  
         var width = Game._screenWidth;
         var height = Game._screenHeight;
@@ -163,6 +164,7 @@ Game.Screen.playScreen = {
         if (this._gameEnded) {
             if (inputType === 'keydown' && inputData.keyCode === ROT.KEYS.VK_RETURN) {
                 Game.Screen.playScreen.deathInfo.maxHP = this._player.getMaxHP();
+                Game.Screen.playScreen.deathInfo.murderer = this._player.murderer;
         
                 let strengthGap = 0;
                 let strengthModifier = 0;
@@ -443,6 +445,7 @@ Game.Screen.playScreen = {
                     }
                 }
             }
+            this.turnCount++;
         } else {
             // Not a valid key
             return;
@@ -720,7 +723,7 @@ Game.Screen.winScreen = {
         Game.Screen.playScreen.deathInfo.armor = defenseValue;
         Game.Screen.playScreen.deathInfo.weapon = ((attackValue + strengthModifier) + ' ' + damageType);
 
-        gtag('event', 'death_stats', {'strength': Game.Screen.playScreen.deathInfo.strength, 'hp': Game.Screen.playScreen.deathInfo.maxHP, 'defense': Game.Screen.playScreen.deathInfo.armor, 'damage': Game.Screen.playScreen.deathInfo.weapon, 'level': Game.Screen.playScreen.deathInfo.level});
+        gtag('event', 'death_stats', {'strength': Game.Screen.playScreen.deathInfo.strength, 'hp': Game.Screen.playScreen.deathInfo.maxHP, 'defense': Game.Screen.playScreen.deathInfo.armor, 'damage': Game.Screen.playScreen.deathInfo.weapon, 'level': Game.Screen.playScreen.deathInfo.level, 'turns': Game.Screen.playScreen.turnCount, 'murderer': 'survived'});
 
         // Render our prompt to the screen
         display.drawText(2, 1, "%c{yellow}You win the Headless Panic Beta!");
@@ -738,16 +741,16 @@ Game.Screen.loseScreen = {
     exit: function() { console.log("Exited lose screen."); },
     render: function(display) {
         // Render our prompt to the screen
-        display.drawText(2, 1, "You died on LVL " +  Game.Screen.playScreen.deathInfo.level + " of 14.");
+        display.drawText(2, 1, "You were killed on LVL " +  Game.Screen.playScreen.deathInfo.level + " of 14 by " + Game.Screen.playScreen.deathInfo.murderer + '.');
         display.drawText(2, 3, "STRN: " +  Game.Screen.playScreen.deathInfo.strength);
         display.drawText(2, 4, "MAX HP: " +  Game.Screen.playScreen.deathInfo.maxHP);
         display.drawText(2, 5, "DMG: " +  Game.Screen.playScreen.deathInfo.weapon);
         display.drawText(2, 6, "ARMR: " +  Game.Screen.playScreen.deathInfo.armor);
-        display.drawText(2, 8,  Game.Screen.loseScreen.chooseHint());
-        display.drawText(2, 10, "%c{yellow}Refresh your browser tab to restart.");
-
+        display.drawText(2, 8, "TURNS: " +  Game.Screen.playScreen.turnCount);
+        display.drawText(2, 10,  Game.Screen.loseScreen.chooseHint());
+        display.drawText(2, 12, "%c{yellow}Refresh your browser tab to restart.");
         // Sends an event that passes 'death stats'
-        gtag('event', 'death_stats', {'strength':  Game.Screen.playScreen.deathInfo.strength, 'hp':  Game.Screen.playScreen.deathInfo.maxHP, 'defense':  Game.Screen.playScreen.deathInfo.armor, 'damage':  Game.Screen.playScreen.deathInfo.weapon, 'level':  Game.Screen.playScreen.deathInfo.level});
+        gtag('event', 'death_stats', {'strength':  Game.Screen.playScreen.deathInfo.strength, 'hp':  Game.Screen.playScreen.deathInfo.maxHP, 'defense':  Game.Screen.playScreen.deathInfo.armor, 'damage':  Game.Screen.playScreen.deathInfo.weapon, 'level':  Game.Screen.playScreen.deathInfo.level, 'turns': Game.Screen.playScreen.turnCount, 'murderer': Name.Screen.playScreen.deathInfo.murderer});
     },
     handleInput: function(inputType, inputData) {
         // Nothing to do here      

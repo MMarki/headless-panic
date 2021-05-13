@@ -7,6 +7,7 @@ Game.EntityMixins.PlayerActor = {
         // Load tasks
         this._pathingTarget = null;
         this._hasNotMovedThisTurn = true;
+        this.murderer = '';
     },
     act: function() {
         if (this._acting) {
@@ -316,6 +317,7 @@ Game.EntityMixins.Destructible = {
         if (this._hp <= 0) {
             this._hp = 0;
             if (this.hasMixin('PlayerActor')) {
+                this.murderer = 'bleeding out';
                 this.act();
             } else {
                 this.getMap().removeEntity(this);
@@ -417,6 +419,7 @@ Game.EntityMixins.Destructible = {
             }
             if (this.hasMixin('PlayerActor')) {
                 this.act();
+                this.murderer = attacker.describeA === undefined ? attacker : attacker.describeA();
             } else {
                 this.getMap().removeEntity(this);
             }
@@ -1359,19 +1362,19 @@ Game.EntityMixins.Affectible = {
         if (effectName === "poisoned" && this.hasMixin('Destructible')){
             let targetIsVulnerable = this.getVulnerabilities().includes('poison');
             if (targetIsVulnerable){
-                let string = this.takeDamage(this, 2, false);
+                let string = this.takeDamage('poison', 2, false);
                 return string.length > 0 ? true : false;
             } else {
-                let string = this.takeDamage(this, 1, false);
+                let string = this.takeDamage('poison', 1, false);
                 return string.length > 0 ? true : false;
             }      
         } else if (effectName === "burning" && this.hasMixin('Destructible')){
             let targetIsVulnerable = this.getVulnerabilities().includes('fire');
             if (targetIsVulnerable){
-                let string = this.takeDamage(this, 2, false);
+                let string = this.takeDamage('fire', 2, false);
                 return string.length > 0 ? true : false;
             } else {
-                let string = this.takeDamage(this, 1, false);
+                let string = this.takeDamage('fire', 1, false);
                 return string.length > 0 ? true : false;
             }  
         }
