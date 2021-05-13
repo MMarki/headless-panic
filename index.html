@@ -14,7 +14,21 @@
             canvas {
                 width: 95%;
             }
-        </style> 
+        </style>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-YOUR-KEY"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            //gtag('config', 'G-YOUR-KEY');
+            // Maps 'dimension1' to 'death'.
+            gtag('config', 'G-YOUR-KEY', {
+            'custom_map': {
+                'dimension1': 'death'
+            }
+            });
+        </script>
     </head>
     <body">
         <script src="./rot/rot-js/dist/rot.min.js"></script>

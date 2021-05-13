@@ -29,6 +29,13 @@ Game.Screen.playScreen = {
     _subScreen: null,
     _lastTarget: null,
     alreadyGotList: [],
+    deathInfo: {
+        strength: 1,
+        maxHP: 40,
+        level: 1,
+        weapon: 0,
+        armor: 0
+    },
     enter: function() {  
         var width = Game._screenWidth;
         var height = Game._screenHeight;
@@ -155,7 +162,7 @@ Game.Screen.playScreen = {
         // If the game is over, enter will bring the user to the losing screen.
         if (this._gameEnded) {
             if (inputType === 'keydown' && inputData.keyCode === ROT.KEYS.VK_RETURN) {
-                Game.Screen.loseScreen.deathInfo.maxHP = this._player.getMaxHP();
+                Game.Screen.playScreen.deathInfo.maxHP = this._player.getMaxHP();
         
                 let strengthGap = 0;
                 let strengthModifier = 0;
@@ -173,10 +180,10 @@ Game.Screen.playScreen = {
                     }
                 }
 
-                Game.Screen.loseScreen.deathInfo.level = Game.getLevel();
-                Game.Screen.loseScreen.deathInfo.strength = strengthValue;
-                Game.Screen.loseScreen.deathInfo.armor = defenseValue;
-                Game.Screen.loseScreen.deathInfo.weapon = ((attackValue + strengthModifier) + ' ' + damageType);
+                Game.Screen.playScreen.deathInfo.level = Game.getLevel();
+                Game.Screen.playScreen.deathInfo.strength = strengthValue;
+                Game.Screen.playScreen.deathInfo.armor = defenseValue;
+                Game.Screen.playScreen.deathInfo.weapon = ((attackValue + strengthModifier) + ' ' + damageType);
         
                 Game.switchScreen(Game.Screen.loseScreen);
             }
@@ -690,6 +697,31 @@ Game.Screen.winScreen = {
     enter: function() { console.log("Entered win screen."); },
     exit: function() { console.log("Exited win screen."); },
     render: function(display) {
+        Game.Screen.playScreen.deathInfo.maxHP = this._player.getMaxHP();
+        
+        let strengthGap = 0;
+        let strengthModifier = 0;
+        let damageType = 'crush';
+        let strengthValue = this._player.getStrengthValue();
+        let attackValue = this._player.getAttackValue();
+        let defenseValue = this._player.getDefenseValue();
+        if (this._player.getWeapon() !== null){
+            damageType = this._player.getWeapon().getDamageType();
+            strengthGap = strengthValue - this._player.getWeapon().getStrengthRequirement();
+            if (strengthGap <  0){
+                strengthModifier = 4 * strengthGap;
+            } else if (strengthGap > 0){
+                strengthModifier =  strengthGap;
+            }
+        }
+
+        Game.Screen.playScreen.deathInfo.level = Game.getLevel();
+        Game.Screen.playScreen.deathInfo.strength = strengthValue;
+        Game.Screen.playScreen.deathInfo.armor = defenseValue;
+        Game.Screen.playScreen.deathInfo.weapon = ((attackValue + strengthModifier) + ' ' + damageType);
+
+        gtag('event', 'death_stats', {'strength': Game.Screen.playScreen.deathInfo.strength, 'hp': Game.Screen.playScreen.deathInfo.maxHP, 'defense': Game.Screen.playScreen.deathInfo.armor, 'damage': Game.Screen.playScreen.deathInfo.weapon, 'level': Game.Screen.playScreen.deathInfo.level});
+
         // Render our prompt to the screen
         display.drawText(2, 1, "%c{yellow}You win the Headless Panic Beta!");
         display.drawText(2, 3, "Thank you for playing!");
@@ -706,23 +738,19 @@ Game.Screen.loseScreen = {
     exit: function() { console.log("Exited lose screen."); },
     render: function(display) {
         // Render our prompt to the screen
-        display.drawText(2, 1, "You died on LVL " + this.deathInfo.level + " of 14.");
-        display.drawText(2, 3, "STRN: " + this.deathInfo.strength);
-        display.drawText(2, 4, "MAX HP: " + this.deathInfo.maxHP);
-        display.drawText(2, 5, "DMG: " + this.deathInfo.weapon);
-        display.drawText(2, 6, "ARMR: " + this.deathInfo.armor);
-        display.drawText(2, 8, this.chooseHint());
+        display.drawText(2, 1, "You died on LVL " +  Game.Screen.playScreen.deathInfo.level + " of 14.");
+        display.drawText(2, 3, "STRN: " +  Game.Screen.playScreen.deathInfo.strength);
+        display.drawText(2, 4, "MAX HP: " +  Game.Screen.playScreen.deathInfo.maxHP);
+        display.drawText(2, 5, "DMG: " +  Game.Screen.playScreen.deathInfo.weapon);
+        display.drawText(2, 6, "ARMR: " +  Game.Screen.playScreen.deathInfo.armor);
+        display.drawText(2, 8,  Game.Screen.loseScreen.chooseHint());
         display.drawText(2, 10, "%c{yellow}Refresh your browser tab to restart.");
+
+        // Sends an event that passes 'death stats'
+        gtag('event', 'death_stats', {'strength':  Game.Screen.playScreen.deathInfo.strength, 'hp':  Game.Screen.playScreen.deathInfo.maxHP, 'defense':  Game.Screen.playScreen.deathInfo.armor, 'damage':  Game.Screen.playScreen.deathInfo.weapon, 'level':  Game.Screen.playScreen.deathInfo.level});
     },
     handleInput: function(inputType, inputData) {
         // Nothing to do here      
-    },
-    deathInfo: {
-        strength: 1,
-        maxHP: 40,
-        level: 1,
-        weapon: 0,
-        armor: 0
     },
     chooseHint: function(){
         var hintList = [
