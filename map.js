@@ -163,6 +163,11 @@ Game.Map.prototype.getEntityAt = function(x, y){
     return this._entities[x + ',' + y];
 }
 
+Game.Map.prototype.isInBounds = function(x, y){
+    if (x < 0 || x >= this._width || y < 0 || y >= this._height) return 0;
+    else return 1;
+}
+
 Game.Map.prototype.addGatedItem = function() {
     const randNum = Math.random()*100;
     let chosenItem = ''
@@ -320,7 +325,7 @@ Game.Map.prototype.getRidOfBoringRooms = function (rooms) {
 Game.Map.prototype.getTile = function(x, y) {
     // Make sure we are inside the bounds. If we aren't, return
     // null tile.
-    if (x < 0 || x >= this._width || y < 0 || y >= this._height) {
+    if (!this.isInBounds(x, y)) {
         return Game.Tile.nullTile;
     } else {
         return this._tiles[x][y] || Game.Tile.nullTile;
@@ -331,7 +336,7 @@ Game.Map.prototype.getTile = function(x, y) {
 Game.Map.prototype.setTile = function(x, y, tileType) {
     // Make sure we are inside the bounds. If we aren't, return
     // null tile.
-    if (x < 0 || x >= this._width || y < 0 || y >= this._height) {
+    if (!this.isInBounds(x, y)) {
         console.log('out of bounds!');
     } else {
         this._tiles[x][y] = tileType;
@@ -342,7 +347,7 @@ Game.Map.prototype.setTile = function(x, y, tileType) {
 Game.Map.prototype.getGas = function(x, y) {
     // Make sure we are inside the bounds. If we aren't, return
     // null tile.
-    if (x < 0 || x >= this._width || y < 0 || y >= this._height) {
+    if (!this.isInBounds(x, y)) {
         return  null;
     } else {
         return this._gasMap[x][y] || null;
@@ -574,8 +579,7 @@ Game.Map.prototype.updateEntityPosition = function(entity, oldX, oldY) {
         }
     }
     // Make sure the entity's position is within bounds
-    if (entity.getX() < 0 || entity.getX() >= this._width ||
-        entity.getY() < 0 || entity.getY() >= this._height ) {
+    if (!this.isInBounds(entity.getX(), entity.getY())) {
         throw new Error("Entity's position is out of bounds.");
     }
     // Sanity check to make sure there is no entity at the new position.
@@ -597,20 +601,25 @@ Game.Map.prototype.findFreeTile = function(x, y){
         // Do the cross first
         for (let i = 0 - radius; i <= radius; i++) {
             let items = this._items[(x + i) + ',' + y];
-            if ( (items === undefined || items.length === 0) && this._tiles[x+i][y].isWalkable()){
-                return {
-                    x: x + i,
-                    y: y
-                };
+            if ( (items === undefined || items.length === 0) && this.isInBounds(x + i, y) && this._tiles[x+i][y].isWalkable()){
+                // catch the edge case of the starting tile not having a path to itself
+                if (radius === 0 ||this.checkPathLength(x, y, x + i, y, maxRadius*2)){
+                    return {
+                        x: x + i,
+                        y: y
+                    };
+                }
             } 
         }
         for (let j = 0 - radius; j <= radius; j++) {
             let items = this._items[x + ',' + (y + j)];
-            if ( (items === undefined || items.length === 0) && this._tiles[x][y+j].isWalkable()){
-                return {
-                    x: x,
-                    y: y + j
-                };
+            if ( (items === undefined || items.length === 0) && this.isInBounds(x, y + j) && this._tiles[x][y+j].isWalkable()){
+                if (this.checkPathLength(x, y, x, y + j, maxRadius*2)){
+                    return {
+                        x: x,
+                        y: y + j
+                    };
+                }
             } 
         }
 
@@ -618,11 +627,13 @@ Game.Map.prototype.findFreeTile = function(x, y){
         for (let i = 0 - radius; i <= radius; i++) {
             for (let j = 0 - radius; j <= radius; j++){
                 let items = this._items[(x + i) + ',' + (y + j)];
-                if ( (items === undefined || items.length === 0) && this._tiles[x+i][y+j].isWalkable()){
-                    return {
-                        x: x + i,
-                        y: y + j
-                    };
+                if ( (items === undefined || items.length === 0) && this.isInBounds(x + i, y + j) && this._tiles[x+i][y+j].isWalkable()){
+                    if (this.checkPathLength(x, y, x + i, y + j, maxRadius*2)){
+                        return {
+                            x: x + i,
+                            y: y + j
+                        };
+                    }
                 } 
             }
         }
@@ -631,6 +642,23 @@ Game.Map.prototype.findFreeTile = function(x, y){
     //last resort is a stack
     return {x:x, y:y}; 
 }
+
+Game.Map.prototype.checkPathLength = function(sourceX, sourceY, targetX, targetY, pathLength) {  
+    var thisRef = this;
+    var path = new ROT.Path.AStar(targetX, targetY, function(x, y) {
+        return thisRef.getTile(x, y).isWalkable();
+    }, {topology: 4});
+    // Once we've gotten the path, we want to move to the second cell that is passed in the callback (the first is the entity's starting point)
+
+    path.compute(sourceX, sourceY, function(x, y) {});
+                    
+    //If we can get there, go to it
+    if(path._todo.length > 0 && path._todo.length <= pathLength){
+        return true;
+    }
+
+    return false;
+};
 
 Game.Map.prototype.getItemsAt = function(x, y) {
     return this._items[x + ',' + y];
@@ -686,7 +714,7 @@ Game.Map.prototype.addGas = function(gas, x, y) {
 Game.Map.prototype.addCell = function (cell, x, y, isTile){
     cell.setMap(this);
     // Make sure the cell's position is within bounds
-    if (x < 0 || x >= this._width || y < 0 || y >= this._height ) {
+    if (!this.isInBounds(x,y)) {
         throw new Error("Cell's position is out of bounds.");
     }
     // Add the cell to the table of cells (tiles or gas)
