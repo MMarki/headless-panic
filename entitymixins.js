@@ -662,7 +662,7 @@ Game.EntityMixins.KeyDropper = {
     },
     dropKey: function() {
         // Create a new key item and drop it.
-        const coords = mapRef.findFreeTile(this.getX(), this.getY(),);
+        const coords = this._map.findFreeTile(this.getX(), this.getY());
         this._map.addItem(coords.x, coords.y, Game.ItemRepository.create('key'));
     }
 }
