@@ -492,7 +492,31 @@ Game.Screen.playScreen = {
             }
         }
         if (tile === Game.Tile.stairsDownTile || tile === Game.Tile.stairsDownTileLocked && playerHasKey){
-            if (Game.getLevel() === 14){
+            if (Game.getLevel() === 17){
+                Game.Screen.playScreen.deathInfo.maxHP = this._player.getMaxHP();
+                Game.Screen.playScreen.deathInfo.murderer = this._player.murderer;
+        
+                let strengthGap = 0;
+                let strengthModifier = 0;
+                let damageType = 'crush';
+                let strengthValue = this._player.getStrengthValue();
+                let attackValue = this._player.getAttackValue();
+                let defenseValue = this._player.getDefenseValue();
+                if (this._player.getWeapon() !== null){
+                    damageType = this._player.getWeapon().getDamageType();
+                    strengthGap = strengthValue - this._player.getWeapon().getStrengthRequirement();
+                    if (strengthGap <  0){
+                        strengthModifier = 4 * strengthGap;
+                    } else if (strengthGap > 0){
+                        strengthModifier =  strengthGap;
+                    }
+                }
+
+                Game.Screen.playScreen.deathInfo.level = Game.getLevel();
+                Game.Screen.playScreen.deathInfo.strength = strengthValue;
+                Game.Screen.playScreen.deathInfo.armor = defenseValue;
+                Game.Screen.playScreen.deathInfo.weapon = ((attackValue + strengthModifier) + ' ' + damageType);
+
                 Game.switchScreen(Game.Screen.winScreen);
                 Game.refresh();
                 return;
@@ -689,8 +713,10 @@ Game.Screen.playScreen = {
             return "Sewers " + (Game.getLevel() - 3);
         } else if (Game.getLevel() < 12) {
             return "Caverns " + (Game.getLevel() - 6);
-        } else {
+        } else if (Game.getLevel() < 15) {
             return "Catacombs " + (Game.getLevel() - 11);
+        } else {
+            return "Underworld " + (Game.getLevel() - 4);
         }
     }
 }
@@ -700,29 +726,6 @@ Game.Screen.winScreen = {
     enter: function() { console.log("Entered win screen."); },
     exit: function() { console.log("Exited win screen."); },
     render: function(display) {
-        Game.Screen.playScreen.deathInfo.maxHP = this._player.getMaxHP();
-        
-        let strengthGap = 0;
-        let strengthModifier = 0;
-        let damageType = 'crush';
-        let strengthValue = this._player.getStrengthValue();
-        let attackValue = this._player.getAttackValue();
-        let defenseValue = this._player.getDefenseValue();
-        if (this._player.getWeapon() !== null){
-            damageType = this._player.getWeapon().getDamageType();
-            strengthGap = strengthValue - this._player.getWeapon().getStrengthRequirement();
-            if (strengthGap <  0){
-                strengthModifier = 4 * strengthGap;
-            } else if (strengthGap > 0){
-                strengthModifier =  strengthGap;
-            }
-        }
-
-        Game.Screen.playScreen.deathInfo.level = Game.getLevel();
-        Game.Screen.playScreen.deathInfo.strength = strengthValue;
-        Game.Screen.playScreen.deathInfo.armor = defenseValue;
-        Game.Screen.playScreen.deathInfo.weapon = ((attackValue + strengthModifier) + ' ' + damageType);
-
         gtag('event', 'death_stats', {'strength': Game.Screen.playScreen.deathInfo.strength, 'hp': Game.Screen.playScreen.deathInfo.maxHP, 'defense': Game.Screen.playScreen.deathInfo.armor, 'damage': Game.Screen.playScreen.deathInfo.weapon, 'level': Game.Screen.playScreen.deathInfo.level, 'turns': Game.Screen.playScreen.turnCount, 'murderer': 'survived'});
 
         // Render our prompt to the screen
@@ -741,7 +744,7 @@ Game.Screen.loseScreen = {
     exit: function() { console.log("Exited lose screen."); },
     render: function(display) {
         // Render our prompt to the screen
-        display.drawText(2, 1, "You were killed on LVL " +  Game.Screen.playScreen.deathInfo.level + " of 14 by " + Game.Screen.playScreen.deathInfo.murderer + '.');
+        display.drawText(2, 1, "You were killed on LVL " +  Game.Screen.playScreen.deathInfo.level + " of 17 by " + Game.Screen.playScreen.deathInfo.murderer + '.');
         display.drawText(2, 3, "STRN: " +  Game.Screen.playScreen.deathInfo.strength);
         display.drawText(2, 4, "MAX HP: " +  Game.Screen.playScreen.deathInfo.maxHP);
         display.drawText(2, 5, "DMG: " +  Game.Screen.playScreen.deathInfo.weapon);

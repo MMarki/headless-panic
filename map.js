@@ -64,8 +64,12 @@ Game.Map = function(tiles, player, items, stairs, gasMap) {
     if (Game.getLevel() === 13){
         this.addEntityAtRandomPosition(Game.EntityRepository.create('vampire'), 1);
     }
-    // if on L14, create one lich
+    // if on L14, create one hydra (for testing)
     if (Game.getLevel() === 14){
+        this.addEntityAtRandomPosition(Game.EntityRepository.create('rat king'), 1);
+    }
+    // if on L17, create one lich
+    if (Game.getLevel() === 17){
         this.addEntityAtRandomPosition(Game.EntityRepository.create('lich'), 1);
     }
     

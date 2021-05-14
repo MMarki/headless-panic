@@ -1020,6 +1020,13 @@ Game.EntityMixins.Charger = {
     }
 }
 
+Game.EntityMixins.Flyer = {
+    name: 'Flyer',
+    init: function(template) {
+        template;
+    }
+}
+
 // This signifies our entity posseses a field of vision of a given radius.
 Game.EntityMixins.Sight = {
     name: 'Sight',

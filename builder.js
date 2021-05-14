@@ -23,7 +23,8 @@ Game.Builder = function(width, height, level) {
         'cellars': [prefabs.arena, prefabs.columns, prefabs.garden, prefabs.tetris],
         'sewers': [prefabs.arena, prefabs.garden, prefabs.tetris],
         'caverns': [prefabs.arena],
-        'catacombs': [prefabs.arena, prefabs.columns, prefabs.tetris]
+        'catacombs': [prefabs.arena, prefabs.columns, prefabs.tetris],
+        'underworld': [prefabs.arena, prefabs.columns, prefabs.tetris, prefabs.arena, prefabs.arena, prefabs.arena]
     }
 
     let grassAmount = 2;
@@ -57,9 +58,14 @@ Game.Builder = function(width, height, level) {
             }
             this._setPrefab(Game.pickRandomElement(prefabsByArea['caverns']));
             this._setPrefab(Game.pickRandomElement(prefabsByArea['caverns']));
+        } else if (level <= 14){
+            this._setPrefab(Game.pickRandomElement(prefabsByArea['catacombs']));
+            this._setPrefab(Game.pickRandomElement(prefabsByArea['catacombs']));
         } else {
-            this._setPrefab(Game.pickRandomElement(prefabsByArea['catacombs']));
-            this._setPrefab(Game.pickRandomElement(prefabsByArea['catacombs']));
+            this._setPrefab(Game.pickRandomElement(prefabsByArea['underworld']));
+            this._setPrefab(Game.pickRandomElement(prefabsByArea['underworld']));
+            this._setPrefab(Game.pickRandomElement(prefabsByArea['underworld']));
+            this._setPrefab(Game.pickRandomElement(prefabsByArea['underworld']));
         }
         
     }
@@ -158,10 +164,21 @@ Game.Builder.prototype._generateLevel = function(level) {
             dugPercentage: 0.31
         }
         generator = new ROT.Map.Digger(this._width, this._height, options);
+    } else {
+        setMapTile = function (x, y, value) {
+            if (value === 0) {
+               map[x][y] = Game.Tile.wallTile;
+           } else {
+               map[x][y] = Game.Tile.floorTile;
+           }       
+       }
+        // Set up the level generator
+       generator = new ROT.Map.Cellular(this._width - 1, this._height - 1);
+       generator.randomize(0.50);
     }
    
 
-    if (level <=6 || level > 11){
+    if (level <=6 || (level > 11 && level <=14)){
         generator.create(setMapTile);
 
         let makeDoor = function(x, y) {
