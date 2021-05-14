@@ -312,7 +312,7 @@ Game.EntityRepository.define('golem', {
     maxHP: 50,
     attackValue: 30,
     defenseValue: 14,
-    accuracyValue: 90,
+    accuracyValue: 100,
     sightRadius: 13,
     headHits: 1,
     resistances: ['stab'],
@@ -478,6 +478,78 @@ Game.EntityRepository.define('rat king', {
              Game.EntityMixins.Summoner, Game.EntityMixins.KeyDropper]
 });
 
+Game.EntityRepository.define('cerberus', {
+    name: 'cerberus', 
+    character: 'C',
+    foreground: Game.Colors.ratColor,
+    maxHP: 140,
+    attackValue: 20,
+    defenseValue: 24,
+    accuracyValue: 100,
+    speed: 1000,
+    heads: 3,
+    sightRadius: 9,
+    headHits: 1,
+    description: "A massive 3-headed bulldog.",
+    tasks: ['hunt', 'wander'],
+    mixins: [Game.EntityMixins.TaskActor, Game.EntityMixins.Sight,
+             Game.EntityMixins.Attacker, Game.EntityMixins.Destructible,
+             Game.EntityMixins.HeadDropper, Game.EntityMixins.Affectible,
+             Game.EntityMixins.KeyDropper, Game.EntityMixins.MultiHeaded]
+});
+
+Game.EntityRepository.define('harpy', {
+    name: 'harpy', 
+    character: 'h',
+    foreground: 'teal',
+    maxHP: 30,
+    attackValue: 10,
+    defenseValue: 10,
+    accuracyValue: 90,
+    sightRadius: 9,
+    headHits: 1,
+    description: "A flying bird monster with a pale human face.",
+    tasks: ['hunt', 'wander'],
+    mixins: [Game.EntityMixins.TaskActor, Game.EntityMixins.Sight,
+             Game.EntityMixins.Attacker, Game.EntityMixins.Destructible,
+             Game.EntityMixins.HeadDropper, Game.EntityMixins.Affectible,
+             Game.EntityMixins.Flyer]
+});
+
+Game.EntityRepository.define('imp', {
+    name: 'imp', 
+    character: 'i',
+    foreground: Game.Colors.piranhaColor,
+    maxHP: 20,
+    attackValue: 10,
+    defenseValue: 10,
+    accuracyValue: 90,
+    sightRadius: 12,
+    headHits: 1,
+    description: "A tiny nimble figure with eyes like coals.",
+    tasks: ['hunt', 'wander'],
+    mixins: [Game.EntityMixins.TaskActor, Game.EntityMixins.Sight,
+             Game.EntityMixins.Attacker, Game.EntityMixins.Destructible,
+             Game.EntityMixins.HeadDropper, Game.EntityMixins.Affectible]
+});
+
+Game.EntityRepository.define('devil', {
+    name: 'devil', 
+    character: 'd',
+    foreground: Game.Colors.piranhaColor,
+    maxHP: 50,
+    attackValue: 16,
+    defenseValue: 12,
+    accuracyValue: 90,
+    sightRadius: 9,
+    headHits: 1,
+    description: "A wiry horned figure with molten skin.",
+    tasks: ['hunt', 'wander'],
+    mixins: [Game.EntityMixins.TaskActor, Game.EntityMixins.Sight,
+             Game.EntityMixins.Attacker, Game.EntityMixins.Destructible,
+             Game.EntityMixins.HeadDropper, Game.EntityMixins.Affectible]
+});
+
 Game.EntityRepository.define('death', {
     name: 'death',
     character: '\u2625',
@@ -510,7 +582,7 @@ Game.EntityRepository.repoFrequency = {
     'L12': [{'zombie': 2}, {'slime': 1}, {'skeleton': 6}, {'golem': 1}, {'wraith': 1}, {'minotaur': 2}],
     'L13': [{'zombie': 2}, {'slime': 1}, {'skeleton': 6}, {'golem': 2}, {'bat': 2}, {'wraith': 1}, {'minotaur': 1}],
     'L14': [{'zombie': 1}, {'slime': 1}, {'skeleton': 6}, {'golem': 2}, {'wraith': 1}, {'minotaur': 2}],
-    'L15': [{'slime': 1}, {'skeleton': 6}, {'wraith': 1}],
-    'L16': [{'slime': 1}, {'skeleton': 6}, {'wraith': 1}],
-    'L17': [ {'slime': 1}, {'skeleton': 6}, {'wraith': 1}]
+    'L15': [{'skeleton': 4}, {'wraith': 1}, {'harpy': 2}, {'devil': 1}, {'imp': 1}],
+    'L16': [{'skeleton': 4}, {'wraith': 1}, {'harpy': 2}, {'devil': 1}, {'imp': 1}],
+    'L17': [{'skeleton': 4}, {'harpy': 2}, {'devil': 1}, {'imp': 2}]
 }

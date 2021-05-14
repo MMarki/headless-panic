@@ -23,8 +23,8 @@ Game.Builder = function(width, height, level) {
         'cellars': [prefabs.arena, prefabs.columns, prefabs.garden, prefabs.tetris],
         'sewers': [prefabs.arena, prefabs.garden, prefabs.tetris],
         'caverns': [prefabs.arena],
-        'catacombs': [prefabs.arena, prefabs.columns, prefabs.tetris],
-        'underworld': [prefabs.arena, prefabs.columns, prefabs.tetris, prefabs.arena, prefabs.arena, prefabs.arena]
+        'catacombs': [prefabs.arena, prefabs.columns, prefabs.tetris, prefabs.tetris2],
+        'underworld': [prefabs.arena, prefabs.columns, prefabs.tetris, prefabs.square, prefabs.square, prefabs.hallwayHoriz, prefabs.hallwayVert]
     }
 
     let grassAmount = 2;
@@ -174,7 +174,7 @@ Game.Builder.prototype._generateLevel = function(level) {
        }
         // Set up the level generator
        generator = new ROT.Map.Cellular(this._width - 1, this._height - 1);
-       generator.randomize(0.50);
+       generator.randomize(0.47);
     }
    
 
@@ -296,7 +296,7 @@ Game.Builder.prototype._setStairs = function(levelNumber) {
     while (true){
         let match =  Game.pickRandomElement(matches);
         if(this._checkAdjacent(match.x, match.y, Game.Tile.floorTile)){
-            if (levelNumber != 3 && levelNumber != 6 && levelNumber != 11 && levelNumber != 14){
+            if (levelNumber != 3 && levelNumber != 6 && levelNumber != 11 && levelNumber != 14 && levelNumber != 17){
                 this._tiles[match.x][match.y] = Game.Tile.stairsDownTile;
                 this._stairs = {
                     x: match.x,

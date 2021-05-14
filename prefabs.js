@@ -53,3 +53,35 @@ prefabs.tetris.push(['.','.','#','.','.','#','.']);
 prefabs.tetris.push(['.','.','.','.','#','#','.']);
 prefabs.tetris.push(['.','.','.','.','#','.','.']);
 prefabs.tetris.push(['.','.','.','.','.','.','.']);
+
+prefabs.tetris2 = [];
+prefabs.tetris2.push(['.','.','.','.','.','.','.']);
+prefabs.tetris2.push(['.','.','.','#','#','.','.']);
+prefabs.tetris2.push(['.','.','.','.','#','#','.']);
+prefabs.tetris2.push(['.','.','.','.','.','.','.']);
+prefabs.tetris2.push(['.','.','#','.','.','.','.']);
+prefabs.tetris2.push(['.','#','#','#','.','.','.']);
+prefabs.tetris2.push(['.','.','.','.','.','.','.']);
+
+prefabs.square = [];
+prefabs.square.push(['.','.','.','.','.','.','.']);
+prefabs.square.push(['.','.','.','.','.','.','.']);
+prefabs.square.push(['.','.','.','.','.','.','.']);
+prefabs.square.push(['.','.','.','.','.','.','.']);
+prefabs.square.push(['.','.','.','.','.','.','.']);
+prefabs.square.push(['.','.','.','.','.','.','.']);
+prefabs.square.push(['.','.','.','.','.','.','.']);
+
+prefabs.hallwayHoriz = [];
+prefabs.hallwayHoriz.push(['','','.','.','.','','']);
+prefabs.hallwayHoriz.push(['.','.','.','.','.','.','.']);
+prefabs.hallwayHoriz.push(['','','.','.','.','','']);
+
+prefabs.hallwayVert = [];
+prefabs.hallwayVert.push(['','','','.','','','']);
+prefabs.hallwayVert.push(['','','','.','','','']);
+prefabs.hallwayVert.push(['','','.','.','.','','']);
+prefabs.hallwayVert.push(['','','.','.','.','','']);
+prefabs.hallwayVert.push(['','','.','.','.','','']);
+prefabs.hallwayVert.push(['','','','.','','','']);
+prefabs.hallwayVert.push(['','','','.','','','']);
