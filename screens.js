@@ -746,9 +746,9 @@ Game.Screen.loseScreen = {
         display.drawText(2, 4, "MAX HP: " +  Game.Screen.playScreen.deathInfo.maxHP);
         display.drawText(2, 5, "DMG: " +  Game.Screen.playScreen.deathInfo.weapon);
         display.drawText(2, 6, "ARMR: " +  Game.Screen.playScreen.deathInfo.armor);
-        display.drawText(2, 8, "TURNS: " +  Game.Screen.playScreen.turnCount);
-        display.drawText(2, 10,  Game.Screen.loseScreen.chooseHint());
-        display.drawText(2, 12, "%c{yellow}Refresh your browser tab to restart.");
+        display.drawText(2, 7, "TURNS: " +  Game.Screen.playScreen.turnCount);
+        display.drawText(2, 9,  Game.Screen.loseScreen.chooseHint());
+        display.drawText(2, 11, "%c{yellow}Refresh your browser tab to restart.");
         // Sends an event that passes 'death stats'
         gtag('event', 'death_stats', {'strength':  Game.Screen.playScreen.deathInfo.strength, 'hp':  Game.Screen.playScreen.deathInfo.maxHP, 'defense':  Game.Screen.playScreen.deathInfo.armor, 'damage':  Game.Screen.playScreen.deathInfo.weapon, 'level':  Game.Screen.playScreen.deathInfo.level, 'turns': Game.Screen.playScreen.turnCount, 'murderer': Game.Screen.playScreen.deathInfo.murderer});
     },
