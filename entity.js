@@ -97,12 +97,12 @@ Game.Entity.prototype.tryMove = function(x, y) {
             if(tile === Game.Tile.fernTile) {
                 this.getMap()._tiles[x][y] = Game.Tile.grassTile;
             }
-            if((this.hasMixin('Affectible')) && this.hasEffect('burning') && tile === Game.Tile.grassTile) {
+            if((this.hasMixin('Affectible')) && this.hasEffect('burning') && tile === Game.Tile.grassTile && !this.hasMixin('Flyer')) {
                 let tempList = [];
                 tempList.push({x: x, y: y});
                 this._map.cellGrow(tempList, 'fireTile', 1);
             }
-            if((this.hasMixin('Affectible')) && this.hasEffect('burning') && (tile === Game.Tile.shallowWaterTile || tile === Game.Tile.waterTile || tile === Game.Tile.wineTile)) {
+            if((this.hasMixin('Affectible')) && this.hasEffect('burning') && !this.hasMixin('Flyer') && (tile === Game.Tile.shallowWaterTile || tile === Game.Tile.waterTile || tile === Game.Tile.wineTile)) {
                 if (this.hasEffect('burning')){
                     var effects = this._effects;
                     for (var i = 0; i < effects.length; i++){
@@ -150,7 +150,7 @@ Game.Entity.prototype.applyNewEffects = function(){
     // if so, change the existing duration instead of adding a new one
 
     if (this.hasMixin('Affectible')){
-        if (tile._name === 'fireTile'){
+        if (tile._name === 'fireTile' && !this.hasMixin('Flyer')){
             if (this.hasEffect('burning')){
                 this.removeEffect('burning');
             }
