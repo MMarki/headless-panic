@@ -39,7 +39,7 @@ Game.Builder = function(width, height, level) {
         }
         this._setPrefab(Game.pickRandomElement(prefabsByArea['cellars']));
     }
-    if (level <= 11){
+    if (level <= 10){
         this._setGrass();
         this._setGrass();
         this._setFerns();
@@ -53,13 +53,13 @@ Game.Builder = function(width, height, level) {
             }
             this._setPrefab(Game.pickRandomElement(prefabsByArea['sewers']));
             this._setPrefab(Game.pickRandomElement(prefabsByArea['sewers']));
-        } else if (level <= 11) {
+        } else if (level <= 10) {
             for (let i = 0; i < shallowWaterAmount; i++){
                 this._setShallowWater();
             }
             this._setPrefab(Game.pickRandomElement(prefabsByArea['caverns']));
             this._setPrefab(Game.pickRandomElement(prefabsByArea['caverns']));
-        } else if (level <= 14){
+        } else if (level <= 13){
             this._setPrefab(Game.pickRandomElement(prefabsByArea['catacombs']));
             this._setPrefab(Game.pickRandomElement(prefabsByArea['catacombs']));
         } else {
@@ -145,7 +145,7 @@ Game.Builder.prototype._generateLevel = function(level) {
             dugPercentage: 0.42
         }
         generator = new ROT.Map.Digger(this._width, this._height, options);
-    } else if (level > 6 && level <= 11){
+    } else if (level > 6 && level <= 10){
         setMapTile = function (x, y, value) {
             if (value === 0) {
                map[x][y] = Game.Tile.wallTile;
@@ -156,7 +156,7 @@ Game.Builder.prototype._generateLevel = function(level) {
         // Set up the level generator
        generator = new ROT.Map.Cellular(this._width - 1, this._height - 1);
        generator.randomize(0.45);
-    } else if (level > 11 && level <= 14) {
+    } else if (level > 10 && level <= 13) {
         // Set up the level generator
         options = {
             roomWidth: [4, 12],
@@ -179,7 +179,7 @@ Game.Builder.prototype._generateLevel = function(level) {
     }
    
 
-    if (level <=6 || (level > 11 && level <=14)){
+    if (level <=6 || (level > 10 && level <=13)){
         generator.create(setMapTile);
 
         let makeDoor = function(x, y) {
@@ -297,7 +297,7 @@ Game.Builder.prototype._setStairs = function(levelNumber) {
     while (true){
         let match =  Game.pickRandomElement(matches);
         if(this._checkAdjacent(match.x, match.y, Game.Tile.floorTile)){
-            if (levelNumber != 3 && levelNumber != 6 && levelNumber != 11 && levelNumber != 14 && levelNumber != 17){
+            if (levelNumber != 3 && levelNumber != 6 && levelNumber != 10 && levelNumber != 13 && levelNumber != 16){
                 this._tiles[match.x][match.y] = Game.Tile.stairsDownTile;
                 this._stairs = {
                     x: match.x,

@@ -570,21 +570,20 @@ Game.EntityRepository.define('death', {
 
 
 Game.EntityRepository.repoFrequency = {
-    'L1': [/*{'rat': 2}, {'kobold': 2}, */{'bat':2}, {'jackal': 1}],
-    'L2': [/*{'rat': 3}, {'kobold': 2}, */{'bat':2}, {'jackal': 1}, {'goblin': 1}],
-    'L3': [/*{'rat': 2}, {'kobold': 2}, */{'bat':2}, {'jackal': 1}, {'goblin': 1}, {'floater': 1}, {'slime': 1}],
-    'L4': [/*{'rat': 2}, {'goblin': 1}, */{'floater': 1}, {'slime': 2}, {'toadman': 2}, {'acid jelly': 1}],
-    'L5': [/*{'rat': 1}, {'goblin': 1}, */{'slime': 2}, {'toadman': 2}, {'acid jelly': 1}, {'poison toad': 1}],
-    'L6': [/*{'rat': 1}, {'goblin': 1}, */{'slime': 2}, {'toadman': 2}, {'acid jelly': 1}, {'poison toad': 2}],
-    'L7': [/*{'kappa': 1}, {'slime': 2}, */{'mushroom man': 1}, {'poison toad': 1}],
-    'L8': [/*{'kappa': 1}, {'mushroom man': 1},*/ {'poison toad': 1}],
+    'L1': [{'rat': 2}, {'kobold': 2}, {'bat':2}, {'jackal': 1}],
+    'L2': [{'rat': 3}, {'kobold': 2}, {'bat':2}, {'jackal': 1}, {'goblin': 1}],
+    'L3': [{'rat': 2}, {'kobold': 2}, {'bat':2}, {'jackal': 1}, {'goblin': 1}, {'floater': 1}, {'slime': 1}],
+    'L4': [{'rat': 2}, {'goblin': 1}, {'floater': 1}, {'slime': 2}, {'toadman': 2}, {'acid jelly': 1}],
+    'L5': [{'rat': 1}, {'goblin': 1}, {'slime': 2}, {'toadman': 2}, {'acid jelly': 1}, {'poison toad': 1}],
+    'L6': [{'rat': 1}, {'goblin': 1}, {'slime': 2}, {'toadman': 2}, {'acid jelly': 1}, {'poison toad': 2}],
+    'L7': [{'kappa': 1}, {'slime': 2}, {'mushroom man': 1}, {'poison toad': 1}],
+    'L8': [{'kappa': 1}, {'mushroom man': 1}, {'poison toad': 1}],
     'L9': [{'kappa': 1}, {'mushroom man': 1}, {'poison toad': 1}, {'piranha': 1}, {'bee':1}],
-    'L10': [{'kappa': 1}, {'mushroom man': 1}, {'poison toad': 1}, {'piranha': 1}, {'bee':1}],
-    'L11': [{'kappa': 1}, {'mushroom man': 1}, {'poison toad': 1}, {'piranha': 2}, {'bee':1}],
-    'L12': [{'zombie': 2}, {'slime': 1}, {'skeleton': 6}, {'golem': 1}, {'wraith': 1}, {'minotaur': 2}],
-    'L13': [{'zombie': 2}, {'slime': 1}, {'skeleton': 6}, {'golem': 2}, {'bat': 2}, {'wraith': 1}, {'minotaur': 1}],
-    'L14': [{'zombie': 1}, {'slime': 1}, {'skeleton': 6}, {'golem': 2}, {'wraith': 1}, {'minotaur': 2}],
+    'L10': [{'kappa': 1}, {'mushroom man': 1}, {'poison toad': 1}, {'piranha': 2}, {'bee':1}],
+    'L11': [{'zombie': 2}, {'slime': 1}, {'skeleton': 6}, {'golem': 1}, {'wraith': 1}, {'minotaur': 2}],
+    'L12': [{'zombie': 2}, {'slime': 1}, {'skeleton': 6}, {'golem': 2}, {'bat': 2}, {'wraith': 1}, {'minotaur': 1}],
+    'L13': [{'zombie': 1}, {'slime': 1}, {'skeleton': 6}, {'golem': 2}, {'wraith': 1}, {'minotaur': 2}],
+    'L14': [{'skeleton': 4}, {'wraith': 1}, {'harpy': 2}, {'devil': 1}, {'imp': 1}],
     'L15': [{'skeleton': 4}, {'wraith': 1}, {'harpy': 2}, {'devil': 1}, {'imp': 1}],
-    'L16': [{'skeleton': 4}, {'wraith': 1}, {'harpy': 2}, {'devil': 1}, {'imp': 1}],
-    'L17': [{'skeleton': 4}, {'harpy': 2}, {'devil': 1}, {'imp': 2}]
+    'L16': [{'skeleton': 4}, {'harpy': 2}, {'devil': 1}, {'imp': 2}]
 }

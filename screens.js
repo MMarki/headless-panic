@@ -492,7 +492,7 @@ Game.Screen.playScreen = {
             }
         }
         if (tile === Game.Tile.stairsDownTile || tile === Game.Tile.stairsDownTileLocked && playerHasKey){
-            if (Game.getLevel() === 17){
+            if (Game.getLevel() === 16){
                 Game.Screen.playScreen.deathInfo.maxHP = this._player.getMaxHP();
                 Game.Screen.playScreen.deathInfo.murderer = this._player.murderer;
         
@@ -711,12 +711,12 @@ Game.Screen.playScreen = {
             return "Cellars " + Game.getLevel();
         } else if (Game.getLevel() < 7){
             return "Sewers " + (Game.getLevel() - 3);
-        } else if (Game.getLevel() < 12) {
+        } else if (Game.getLevel() < 11) {
             return "Caverns " + (Game.getLevel() - 6);
-        } else if (Game.getLevel() < 15) {
-            return "Catacombs " + (Game.getLevel() - 11);
+        } else if (Game.getLevel() < 14) {
+            return "Catacombs " + (Game.getLevel() - 10);
         } else {
-            return "Underworld " + (Game.getLevel() - 4);
+            return "Underworld " + (Game.getLevel() - 13);
         }
     }
 }
@@ -744,7 +744,7 @@ Game.Screen.loseScreen = {
     exit: function() { console.log("Exited lose screen."); },
     render: function(display) {
         // Render our prompt to the screen
-        display.drawText(2, 1, "You were killed on LVL " +  Game.Screen.playScreen.deathInfo.level + " of 17 by " + Game.Screen.playScreen.deathInfo.murderer + '.');
+        display.drawText(2, 1, "You were killed on LVL " +  Game.Screen.playScreen.deathInfo.level + " of 16 by " + Game.Screen.playScreen.deathInfo.murderer + '.');
         display.drawText(2, 3, "STRN: " +  Game.Screen.playScreen.deathInfo.strength);
         display.drawText(2, 4, "MAX HP: " +  Game.Screen.playScreen.deathInfo.maxHP);
         display.drawText(2, 5, "DMG: " +  Game.Screen.playScreen.deathInfo.weapon);

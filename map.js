@@ -37,7 +37,7 @@ Game.Map = function(tiles, player, items, stairs, gasMap) {
     if (Game.getLevel() > 6){
         entitiesPerArea = 15;
     }
-    if (Game.getLevel() > 11){
+    if (Game.getLevel() > 10){
         entitiesPerArea = 22;
     }
     for (let i = 0; i < entitiesPerArea; i++) {
@@ -56,20 +56,20 @@ Game.Map = function(tiles, player, items, stairs, gasMap) {
     if (Game.getLevel() === 6){
         this.addEntityAtRandomPosition(Game.EntityRepository.create('toad queen'), 1);
     }
-    // if on L11, create one hydra
-    if (Game.getLevel() === 11){
+    // if on L10, create one hydra
+    if (Game.getLevel() === 10){
         this.addEntityAtRandomPosition(Game.EntityRepository.create('hydra'), 1);
     }
-    // if on L13, create one vampire
-    if (Game.getLevel() === 13){
+    // if on L12, create one vampire
+    if (Game.getLevel() === 12){
         this.addEntityAtRandomPosition(Game.EntityRepository.create('vampire'), 1);
     }
-    // if on L14, create one cerberus
-    if (Game.getLevel() === 14){
+    // if on L13, create one cerberus
+    if (Game.getLevel() === 13){
         this.addEntityAtRandomPosition(Game.EntityRepository.create('cerberus'), 1);
     }
-    // if on L17, create one lich
-    if (Game.getLevel() === 17){
+    // if on L16, create one lich
+    if (Game.getLevel() === 16){
         this.addEntityAtRandomPosition(Game.EntityRepository.create('lich'), 1);
     }
     
@@ -98,7 +98,7 @@ Game.Map = function(tiles, player, items, stairs, gasMap) {
     if (Game.getLevel() > 6){
         itemsPerArea = 5;
     }
-    if (Game.getLevel() > 11){
+    if (Game.getLevel() > 10){
         itemsPerArea = 4;
     }
     
