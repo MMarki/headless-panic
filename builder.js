@@ -21,7 +21,7 @@ Game.Builder = function(width, height, level) {
 
     let prefabsByArea = {
         'cellars': [prefabs.arena, prefabs.columns, prefabs.garden, prefabs.tetris],
-        'sewers': [prefabs.arena, prefabs.garden, prefabs.tetris],
+        'sewers': [prefabs.arena, prefabs.garden, prefabs.tetris, prefabs.tetris2],
         'caverns': [prefabs.arena],
         'catacombs': [prefabs.arena, prefabs.columns, prefabs.tetris, prefabs.tetris2],
         'underworld': [prefabs.arena, prefabs.columns, prefabs.tetris, prefabs.square, prefabs.square, prefabs.hallwayHoriz, prefabs.hallwayVert]
@@ -51,6 +51,7 @@ Game.Builder = function(width, height, level) {
             for (let i = 0; i < shallowWaterAmount; i++){
                 this._setShallowWater();
             }
+            this._setPrefab(Game.pickRandomElement(prefabsByArea['sewers']));
             this._setPrefab(Game.pickRandomElement(prefabsByArea['sewers']));
         } else if (level <= 11) {
             for (let i = 0; i < shallowWaterAmount; i++){
@@ -138,10 +139,10 @@ Game.Builder.prototype._generateLevel = function(level) {
     } else if (level > 3 && level <=6){
         // Set up the level generator
         options = {
-            roomWidth: [5, 20],
-            roomHeight: [5, 12],
+            roomWidth: [5, 16],
+            roomHeight: [5, 10],
             corridorLength: [0, 4],
-            dugPercentage: 0.45
+            dugPercentage: 0.42
         }
         generator = new ROT.Map.Digger(this._width, this._height, options);
     } else if (level > 6 && level <= 11){

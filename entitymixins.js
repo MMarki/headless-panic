@@ -678,6 +678,14 @@ Game.EntityMixins.Unpoisonable = {
     }
 }
 
+Game.EntityMixins.Fireproof = {
+    name: 'Fireproof',
+    groupName: 'Fireproof',
+    init: function(template) {
+        template;
+    }
+}
+
 Game.EntityMixins.Sucker = {
     name: 'Sucker',
     groupName: 'Sucker',
@@ -1387,7 +1395,7 @@ Game.EntityMixins.Affectible = {
         }
     },
     setEffect : function(effect) {
-        if (this.hasMixin('Unpoisonable') && effect._name === 'poisoned') {
+        if ((this.hasMixin('Unpoisonable') && effect._name === 'poisoned') || (this.hasMixin('Fireproof') && effect._name === 'burning')) {
             return;
         } else {
             this._effects.push(effect);
