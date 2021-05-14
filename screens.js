@@ -750,7 +750,7 @@ Game.Screen.loseScreen = {
         display.drawText(2, 10,  Game.Screen.loseScreen.chooseHint());
         display.drawText(2, 12, "%c{yellow}Refresh your browser tab to restart.");
         // Sends an event that passes 'death stats'
-        gtag('event', 'death_stats', {'strength':  Game.Screen.playScreen.deathInfo.strength, 'hp':  Game.Screen.playScreen.deathInfo.maxHP, 'defense':  Game.Screen.playScreen.deathInfo.armor, 'damage':  Game.Screen.playScreen.deathInfo.weapon, 'level':  Game.Screen.playScreen.deathInfo.level, 'turns': Game.Screen.playScreen.turnCount, 'murderer': Name.Screen.playScreen.deathInfo.murderer});
+        gtag('event', 'death_stats', {'strength':  Game.Screen.playScreen.deathInfo.strength, 'hp':  Game.Screen.playScreen.deathInfo.maxHP, 'defense':  Game.Screen.playScreen.deathInfo.armor, 'damage':  Game.Screen.playScreen.deathInfo.weapon, 'level':  Game.Screen.playScreen.deathInfo.level, 'turns': Game.Screen.playScreen.turnCount, 'murderer': Game.Screen.playScreen.deathInfo.murderer});
     },
     handleInput: function(inputType, inputData) {
         // Nothing to do here      
