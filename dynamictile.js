@@ -84,17 +84,25 @@ Game.DynamicTileMixins.Actor = {
         } else {
             this.getMap().removeDynamicTile(this);
         }
+        // Just do this part once, we don't grow new flamable substances
 
         if (this.hasMixin("Spreadable")){
-            let neighbors = this.getNeighborPositions();
-            // see if they match this._spreadSubstance
-            for (let neighbor of  neighbors){
-                let tile = this._map.getTile(neighbor.x, neighbor.y);
-                if (tile.isFlammable()){
-                    let newTile =  Game.DynamicTileRepository.create('fireTile')
-                    this._map.addDynamicTile(newTile, neighbor.x, neighbor.y);
+            if (!this.hasTriedSpreading()){
+                let newTile = '';
+                let neighbors = this.getNeighborPositions();
+                // see if they match this._spreadSubstance
+                for (let neighbor of neighbors){
+                    let tile = this._map.getTile(neighbor.x, neighbor.y);
+                    if (this._spreadSubstance && tile.isFlammable()){
+                        if (this._name = 'fireTile'){
+                            newTile =  Game.DynamicTileRepository.create('fireTile')
+                        } else if (this._name = 'hellFireTile'){
+                            newTile =  Game.DynamicTileRepository.create('hellFireTile')
+                        }
+                        this._map.addDynamicTile(newTile, neighbor.x, neighbor.y);
+                    }
                 }
-                
+                this.setTriedSpreading();
             }
         }
 
@@ -109,5 +117,12 @@ Game.DynamicTileMixins.Spreadable = {
     name: 'Spreadable',
     init: function(template) { 
         this._spreadSubstance = template['spreadSubstance'] || 'flammable';
+        this._triedSpreading = false;
+    },
+    hasTriedSpreading: function(){
+        return this._triedSpreading;
+    },
+    setTriedSpreading: function(){
+        this._triedSpreading = true;
     }
 };

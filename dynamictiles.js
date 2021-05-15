@@ -14,6 +14,19 @@ Game.DynamicTileRepository.define('fireTile', {
     mixins: [Game.DynamicTileMixins.Actor, Game.DynamicTileMixins.Spreadable]
 });
 
+Game.DynamicTileRepository.define('hellFireTile', {
+    character: '^',
+    name: 'hellFireTile',
+    foreground: Game.Colors.hellFireColor,
+    background: Game.Colors.glowColor,
+    walkable: true,
+    blocksLight: false,
+    lifespan: 800,
+    isHazard: true,
+    description: "an eternal shimmering flame",
+    mixins: [Game.DynamicTileMixins.Actor, Game.DynamicTileMixins.Spreadable]
+});
+
 Game.DynamicTileRepository.define('wineTile', {
     character: '.',
     name: 'wineTile',

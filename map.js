@@ -23,13 +23,25 @@ Game.Map = function(tiles, player, items, stairs, gasMap) {
     this.setupFov();
 
     //runes
-    this.setRune('protectTile');
-    this.setRune('protectTile');
-    this.setRune('vulnerabilityTile');
-    this.setRune('vulnerabilityTile');
+    this.setDynamicTile('protectTile');
+    this.setDynamicTile('protectTile');
+    this.setDynamicTile('vulnerabilityTile');
+    this.setDynamicTile('vulnerabilityTile');
     if (Game.getLevel() > 6){
-        this.setRune('vulnerabilityTile');
-        this.setRune('vulnerabilityTile');
+        this.setDynamicTile('vulnerabilityTile');
+        this.setDynamicTile('vulnerabilityTile');
+    }
+    if (Game.getLevel() > 10){
+        this.setDynamicTile('vulnerabilityTile');
+        this.setDynamicTile('vulnerabilityTile');
+    }
+    if (Game.getLevel() > 13){
+        this.setDynamicTile('hellFireTile');
+        this.setDynamicTile('hellFireTile');
+        this.setDynamicTile('hellFireTile');
+        this.setDynamicTile('hellFireTile');
+        this.setDynamicTile('hellFireTile');
+        this.setDynamicTile('hellFireTile');
     }
 
     // 15 entities per floor
@@ -497,12 +509,12 @@ Game.Map.prototype.getEntitiesWithinRadius = function(centerX, centerY, radius) 
     return results;
 }
 
-Game.Map.prototype.setRunePosition = function(runeName, x, y){
+Game.Map.prototype.setDynamicTilePosition = function(runeName, x, y){
     let tileObject = Game.DynamicTileRepository.create(runeName);
     this.addDynamicTile(tileObject, x, y);
 }
 
-Game.Map.prototype.setRune = function(runeName) {
+Game.Map.prototype.setDynamicTile = function(runeName) {
     let matches = [];
     // Iterate through all tiles, checking if they are floor tiles. 
     for (let x = 0; x < this._width; x++) {
@@ -514,7 +526,7 @@ Game.Map.prototype.setRune = function(runeName) {
     }
     // We shuffle the list of matches to prevent bias
     let match =  Game.pickRandomElement(matches);
-    this.setRunePosition(runeName, match.x, match.y);
+    this.setDynamicTilePosition(runeName, match.x, match.y);
     
 }
 

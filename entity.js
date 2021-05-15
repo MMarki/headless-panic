@@ -150,7 +150,7 @@ Game.Entity.prototype.applyNewEffects = function(){
     // if so, change the existing duration instead of adding a new one
 
     if (this.hasMixin('Affectible')){
-        if (tile._name === 'fireTile' && !this.hasMixin('Flyer')){
+        if ( (tile._name === 'fireTile' || tile._name === 'hellFireTile') && !this.hasMixin('Flyer')){
             if (this.hasEffect('burning')){
                 this.removeEffect('burning');
             }

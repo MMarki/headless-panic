@@ -239,7 +239,7 @@ Game.EntityMixins.TaskActor = {
         }     
 
         if (map._tiles[x][y].isWalkable()){
-            map.setRunePosition('vulnerabilityTile', x, y);
+            map.setDynamicTilePosition('vulnerabilityTile', x, y);
             Game.sendMessage(player, "%c{#F61067}The " + this._name + " casts a spell!");
             this._castWait = this._castWaitMax;
         }
