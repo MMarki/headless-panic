@@ -28,7 +28,6 @@ Game.Colors.glowColor =     '#291201';
 Game.Colors.barrelColor =   '#B57F50';
 Game.Colors.hellFireColor = '#0ACDFF';
 
-
 //monsters
 Game.Colors.ratColor =          '#E3D081';
 Game.Colors.jackalColor =       '#D19A66';
