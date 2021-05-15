@@ -584,6 +584,14 @@ Game.EntityMixins.Attacker = {
                         Game.sendMessage(target, '%c{#F61067}Your armor dissolves!');
                     }
                 } 
+                if (target.hasMixin('Acidic') && this.hasMixin('PlayerActor')){
+                    let weaponIndex = this.getWeaponIndex();
+                    if (weaponIndex !== null){
+                        this.unwield();
+                        this.removeItem(weaponIndex);
+                        Game.sendMessage(this, '%c{#F61067}Your weapon dissolves!');
+                    }
+                } 
             } else {
                 Game.sendMessage(this, 'You miss the %s.', [target.getName()]);
                 Game.sendMessage(target, 'The %s misses you.',  [this.getName()]);
@@ -1336,6 +1344,17 @@ Game.EntityMixins.Equipper = {
             if (this._items[i]) {
                 // Check if the item is worn as a head
                 if (this._items[i] === this.getArmor()) {
+                    return i;
+                }
+            }
+        }
+        return null;
+    },
+    getWeaponIndex: function(){
+        for (var i = 0; i < this._items.length; i++) {
+            if (this._items[i]) {
+                // Check if the item is worn as a head
+                if (this._items[i] === this.getWeapon()) {
                     return i;
                 }
             }
