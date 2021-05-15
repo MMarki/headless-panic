@@ -520,12 +520,11 @@ Game.EntityRepository.define('imp', {
     name: 'imp', 
     character: 'i',
     foreground: Game.Colors.piranhaColor,
-    maxHP: 20,
-    attackValue: 10,
-    defenseValue: 10,
+    maxHP: 12,
+    attackValue: 6,
+    defenseValue: 0,
     accuracyValue: 90,
     sightRadius: 12,
-    headHits: 1,
     description: "Its eyes are like coals. Its head is too small to wear.",
     tasks: ['hunt', 'wander'],
     mixins: [Game.EntityMixins.TaskActor, Game.EntityMixins.Sight,
@@ -538,8 +537,8 @@ Game.EntityRepository.define('devil', {
     character: 'd',
     foreground: Game.Colors.piranhaColor,
     maxHP: 50,
-    attackValue: 16,
-    defenseValue: 12,
+    attackValue: 14,
+    defenseValue: 10,
     accuracyValue: 90,
     sightRadius: 9,
     headHits: 1,
@@ -548,7 +547,7 @@ Game.EntityRepository.define('devil', {
     mixins: [Game.EntityMixins.TaskActor, Game.EntityMixins.Sight,
              Game.EntityMixins.Attacker, Game.EntityMixins.Destructible,
              Game.EntityMixins.HeadDropper, Game.EntityMixins.Affectible,
-             Game.EntityMixins.Fireproof]
+             Game.EntityMixins.Fireproof, Game.EntityMixins.Burner]
 });
 
 Game.EntityRepository.define('death', {

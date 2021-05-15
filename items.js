@@ -1,14 +1,6 @@
 Game.GatedItemRepository = new Game.Repository('gatedItems', Game.Item);
 Game.ItemRepository = new Game.Repository('items', Game.Item);
 
-//TO DO: More Potions, including: 
-// Invisibility
-// Paralysis
-// Fire immunity
-
-// Magic Sensitivity
-// Holy Potion, clears curses from items in inventory
-
 Game.GatedItemRepository.define('life potion', {
     name: 'life potion',
     character: '!',

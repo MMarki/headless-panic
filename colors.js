@@ -10,7 +10,6 @@ Game.Colors.darkGray =      '#282C34';
 Game.Colors.lightGray =     '#ABB2BF';
 Game.Colors.coral =         '#FF8A5B';
 
-
 //effects
 Game.Colors.poisonColor =   '#00EE00';
 Game.Colors.burningColor =  '#EE4411';
