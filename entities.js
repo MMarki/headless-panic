@@ -526,12 +526,11 @@ Game.EntityRepository.define('imp', {
     accuracyValue: 90,
     sightRadius: 12,
     headHits: 1,
-    description: "A tiny nimble figure with eyes like coals.",
+    description: "Its eyes are like coals. Its head is too small to wear.",
     tasks: ['hunt', 'wander'],
     mixins: [Game.EntityMixins.TaskActor, Game.EntityMixins.Sight,
              Game.EntityMixins.Attacker, Game.EntityMixins.Destructible,
-             Game.EntityMixins.HeadDropper, Game.EntityMixins.Affectible,
-             Game.EntityMixins.Fireproof]
+             Game.EntityMixins.Affectible, Game.EntityMixins.Fireproof]
 });
 
 Game.EntityRepository.define('devil', {
