@@ -26,7 +26,7 @@ Game.ItemRepository.define('fireproof potion', {
         duration: 20,
         name: "fireproof"
     },
-    rarity: 'COMMON',
+    rarity: 'UNCOMMON',
     depth: 'ANY',
     mixins: [Game.ItemMixins.Edible, Game.ItemMixins.Throwable],
     itemLevel: 1

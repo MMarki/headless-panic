@@ -78,6 +78,9 @@ Game.Entity.prototype.tryMove = function(x, y) {
                         this.attack(target);
                     }
                 }
+                if(this.hasMixin('PlayerActor')){
+                    this._hasNotMovedThisTurn = false;
+                }
                 return true;
             } else {
                 // If not, nothing we can do, but we can't move to the tile

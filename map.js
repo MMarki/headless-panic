@@ -116,14 +116,11 @@ Game.Map = function(tiles, player, items, stairs, gasMap) {
     console.log(emptyItemCount);*/
 
     // Items per floor
-    let itemsPerArea = 7
+    let itemsPerArea = 6;
     if (Game.getLevel() > 3){
-        itemsPerArea = 6;
-    }
-    if (Game.getLevel() > 6){
         itemsPerArea = 5;
     }
-    if (Game.getLevel() > 9){
+    if (Game.getLevel() > 6){
         itemsPerArea = 4;
     }
     
