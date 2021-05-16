@@ -443,7 +443,7 @@ Game.Screen.playScreen = {
                     if (!canSeeMonster){
                         let artificialInputData = {}
                         artificialInputData.keyCode = ROT.KEYS.VK_X
-                        Game.sleep(60).then(() => { this.handleInput('keydown', artificialInputData, false) });
+                        Game.sleep(30).then(() => { this.handleInput('keydown', artificialInputData, false) });
                     }
                 }
             }
@@ -1408,6 +1408,13 @@ Game.Screen.ItemScreen.prototype.render = function(display) {
     display.drawText(0, 1, this._item.describe());
     var rowCount = 0;
     //open an item modal with:
+    if (this._item.hasMixin('Equippable') && this._item.isHeadible()){
+        if (this._item.getPowerDescription() !== ''){
+            display.drawText(0,rowCount + 2, "%c{"+this._item.getForeground()+"}" + this._item.getPowerDescription());
+            rowCount += 1;
+        }
+    }
+
     if(this._item.hasMixin('Edible') || (this._item.hasMixin('Usable') && this._item.getUses() > 0) ){
         display.drawText(0, rowCount + 3, "%c{yellow}A%c{white}pply");
         rowCount += 1;
@@ -1427,9 +1434,6 @@ Game.Screen.ItemScreen.prototype.render = function(display) {
     }
     display.drawText(0,rowCount + 3, "%c{yellow}D%c{white}rop");
     rowCount += 1;
-    if (this._item.hasMixin('Equippable') && this._item.isHeadible()){
-        display.drawText(0,rowCount + 4, this._item.getPowerDescription());
-    }
 };
 
 Game.Screen.ItemScreen.prototype.executeOkFunction = function() {
@@ -1505,7 +1509,7 @@ Game.Screen.ItemScreen.prototype.handleInput = function(inputType, inputData) {
 };
 
 Game.Screen.itemScreenGeneric = new Game.Screen.ItemScreen({
-    caption: 'What do you want to do with this item?',
+    caption: '%c{#CCCCCC}WHAT DO YOU WANT TO DO WITH THIS ITEM?',
     ok: function() {
         return true;
     }
