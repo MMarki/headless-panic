@@ -565,13 +565,13 @@ Game.EntityMixins.Attacker = {
                 } 
                 if (this.hasMixin('Equipper') && target.hasMixin('Affectible')){
                     if (this._venomous){
-                        if (Math.random()*100 < 40){
+                        if (Math.random()*100 < 50){
                             let newEffect = new Game.Effect(Math.floor(damage*1.5), 'poisoned');
                             target.setEffect(newEffect);
                         }
                     } else if (this._paralytic){
-                        if (Math.random()*100 < 20){
-                            let newEffect = new Game.Effect(Math.floor(damage*1.5), 'paralyzed');
+                        if (Math.random()*100 < 25){
+                            let newEffect = new Game.Effect(Math.floor(damage), 'paralyzed');
                             target.setEffect(newEffect);
                         }
                     } else if (this._pusher && target.getHP() > 0){
@@ -1286,7 +1286,7 @@ Game.EntityMixins.Equipper = {
             this._sucker = false;
             if(this._head._name === 'goblin head' || this._head._name === 'kappa head'){
                 this._armored = true;
-            } else if (this._head._name === 'jackal head' || this._head._name === 'piranha head'){
+            } else if (this._head._name === 'jackal head' || this._head._name === 'piranha head' || this._head._name === 'wraith head'){
                 this._fierce = true;
             } else if (this._head._name === 'rat king head'){
                 this._ratThreaten = true;
@@ -1312,7 +1312,7 @@ Game.EntityMixins.Equipper = {
         if (this.hasMixin('PlayerActor')){
             if(this._head._name === 'goblin head' || this._head._name === 'kappa head'){
                 this._armored = false;
-            } else if (this._head._name === 'jackal head' || this._head._name === 'piranha head'){
+            } else if (this._head._name === 'jackal head' || this._head._name === 'piranha head' || this._head._name === 'wraith head'){
                 this._fierce = false;
             } else if (this._head._name === 'rat king head'){
                 this._ratThreaten = false;

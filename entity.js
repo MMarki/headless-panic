@@ -178,7 +178,7 @@ Game.Entity.prototype.applyNewEffects = function(){
             map.setTile(this._x, this._y, Game.Tile.floorTile);
         }
 
-        if (gas !== null && gas._name === 'darknessTile'){
+        if (gas !== null && gas._name === 'darknessTile' && this.getName()!== 'wraith'){
             if (this.hasEffect('blind')){
                 this.removeEffect('blind');
             }

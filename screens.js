@@ -73,7 +73,9 @@ Game.Screen.playScreen = {
         this._player.addItem(dart);
         //Create map
         this._map = new Game.Map(tiles, this._player, null, stairs, gasMap);
-        this._map.getRidOfBoringRooms(rooms);
+        if (Game.getLevel() <= 6){
+            this._map.getRidOfBoringRooms(rooms);
+        }
         this._map.cleanUpDoors();
         // Start the map's engine
         this._map.getEngine().start();

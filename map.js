@@ -36,12 +36,25 @@ Game.Map = function(tiles, player, items, stairs, gasMap) {
         this.setDynamicTile('vulnerabilityTile');
     }
     if (Game.getLevel() > 13){
-        this.setDynamicTile('hellFireTile');
-        this.setDynamicTile('hellFireTile');
-        this.setDynamicTile('hellFireTile');
-        this.setDynamicTile('hellFireTile');
-        this.setDynamicTile('hellFireTile');
-        this.setDynamicTile('hellFireTile');
+        let position = this.getRandomFloorPosition();
+        let list = [];
+        list.push(position);
+        this.cellGrow(list, 'hellFireTile', 10);
+
+        position = this.getRandomFloorPosition();
+        list = [];
+        list.push(position);
+        this.cellGrow(list, 'hellFireTile', 10);
+
+        position = this.getRandomFloorPosition();
+        list = [];
+        list.push(position);
+        this.cellGrow(list, 'hellFireTile', 10);
+
+        position = this.getRandomFloorPosition();
+        list = [];
+        list.push(position);
+        this.cellGrow(list, 'hellFireTile', 10);
     }
 
     // 15 entities per floor

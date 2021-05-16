@@ -106,10 +106,28 @@ Game.DynamicTileMixins.Actor = {
             }
         }
 
-        this._foreground = ROT.Color.toHex(ROT.Color.randomize(ROT.Color.fromString(this._defaultForeground), [10, 10, 10]));
-        this._background = ROT.Color.toHex(ROT.Color.randomize(ROT.Color.fromString(this._defaultBackground), [10, 10, 10]));
-        // Re-render the screen
-        Game.refresh();
+        // if in field of view
+        let map = this.getMap();
+
+        // Compute the FOV and check if the coordinates are in there.
+        let canSee = false;
+        let otherX = map._player.getX();
+        let otherY = map._player.getY();
+
+        this.getMap().getFov().compute(
+            this.getX(), this.getY(), 100, 
+            function(x, y, radius, visibility) {
+                if (x === otherX && y === otherY) {
+                    canSee = true;
+                }
+            });
+
+        if (canSee){
+            this._foreground = ROT.Color.toHex(ROT.Color.randomize(ROT.Color.fromString(this._defaultForeground), [10, 10, 10]));
+            this._background = ROT.Color.toHex(ROT.Color.randomize(ROT.Color.fromString(this._defaultBackground), [10, 10, 10]));
+            // Re-render the screen
+            Game.refresh();
+        }
     }
 };
 
