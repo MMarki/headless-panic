@@ -281,6 +281,7 @@ Game.EntityRepository.define('zombie', {
     headHits: 1,
     description: "A shambling undead monster that smells of decay.",
     tasks: ['hunt', 'wander'],
+    headPower: 'It looks rotten',
     mixins: [Game.EntityMixins.TaskActor, Game.EntityMixins.Sight,
              Game.EntityMixins.Attacker, Game.EntityMixins.Destructible,
              Game.EntityMixins.HeadDropper, Game.EntityMixins.Affectible]
@@ -492,6 +493,7 @@ Game.EntityRepository.define('cerberus', {
     headHits: 1,
     description: "A massive 3-headed bulldog.",
     tasks: ['hunt', 'wander'],
+    headPower: 'When you get hit, you deal 25% damage back.',
     mixins: [Game.EntityMixins.TaskActor, Game.EntityMixins.Sight,
              Game.EntityMixins.Attacker, Game.EntityMixins.Destructible,
              Game.EntityMixins.HeadDropper, Game.EntityMixins.Affectible,
@@ -502,7 +504,7 @@ Game.EntityRepository.define('harpy', {
     name: 'harpy', 
     character: 'h',
     foreground: 'teal',
-    maxHP: 30,
+    maxHP: 25,
     attackValue: 10,
     defenseValue: 10,
     accuracyValue: 90,
@@ -510,6 +512,7 @@ Game.EntityRepository.define('harpy', {
     headHits: 1,
     description: "A flying bird monster with a pale human face.",
     tasks: ['hunt', 'wander'],
+    headPower: 'Levitation',
     mixins: [Game.EntityMixins.TaskActor, Game.EntityMixins.Sight,
              Game.EntityMixins.Attacker, Game.EntityMixins.Destructible,
              Game.EntityMixins.HeadDropper, Game.EntityMixins.Affectible,
@@ -544,6 +547,7 @@ Game.EntityRepository.define('devil', {
     headHits: 1,
     description: "A wiry horned figure with molten skin.",
     tasks: ['hunt', 'wander'],
+    headPower: '50% chance to burn on hit',
     mixins: [Game.EntityMixins.TaskActor, Game.EntityMixins.Sight,
              Game.EntityMixins.Attacker, Game.EntityMixins.Destructible,
              Game.EntityMixins.HeadDropper, Game.EntityMixins.Affectible,
@@ -554,18 +558,16 @@ Game.EntityRepository.define('death', {
     name: 'death',
     character: '\u2625',
     foreground: '#b7fdfe',
-    maxHP: 3,
+    maxHP: 100,
     defenseValue: 0,
-    attackValue: 1,
-    accuracyValue: 70,
-    sightRadius: 10,
+    attackValue: 20,
+    accuracyValue: 100,
+    sightRadius: 100,
     description: "She seeks what is hers.",
     tasks: ['hunt', 'wander'],
     mixins: [Game.EntityMixins.TaskActor, Game.EntityMixins.Sight,
-             Game.EntityMixins.Attacker, Game.EntityMixins.Destructible,
-             Game.EntityMixins.Affectible]
+             Game.EntityMixins.Attacker]
 });
-
 
 Game.EntityRepository.repoFrequency = {
     'L1': [{'rat': 2}, {'kobold': 2}, {'bat':2}, {'jackal': 1}],
@@ -581,7 +583,7 @@ Game.EntityRepository.repoFrequency = {
     'L11': [{'zombie': 2}, {'slime': 1}, {'skeleton': 6}, {'golem': 1}, {'wraith': 1}, {'minotaur': 2}],
     'L12': [{'zombie': 2}, {'slime': 1}, {'skeleton': 6}, {'golem': 2}, {'bat': 2}, {'wraith': 1}, {'minotaur': 1}],
     'L13': [{'zombie': 1}, {'slime': 1}, {'skeleton': 6}, {'golem': 2}, {'wraith': 1}, {'minotaur': 2}],
-    'L14': [{'skeleton': 4}, {'wraith': 1}, {'harpy': 2}, {'devil': 1}, {'imp': 1}],
+    'L14': [{'skeleton': 4}, {'wraith': 1}, {'harpy': 3}, {'devil': 1}, {'imp': 1}],
     'L15': [{'skeleton': 4}, {'wraith': 1}, {'harpy': 2}, {'devil': 1}, {'imp': 1}],
     'L16': [{'skeleton': 4}, {'harpy': 2}, {'devil': 1}, {'imp': 2}]
 }

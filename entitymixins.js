@@ -17,6 +17,7 @@ Game.EntityMixins.PlayerActor = {
         this.addTurnBleed();
         this.handleEffects();
         this.applyNewEffects();
+        this.checkHeadRot();
         // Detect if the game is over
         if (this.getHP() < 1) {
             Game.Screen.playScreen.setGameEnded(true);
@@ -37,7 +38,19 @@ Game.EntityMixins.PlayerActor = {
     },
     setPathingTarget: function(newPath){
         this._pathingTarget = newPath;
+    },
+    checkHeadRot: function(){
+        let myHead = this.getHead();
+        if (myHead !== null && myHead._name === 'zombie head'){
+            if (Math.random()*100 < 2){
+                let headIndex = this.getHeadIndex();
+                this.unhead();
+                this.removeItem(headIndex);
+                Game.sendMessage(this, "%c{#F61067}Your zombie head rots off!");
+            }
+        }
     }
+        
 }
 
 Game.EntityMixins.TaskActor = {
@@ -328,8 +341,15 @@ Game.EntityMixins.Destructible = {
     },
     takeDamage: function(attacker, damage, isKnockDamage) {
         let returnMessage = '';
+
+        if (this._vengeful === true){
+            if( attacker.takeDamage !== undefined){
+                attacker.takeDamage(this, Math.ceil(damage/4), true);
+            } 
+        }
+
         if (this.hasMixin('Bleeder')){
-            var myHead = this.getHead()
+            let myHead = this.getHead();
             if (myHead !== null && isKnockDamage) {
                 if (myHead._headHits > 1) {
                     myHead._headHits -= 1;
@@ -577,6 +597,11 @@ Game.EntityMixins.Attacker = {
                     } else if (this._pusher && target.getHP() > 0){
                         if (Math.random()*100 < 50){
                             this.pushEntity(target);
+                        }
+                    } else if (this._burner && target.getHP() > 0){
+                        if (Math.random()*100 < 50){
+                            let newEffect = new Game.Effect(Math.floor(damage*1.5), 'burning');
+                            target.setEffect(newEffect);
                         }
                     }
                 } 
@@ -1280,10 +1305,14 @@ Game.EntityMixins.Equipper = {
             this._ratThreaten = false;
             this._toady = false;
             this._venomous = false;
+            this._burner = false;
             this._strengthened = false;
             this._paralytic = false;
             this._pusher = false;
             this._sucker = false;
+            this._levitating = false;
+            this._vengeful = false;
+
             if(this._head._name === 'goblin head' || this._head._name === 'kappa head'){
                 this._armored = true;
             } else if (this._head._name === 'jackal head' || this._head._name === 'piranha head' || this._head._name === 'wraith head'){
@@ -1305,6 +1334,12 @@ Game.EntityMixins.Equipper = {
                 }
             } else if (this._head._name === 'vampire head'){
                 this._sucker = true;
+            } else if (this._head._name === 'devil head'){
+                this._burner = true;
+            } else if (this._head._name === 'harpy head'){
+                this._levitating = true;
+            } else if (this._head._name === 'cerberus head'){
+                this._vengeful = true;
             }
         }
     },
@@ -1326,6 +1361,12 @@ Game.EntityMixins.Equipper = {
                 this._pusher = false;
             } else if (this._head._name === 'vampire head'){
                 this._sucker= false;
+            } else if (this._head._name === 'devil head'){
+                this._burner = false;
+            } else if (this._head._name === 'harpy head'){
+                this._levitating = false;
+            } else if (this._head._name === 'cerberus head'){
+                this._vengeful = false;
             }
         }
         this._head = null;
