@@ -74,7 +74,9 @@ Game.Screen.playScreen = {
         //Create map
         this._map = new Game.Map(tiles, this._player, null, stairs, gasMap);
         if (Game.getLevel() <= 6){
-            this._map.getRidOfBoringRooms(rooms);
+            //this._map.getRidOfBoringRooms(rooms);
+            //TODO turning this off because it clears rooms after prefabs are generated, 
+            //and it there's an overlap, you might have an orphanned prefab that the player can spawn in.
         }
         this._map.cleanUpDoors();
         // Start the map's engine
@@ -536,7 +538,9 @@ Game.Screen.playScreen = {
             //pass the current player and the new tiles in
             this._map = new Game.Map(tiles, this._player, this._player.getItems(), stairs, gasMap);
             if (Game.getLevel() <= 6){
-                this._map.getRidOfBoringRooms(rooms);
+                //this._map.getRidOfBoringRooms(rooms);
+                //TODO turning this off because it clears rooms after prefabs are generated, 
+                //and it there's an overlap, you might have an orphanned prefab that the player can spawn in.
             }
             if (Game.getLevel() <= 6 && Game.getLevel() > 3){
                 this._map.deleteHalfOfDoors();
