@@ -434,7 +434,7 @@ Game.Builder.prototype._setColumn = function() {
     match =  Game.pickRandomElement(matches);
     matchX = match.x;
     matchY = match.y;
-    if(this._checkAdjacent(matchX, matchY, Game.Tile.floorTile)){
+    if(this._checkAdjacentNine(matchX, matchY, Game.Tile.floorTile)){
         this._tiles[matchX][matchY] = Game.Tile.wallTile;
     }
 }
@@ -442,6 +442,17 @@ Game.Builder.prototype._setColumn = function() {
 Game.Builder.prototype._checkAdjacent = function(x,y,tileType) {
     if (this._tiles[x - 1][y]  === tileType && this._tiles[x + 1][y]  === tileType
         && this._tiles[x][y - 1]  === tileType && this._tiles[x][y + 1]  === tileType) {
+            return true;
+    } else {
+        return false;
+    }
+}
+
+Game.Builder.prototype._checkAdjacentNine = function(x,y,tileType) {
+    if (this._tiles[x - 1][y]  === tileType && this._tiles[x + 1][y]  === tileType
+        && this._tiles[x][y - 1]  === tileType && this._tiles[x][y + 1]  === tileType 
+        && this._tiles[x - 1][y - 1]  === tileType && this._tiles[x - 1][y + 1]  === tileType
+        && this._tiles[x + 1][y - 1]  === tileType && this._tiles[x + 1][y + 1]  === tileType) {
             return true;
     } else {
         return false;
