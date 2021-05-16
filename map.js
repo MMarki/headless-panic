@@ -16,13 +16,8 @@ Game.Map = function(tiles, player, items, stairs, gasMap) {
     // add the player
     this._player = player;
     this._gasMap = gasMap;
-    this.addEntityAtRandomPosition(player, 0);
 
-    //set up the field of vision
-    this._fov = {};
-    this.setupFov();
-
-    //runes
+    //runes and hellfire
     this.setDynamicTile('protectTile');
     this.setDynamicTile('protectTile');
     this.setDynamicTile('vulnerabilityTile');
@@ -56,6 +51,13 @@ Game.Map = function(tiles, player, items, stairs, gasMap) {
         list.push(position);
         this.cellGrow(list, 'hellFireTile', 10);
     }
+
+    //App Player
+    this.addEntityAtRandomPosition(player, 0);
+
+    //set up the field of vision
+    this._fov = {};
+    this.setupFov();
 
     // 15 entities per floor
     let entitiesPerArea = 10
