@@ -703,7 +703,7 @@ Game.Screen.playScreen = {
                 var visibleEntity = visibleEntities[i]
                 display.drawText(screenWidth + 1, 10 + 2*i + j , '%c{' + visibleEntity.getForeground() + '}' + visibleEntity.getChar() + ':  ' + visibleEntity.getName() + '%c{' + visibleEntity.getForeground() + '} '  + visibleEntity.getHP() + '/' + visibleEntity.getMaxHP());
             
-                var effectsList = visibleEntity.getEffects();
+                var effectsList = visibleEntity.hasMixin('Affectible') ? visibleEntity.getEffects() : [];
                 var effectsString = '';
                 for (effect of effectsList){
                     var effectsString = effectsString + '%c{' + effect._color + '}' + effect.getName() + ' ';

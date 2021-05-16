@@ -64,10 +64,11 @@ Game.EntityMixins.TaskActor = {
         this._castWait = this._castWaitMax;
     },
     act: function() {
-        var stopActor = this.handleEffects();
-        if (stopActor === 1) {return;}
-
-        this.applyNewEffects();
+        if (this.hasMixin('Affectible')){
+            let stopActor = this.handleEffects();
+            if (stopActor === 1) {return;}
+            this.applyNewEffects();
+        }
 
         if (this.hasMixin('Summoner') && this._summonWait > 0) {
             this._summonWait -=1;
@@ -1114,14 +1115,14 @@ Game.EntityMixins.Sight = {
             return false;
         }
 
-        if (this.hasEffect('blind')){
+        if (this.hasMixin('Affectible') && this.hasEffect('blind')){
             return false;
         }
 
         var otherX = entity.getX();
         var otherY = entity.getY();
 
-        var seeAbleByMagic = (this.hasEffect("knowledgeable") && this.getMap().getEntityAt(otherX, otherY) !== null);
+        var seeAbleByMagic = (this.hasMixin('Affectible') && this.hasEffect("knowledgeable") && this.getMap().getEntityAt(otherX, otherY) !== null);
         if (seeAbleByMagic){
             return true;
         }
@@ -1251,7 +1252,7 @@ Game.EntityMixins.Bleeder = {
         if (this._head === null){
             this.modifyHPBy(-this._bleedRate);
             this.getMap().changeTile(this.getX(),this.getY(), Game.Tile.bloodTile);
-        } else if(!this.hasEffect('burning') && !this.hasEffect('poisoned')) {
+        } else if(this.hasMixin('Affectible') && !this.hasEffect('burning') && !this.hasEffect('poisoned')) {
             this.modifyHPBy(this._bleedRate);
         }
         

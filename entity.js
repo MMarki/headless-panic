@@ -68,7 +68,7 @@ Game.Entity.prototype.tryMove = function(x, y) {
     const tile = map.getTile(x, y);
     const target = map.getEntityAt(x, y);
     // If an entity was present at the tile
-    if (!this.hasEffect('paralyzed')){
+    if (!this.hasMixin('Affectible') || !this.hasEffect('paralyzed')){
         if (target) {
             // If we are an attacker, try to attack the target
             if ((this.hasMixin('Attacker') && (this.hasMixin('PlayerActor') || target.hasMixin('PlayerActor')))) {
