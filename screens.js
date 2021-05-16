@@ -566,7 +566,11 @@ Game.Screen.playScreen = {
             // If only one item, try to pick it up
             var item = items[0];
             if (this._player.pickupItems([0])) {
-                Game.sendMessage(this._player, "You pick up %s.", [item.describeA()]);
+                if (item.getName() === 'key'){
+                    Game.sendMessage(this._player, "%%c{#61AEEE}You pick up %s.", [item.describeA()]);
+                } else {
+                    Game.sendMessage(this._player, "You pick up %s.", [item.describeA()]);
+                }
             } else {
                 Game.sendMessage(this._player, "Your inventory is full! Nothing was picked up.");
             }

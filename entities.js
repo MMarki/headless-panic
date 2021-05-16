@@ -325,8 +325,7 @@ Game.EntityRepository.define('golem', {
     headPower: '50% chance to knock back on hit',
     mixins: [Game.EntityMixins.TaskActor, Game.EntityMixins.Sight,
              Game.EntityMixins.Attacker, Game.EntityMixins.Destructible,
-             Game.EntityMixins.HeadDropper, Game.EntityMixins.Affectible, 
-             Game.EntityMixins.Unpoisonable, Game.EntityMixins.Pusher]
+             Game.EntityMixins.HeadDropper, Game.EntityMixins.Pusher]
 });
 
 Game.EntityRepository.define('wraith', {
@@ -541,7 +540,7 @@ Game.EntityRepository.define('devil', {
     character: 'd',
     foreground: Game.Colors.piranhaColor,
     maxHP: 50,
-    attackValue: 14,
+    attackValue: 12,
     defenseValue: 10,
     accuracyValue: 90,
     sightRadius: 9,
@@ -584,6 +583,6 @@ Game.EntityRepository.repoFrequency = {
     'L11': [{'zombie': 2}, {'slime': 1}, {'skeleton': 6}, {'golem': 2}, {'bat': 2}, {'wraith': 1}, {'minotaur': 1}],
     'L12': [{'zombie': 1}, {'slime': 1}, {'skeleton': 6}, {'golem': 2}, {'wraith': 1}, {'minotaur': 2}],
     'L13': [{'skeleton': 4}, {'wraith': 1}, {'harpy': 3}, {'devil': 1}, {'imp': 1}],
-    'L14': [{'skeleton': 4}, {'wraith': 1}, {'harpy': 2}, {'devil': 1}, {'imp': 1}],
-    'L15': [{'skeleton': 4}, {'harpy': 2}, {'devil': 1}, {'imp': 2}]
+    'L14': [{'skeleton': 5}, {'wraith': 1}, {'harpy': 2}, {'devil': 1}, {'imp': 1}],
+    'L15': [{'skeleton': 5}, {'harpy': 2}, {'devil': 1}, {'imp': 2}]
 }

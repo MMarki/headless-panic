@@ -194,6 +194,14 @@ Game.Map.prototype.isInBounds = function(x, y){
     else return 1;
 }
 
+Game.Map.prototype.isFireTile = function(x, y){
+    if (!this.isInBounds(x, y)) {
+        return Game.Tile.nullTile;
+    } else {
+        return this._tiles[x][y].getDescription() === "an eternal shimmering flame" || this._tiles[x][y].getDescription() === "a dancing flame";
+    }
+}
+
 Game.Map.prototype.addGatedItem = function() {
     const randNum = Math.random()*100;
     let chosenItem = ''
