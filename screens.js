@@ -55,9 +55,9 @@ Game.Screen.playScreen = {
         this._player.addItem(startingHead);
         this._player.wearHead(startingHead);
 
-        var dart = Game.ItemRepository.create('dart');
+        var dart = Game.ItemRepository.create('fireproof potion');
         this._player.addItem(dart);
-        var dart = Game.ItemRepository.create('dart');
+        var dart = Game.ItemRepository.create('fire potion');
         this._player.addItem(dart);
         var dart = Game.ItemRepository.create('dart');
         this._player.addItem(dart);

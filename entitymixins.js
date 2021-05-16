@@ -1455,7 +1455,7 @@ Game.EntityMixins.Affectible = {
                 let string = this.takeDamage('poison', 1, false);
                 return string.length > 0 ? true : false;
             }      
-        } else if (effectName === "burning" && this.hasMixin('Destructible')){
+        } else if (effectName === "burning" && this.hasMixin('Destructible') && !this.hasEffect('fireproof') && !this.hasMixin('Fireproof')){
             let targetIsVulnerable = this.getVulnerabilities().includes('fire');
             if (targetIsVulnerable){
                 let string = this.takeDamage('fire', 2, false);
