@@ -18,6 +18,20 @@ Game.GatedItemRepository.define('strength potion', {
     mixins: [Game.ItemMixins.Edible, Game.ItemMixins.Throwable]
 });
 
+Game.ItemRepository.define('fireproof potion', {
+    name: 'fireproof potion',
+    character: '!',
+    foreground: Game.Colors.yellow,
+    potionEffect: {
+        duration: 20,
+        name: "fireproof"
+    },
+    rarity: 'COMMON',
+    depth: 'ANY',
+    mixins: [Game.ItemMixins.Edible, Game.ItemMixins.Throwable],
+    itemLevel: 1
+});
+
 Game.ItemRepository.define('poison potion', {
     name: 'poison potion',
     character: '!',

@@ -1467,7 +1467,7 @@ Game.EntityMixins.Affectible = {
         }
     },
     setEffect : function(effect) {
-        if ((this.hasMixin('Unpoisonable') && effect._name === 'poisoned') || (this.hasMixin('Fireproof') && effect._name === 'burning')) {
+        if ((this.hasMixin('Unpoisonable') && effect._name === 'poisoned') || ( (this.hasMixin('Fireproof') || this.hasEffect('fireproof')) && effect._name === 'burning')) {
             return;
         } else {
             this._effects.push(effect);
