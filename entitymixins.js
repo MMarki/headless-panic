@@ -797,7 +797,6 @@ Game.EntityMixins.Thrower = {
             if (tileType == Game.Tile.wallTile || tileType === Game.Tile.doorTile){
                 //console.log("oi mate, we hit a wall!");
                 this.handleThrowDrop(item, true, this._map, point.x, point.y)
-                Game.sendMessage(this, 'You throw a %s.',item.getName());
                 break;
             }            
             endPointX = point.x;
