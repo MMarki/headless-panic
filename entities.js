@@ -318,7 +318,6 @@ Game.EntityRepository.define('golem', {
     sightRadius: 13,
     headHits: 1,
     resistances: ['stab'],
-    vulnerabilities: ['crush'],
     speed: 500,
     description: "A big rock monster.",
     tasks: ['hunt', 'wander'],
