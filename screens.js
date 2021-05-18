@@ -37,6 +37,8 @@ Game.Screen.playScreen = {
         armor: 0
     },
     turnCount: 0,
+    turnsOnThisFloorCount: 0,
+    hasSpawnedDeath: false,
     enter: function() {  
         var width = Game._screenWidth;
         var height = Game._screenHeight;
@@ -450,6 +452,12 @@ Game.Screen.playScreen = {
                 }
             }
             this.turnCount++;
+            this.turnsOnThisFloorCount++;
+            if (this.turnsOnThisFloorCount > 300 && this.hasSpawnedDeath === false){
+                this._map.addEntityAtRandomPosition(Game.EntityRepository.create("death"), 1);
+                this.hasSpawnedDeath = true;
+                console.log("DEATH COMES FOR WHAT'S HERS");
+            }
         } else {
             // Not a valid key
             return;
@@ -530,6 +538,8 @@ Game.Screen.playScreen = {
             var height = Game._screenHeight;
             // Create our map from tiles and player
             Game.incrementLevel();
+            this.turnsOnThisFloorCount = 0;
+            this.hasSpawnedDeath = 0;
             let builder = new Game.Builder(width,height, Game.getLevel())
             let tiles = builder.getTiles()
             let rooms = builder.getRooms();
@@ -705,8 +715,13 @@ Game.Screen.playScreen = {
             
             for (var i=0; i < visibleEntities.length; i++){
                 var visibleEntity = visibleEntities[i]
-                display.drawText(screenWidth + 1, 10 + 2*i + j , '%c{' + visibleEntity.getForeground() + '}' + visibleEntity.getChar() + ':  ' + visibleEntity.getName() + '%c{' + visibleEntity.getForeground() + '} '  + visibleEntity.getHP() + '/' + visibleEntity.getMaxHP());
-            
+                let isDestructible = visibleEntity.hasMixin('Destructible');
+                if (isDestructible){
+                    display.drawText(screenWidth + 1, 10 + 2*i + j , '%c{' + visibleEntity.getForeground() + '}' + visibleEntity.getChar() + ':  ' + visibleEntity.getName() + '%c{' + visibleEntity.getForeground() + '} '  + visibleEntity.getHP() + '/' + visibleEntity.getMaxHP());
+                } else {
+                    display.drawText(screenWidth + 1, 10 + 2*i + j , '%c{' + visibleEntity.getForeground() + '}' + visibleEntity.getChar() + ':  ' + visibleEntity.getName() + '%c{' + visibleEntity.getForeground() + '} ');
+                }
+                
                 var effectsList = visibleEntity.hasMixin('Affectible') ? visibleEntity.getEffects() : [];
                 var effectsString = '';
                 for (effect of effectsList){
