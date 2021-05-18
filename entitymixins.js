@@ -563,7 +563,7 @@ Game.EntityMixins.Attacker = {
             //console.log("hitprob: " + hitProbability);
             if (Math.random()*100 < hitProbability){
                 let max = Math.max(1, attack + (strengthModifier));
-                let damage = Math.ceil(Game.Utilities.randomRange(Math.ceil(max/2), max));
+                let damage = max;
                 if (targetIsVulnerable) {
                     damage *= 2;
                 } else if (targetIsResistant) {
@@ -931,11 +931,10 @@ Game.EntityMixins.Thrower = {
             if (throwDistance > 6) {
                 hitProbability = hitProbability - throwDistance*3; 
             }
-            // TO DO: it should also be harder to hit flying enemies
             if (target.hasMixin('Deflecter')){
                 Game.sendMessage(this, 'You throw a %s at the %s. It deflects off its shell!', [item.getName(),target.getName()]);
             } else if (Math.random()*100 < hitProbability){
-                let maxAmount = Math.max(0, item.getThrownAttackValue());
+                let maxAmount = Math.max(1, item.getThrownAttackValue());
                 if (this.hasMixin('PlayerActor')) {
                     if (item.getDamageType != undefined){
                         let damageType = item.getDamageType();
@@ -949,7 +948,7 @@ Game.EntityMixins.Thrower = {
                         } 
                     } 
                 }
-                amount = Math.floor((Math.random() * maxAmount)) + 1;
+                amount = maxAmount;
                 if (amount > 0){
                     let returnMessage = target.takeDamage(this, amount, true);
                     if (returnMessage.length > 0){
