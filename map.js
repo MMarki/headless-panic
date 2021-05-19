@@ -491,6 +491,52 @@ Game.Map.prototype.addEntityAtRandomPosition = function(entity, outOfSightline) 
     this.addEntity(entity);
 }
 
+//adds and entity on an file, far away
+Game.Map.prototype.addEntityAtDistantPosition = function(entity, x, y, outOfSightline) {
+    let position = this.getRandomFloorPosition();
+    let tileCandidates = [];
+    if (outOfSightline){
+        // Cache the FOV
+        let visibleCells = {};
+        this.getFov().compute(
+            this._player.getX(), this._player.getY(), 
+            this._player.getSightRadius(), 
+            function(x, y, radius, visibility) {
+                visibleCells[x + "," + y] = true;
+            }
+        );
+        //find 20 candidates
+        while (tileCandidates.length < 100){
+            position = this.getRandomFloorPosition();
+            if (visibleCells[String(position.x) + ',' + String(position.y)] === undefined) {
+                tileCandidates.push(position);
+                console.log(tileCandidates.length);
+            }
+        }
+    }
+
+    //sort tileCandidates by distance
+    let totalDist = 0;
+    let winningX = 0;
+    let winningY = 0;
+    for (tileCandidate of tileCandidates){
+        let newTotalDist = Math.abs(tileCandidate.x - x) + Math.abs(position.y - y);
+        if (newTotalDist > totalDist) {
+            totalDist = newTotalDist;
+            winningX = tileCandidate.x;
+            winningY = tileCandidate.y;
+        }
+    }
+
+    console.log(winningX + ', ' + winningY);
+    
+
+    entity.setX(winningX);
+    entity.setY(winningY);
+    this.addEntity(entity);
+}
+
+
 Game.Map.prototype.removeEntity = function(entity) {
     // Remove the entity from the map
     const key = entity.getX() + ',' + entity.getY();
