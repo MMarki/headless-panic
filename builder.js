@@ -296,7 +296,7 @@ Game.Builder.prototype._setStairs = function(levelNumber) {
     // We shuffle the list of matches to prevent bias
     while (true){
         let match =  Game.pickRandomElement(matches);
-        if(this._checkAdjacent(match.x, match.y, Game.Tile.floorTile)){
+        if(this._checkAdjacentNine(match.x, match.y, Game.Tile.floorTile)){
             if (levelNumber != 3 && levelNumber != 6 && levelNumber != 9 && levelNumber != 12 && levelNumber != 15){
                 this._tiles[match.x][match.y] = Game.Tile.stairsDownTile;
                 this._stairs = {

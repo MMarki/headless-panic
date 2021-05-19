@@ -394,7 +394,7 @@ Game.EntityMixins.Destructible = {
                 if (creature !== null){
                     creature._hp = Math.ceil(this._hp/2);
                     if (this.hasMixin("Affectible")){
-                        creature._effects = this._effects
+                        creature.transferEffects(this._effects); 
                     }   
                 }
                 this._hp = Math.ceil(this._hp/2);
@@ -1484,6 +1484,11 @@ Game.EntityMixins.Affectible = {
                 let string = this.takeDamage('fire', 1, false);
                 return string.length > 0 ? true : false;
             }  
+        }
+    },
+    transferEffects: function(effectsList){
+        for (effect of effectsList){
+            this.setEffect(effect);
         }
     },
     setEffect : function(effect) {
