@@ -99,7 +99,10 @@ Game.EntityMixins.TaskActor = {
             return (this.hasMixin('Sight') && this.canSee(player)) || this.getChargeDirection() !=='none';
         } else if (task === 'hunt') {
             let player = this.getMap().getPlayer()
-            return this.hasMixin('Sight') && this.canSee(player) && !(this._name === 'rat' && player._ratThreaten === true) && !(this._name === 'wraith' && player._hasNotMovedThisTurn === true);
+            return (this.hasMixin('Sight') && this.canSee(player) 
+            && !(this._name === 'rat' && player._ratThreaten === true) 
+            && !(this._name === 'wraith' && player._hasNotMovedThisTurn === true))
+            || (this._name === 'death');
         } else if (task === 'wander') {
             return true;
         } else {
@@ -337,10 +340,10 @@ Game.EntityMixins.Destructible = {
             }
         } 
         if (isProtected) {
-            modifier +=2;
+            modifier +=3;
         }
         if (isVulnerable) {
-            modifier -=2;
+            modifier -=3;
         }
         return Math.max(this._defenseValue + modifier + (this._armored ? 1: 0), 0);
     },

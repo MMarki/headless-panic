@@ -165,7 +165,7 @@ Game.Entity.prototype.applyNewEffects = function(){
             if (this.hasEffect('protected')){
                 this.removeEffect('protected');
             }
-            let duration = 3;
+            let duration = 6;
             let name = 'protected';
             let newEffect = new Game.Effect(duration, name);
             this.setEffect(newEffect);
@@ -174,7 +174,7 @@ Game.Entity.prototype.applyNewEffects = function(){
             if (this.hasEffect('vulnerable')){
                 this.removeEffect('vulnerable');
             }
-            let duration = 3;
+            let duration = 6;
             let name = 'vulnerable';
             let newEffect = new Game.Effect(duration, name);
             this.setEffect(newEffect);

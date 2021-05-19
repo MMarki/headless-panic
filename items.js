@@ -137,7 +137,7 @@ Game.ItemRepository.define('dart', {
     character: '\u16DA',
     foreground: Game.Colors.yellow,
     attackValue: 1,
-    thrownAttackValue: 4,
+    thrownAttackValue: 3,
     throwBreakChance: 100,
     wieldable: true,
     stackable: true,

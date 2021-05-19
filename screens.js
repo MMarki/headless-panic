@@ -159,7 +159,17 @@ Game.Screen.playScreen = {
             }
         }
 
-        display.drawText(screenWidth + 1, 5, "%c{white}ARMR: +" + defenseValue);
+        const isProtected =  this._player.hasEffect('protected');
+        const isVulnerable = this._player.hasEffect('vulnerable');
+
+        if (isVulnerable) {
+            display.drawText(screenWidth + 1, 5, "%c{white}ARMR: " + "%c{" + Game.Colors.lichColor + "}" + "+" + defenseValue);
+        } else if (isProtected) {
+            display.drawText(screenWidth + 1, 5, "%c{white}ARMR: " + "%c{" + Game.Colors.effectDefault + "}" + "+" + defenseValue);
+        } else {
+            display.drawText(screenWidth + 1, 5, "%c{white}ARMR: +" + defenseValue);
+        }
+
         display.drawText(screenWidth + 1, 6, "%c{white}DMG:  +" + (attackValue + strengthModifier) + ' ' + damageType);
         display.drawText(screenWidth + 1, 7, "%c{white}STRN: " + strengthValue);
            
@@ -453,10 +463,10 @@ Game.Screen.playScreen = {
             }
             this.turnCount++;
             this.turnsOnThisFloorCount++;
-            if (this.turnsOnThisFloorCount > 300 && this.hasSpawnedDeath === false){
+            if (this.turnsOnThisFloorCount > 400 && this.hasSpawnedDeath === false){
                 this._map.addEntityAtRandomPosition(Game.EntityRepository.create("death"), 1);
                 this.hasSpawnedDeath = true;
-                console.log("DEATH COMES FOR WHAT'S HERS");
+                Game.sendMessage(this._player, "%c{#F61067}--DEATH COMES FOR WHAT'S HERS--");
             }
         } else {
             // Not a valid key
@@ -539,7 +549,7 @@ Game.Screen.playScreen = {
             // Create our map from tiles and player
             Game.incrementLevel();
             this.turnsOnThisFloorCount = 0;
-            this.hasSpawnedDeath = 0;
+            this.hasSpawnedDeath = false;
             let builder = new Game.Builder(width,height, Game.getLevel())
             let tiles = builder.getTiles()
             let rooms = builder.getRooms();
