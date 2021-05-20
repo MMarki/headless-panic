@@ -1,7 +1,7 @@
 var Game =  {
 	_display: null,
     _currentScreen: null,
-    _screenWidth: 72,
+    _screenWidth: 60,
     _screenHeight: 24,
     _level: 1,
 	init: function() {

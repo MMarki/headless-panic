@@ -510,7 +510,6 @@ Game.Map.prototype.addEntityAtDistantPosition = function(entity, x, y, outOfSigh
             position = this.getRandomFloorPosition();
             if (visibleCells[String(position.x) + ',' + String(position.y)] === undefined) {
                 tileCandidates.push(position);
-                console.log(tileCandidates.length);
             }
         }
     }
@@ -527,9 +526,6 @@ Game.Map.prototype.addEntityAtDistantPosition = function(entity, x, y, outOfSigh
             winningY = tileCandidate.y;
         }
     }
-
-    console.log(winningX + ', ' + winningY);
-    
 
     entity.setX(winningX);
     entity.setY(winningY);

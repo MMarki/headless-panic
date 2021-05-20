@@ -463,7 +463,7 @@ Game.Screen.playScreen = {
             }
             this.turnCount++;
             this.turnsOnThisFloorCount++;
-            if (this.turnsOnThisFloorCount > 450 && this.hasSpawnedDeath === false){
+            if (this.turnsOnThisFloorCount > (Game._screenWidth * Game._screenHeight * .2605) && this.hasSpawnedDeath === false){
                 this._map.addEntityAtDistantPosition(Game.EntityRepository.create("death"), this._player.getX(), this._player.getY(), 1);
                 this.hasSpawnedDeath = true;
                 Game.sendMessage(this._player, "%c{#F61067}--DEATH COMES FOR WHAT'S HERS--");
