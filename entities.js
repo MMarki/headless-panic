@@ -366,7 +366,7 @@ Game.EntityRepository.define('vampire', {
     character: 'V',
     foreground: 'white',
     maxHP: 45,
-    attackValue: 20,
+    attackValue: 16,
     defenseValue: 12,
     accuracyValue: 90,
     sightRadius: 12,
@@ -518,6 +518,24 @@ Game.EntityRepository.define('harpy', {
              Game.EntityMixins.Flyer]
 });
 
+Game.EntityRepository.define('eldritch eye', {
+    name: 'eldritch eye', 
+    character: 'e',
+    foreground: Game.Colors.piranhaColor,
+    maxHP: 6,
+    attackValue: 4,
+    defenseValue: 10,
+    accuracyValue: 100,
+    sightRadius: 12,
+    description: "A levitating giant eye.",
+    tasks: ['hunt', 'wander'],
+    headPower: 'Levitation',
+    mixins: [Game.EntityMixins.TaskActor, Game.EntityMixins.Sight,
+             Game.EntityMixins.Attacker, Game.EntityMixins.Destructible,
+             Game.EntityMixins.Blinder, Game.EntityMixins.Affectible,
+             Game.EntityMixins.Flyer]
+});
+
 Game.EntityRepository.define('imp', {
     name: 'imp', 
     character: 'i',
@@ -575,11 +593,11 @@ Game.EntityRepository.repoFrequency = {
     'L4': [{'rat': 2}, {'goblin': 1}, {'floater': 1}, {'slime': 2}, {'toadman': 2}, {'acid jelly': 1}],
     'L5': [{'rat': 1}, {'goblin': 1}, {'slime': 2}, {'toadman': 2}, {'acid jelly': 1}, {'poison toad': 1}],
     'L6': [{'rat': 1}, {'goblin': 1}, {'slime': 2}, {'toadman': 2}, {'acid jelly': 1}, {'poison toad': 2}],
-    'L7': [{'kappa': 1}, {'slime': 2}, {'mushroom man': 1}, {'poison toad': 1}, {'rat': 1}],
-    'L8': [{'kappa': 1}, {'slime': 1}, {'mushroom man': 1}, {'poison toad': 1}, {'piranha': 1}, {'bee':1}],
-    'L9': [{'kappa': 1}, {'mushroom man': 1}, {'poison toad': 1}, {'piranha': 2}, {'bee':1}],
-    'L10': [{'zombie': 2}, {'slime': 1}, {'skeleton': 6}, {'golem': 1}, {'wraith': 1}, {'minotaur': 2}],
-    'L11': [{'zombie': 2}, {'slime': 1}, {'skeleton': 6}, {'golem': 2}, {'bat': 2}, {'wraith': 1}, {'minotaur': 1}],
+    'L7': [{'kappa': 1}, {'slime': 2}, {'mushroom man': 1}, {'poison toad': 1}],
+    'L8': [{'kappa': 1}, {'slime': 1}, {'mushroom man': 1}, {'poison toad': 1}, {'piranha': 1}, {'bee':1}, {'eldritch eye':1}],
+    'L9': [{'kappa': 1}, {'mushroom man': 1}, {'poison toad': 1}, {'piranha': 2}, {'bee':1}, {'eldritch eye':1}],
+    'L10': [{'zombie': 2}, {'slime': 1}, {'skeleton': 6}, {'golem': 1}, {'wraith': 1}, {'minotaur': 2}, {'eldritch eye':2}],
+    'L11': [{'zombie': 2}, {'slime': 1}, {'skeleton': 6}, {'golem': 2}, {'bat': 2}, {'wraith': 1}, {'minotaur': 1}, {'eldritch eye':1}],
     'L12': [{'zombie': 1}, {'slime': 1}, {'skeleton': 6}, {'golem': 2}, {'wraith': 1}, {'minotaur': 2}],
     'L13': [{'skeleton': 4}, {'wraith': 1}, {'harpy': 3}, {'devil': 1}, {'imp': 1}],
     'L14': [{'skeleton': 5}, {'wraith': 1}, {'harpy': 2}, {'devil': 1}, {'imp': 1}],

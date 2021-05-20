@@ -586,6 +586,10 @@ Game.EntityMixins.Attacker = {
                     let newEffect = new Game.Effect(Math.floor(damage*1.5), 'poisoned');
                     target.setEffect(newEffect);
                 }
+                if (this.hasMixin('Blinder') && target.hasMixin('Affectible')){
+                    let newEffect = new Game.Effect(Math.floor(damage*1.5), 'blind');
+                    target.setEffect(newEffect);
+                }
                 if (this.hasMixin('Burner') && target.hasMixin('Affectible')){
                     let newEffect = new Game.Effect(Math.floor(damage*1.5), 'burning');
                     target.setEffect(newEffect);
@@ -664,6 +668,14 @@ Game.EntityMixins.Attacker = {
 Game.EntityMixins.Poisoner = {
     name: 'Poisoner',
     groupName: 'Poisoner',
+    init: function(template) {
+        template;
+    }
+}
+
+Game.EntityMixins.Blinder = {
+    name: 'Blinder',
+    groupName: 'Blinder',
     init: function(template) {
         template;
     }
