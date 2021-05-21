@@ -20,10 +20,10 @@ Game.Builder = function(width, height, level) {
     }
 
     let prefabsByArea = {
-        'cellars': [prefabs.arena, prefabs.columns, prefabs.garden, prefabs.tetris],
-        'sewers': [prefabs.arena, prefabs.garden, prefabs.tetris, prefabs.tetris2],
+        'cellars': [prefabs.arena, prefabs.columns, prefabs.garden, prefabs.tetris, prefabs.diamond],
+        'sewers': [prefabs.arena, prefabs.garden, prefabs.tetris, prefabs.tetris2, prefabs.cistern],
         'caverns': [prefabs.arena],
-        'catacombs': [prefabs.arena, prefabs.columns, prefabs.tetris, prefabs.tetris2],
+        'catacombs': [prefabs.arena, prefabs.columns, prefabs.tetris, prefabs.tetris2, prefabs.diamond],
         'underworld': [prefabs.arena, prefabs.columns, prefabs.tetris, prefabs.square, prefabs.square, prefabs.hallwayHoriz, prefabs.hallwayVert]
     }
 
@@ -37,6 +37,7 @@ Game.Builder = function(width, height, level) {
         for (let i = 0; i < columnAmount; i++){
             this._setColumn();
         }
+        this._setPrefab(Game.pickRandomElement(prefabsByArea['cellars']));
         this._setPrefab(Game.pickRandomElement(prefabsByArea['cellars']));
     }
     if (level <= 9){

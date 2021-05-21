@@ -332,7 +332,7 @@ Game.EntityRepository.define('wraith', {
     character: 'W',
     foreground: Game.Colors.hydraColor,
     maxHP: 40,
-    attackValue: 18,
+    attackValue: 17,
     accuracyValue: 90,
     sightRadius: 14,
     speed: 2000,
@@ -438,7 +438,7 @@ Game.EntityRepository.define('floater', {
     tasks: ['hunt', 'wander'],
     mixins: [Game.EntityMixins.TaskActor, Game.EntityMixins.Sight,
              Game.EntityMixins.Destructible, Game.EntityMixins.Affectible,
-             Game.EntityMixins.Exploder]
+             Game.EntityMixins.Exploder, Game.EntityMixins.Flyer]
 });
 
 Game.EntityRepository.define('rat', {

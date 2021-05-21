@@ -18,6 +18,20 @@ prefabs.columns.push(['.','.','.','.','.','.','.']);
 prefabs.columns.push(['.','#','.','#','.','#','.']);
 prefabs.columns.push(['.','.','.','.','.','.','.']);
 
+prefabs.diamond = [];
+prefabs.diamond.push(['.','.','.','.','.','.','.']);
+prefabs.diamond.push(['.','.','.','#','.','.','.']);
+prefabs.diamond.push(['.','.','#','#','#','.','.']);
+prefabs.diamond.push(['.','.','.','#','.','.','.']);
+prefabs.diamond.push(['.','.','.','.','.','.','.']);
+
+prefabs.chunkyColumn = [];
+prefabs.chunkyColumn.push(['.','.','.','.','.','.','.']);
+prefabs.chunkyColumn.push(['.','.','#','#','#','.','.']);
+prefabs.chunkyColumn.push(['.','.','#','#','#','.','.']);
+prefabs.chunkyColumn.push(['.','.','#','#','#','.','.']);
+prefabs.chunkyColumn.push(['.','.','.','.','.','.','.']);
+
 prefabs.wineCellar = [];
 prefabs.wineCellar.push(['.','.','.','.','.','.','.']);
 prefabs.wineCellar.push(['.','#','#','#','#','#','.']);
@@ -38,11 +52,11 @@ prefabs.garden.push(['',',','.',',','.',',','.']);
 
 prefabs.cistern = [];
 prefabs.cistern.push(['.','.','.','b',',','.','.']);
-prefabs.cistern.push(['.','.','b','d','b','.','.']);
-prefabs.cistern.push(['.','b','d','d','d','b','']);
-prefabs.cistern.push(['b','d','d','d','d','d','b']);
-prefabs.cistern.push(['.','b','d','d','d','b',',']);
-prefabs.cistern.push(['.','.','b','d','b','.',',']);
+prefabs.cistern.push(['.','.','b','b','b','.','.']);
+prefabs.cistern.push(['.','b','b','b','b','b','.']);
+prefabs.cistern.push(['b','b','b','b','b','b','b']);
+prefabs.cistern.push(['.','b','b','b','b','b',',']);
+prefabs.cistern.push(['.','.','b','b','b','.',',']);
 prefabs.cistern.push(['.',',','.','b','.',',','.']);
 
 prefabs.tetris = [];
