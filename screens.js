@@ -569,7 +569,8 @@ Game.Screen.playScreen = {
             // Start the map's engine
             this._map.getEngine().start();
             if (playerHasKey){
-                Game.sendMessage(this._player, "%c{#61AEEE}You use the key on the trapdoor. You go down the stairs. They crumble to dust behind you.");
+                Game.sendMessage(this._player, "%c{#61AEEE}You use the key on the trapdoor.");
+                Game.sendMessage(this._player, "%c{#61AEEE}You go down the stairs. They crumble to dust behind you.");
                 for (let i = 0; i < items.length; i ++){
                     if (items[i] !== undefined && items[i] !== null){
                         if (items[i].describe() === 'key'){

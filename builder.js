@@ -20,9 +20,9 @@ Game.Builder = function(width, height, level) {
     }
 
     let prefabsByArea = {
-        'cellars': [prefabs.arena, prefabs.columns, prefabs.garden, prefabs.tetris, prefabs.diamond],
-        'sewers': [prefabs.arena, prefabs.garden, prefabs.tetris, prefabs.tetris2, prefabs.cistern],
-        'caverns': [prefabs.arena],
+        'cellars': [prefabs.arena, prefabs.columns, prefabs.garden, prefabs.tetris, prefabs.diamond, prefabs.chunkyColumn],
+        'sewers': [prefabs.arena, prefabs.garden, prefabs.tetris, prefabs.tetris2, prefabs.cistern, prefabs.chunkyColumn],
+        'caverns': [prefabs.arena, prefabs.tetris2],
         'catacombs': [prefabs.arena, prefabs.columns, prefabs.tetris, prefabs.tetris2, prefabs.diamond],
         'underworld': [prefabs.arena, prefabs.columns, prefabs.tetris, prefabs.square, prefabs.square, prefabs.hallwayHoriz, prefabs.hallwayVert]
     }
