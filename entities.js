@@ -366,7 +366,7 @@ Game.EntityRepository.define('vampire', {
     character: 'V',
     foreground: 'white',
     maxHP: 45,
-    attackValue: 16,
+    attackValue: 14,
     defenseValue: 12,
     accuracyValue: 90,
     sightRadius: 12,

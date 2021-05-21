@@ -331,7 +331,7 @@ Game.Map.prototype.getRidOfBoringRooms = function (rooms) {
                     }
                     //check for entities
                     const key = x + ',' + y;
-                    if (this._entities[key] !== undefined && this._entities[key] !== null && this._entities[key].getName() !== 'barrel') {
+                    if (this._entities[key] !== undefined && this._entities[key] !== null && !this._entities[key].isNotMonster()) {
                         roomMatters = true;
                     }
                     //check for items

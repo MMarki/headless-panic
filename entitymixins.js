@@ -435,7 +435,7 @@ Game.EntityMixins.Destructible = {
                 Game.Screen.playScreen._lastTarget = null;
             }
 
-            if (this.getName() != 'barrel'){
+            if (!this.isNotMonster()){
                 returnMessage = ' %%c{#61AEEE}You kill the ' + this.getName() + '.';
                 //Game.sendMessage(attacker, '%%c{#61AEEE}You kill the %s!', [this.getName()]);
             } else {
@@ -453,7 +453,7 @@ Game.EntityMixins.Destructible = {
                 var currentPosition = {x: this.getX(), y: this.getY()}
                 var tempList = []
                 tempList.push(currentPosition)
-                if (this.getName() !== 'barrel') {
+                if (!this.isNotMonster()) {
                     this.getMap().gasGrow(tempList, this._explodeTile, this._explodeSize);
                 } else {
                     this.getMap().cellGrow(tempList, this._explodeTile, this._explodeSize);

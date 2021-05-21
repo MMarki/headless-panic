@@ -447,7 +447,7 @@ Game.Screen.playScreen = {
                         this._player.getSightRadius(), 
                         function(x, y, radius, visibility) {
                             let key = x + ',' + y;
-                            if (thisReference._map.getEntities()[key] !== undefined && thisReference._map.getEntities()[key].getName() !== 'barrel' && thisReference._map.getEntities()[key].getName() !== 'chicken knight') {
+                            if (thisReference._map.getEntities()[key] !== undefined && (!thisReference._map.getEntities()[key].isNotMonster()) && thisReference._map.getEntities()[key].getName() !== 'chicken knight') {
                                 //console.log(thisReference._map.getEntities()[key]);
                                 canSeeMonster = true;
                             }
@@ -1363,7 +1363,7 @@ Game.Screen.lookScreen = new Game.Screen.TargetBasedScreen({
                 } else if (map.getEntityAt(x, y)) {
                     var entity = map.getEntityAt(x, y);
                     let hpSuffix = '';
-                    if (entity.hasMixin('Destructible') && entity.getName() != 'barrel'){
+                    if (entity.hasMixin('Destructible') && !entity.isNotMonster()){
                         hpSuffix = ' HP: ' + entity.getHP() + '/' + entity.getMaxHP();
                     }
                     return (entity.getRepresentation() + ' - ' + entity.describeA(true) + '. ' + entity.getDescription() + hpSuffix);
