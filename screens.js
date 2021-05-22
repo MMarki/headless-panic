@@ -39,6 +39,7 @@ Game.Screen.playScreen = {
     turnCount: 0,
     turnsOnThisFloorCount: 0,
     hasSpawnedDeath: false,
+    goldCount: 0,
     enter: function() {  
         var width = Game._screenWidth;
         var height = Game._screenHeight;
@@ -76,6 +77,7 @@ Game.Screen.playScreen = {
         //Create map
         this._map = new Game.Map(tiles, this._player, null, stairs, gasMap);
         if (Game.getLevel() <= 6){
+            this._map.putGoldInBoringRooms(rooms);
             //this._map.getRidOfBoringRooms(rooms);
             //TODO turning this off because it clears rooms after prefabs are generated, 
             //and it there's an overlap, you might have an orphanned prefab that the player can spawn in.
@@ -173,7 +175,8 @@ Game.Screen.playScreen = {
         display.drawText(screenWidth + 1, 6, "%c{white}DMG:  +" + (attackValue + strengthModifier) + ' ' + damageType);
         display.drawText(screenWidth + 1, 7, "%c{white}STRN: " + strengthValue);
            
-        display.drawText(screenWidth + 1, 8, "%c{white}LVL:  " + levelName );   
+        display.drawText(screenWidth + 1, 8, "%c{white}LVL:  " + levelName );
+        display.drawText(screenWidth + 1, 9, "%c{white}GOLD: " + Game.Screen.playScreen.goldCount);
     },
     handleInput: function(inputType, inputData, invokedManually) {
         // If the game is over, enter will bring the user to the losing screen.
@@ -558,6 +561,7 @@ Game.Screen.playScreen = {
             //pass the current player and the new tiles in
             this._map = new Game.Map(tiles, this._player, this._player.getItems(), stairs, gasMap);
             if (Game.getLevel() <= 6){
+                this._map.putGoldInBoringRooms(rooms);
                 //this._map.getRidOfBoringRooms(rooms);
                 //TODO turning this off because it clears rooms after prefabs are generated, 
                 //and it there's an overlap, you might have an orphanned prefab that the player can spawn in.
@@ -646,15 +650,15 @@ Game.Screen.playScreen = {
                         //If we have stairs, we want to render them in the sidebar
                         if (!this._player.hasEffect('blind')){
                             if ( tile === Game.Tile.stairsDownTile) {
-                                display.drawText(screenWidth + 1, 10 + j , '%c{' + tile._foreground + '}' + tile._char + ':  ' + 'stairs down');
+                                display.drawText(screenWidth + 1, 11 + j , '%c{' + tile._foreground + '}' + tile._char + ':  ' + 'stairs down');
                                 j+=1;
                             }
                             if ( tile === Game.Tile.stairsDownTileLocked) {
-                                display.drawText(screenWidth + 1, 10 + j , '%c{' + tile._foreground + '}' + tile._char + ':  ' + 'locked stairs down');
+                                display.drawText(screenWidth + 1, 11 + j , '%c{' + tile._foreground + '}' + tile._char + ':  ' + 'locked stairs down');
                                 j+=1;
                             }
                             if (tile === Game.Tile.altarTile) {
-                                display.drawText(screenWidth + 1, 10 + j , '%c{' + tile._foreground + '}' + tile._char + ':  ' + 'wand altar');
+                                display.drawText(screenWidth + 1, 11 + j , '%c{' + tile._foreground + '}' + tile._char + ':  ' + 'wand altar');
                                 j+=1;
                             }
                             // If we have items, we want to render the top most item
@@ -664,7 +668,7 @@ Game.Screen.playScreen = {
                                 if (glyph.hasMixin('Equippable')){
                                     strSuffix = (glyph.getStrengthRequirement() > 1 ? ' [' + glyph.getStrengthRequirement() + ']' : '');
                                 }
-                                display.drawText(screenWidth + 1, 10 + j , '%c{' + glyph._foreground + '}' + glyph._char + ':  ' + glyph._name + strSuffix);
+                                display.drawText(screenWidth + 1, 11 + j , '%c{' + glyph._foreground + '}' + glyph._char + ':  ' + glyph._name + strSuffix);
                                 j++;
                                 // Update the foreground color in case our glyph changed
                                 foreground = glyph.getForeground();
@@ -728,9 +732,9 @@ Game.Screen.playScreen = {
                 var visibleEntity = visibleEntities[i]
                 let isDestructible = visibleEntity.hasMixin('Destructible');
                 if (isDestructible){
-                    display.drawText(screenWidth + 1, 10 + 2*i + j , '%c{' + visibleEntity.getForeground() + '}' + visibleEntity.getChar() + ':  ' + visibleEntity.getName() + '%c{' + visibleEntity.getForeground() + '} '  + visibleEntity.getHP() + '/' + visibleEntity.getMaxHP());
+                    display.drawText(screenWidth + 1, 11 + 2*i + j , '%c{' + visibleEntity.getForeground() + '}' + visibleEntity.getChar() + ':  ' + visibleEntity.getName() + '%c{' + visibleEntity.getForeground() + '} '  + visibleEntity.getHP() + '/' + visibleEntity.getMaxHP());
                 } else {
-                    display.drawText(screenWidth + 1, 10 + 2*i + j , '%c{' + visibleEntity.getForeground() + '}' + visibleEntity.getChar() + ':  ' + visibleEntity.getName() + '%c{' + visibleEntity.getForeground() + '} ');
+                    display.drawText(screenWidth + 1, 11 + 2*i + j , '%c{' + visibleEntity.getForeground() + '}' + visibleEntity.getChar() + ':  ' + visibleEntity.getName() + '%c{' + visibleEntity.getForeground() + '} ');
                 }
                 
                 var effectsList = visibleEntity.hasMixin('Affectible') ? visibleEntity.getEffects() : [];
@@ -738,7 +742,7 @@ Game.Screen.playScreen = {
                 for (effect of effectsList){
                     var effectsString = effectsString + '%c{' + effect._color + '}' + effect.getName() + ' ';
                 }
-                display.drawText(screenWidth + 1, 11 + 2*i + j, effectsString);
+                display.drawText(screenWidth + 1, 12 + 2*i + j, effectsString);
             }
         }
     },

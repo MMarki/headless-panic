@@ -131,6 +131,14 @@ Game.ItemRepository.define('key', {
     disableRandomCreation: true
 });
 
+Game.ItemRepository.define('gold', {
+    name: 'gold',
+    character: '*',
+    foreground: Game.Colors.yellow,
+}, {
+    disableRandomCreation: true
+});
+
 // Weapons
 Game.ItemRepository.define('dart', {
     name: 'dart',

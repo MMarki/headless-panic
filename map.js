@@ -316,6 +316,50 @@ Game.Map.prototype.checkAdjacentNumber = function(x,y,tileType) {
 }
 
 Game.Map.prototype.getRidOfBoringRooms = function (rooms) {
+    let boringRooms = this.findBoringRooms(rooms);
+    for (room of boringRooms){
+        let left = room.getLeft();
+        let right = room.getRight();
+        let top = room.getTop();
+        let bottom = room.getBottom();
+
+        for (let x = left; x <= right; x++){
+            for (let y = top; y <= bottom; y ++){
+                this._tiles[x][y] = Game.Tile.wallTile;
+            }
+        } 
+        for (let key in room._doors){
+            let xy = key.split(",");
+            let x = xy[0];
+            let y = xy[1];
+            this._tiles[Number(x)][Number(y)] = Game.Tile.wallTile;
+        }
+    }
+}
+
+Game.Map.prototype.putGoldInBoringRooms = function (rooms) {
+    let boringRooms = this.findBoringRooms(rooms);
+    for (room of boringRooms){
+        let left = room.getLeft();
+        let right = room.getRight();
+        let top = room.getTop();
+        let bottom = room.getBottom();
+
+        let x, y;
+        let count = 0;
+        do {
+            x = Math.ceil(Math.random() * Math.abs(left - right)- 1);
+            y = Math.ceil(Math.random() * Math.abs(top - bottom)- 1);
+            count++;
+        } while(!this.isEmptyTileOfType(left + x, top + y, Game.Tile.floorTile) && !this.isEmptyTileOfType(left + x, top + y, Game.Tile.grassTile) && count < 100);
+
+        let item = Game.ItemRepository.create('gold')
+        this.addItem(left + x, top + y, item);
+    }
+}
+
+Game.Map.prototype.findBoringRooms = function (rooms) {
+    let boringRooms = [];
     for (room of rooms){
         if (Object.keys(room._doors).length === 1){
             let left = room.getLeft();
@@ -341,20 +385,12 @@ Game.Map.prototype.getRidOfBoringRooms = function (rooms) {
                 }
             }
             if (roomMatters === false) {
-                for (let x = left; x <= right; x++){
-                    for (let y = top; y <= bottom; y ++){
-                        this._tiles[x][y] = Game.Tile.wallTile;
-                    }
-                } 
-                for (let key in room._doors){
-                    let xy = key.split(",");
-                    let x = xy[0];
-                    let y = xy[1];
-                    this._tiles[Number(x)][Number(y)] = Game.Tile.wallTile;
-                }
+                boringRooms.push(room);
             }
         }
     }
+
+    return boringRooms;
 }
 
 // Gets the tile for a given coordinate set
@@ -441,7 +477,7 @@ Game.Map.prototype.getRandomFloorPosition = function() {
     let x, y;
     do {
         x = Math.floor(Math.random() * this._width);
-        y = Math.floor(Math.random() * this._width);
+        y = Math.floor(Math.random() * this._height);
     } while(!this.isEmptyTileOfType(x, y, Game.Tile.floorTile));
     return {x: x, y: y};
 }
@@ -452,7 +488,7 @@ Game.Map.prototype.getRandomWaterPosition = function() {
     let x, y;
     do {
         x = Math.floor(Math.random() * this._width);
-        y = Math.floor(Math.random() * this._width);
+        y = Math.floor(Math.random() * this._height);
     } while(!this.isEmptyTileOfType(x, y, Game.Tile.shallowWaterTile));
     return {x: x, y: y};
 }

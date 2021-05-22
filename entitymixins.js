@@ -1187,6 +1187,10 @@ Game.EntityMixins.InventoryHolder = {
         return this._items[i];
     },
     addItem: function(addedItem) {
+        if (addedItem._name === 'gold'){
+            Game.Screen.playScreen.goldCount++;
+            return true; 
+        }
         // Try to find a slot, returning true only if we could add the item.
         if (addedItem.hasMixin('Throwable')) {
             if (addedItem.isStackable()){
