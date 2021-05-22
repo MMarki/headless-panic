@@ -1307,7 +1307,7 @@ Game.Screen.TargetBasedScreen.prototype.render = function(display) {
         }
         
         //var tile = this._player.getMap().getTile(x,y)
-        display.drawText(x, y, '%c{' + foregroundColor + '}%b{yellow}' + character);
+        display.drawText(x, y, '%c{' + foregroundColor + '}%b{' + Game.Colors.darkGray + '}' + character);
     }
 
     // Render the caption at the bottom.
