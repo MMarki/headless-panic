@@ -546,7 +546,7 @@ Game.EntityRepository.define('imp', {
     accuracyValue: 90,
     sightRadius: 12,
     description: "Its eyes are like coals. Its head is too small to wear.",
-    tasks: ['hunt', 'wander'],
+    tasks: ['aimRange','rangeAttack', 'wander'],
     mixins: [Game.EntityMixins.TaskActor, Game.EntityMixins.Sight,
              Game.EntityMixins.Attacker, Game.EntityMixins.Destructible,
              Game.EntityMixins.Affectible, Game.EntityMixins.Fireproof]

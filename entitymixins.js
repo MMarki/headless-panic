@@ -93,11 +93,17 @@ Game.EntityMixins.TaskActor = {
             return this._summonWait === 0;     
         } else if (task === 'castRune') {   
             let player = this.getMap().getPlayer()
-            return this.hasMixin('Sight') && this.canSee(player) && this._castWait === 0;;
+            return this.hasMixin('Sight') && this.canSee(player) && this._castWait === 0;
         } else if (task === 'charge') {
             let player = this.getMap().getPlayer()
             return (this.hasMixin('Sight') && this.canSee(player)) || this.getChargeDirection() !=='none';
-        } else if (task === 'hunt' || task === 'hopHunt') {
+        } else if (task === 'aimRange') {
+            let player = this.getMap().getPlayer();
+            return this.hasMixin('Sight') && this.canSee(player) && this._castWait === 0;
+        }else if (task === 'rangeAttack') {
+            let player = this.getMap().getPlayer();
+            return this.hasMixin('Sight') && this.canSee(player) && this._aiming;
+        }else if (task === 'hunt' || task === 'hopHunt') {
             let player = this.getMap().getPlayer()
             return (this.hasMixin('Sight') && this.canSee(player) 
             && !(this._name === 'rat' && player._ratThreaten === true) 
@@ -162,7 +168,6 @@ Game.EntityMixins.TaskActor = {
         let yOffset = player.getY() - this.getY();
         let totalOffset = Math.abs(xOffset) + Math.abs(yOffset);
 
-
         //hopping direction
         if (Math.abs(xOffset) > Math.abs(yOffset)){
             if (xOffset > 0 && !moveSuccess) {
@@ -206,6 +211,24 @@ Game.EntityMixins.TaskActor = {
             }
             return moveSuccess;
         }  
+    },
+    aimRange: function() {
+        this._aiming = true;
+
+        Game.Screen.playScreen.aimLines.push({
+            x: this.getX(),
+            y: this.getY()
+        }); 
+
+        this._castWait = this._castWaitMax;
+
+    },
+    rangeAttack: function() {
+        // player = this.getMap().getPlayer();
+        this._aiming = false;
+
+        console.log('shooting!')
+
     },
     charge: function() {
         let player = this.getMap().getPlayer();

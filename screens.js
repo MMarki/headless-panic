@@ -28,6 +28,7 @@ Game.Screen.playScreen = {
     _gameEnded: false,
     _subScreen: null,
     _lastTarget: null,
+    aimLines: [],
     alreadyGotList: [],
     deathInfo: {
         strength: 1,
@@ -98,6 +99,7 @@ Game.Screen.playScreen = {
 
         // Render the tiles
         this.renderTiles(display);
+        this.renderTelegraphs(display);
 
         // Get the messages in the player's queue and render them
         var messages = this._player.getMessages();
@@ -177,6 +179,76 @@ Game.Screen.playScreen = {
            
         display.drawText(screenWidth + 1, 8, "%c{white}LVL:  " + levelName );
         display.drawText(screenWidth + 1, 9, "%c{white}GOLD: " + Game.Screen.playScreen.goldCount);
+    },
+    renderTelegraphs: function(display){
+        // Draw a line from the start to the cursor.
+        if (this.aimLines.length > 0){
+            for (aimLine of this.aimLines){
+                let points = Game.Geometry.getLine(aimLine.x, aimLine.y, this._player.getX(), this._player.getY());
+                let foregroundColor =  "#333333";
+                let character = "?";
+
+                let map = this._player.getMap();
+
+                let visibleCells = {};
+                this._player.getMap().getFov().compute(this._player.getX(), this._player.getY(), this._player.getSightRadius(), 
+                    function(x, y, radius, visibility) {
+                        visibleCells[x + "," + y] = true;
+                    });
+
+                // Render yellow along the line.
+                for (let i = 0, l = points.length; i < l; i++) {
+                    let x = points[i].x
+                    let y = points[i].y
+
+                    // If the tile is explored, we can give a better tile image
+                    if (map.isExplored(x, y)) {
+                        // If the tile isn't explored, we have to check if we can actually see it before testing if there's an entity or item.
+                        if (visibleCells[x + ',' + y]) {
+                            var items = map.getItemsAt(x, y);
+                            // If we have items, we want to render the top most item
+                            if (items) {
+                                var item = items[items.length - 1];
+                                foregroundColor = item.getForeground();
+                                character = item.getChar();
+                            // Else check if there's an entity
+                            } else if (map.getEntityAt(x, y)) {
+                                var entity = map.getEntityAt(x, y);
+                                foregroundColor = entity.getForeground();
+                                character = entity.getChar();
+                            } else {
+                                // If there was no entity/item or the tile wasn't visible, then use
+                                // the tile information.
+                                var tile = map.getTile(x, y)
+                                foregroundColor = tile.getForeground();
+                                character = tile.getChar();
+                            }
+                        } else {
+                                //if tile is explored but not visible, check for items, otherwise use tile
+                                var items = map.getItemsAt(x, y);
+                                if (items) {
+                                    var item = items[items.length - 1];
+                                    foregroundColor = item.getForeground();
+                                    character = item.getChar();
+                                // Else get tile info
+                                } else {
+                                    var tile = map.getTile(x, y)
+                                    foregroundColor = tile.getForeground();
+                                    character = tile.getChar();
+                                }      
+                        }
+                    } else {
+                        // If the tile is not explored, show no new info to user.
+                        foregroundColor =  "#333333";
+                        character = "?";
+                    }
+                    
+                    //var tile = this._player.getMap().getTile(x,y)
+                    display.drawText(x, y, '%c{' + foregroundColor + '}%b{#3B2F37}' + character);
+                }
+            }
+            this.aimLines = [];
+        }
     },
     handleInput: function(inputType, inputData, invokedManually) {
         // If the game is over, enter will bring the user to the losing screen.
