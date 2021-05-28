@@ -97,13 +97,13 @@ Game.EntityMixins.TaskActor = {
         } else if (task === 'charge') {
             let player = this.getMap().getPlayer()
             return (this.hasMixin('Sight') && this.canSee(player)) || this.getChargeDirection() !=='none';
-        } else if (task === 'hunt') {
+        } else if (task === 'hunt' || task === 'hopHunt') {
             let player = this.getMap().getPlayer()
             return (this.hasMixin('Sight') && this.canSee(player) 
             && !(this._name === 'rat' && player._ratThreaten === true) 
             && !(this._name === 'wraith' && player._hasNotMovedThisTurn === true))
             || (this._name === 'death');
-        } else if (task === 'wander') {
+        } else if (task === 'wander' || task ==='hopWander') {
             return true;
         } else {
             throw new Error('Tried to perform undefined task ' + task);
@@ -151,6 +151,61 @@ Game.EntityMixins.TaskActor = {
             }
             count++;
         });
+    },
+    hopHunt: function() {
+        let player = this.getMap().getPlayer();
+        this._hunting = true;
+        let moveSuccess = false;
+
+        // If we are adjacent to the player, then attack instead of hunting.
+        let xOffset = player.getX() - this.getX();
+        let yOffset = player.getY() - this.getY();
+        let totalOffset = Math.abs(xOffset) + Math.abs(yOffset);
+
+
+        //hopping direction
+        if (Math.abs(xOffset) > Math.abs(yOffset)){
+            if (xOffset > 0 && !moveSuccess) {
+                moveSuccess = this.hopMove(totalOffset, 1, 0);
+            }
+            if (xOffset < 0 && !moveSuccess) {
+                moveSuccess = this.hopMove(totalOffset, -1, 0);
+            }
+            if (yOffset > 0 && !moveSuccess) {
+                moveSuccess = this.hopMove(totalOffset, 0, 1);
+            }
+            if (yOffset < 0 && !moveSuccess) {
+                moveSuccess = this.hopMove(totalOffset, 0, -1);
+            } 
+        } else {
+            if (yOffset > 0 && !moveSuccess) {
+                moveSuccess = this.hopMove(totalOffset, 0, 1);
+            }
+            if (yOffset < 0 && !moveSuccess) {
+                moveSuccess = this.hopMove(totalOffset, 0, -1);
+            } 
+            if (xOffset > 0 && !moveSuccess) {
+                moveSuccess = this.hopMove(totalOffset, 1, 0);
+            }
+            if (xOffset < 0 && !moveSuccess) {
+                moveSuccess = this.hopMove(totalOffset, -1, 0);
+            }
+        }
+    },
+    hopMove: function(totalOffset, xDir, yDir) {
+        let player = this.getMap().getPlayer();
+        if (totalOffset === 1) {
+            if (this.hasMixin('Attacker')) {
+                this.attack(player);
+                return true;
+            }
+        } else {
+            moveSuccess =  this.tryMove(this.getX() + xDir, this.getY() + yDir);
+            if (moveSuccess){
+                this.tryMove(this.getX() + xDir, this.getY() + yDir);
+            }
+            return moveSuccess;
+        }  
     },
     charge: function() {
         let player = this.getMap().getPlayer();
@@ -221,6 +276,38 @@ Game.EntityMixins.TaskActor = {
                 }
                 count++;
             });
+        }
+    },
+    hopWander: function() {
+        // Flip coin to determine if moving by 1 in the positive or negative direction
+        let i = 0;
+        while(i < 10){
+            let xOffset = 0;
+            let yOffset = 0;
+            let moveOffset = (Math.round(Math.random()) === 1) ? 1 : -1;
+            let map = this.getMap();
+
+            // Flip coin to determine if moving in x direction or y direction
+            if (Math.round(Math.random()) === 1) {
+                xOffset = moveOffset;
+            } else {
+                yOffset = moveOffset;
+            }
+            
+            //don't walk into fire while wandering, unless you're already on fire, then you do you, girl
+            let alreadyStandingOnFire = map.isFireTile(this.getX(), this.getY());
+
+            if (map.getTile(this.getX() + xOffset, this.getY() + yOffset).isWalkable() 
+            && ( alreadyStandingOnFire || (!alreadyStandingOnFire && !map.isFireTile(this.getX() + xOffset, this.getY() + yOffset)) )
+            ){
+                let moveSuccess =  this.tryMove(this.getX() + xOffset, this.getY() + yOffset);
+                if (moveSuccess){
+                    this.tryMove(this.getX() + xOffset, this.getY() + yOffset);
+                }
+
+                break;
+            }
+            i++;
         }
     },
     wander: function() {

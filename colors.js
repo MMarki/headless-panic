@@ -6,7 +6,7 @@ Game.Colors.yellow =        '#F2EC2D';
 Game.Colors.green =         '#0CCE6B';
 Game.Colors.red =           '#F61067';
 Game.Colors.charcoalColor = '#232121';
-Game.Colors.darkGray =      '#282C34';
+Game.Colors.darkGray =      '#2B2F37';
 Game.Colors.lightGray =     '#ABB2BF';
 Game.Colors.coral =         '#FF8A5B';
 
