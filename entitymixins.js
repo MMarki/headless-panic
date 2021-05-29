@@ -214,6 +214,9 @@ Game.EntityMixins.TaskActor = {
     },
     aimRange: function() {
         this._aiming = true;
+        let player = this.getMap().getPlayer();
+        this._aimX = player.getX();
+        this._aimY = player.getY();
 
         Game.Screen.playScreen.aimLines.push({
             x: this.getX(),
@@ -224,9 +227,34 @@ Game.EntityMixins.TaskActor = {
 
     },
     rangeAttack: function() {
-        // player = this.getMap().getPlayer();
+        player = this.getMap().getPlayer();
         this._aiming = false;
 
+        const entity =this._map.getEntityAt(this._aimX, this._aimY);
+        if (entity){
+            let target = entity;
+            let defense = target.getDefenseValue();
+            if (target.hasMixin('PlayerActor')) {
+                defense = defense * 10;
+            }
+            let hitProbability = 90 * Math.pow(0.988, defense);
+
+            if (Math.random()*100 < hitProbability){
+                let amount = 4;
+                if (amount > 0){
+                    let returnMessage = target.takeDamage(this, amount, true);
+                    if (returnMessage.length > 0){
+                        Game.sendMessage(target, 'The %s casts magic dart at you for %d damage!' + returnMessage, [this.getName(), amount]);
+                    } else {
+                        Game.sendMessage(target, 'The %s casts magic dart at you for %d damage!', [this.getName(), amount]);
+                    }
+                }
+            } else {
+                Game.sendMessage(target, 'The %s casts magic dart. It misses.', [this.getName()]);
+            }
+        } else {
+            Game.sendMessage(player, 'The %s casts magic dart. It misses.', [this.getName()]);
+        }
         console.log('shooting!')
 
     },
