@@ -177,24 +177,6 @@ Game.ItemRepository.define('javelin', {
     disableRandomCreation: false
 });
 
-Game.ItemRepository.define('incendiary dart', {
-    name: 'incendiary dart',
-    character: '\u16DB',
-    foreground: Game.Colors.yellow,
-    attackValue: 1,
-    thrownAttackValue: 4,
-    throwBreakChance: 100,
-    wieldable: true,
-    stackable: true,
-    damageType: 'stab',
-    rarity: 'COMMON',
-    depth: 'ANY',
-    mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable],
-    itemLevel: 6
-}, {
-    disableRandomCreation: true
-});
-
 Game.ItemRepository.define('dagger', {
     name: 'dagger',
     character: '\u07D9',
@@ -296,23 +278,6 @@ Game.ItemRepository.define('axe', {
     itemLevel: 2
 }, {
     disableRandomCreation: false
-});
-
-Game.ItemRepository.define('broadsword', {
-    name: 'broadsword',
-    character: '\u16B5',
-    foreground: Game.Colors.yellow,
-    attackValue: 6,
-    thrownAttackValue: 2,
-    strengthRequirement: 3,
-    wieldable: true,
-    damageType: 'slash',
-    rarity: 'UNCOM',
-    depth: 'ANY',
-    mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable, Game.ItemMixins.Enchantable],
-    itemLevel: 3
-}, {
-    disableRandomCreation: true
 });
 
 Game.ItemRepository.define('spear', {
