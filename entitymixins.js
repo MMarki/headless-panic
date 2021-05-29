@@ -230,6 +230,8 @@ Game.EntityMixins.TaskActor = {
         player = this.getMap().getPlayer();
         this._aiming = false;
 
+        let castString = this.getName() === 'imp' ? 'casts magic dart' : 'spits water';
+
         const entity =this._map.getEntityAt(this._aimX, this._aimY);
         if (entity){
             let target = entity;
@@ -244,19 +246,23 @@ Game.EntityMixins.TaskActor = {
                 if (amount > 0){
                     let returnMessage = target.takeDamage(this, amount, true);
                     if (returnMessage.length > 0){
-                        Game.sendMessage(target, 'The %s casts magic dart at you for %d damage!' + returnMessage, [this.getName(), amount]);
+                        Game.sendMessage(target, 'The %s ' + castString + ' for %d damage!' + returnMessage, [this.getName(), amount]);
                     } else {
-                        Game.sendMessage(target, 'The %s casts magic dart at you for %d damage!', [this.getName(), amount]);
+                        Game.sendMessage(target, 'The %s ' + castString + ' for %d damage!', [this.getName(), amount]);
                     }
                 }
             } else {
-                Game.sendMessage(target, 'The %s casts magic dart. It misses.', [this.getName()]);
+                Game.sendMessage(target, 'The %s ' + castString + '. It misses.', [this.getName()]);
             }
         } else {
-            Game.sendMessage(player, 'The %s casts magic dart. It misses.', [this.getName()]);
+            Game.sendMessage(player, 'The %s  ' + castString + '. It misses.', [this.getName()]);
         }
-        console.log('shooting!')
 
+        if (this.getName() !== 'imp'){
+            let list = [];
+            list.push ({x: this._aimX, y: this._aimY});
+            this._map.cellGrow(list, Game.Tile.shallowWaterTile, 5, false);
+        }
     },
     charge: function() {
         let player = this.getMap().getPlayer();
@@ -594,7 +600,7 @@ Game.EntityMixins.Destructible = {
                 if (!this.isNotMonster()) {
                     this.getMap().gasGrow(tempList, this._explodeTile, this._explodeSize);
                 } else {
-                    this.getMap().cellGrow(tempList, this._explodeTile, this._explodeSize);
+                    this.getMap().cellGrow(tempList, this._explodeTile, this._explodeSize, true);
                 }
             }
             if (this.hasMixin('PlayerActor')) {
@@ -978,7 +984,7 @@ Game.EntityMixins.Thrower = {
             } else if (item._name === "fire potion"){
                 var tempList = []
                 tempList.push({x: endPointX, y: endPointY});
-                this._map.cellGrow(tempList, 'fireTile', 10);
+                this._map.cellGrow(tempList, 'fireTile', 10, true);
             } else if (item._name === "darkness potion"){
                 var tempList = []
                 tempList.push({x: endPointX, y: endPointY});
@@ -1061,7 +1067,7 @@ Game.EntityMixins.Thrower = {
                 if (item._name === 'wand of fire'){
                     let tempList = []
                     tempList.push({x: endPointX, y: endPointY});
-                    this._map.cellGrow(tempList, 'fireTile', 1);
+                    this._map.cellGrow(tempList, 'fireTile', 1, true);
                 }
                 Game.sendMessage(this, 'You shoot a blast of magic from a %s.',item.getName());
             }

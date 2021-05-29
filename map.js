@@ -34,22 +34,22 @@ Game.Map = function(tiles, player, items, stairs, gasMap) {
         let position = this.getRandomFloorPosition();
         let list = [];
         list.push(position);
-        this.cellGrow(list, 'hellFireTile', 10);
+        this.cellGrow(list, 'hellFireTile', 10, true);
 
         position = this.getRandomFloorPosition();
         list = [];
         list.push(position);
-        this.cellGrow(list, 'hellFireTile', 10);
+        this.cellGrow(list, 'hellFireTile', 10, true);
 
         position = this.getRandomFloorPosition();
         list = [];
         list.push(position);
-        this.cellGrow(list, 'hellFireTile', 10);
+        this.cellGrow(list, 'hellFireTile', 10, true);
 
         position = this.getRandomFloorPosition();
         list = [];
         list.push(position);
-        this.cellGrow(list, 'hellFireTile', 10);
+        this.cellGrow(list, 'hellFireTile', 10, true);
     }
 
     //App Player
@@ -885,7 +885,7 @@ Game.Map.prototype.areHunters = function() {
     return false;
 }
 
-Game.Map.prototype.cellGrow = function(list, tileType, numberOfTiles) {
+Game.Map.prototype.cellGrow = function(list, tileType, numberOfTiles, isDynamic) {
     let growthCount = 0;
     let i = 0;
 
@@ -899,29 +899,37 @@ Game.Map.prototype.cellGrow = function(list, tileType, numberOfTiles) {
 
         if (this._tiles[x - 1][y] === Game.Tile.floorTile || this._tiles[x - 1][y] === Game.Tile.bloodTile || this._tiles[x - 1][y] === Game.Tile.grassTile || this._tiles[x - 1][y] === Game.Tile.rubbleTile || this._tiles[x - 1][y] === Game.Tile.openDoorTile) {
             this._tiles[x - 1][y] = tileType;
-            let tileObject = Game.DynamicTileRepository.create(tileType);
-            this.addDynamicTile(tileObject, x -1, y);
+            if (isDynamic){
+                let tileObject = Game.DynamicTileRepository.create(tileType);
+                this.addDynamicTile(tileObject, x - 1, y);
+            }
             list.push({x: x - 1, y: y});
             growthCount ++;
         }
         if (this._tiles[x + 1][y] === Game.Tile.floorTile || this._tiles[x + 1][y] === Game.Tile.bloodTile || this._tiles[x + 1][y] === Game.Tile.grassTile || this._tiles[x + 1][y] === Game.Tile.rubbleTile || this._tiles[x + 1][y] === Game.Tile.openDoorTile) {
             this._tiles[x + 1][y] = tileType;
-            let tileObject = Game.DynamicTileRepository.create(tileType);
-            this.addDynamicTile(tileObject, x + 1, y);
+            if (isDynamic){
+                let tileObject = Game.DynamicTileRepository.create(tileType);
+                this.addDynamicTile(tileObject, x + 1, y);
+            }
             list.push({x: x + 1, y: y});
             growthCount ++;
         }
         if (this._tiles[x][y - 1] === Game.Tile.floorTile || this._tiles[x][y - 1] === Game.Tile.bloodTile || this._tiles[x][y - 1] === Game.Tile.grassTile || this._tiles[x][y - 1] === Game.Tile.rubbleTile || this._tiles[x][y - 1] === Game.Tile.openDoorTile) {
             this._tiles[x][y -1]  = tileType;
-            let tileObject = Game.DynamicTileRepository.create(tileType);
-            this.addDynamicTile(tileObject, x, y - 1);
+            if (isDynamic){
+                let tileObject = Game.DynamicTileRepository.create(tileType);
+                this.addDynamicTile(tileObject, x, y - 1);
+            }
             list.push({x: x, y: y - 1});
             growthCount ++;
         }
         if (this._tiles[x][y + 1] === Game.Tile.floorTile || this._tiles[x][y + 1] === Game.Tile.bloodTile || this._tiles[x][y + 1] === Game.Tile.grassTile || this._tiles[x][y + 1] === Game.Tile.rubbleTile || this._tiles[x][y + 1] === Game.Tile.openDoorTile) {
             this._tiles[x][y + 1] = tileType;
-            let tileObject = Game.DynamicTileRepository.create(tileType);
-            this.addDynamicTile(tileObject, x, y + 1);
+            if (isDynamic){
+                let tileObject = Game.DynamicTileRepository.create(tileType);
+                this.addDynamicTile(tileObject, x, y + 1);
+            }
             list.push({x: x, y: y + 1});
             growthCount ++;
         }

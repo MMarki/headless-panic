@@ -38,7 +38,7 @@ Game.ItemMixins.Edible = {
             let map = entity.getMap();
             let tempList = []
             tempList.push({x: x, y: y});
-            map.cellGrow(tempList, 'fireTile', 10);
+            map.cellGrow(tempList, 'fireTile', 10, true);
         } else if (this._name === 'poison potion'){
             let x = entity.getX();
             let y = entity.getY();
