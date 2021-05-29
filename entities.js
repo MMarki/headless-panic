@@ -91,6 +91,7 @@ Game.EntityRepository.define('hydra', {
     speed: 1000,
     heads: 5,
     castWaitMax: 10,
+    sightRadius: 12,
     tasks: ['aimRange','rangeAttack', 'hunt', 'wander'],
     resistances: ['crush'],
     description: "A massive, many-headed serpent.",
@@ -100,6 +101,27 @@ Game.EntityRepository.define('hydra', {
              Game.EntityMixins.Destructible, Game.EntityMixins.Affectible,
              Game.EntityMixins.Swimmer, Game.EntityMixins.KeyDropper,
              Game.EntityMixins.MultiHeaded]
+});
+
+Game.EntityRepository.define('underwyrm', {
+    name: 'underwyrm',
+    character: 'U',
+    foreground: Game.Colors.lightGray,
+    maxHP: 150,
+    attackValue: 20,
+    defenseValue: 24,
+    accuracyValue: 100,
+    speed: 1000,
+    castWaitMax: 10,
+    sightRadius: 12,
+    tasks: ['aimRange','rangeAttack', 'hunt', 'wander'],
+    resistances: ['crush'],
+    description: "A massive many-legged dragon.",
+    headPower: 'STRN + 1',
+    mixins: [Game.EntityMixins.TaskActor, Game.EntityMixins.Sight,
+             Game.EntityMixins.HeadDropper, Game.EntityMixins.Attacker, 
+             Game.EntityMixins.Destructible, Game.EntityMixins.Affectible,
+             Game.EntityMixins.KeyDropper, Game.EntityMixins.Fireproof]
 });
 
 Game.EntityRepository.define('kobold', {
@@ -311,7 +333,7 @@ Game.EntityRepository.define('skeleton', {
 Game.EntityRepository.define('golem', {
     name: 'golem', 
     character: 'G',
-    foreground: 'teal',
+    foreground: 'white',
     maxHP: 50,
     attackValue: 30,
     defenseValue: 14,
@@ -558,7 +580,7 @@ Game.EntityRepository.define('devil', {
     character: 'd',
     foreground: Game.Colors.piranhaColor,
     maxHP: 50,
-    attackValue: 12,
+    attackValue: 10,
     defenseValue: 10,
     accuracyValue: 90,
     sightRadius: 9,
@@ -600,7 +622,7 @@ Game.EntityRepository.repoFrequency = {
     'L10': [{'zombie': 2}, {'slime': 1}, {'skeleton': 6}, {'golem': 1}, {'wraith': 1}, {'minotaur': 2}, {'eldritch eye':2}],
     'L11': [{'zombie': 2}, {'slime': 1}, {'skeleton': 6}, {'golem': 2}, {'bat': 2}, {'wraith': 1}, {'minotaur': 1}, {'eldritch eye':1}],
     'L12': [{'zombie': 1}, {'slime': 1}, {'skeleton': 6}, {'golem': 2}, {'wraith': 1}, {'minotaur': 2}],
-    'L13': [{'skeleton': 4}, {'wraith': 1}, {'harpy': 3}, {'devil': 1}, {'imp': 1}],
-    'L14': [{'skeleton': 5}, {'wraith': 1}, {'harpy': 2}, {'devil': 1}, {'imp': 1}],
-    'L15': [{'skeleton': 5}, {'harpy': 2}, {'devil': 1}, {'imp': 2}]
+    'L13': [{'skeleton': 4}, {'wraith': 1}, {'harpy': 3}, {'devil': 1}, {'imp': 2}, {'underwyrm': 1}],
+    'L14': [{'skeleton': 5}, {'wraith': 1}, {'harpy': 2}, {'devil': 1}, {'imp': 2}, {'underwyrm': 1}],
+    'L15': [{'skeleton': 5}, {'harpy': 2}, {'devil': 1}, {'imp': 3}]
 }

@@ -230,7 +230,7 @@ Game.EntityMixins.TaskActor = {
         player = this.getMap().getPlayer();
         this._aiming = false;
 
-        let castString = this.getName() === 'imp' ? 'casts magic dart' : 'spits water';
+        let castString = this.getName() === 'imp' ? 'casts magic dart' : (this.getName() === 'hydra' ? 'spits water' : 'breathes fire');
 
         const entity =this._map.getEntityAt(this._aimX, this._aimY);
         if (entity){
@@ -255,13 +255,17 @@ Game.EntityMixins.TaskActor = {
                 Game.sendMessage(target, 'The %s ' + castString + '. It misses.', [this.getName()]);
             }
         } else {
-            Game.sendMessage(player, 'The %s  ' + castString + '. It misses.', [this.getName()]);
+            Game.sendMessage(player, 'The %s ' + castString + '. It misses.', [this.getName()]);
         }
 
-        if (this.getName() !== 'imp'){
+        if (this.getName() === 'hydra'){
             let list = [];
             list.push ({x: this._aimX, y: this._aimY});
             this._map.cellGrow(list, Game.Tile.shallowWaterTile, 5, false);
+        } else if (this.getName() === 'underwyrm'){
+            let list = [];
+            list.push ({x: this._aimX, y: this._aimY});
+            this._map.cellGrow(list, 'fireTile', 8, true);
         }
     },
     charge: function() {
