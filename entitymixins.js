@@ -391,7 +391,7 @@ Game.EntityMixins.TaskActor = {
             let alreadyStandingOnFire = map.isFireTile(this.getX(), this.getY());
 
             if (map.getTile(this.getX() + xOffset, this.getY() + yOffset).isWalkable() 
-            && ( alreadyStandingOnFire || (!alreadyStandingOnFire && !map.isFireTile(this.getX() + xOffset, this.getY() + yOffset)) )
+            && ( alreadyStandingOnFire || (!alreadyStandingOnFire && !map.isFireTile(this.getX() + xOffset, this.getY() + yOffset)) || this.hasMixin('Fireproof') )
             ){
                 this.tryMove(this.getX() + xOffset, this.getY() + yOffset);
                 break;
