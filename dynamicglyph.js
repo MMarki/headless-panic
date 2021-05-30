@@ -59,6 +59,9 @@ Game.DynamicGlyph.prototype.describeA = function(capitalize) {
     // Optional parameter to capitalize the a/an.
     let prefixes = capitalize ? ['A', 'An'] : ['a', 'an'];
     let string = this.describe();
+    if (string === 'cerberus' || string === 'death' || string === 'gold'){
+        return string;
+    }
     let firstLetter = string.charAt(0).toLowerCase();
     // If word starts by a vowel, use an, else use a. Note that this is not perfect.
     let prefix = 'aeiou'.indexOf(firstLetter) >= 0 ? 1 : 0;
@@ -67,6 +70,9 @@ Game.DynamicGlyph.prototype.describeA = function(capitalize) {
 };
 Game.DynamicGlyph.prototype.describeThe = function(capitalize) {
     const prefix = capitalize ? 'The' : 'the';
+    if (this.describe() === 'cerberus' || this.describe() === 'death'){
+        return this.describe();
+    }
     return prefix + ' ' + this.describe();
 };
 

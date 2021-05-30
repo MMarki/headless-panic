@@ -117,11 +117,12 @@ Game.EntityRepository.define('underwyrm', {
     tasks: ['aimRange','rangeAttack', 'hunt', 'wander'],
     resistances: ['crush'],
     description: "A massive many-legged dragon.",
+    headHits: 3,
     headPower: 'STRN + 1',
     mixins: [Game.EntityMixins.TaskActor, Game.EntityMixins.Sight,
              Game.EntityMixins.HeadDropper, Game.EntityMixins.Attacker, 
              Game.EntityMixins.Destructible, Game.EntityMixins.Affectible,
-             Game.EntityMixins.KeyDropper, Game.EntityMixins.Fireproof]
+             Game.EntityMixins.Fireproof]
 });
 
 Game.EntityRepository.define('kobold', {
@@ -299,7 +300,7 @@ Game.EntityRepository.define('zombie', {
     foreground: 'teal',
     maxHP: 30,
     attackValue: 10,
-    defenseValue: 8,
+    defenseValue: 6,
     accuracyValue: 70,
     sightRadius: 8,
     headHits: 1,

@@ -584,11 +584,9 @@ Game.EntityMixins.Destructible = {
             }
 
             if (!this.isNotMonster()){
-                returnMessage = ' %%c{#61AEEE}You kill the ' + this.getName() + '.';
-                //Game.sendMessage(attacker, '%%c{#61AEEE}You kill the %s!', [this.getName()]);
+                returnMessage = ' %%c{#61AEEE}You kill ' + this.describeThe(false) + '.';       
             } else {
                 returnMessage = ' You break the ' + this.getName() + '.';
-                //Game.sendMessage(attacker, 'You break the %s.', [this.getName()]);
             }
             
             if (this.hasMixin('KeyDropper')) {
@@ -723,11 +721,11 @@ Game.EntityMixins.Attacker = {
 
                 let returnMessage = target.takeDamage(this, damage, true);
                 if (returnMessage.length > 0){
-                    Game.sendMessage(this, 'You strike the %s for %d damage.' + returnMessage, [target.getName(), damage]);
-                    Game.sendMessage(target, 'The %s strikes you for %d damage.' + returnMessage,  [this.getName(), damage]);
+                    Game.sendMessage(this, 'You strike %s for %d damage.' + returnMessage, [target.describeThe(false), damage]);
+                    Game.sendMessage(target, '%s strikes you for %d damage.' + returnMessage,  [this.describeThe(true), damage]);
                 } else {
-                    Game.sendMessage(this, 'You strike the %s for %d damage.', [target.getName(), damage]);
-                    Game.sendMessage(target, 'The %s strikes you for %d damage.',  [this.getName(), damage]);
+                    Game.sendMessage(this, 'You strike %s for %d damage.', [target.describeThe(false), damage]);
+                    Game.sendMessage(target, '%s strikes you for %d damage.',  [this.describeThe(true), damage]);
                 }
                
                 if (this.hasMixin('Poisoner') && target.hasMixin('Affectible')){
@@ -796,8 +794,8 @@ Game.EntityMixins.Attacker = {
                     }
                 } 
             } else {
-                Game.sendMessage(this, 'You miss the %s.', [target.getName()]);
-                Game.sendMessage(target, 'The %s misses you.',  [this.getName()]);
+                Game.sendMessage(this, 'You miss %s.', [target.describeThe(false)]);
+                Game.sendMessage(target, '%s misses you.',  [this.describeThe(true)]);
             }
         }
     },
@@ -1115,18 +1113,18 @@ Game.EntityMixins.Thrower = {
                 if (amount > 0){
                     let returnMessage = target.takeDamage(this, amount, true);
                     if (returnMessage.length > 0){
-                        Game.sendMessage(this, 'You throw a %s at the %s for %d damage!' + returnMessage, [item.getName(),target.getName(), amount]);
+                        Game.sendMessage(this, 'You throw a %s at %s for %d damage!' + returnMessage, [item.getName(),target.describeThe(false), amount]);
                     } else {
-                        Game.sendMessage(this, 'You throw a %s at the %s for %d damage!', [item.getName(),target.getName(), amount]);
+                        Game.sendMessage(this, 'You throw a %s at %s for %d damage!', [item.getName(),target.describeThe(false), amount]);
                     }
                 } else {
-                    Game.sendMessage(this, 'You throw a %s at the %s. It misses.', [item.getName(),target.getName()]);
+                    Game.sendMessage(this, 'You throw a %s at %s. It misses.', [item.getName(),target.describeThe(false)]);
                 }
             } else {
-                Game.sendMessage(this, 'You throw a %s at the %s. It misses.', [item.getName(),target.getName()]);
+                Game.sendMessage(this, 'You throw a %s at %s. It misses.', [item.getName(),target.describeThe(false)]);
             }
         } else {
-            Game.sendMessage(this, 'throw a %s at the %s', [item.getName(),target.getName()]); 
+            Game.sendMessage(this, 'You throw a %s at %s.', [item.getName(),target.getName()]); 
         }
         
         //handle thrown potions
