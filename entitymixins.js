@@ -218,11 +218,6 @@ Game.EntityMixins.TaskActor = {
         this._aimX = player.getX();
         this._aimY = player.getY();
 
-        Game.Screen.playScreen.aimLines.push({
-            x: this.getX(),
-            y: this.getY()
-        }); 
-
         this._castWait = this._castWaitMax;
 
     },

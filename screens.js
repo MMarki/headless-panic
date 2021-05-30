@@ -28,7 +28,6 @@ Game.Screen.playScreen = {
     _gameEnded: false,
     _subScreen: null,
     _lastTarget: null,
-    aimLines: [],
     alreadyGotList: [],
     deathInfo: {
         strength: 1,
@@ -182,72 +181,78 @@ Game.Screen.playScreen = {
     },
     renderTelegraphs: function(display){
         // Draw a line from the start to the cursor.
-        if (this.aimLines.length > 0){
-            for (aimLine of this.aimLines){
-                let points = Game.Geometry.getLine(aimLine.x, aimLine.y, this._player.getX(), this._player.getY());
-                let foregroundColor =  "#333333";
-                let character = "?";
+        let entities = this._player.getMap().getEntities();
+        let aimingEntities = []
+        for (let key in entities) {
+            let entity = entities[key];
+            if (entity._aiming === true){
+                aimingEntities.push(entity);
+            }
+        }
 
-                let map = this._player.getMap();
+        for (aimingEntity of aimingEntities){
+            let points = Game.Geometry.getLine(aimingEntity.getX(), aimingEntity.getY(), this._player.getX(), this._player.getY());
+            let foregroundColor =  "#333333";
+            let character = "?";
 
-                let visibleCells = {};
-                this._player.getMap().getFov().compute(this._player.getX(), this._player.getY(), this._player.getSightRadius(), 
-                    function(x, y, radius, visibility) {
-                        visibleCells[x + "," + y] = true;
-                    });
+            let map = this._player.getMap();
 
-                // Render yellow along the line.
-                for (let i = 0, l = points.length; i < l; i++) {
-                    let x = points[i].x
-                    let y = points[i].y
+            let visibleCells = {};
+            this._player.getMap().getFov().compute(this._player.getX(), this._player.getY(), this._player.getSightRadius(), 
+                function(x, y, radius, visibility) {
+                    visibleCells[x + "," + y] = true;
+                });
 
-                    // If the tile is explored, we can give a better tile image
-                    if (map.isExplored(x, y)) {
-                        // If the tile isn't explored, we have to check if we can actually see it before testing if there's an entity or item.
-                        if (visibleCells[x + ',' + y]) {
+            // Render yellow along the line.
+            for (let i = 0, l = points.length; i < l; i++) {
+                let x = points[i].x
+                let y = points[i].y
+
+                // If the tile is explored, we can give a better tile image
+                if (map.isExplored(x, y)) {
+                    // If the tile isn't explored, we have to check if we can actually see it before testing if there's an entity or item.
+                    if (visibleCells[x + ',' + y]) {
+                        var items = map.getItemsAt(x, y);
+                        // If we have items, we want to render the top most item
+                        if (items) {
+                            var item = items[items.length - 1];
+                            foregroundColor = item.getForeground();
+                            character = item.getChar();
+                        // Else check if there's an entity
+                        } else if (map.getEntityAt(x, y)) {
+                            var entity = map.getEntityAt(x, y);
+                            foregroundColor = entity.getForeground();
+                            character = entity.getChar();
+                        } else {
+                            // If there was no entity/item or the tile wasn't visible, then use
+                            // the tile information.
+                            var tile = map.getTile(x, y)
+                            foregroundColor = tile.getForeground();
+                            character = tile.getChar();
+                        }
+                    } else {
+                            //if tile is explored but not visible, check for items, otherwise use tile
                             var items = map.getItemsAt(x, y);
-                            // If we have items, we want to render the top most item
                             if (items) {
                                 var item = items[items.length - 1];
                                 foregroundColor = item.getForeground();
                                 character = item.getChar();
-                            // Else check if there's an entity
-                            } else if (map.getEntityAt(x, y)) {
-                                var entity = map.getEntityAt(x, y);
-                                foregroundColor = entity.getForeground();
-                                character = entity.getChar();
+                            // Else get tile info
                             } else {
-                                // If there was no entity/item or the tile wasn't visible, then use
-                                // the tile information.
                                 var tile = map.getTile(x, y)
                                 foregroundColor = tile.getForeground();
                                 character = tile.getChar();
-                            }
-                        } else {
-                                //if tile is explored but not visible, check for items, otherwise use tile
-                                var items = map.getItemsAt(x, y);
-                                if (items) {
-                                    var item = items[items.length - 1];
-                                    foregroundColor = item.getForeground();
-                                    character = item.getChar();
-                                // Else get tile info
-                                } else {
-                                    var tile = map.getTile(x, y)
-                                    foregroundColor = tile.getForeground();
-                                    character = tile.getChar();
-                                }      
-                        }
-                    } else {
-                        // If the tile is not explored, show no new info to user.
-                        foregroundColor =  "#333333";
-                        character = "?";
+                            }      
                     }
-                    
-                    //var tile = this._player.getMap().getTile(x,y)
-                    display.drawText(x, y, '%c{' + foregroundColor + '}%b{#3B2F37}' + character);
+                } else {
+                    // If the tile is not explored, show no new info to user.
+                    foregroundColor =  "#333333";
+                    character = "?";
                 }
+                
+                //var tile = this._player.getMap().getTile(x,y)
+                display.drawText(x, y, '%c{' + foregroundColor + '}%b{#3B2F37}' + character);
             }
-            this.aimLines = [];
         }
     },
     handleInput: function(inputType, inputData, invokedManually) {
@@ -841,9 +846,9 @@ Game.Screen.winScreen = {
         gtag('event', 'death_stats', {'strength': Game.Screen.playScreen.deathInfo.strength, 'hp': Game.Screen.playScreen.deathInfo.maxHP, 'defense': Game.Screen.playScreen.deathInfo.armor, 'damage': Game.Screen.playScreen.deathInfo.weapon, 'level': Game.Screen.playScreen.deathInfo.level, 'turns': Game.Screen.playScreen.turnCount, 'murderer': 'survived'});
 
         // Render our prompt to the screen
-        display.drawText(2, 1, "%c{yellow}You win the Headless Panic Beta!");
-        display.drawText(2, 3, "Thank you for playing!");
-        display.drawText(2, 5, "Come back to play the expanded game next month.");
+        display.drawText(2, 1, "%c{yellow}Death owes you a dept for defeating the Lich!");
+        display.drawText(2, 3, "She no longer haunts you.");
+        display.drawText(2, 5, "You are free.");
     },
     handleInput: function(inputType, inputData) {
         // Nothing to do here      
