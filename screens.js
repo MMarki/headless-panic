@@ -1450,6 +1450,13 @@ Game.Screen.lookScreen = new Game.Screen.TargetBasedScreen({
                     return (item.getRepresentation() + ' - ' + item.describeA(true) + '. ' + item.getDescription() + (item.hasMixin('Equippable') ? item.getPowerDescription() : ''));
                 
                 }
+            } else {
+                let items = map.getItemsAt(x, y);
+                if (items) {
+                    let item = items[items.length - 1];
+                    return (item.getRepresentation() + ' - ' + item.describeA(true) + '. ' + item.getDescription() + (item.hasMixin('Equippable') ? item.getPowerDescription() : ''));
+                }
+
             }
             // If there was no entity/item or the tile wasn't visible, then use
             // the tile information.
