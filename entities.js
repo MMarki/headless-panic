@@ -118,7 +118,7 @@ Game.EntityRepository.define('underwyrm', {
     resistances: ['crush'],
     description: "A massive many-legged dragon.",
     headHits: 3,
-    headPower: 'STRN + 1',
+    headPower: 'Immunity to fire damage',
     mixins: [Game.EntityMixins.TaskActor, Game.EntityMixins.Sight,
              Game.EntityMixins.HeadDropper, Game.EntityMixins.Attacker, 
              Game.EntityMixins.Destructible, Game.EntityMixins.Affectible,

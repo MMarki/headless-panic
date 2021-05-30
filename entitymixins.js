@@ -509,7 +509,7 @@ Game.EntityMixins.Destructible = {
 
         if (this._vengeful === true){
             if( attacker.takeDamage !== undefined){
-                attacker.takeDamage(this, Math.ceil(damage/4), true);
+                attacker.takeDamage(this, Math.ceil(damage/2), true);
             } 
         }
 
@@ -1410,7 +1410,7 @@ Game.EntityMixins.Bleeder = {
         if (this._head === null){
             this.modifyHPBy(-this._bleedRate);
             this.getMap().changeTile(this.getX(),this.getY(), Game.Tile.bloodTile);
-        } else if(this.hasMixin('Affectible') && !this.hasEffect('burning') && !this.hasEffect('poisoned')) {
+        } else if(this.hasMixin('Affectible') && (!this.hasEffect('burning') || this._fireproof) && !this.hasEffect('poisoned')) {
             this.modifyHPBy(this._bleedRate);
         }
         
@@ -1489,6 +1489,7 @@ Game.EntityMixins.Equipper = {
             this._sucker = false;
             this._levitating = false;
             this._vengeful = false;
+            this._fireproof = false;
 
             if(this._head._name === 'goblin head' || this._head._name === 'kappa head'){
                 this._armored = true;
@@ -1517,6 +1518,8 @@ Game.EntityMixins.Equipper = {
                 this._levitating = true;
             } else if (this._head._name === 'cerberus head'){
                 this._vengeful = true;
+            } else if (this._head._name === 'underwyrm head'){
+                this._fireproof = true;
             }
         }
     },
@@ -1544,6 +1547,8 @@ Game.EntityMixins.Equipper = {
                 this._levitating = false;
             } else if (this._head._name === 'cerberus head'){
                 this._vengeful = false;
+            } else if (this._head._name === 'underwyrm head'){
+                this._fireproof = false;
             }
         }
         this._head = null;
@@ -1632,7 +1637,7 @@ Game.EntityMixins.Affectible = {
                 let string = this.takeDamage('poison', 1, false);
                 return string.length > 0 ? true : false;
             }      
-        } else if (effectName === "burning" && this.hasMixin('Destructible') && !this.hasEffect('fireproof') && !this.hasMixin('Fireproof')){
+        } else if (effectName === "burning" && this.hasMixin('Destructible') && !this.hasEffect('fireproof') && !this.hasMixin('Fireproof') && !this._fireproof){
             let targetIsVulnerable = this.getVulnerabilities().includes('fire');
             if (targetIsVulnerable){
                 let string = this.takeDamage('fire', 2, false);
@@ -1649,7 +1654,7 @@ Game.EntityMixins.Affectible = {
         }
     },
     setEffect : function(effect) {
-        if ((this.hasMixin('Unpoisonable') && effect._name === 'poisoned') || ( (this.hasMixin('Fireproof') || this.hasEffect('fireproof')) && effect._name === 'burning')) {
+        if ((this.hasMixin('Unpoisonable') && effect._name === 'poisoned') || ( (this.hasMixin('Fireproof') || this.hasEffect('fireproof') || this._fireproof) && effect._name === 'burning')) {
             return;
         } else {
             this._effects.push(effect);
