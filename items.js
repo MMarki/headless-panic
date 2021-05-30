@@ -246,6 +246,40 @@ Game.ItemRepository.define('greatclub', {
     disableRandomCreation: false
 });
 
+Game.ItemRepository.define('warhammer', {
+    name: 'warhammer',
+    character: '\u0164',
+    foreground: Game.Colors.yellow,
+    attackValue: 9,
+    thrownAttackValue: 4,
+    strengthRequirement: 4,
+    wieldable: true,
+    damageType: 'crush',
+    rarity: 'RARE',
+    depth: 'ANY',
+    mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable, Game.ItemMixins.Enchantable],
+    itemLevel: 2
+}, {
+    disableRandomCreation: false
+});
+
+Game.ItemRepository.define('greatsword', {
+    name: 'greatsword',
+    character: '\u012C',
+    foreground: Game.Colors.yellow,
+    attackValue: 9,
+    thrownAttackValue: 5,
+    strengthRequirement: 4,
+    wieldable: true,
+    damageType: 'slash',
+    rarity: 'RARE',
+    depth: 'ANY',
+    mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable, Game.ItemMixins.Enchantable],
+    itemLevel: 2
+}, {
+    disableRandomCreation: false
+});
+
 Game.ItemRepository.define('rapier', {
     name: 'rapier',
     character: '\u07D9',
@@ -299,7 +333,7 @@ Game.ItemRepository.define('spear', {
 
 Game.ItemRepository.define('mace', {
     name: 'mace',
-    character: '\u07C9',
+    character: '\u26B4',
     foreground: Game.Colors.yellow,
     attackValue: 4,
     thrownAttackValue: 2,
@@ -316,7 +350,7 @@ Game.ItemRepository.define('mace', {
 
 Game.ItemRepository.define('scimitar', {
     name: 'scimitar',
-    character: '\u1489',
+    character: '\u26B8',
     foreground: Game.Colors.yellow,
     attackValue: 4,
     thrownAttackValue: 2,
@@ -334,7 +368,7 @@ Game.ItemRepository.define('scimitar', {
 //wands
 Game.ItemRepository.define('wand of poison', {
     name: 'wand of poison',
-    character: '~',
+    character: '\u26B5',
     foreground: Game.Colors.yellow,
     attackValue: 1,
     thrownAttackValue: 1,
@@ -352,7 +386,7 @@ Game.ItemRepository.define('wand of poison', {
 
 Game.ItemRepository.define('wand of fire', {
     name: 'wand of fire',
-    character: '~',
+    character: '\u26B5',
     foreground: Game.Colors.yellow,
     attackValue: 1,
     thrownAttackValue: 1,
@@ -370,7 +404,7 @@ Game.ItemRepository.define('wand of fire', {
 
 Game.ItemRepository.define('wand of blinking', {
     name: 'wand of blinking',
-    character: '~',
+    character: '\u26B5',
     foreground: Game.Colors.yellow,
     attackValue: 1,
     thrownAttackValue: 1,
