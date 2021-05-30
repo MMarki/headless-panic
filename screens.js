@@ -213,16 +213,16 @@ Game.Screen.playScreen = {
                     // If the tile isn't explored, we have to check if we can actually see it before testing if there's an entity or item.
                     if (visibleCells[x + ',' + y]) {
                         var items = map.getItemsAt(x, y);
-                        // If we have items, we want to render the top most item
-                        if (items) {
-                            var item = items[items.length - 1];
-                            foregroundColor = item.getForeground();
-                            character = item.getChar();
-                        // Else check if there's an entity
-                        } else if (map.getEntityAt(x, y)) {
+                        // Check if there's an entity
+                        if (map.getEntityAt(x, y)) {
                             var entity = map.getEntityAt(x, y);
                             foregroundColor = entity.getForeground();
                             character = entity.getChar();
+                        } else if (items) {
+                            // Else if we have items, we want to render the top most item
+                            var item = items[items.length - 1];
+                            foregroundColor = item.getForeground();
+                            character = item.getChar();
                         } else {
                             // If there was no entity/item or the tile wasn't visible, then use
                             // the tile information.
@@ -1345,16 +1345,16 @@ Game.Screen.TargetBasedScreen.prototype.render = function(display) {
             // If the tile isn't explored, we have to check if we can actually see it before testing if there's an entity or item.
             if (this._visibleCells[x + ',' + y]) {
                 var items = map.getItemsAt(x, y);
-                // If we have items, we want to render the top most item
-                if (items) {
-                    var item = items[items.length - 1];
-                    foregroundColor = item.getForeground();
-                    character = item.getChar();
-                // Else check if there's an entity
-                } else if (map.getEntityAt(x, y)) {
+                // check if there's an entity
+                if (map.getEntityAt(x, y)) {
                     var entity = map.getEntityAt(x, y);
                     foregroundColor = entity.getForeground();
                     character = entity.getChar();
+                } else if (items) {
+                    // Else if we have items, we want to render the top most item
+                    var item = items[items.length - 1];
+                    foregroundColor = item.getForeground();
+                    character = item.getChar();
                 } else {
                     // If there was no entity/item or the tile wasn't visible, then use
                     // the tile information.
@@ -1436,18 +1436,19 @@ Game.Screen.lookScreen = new Game.Screen.TargetBasedScreen({
             // If the tile isn't explored, we have to check if we can actually see it before testing if there's an entity or item.
             if (this._visibleCells[x + ',' + y]) {
                 var items = map.getItemsAt(x, y);
-                // If we have items, we want to render the top most item
-                if (items) {
-                    var item = items[items.length - 1];
-                    return (item.getRepresentation() + ' - ' + item.describeA(true) + '. ' + item.getDescription() + (item.hasMixin('Equippable') ? item.getPowerDescription() : ''));
-                // Else check if there's an entity
-                } else if (map.getEntityAt(x, y)) {
+                // Check if there's an entity
+                if (map.getEntityAt(x, y)) {
                     var entity = map.getEntityAt(x, y);
                     let hpSuffix = '';
                     if (entity.hasMixin('Destructible') && !entity.isNotMonster()){
                         hpSuffix = ' HP: ' + entity.getHP() + '/' + entity.getMaxHP();
                     }
                     return (entity.getRepresentation() + ' - ' + entity.describeA(true) + '. ' + entity.getDescription() + hpSuffix);
+                } else if (items) {
+                    // Else if we have items, we want to render the top most item
+                    var item = items[items.length - 1];
+                    return (item.getRepresentation() + ' - ' + item.describeA(true) + '. ' + item.getDescription() + (item.hasMixin('Equippable') ? item.getPowerDescription() : ''));
+                
                 }
             }
             // If there was no entity/item or the tile wasn't visible, then use
@@ -1468,14 +1469,14 @@ let lineCaptionFunction = function(x, y) {
         // If the tile isn't explored, we have to check if we can actually see it before testing if there's an entity or item.
         if (this._visibleCells[x + ',' + y]) {
             let items = map.getItemsAt(x, y);
-            // If we have items, we want to render the top most item
-            if (items) {
-                let item = items[items.length - 1];
-                return (item.getRepresentation() + ' - ' + item.describeA(true) + '. ' + item.getDescription());
-            // Else check if there's an entity
-            } else if (map.getEntityAt(x, y)) {
+            // Check if there's an entity
+            if (map.getEntityAt(x, y)) {
                 let entity = map.getEntityAt(x, y);
                 return (entity.getRepresentation() + ' - ' + entity.describeA(true) + '. ' + entity.getDescription());
+            } else if (items) {
+                // else if we have items, we want to render the top most item
+                let item = items[items.length - 1];
+                return (item.getRepresentation() + ' - ' + item.describeA(true) + '. ' + item.getDescription());
             }
         }
         // If there was no entity/item or the tile wasn't visible, then use
