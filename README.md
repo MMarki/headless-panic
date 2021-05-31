@@ -14,13 +14,14 @@ Headless Panic is a short (~ 30 minutes long) roguelike where you play as a head
 ## Features:
 - Head-swapping mechanic
   - Heads are fragile and once they fall off you start bleeding to death.
-  - Some monster heads give you powers which allows for interesting temporary builds.
+  - Some monster heads give you powers which allow for interesting temporary builds.
 - 5 different biomes
-  - Each are has its own level generation parameters (or algorithm), monsters, prefabs, bosses, and item drop rate.
+  - Each area has its own level generation parameters, monsters, prefabs, bosses, and item drop rate.
 - Easy to get started with
   - No classes, races, or backgrounds. Just jump in and play.
-  - No huge list of stats to learn. No item ID, so you can easily see what you've got and build a strategy around it.
-  - Small set of controls to learn .
+  - No huge list of stats to learn.
+  - No item ID, so you can easily see what you've got and build a strategy around it.
+  - Small set of controls to learn.
 - Item-based progression
   - No XP and No leveling.
-  - The few stats in teh game can only be raised by your items.
+  - The few stats in the game can only be raised by your items.
