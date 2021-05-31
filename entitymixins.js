@@ -367,6 +367,10 @@ Game.EntityMixins.TaskActor = {
         }
     },
     wander: function() {
+       if (this._aiming) {
+           //clear out aiming if a player ducks out of sight
+           this._aiming = false;
+       }
         // Flip coin to determine if moving by 1 in the positive or negative direction
         let i = 0;
         while(i < 10){

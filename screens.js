@@ -846,9 +846,9 @@ Game.Screen.winScreen = {
         gtag('event', 'death_stats', {'strength': Game.Screen.playScreen.deathInfo.strength, 'hp': Game.Screen.playScreen.deathInfo.maxHP, 'defense': Game.Screen.playScreen.deathInfo.armor, 'damage': Game.Screen.playScreen.deathInfo.weapon, 'level': Game.Screen.playScreen.deathInfo.level, 'turns': Game.Screen.playScreen.turnCount, 'murderer': 'survived'});
 
         // Render our prompt to the screen
-        display.drawText(2, 1, "%c{yellow}Death owes you a dept for defeating the Lich!");
-        display.drawText(2, 3, "She no longer haunts you.");
-        display.drawText(2, 5, "You are free.");
+        display.drawText(2, 1, "%c{yellow}Death owes you a debt for defeating the Lich!");
+        display.drawText(2, 3, "She no longer haunts you. You are free.");
+        display.drawText(2, 5, "(Thank you for playing Headless Panic)");
     },
     handleInput: function(inputType, inputData) {
         // Nothing to do here      
