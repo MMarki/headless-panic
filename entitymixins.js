@@ -1277,6 +1277,10 @@ Game.EntityMixins.Sight = {
             return false;
         }
 
+        if (entity.hasMixin('Affectible') && entity.hasEffect('invisible')){
+            return false;
+        }
+
         var otherX = entity.getX();
         var otherY = entity.getY();
 

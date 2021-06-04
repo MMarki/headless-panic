@@ -68,6 +68,9 @@ Game.ItemMixins.Edible = {
             Game.sendMessage(entity, 'You are teleported!');
         } else if (entity.hasMixin('Attacker') && this._name === 'strength potion'){
             entity.incrementStrength();
+        } else if (entity.hasMixin('Affectible') && this._name === 'invisibility potion'){
+            let newEffect = new Game.Effect(this.potionEffect.duration, 'invisible');
+            entity.setEffect(newEffect);
         }
     },
     describe: function() {

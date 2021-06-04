@@ -111,6 +111,21 @@ Game.ItemRepository.define('darkness potion', {
     itemLevel: 1
 });
 
+Game.ItemRepository.define('invisibility potion', {
+    name: 'invisibility potion',
+    character: '!',
+    foreground: Game.Colors.yellow,
+    potionEffect: {
+        duration: 50,
+        name: "invisible"
+    },
+    potionEffect: null,
+    rarity: 'COMMON',
+    depth: 'ANY',
+    mixins: [Game.ItemMixins.Edible, Game.ItemMixins.Throwable],
+    itemLevel: 1
+});
+
 Game.ItemRepository.define('head', {
     name: 'head',
     character: '\u25CB',
