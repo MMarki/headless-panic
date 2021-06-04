@@ -280,6 +280,23 @@ Game.ItemRepository.define('greatsword', {
     disableRandomCreation: false
 });
 
+Game.ItemRepository.define('war pike', {
+    name: 'war pike',
+    character: '\u2909',
+    foreground: Game.Colors.yellow,
+    attackValue: 9,
+    thrownAttackValue: 6,
+    strengthRequirement: 4,
+    wieldable: true,
+    damageType: 'stab',
+    rarity: 'RARE',
+    depth: 'ANY',
+    mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable, Game.ItemMixins.Enchantable],
+    itemLevel: 2
+}, {
+    disableRandomCreation: false
+});
+
 Game.ItemRepository.define('rapier', {
     name: 'rapier',
     character: '\u07D9',
