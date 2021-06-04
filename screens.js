@@ -251,7 +251,7 @@ Game.Screen.playScreen = {
                 }
                 
                 //var tile = this._player.getMap().getTile(x,y)
-                display.drawText(x, y, '%c{' + foregroundColor + '}%b{#3B2F37}' + character);
+                display.drawText(x, y, '%c{' + foregroundColor + '}%b{#5B2F37}' + character);
             }
         }
     },
