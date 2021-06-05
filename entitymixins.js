@@ -1129,7 +1129,6 @@ Game.EntityMixins.Thrower = {
         //handle thrown potions
         //console.log("itemname:" + item._name);
         if( item._potionEffect !== null && item._potionEffect !== undefined){
-            //console.log("setting potion effect:" + item._potionEffect);
             target.setEffect(item._potionEffect);
         } else if (item._name === "health potion" && targetIsDestructible === true){
             target.modifyHPBy(item._healthValue);
@@ -1284,7 +1283,7 @@ Game.EntityMixins.Sight = {
         var otherX = entity.getX();
         var otherY = entity.getY();
 
-        var seeAbleByMagic = (this.hasMixin('Affectible') && this.hasEffect("knowledgeable") && this.getMap().getEntityAt(otherX, otherY) !== null);
+        var seeAbleByMagic = (this.hasMixin('Affectible') && this.hasEffect("detecting") && this.getMap().getEntityAt(otherX, otherY) !== null);
         if (seeAbleByMagic){
             return true;
         }

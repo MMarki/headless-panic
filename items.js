@@ -63,14 +63,24 @@ Game.ItemRepository.define('teleportation potion', {
     itemLevel: 1
 });
 
-Game.ItemRepository.define('knowledge potion', {
-    name: 'knowledge potion',
+Game.ItemRepository.define('detection potion', {
+    name: 'detection potion',
     character: '!',
     foreground: Game.Colors.yellow,
     potionEffect: {
         duration: 30,
-        name: "knowledgeable"
+        name: "detecting"
     },
+    rarity: 'COMMON',
+    depth: 'ANY',
+    mixins: [Game.ItemMixins.Edible, Game.ItemMixins.Throwable],
+    itemLevel: 1
+});
+
+Game.ItemRepository.define('knowledge potion', {
+    name: 'knowledge potion',
+    character: '!',
+    foreground: Game.Colors.yellow,
     rarity: 'COMMON',
     depth: 'ANY',
     mixins: [Game.ItemMixins.Edible, Game.ItemMixins.Throwable],
@@ -119,7 +129,6 @@ Game.ItemRepository.define('invisibility potion', {
         duration: 50,
         name: "invisible"
     },
-    potionEffect: null,
     rarity: 'COMMON',
     depth: 'ANY',
     mixins: [Game.ItemMixins.Edible, Game.ItemMixins.Throwable],

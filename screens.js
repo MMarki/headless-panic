@@ -787,7 +787,7 @@ Game.Screen.playScreen = {
                 let tile = this._map.getTile(entity.getX(), entity.getY());
                 let gas = this._map.getGas(entity.getX(), entity.getY());
                 let background = gas !== null ? gas.getBackground() : tile.getBackground();
-                if (visibleCells[entity.getX() + ',' + entity.getY()] || (this._player.hasEffect('knowledgeable') && entity.isNotMonster() == false)) {
+                if (visibleCells[entity.getX() + ',' + entity.getY()] || (this._player.hasEffect('detecting') && entity.isNotMonster() == false)) {
                     if(entity.hasMixin('PlayerActor')){
                         if (currentHead !== null){
                             display.draw(entity.getX(), entity.getY(), entity.getChar(), entity.getForeground(), background);
