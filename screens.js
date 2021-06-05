@@ -789,10 +789,12 @@ Game.Screen.playScreen = {
                 let background = gas !== null ? gas.getBackground() : tile.getBackground();
                 if (visibleCells[entity.getX() + ',' + entity.getY()] || (this._player.hasEffect('detecting') && entity.isNotMonster() == false)) {
                     if(entity.hasMixin('PlayerActor')){
-                        if (currentHead !== null){
-                            display.draw(entity.getX(), entity.getY(), entity.getChar(), entity.getForeground(), background);
-                        } else {
+                        if (currentHead === null){
                             display.draw(entity.getX(), entity.getY(), entity.getChar(), '#F61067', background);
+                        } else if (entity.hasEffect('invisible')) { 
+                            display.draw(entity.getX(), entity.getY(), entity.getChar(), Game.Colors.invisibleColor, background);
+                        } else {
+                            display.draw(entity.getX(), entity.getY(), entity.getChar(), entity.getForeground(), background);
                         }
                     } else if (!entity.isNotMonster()) {
                         display.draw(entity.getX(), entity.getY(), entity.getChar(), entity.getForeground(), background);

@@ -25,6 +25,8 @@ Game.Effect.prototype.getEffectColor = function(name) {
         return Game.Colors.blindColor;
     } else if (name === 'vulnerable'){
         return Game.Colors.lichColor;
+    } else if (name === 'invisible'){
+       return Game.Colors.invisibleColor;
     } else {
         return Game.Colors.effectDefault;
     }

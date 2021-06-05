@@ -14,6 +14,7 @@ Game.Colors.coral =         '#FF8A5B';
 Game.Colors.poisonColor =   '#00EE00';
 Game.Colors.burningColor =  '#EE4411';
 Game.Colors.blindColor =    '#EE22EE';
+Game.Colors.invisibleColor ='#BDC9FE';
 Game.Colors.effectDefault = '#4D6CFA';
 
 //tiles
