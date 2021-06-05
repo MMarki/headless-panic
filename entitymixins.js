@@ -258,9 +258,14 @@ Game.EntityMixins.TaskActor = {
             list.push ({x: this._aimX, y: this._aimY});
             this._map.cellGrow(list, Game.Tile.shallowWaterTile, 5, false);
         } else if (this.getName() === 'underwyrm'){
-            let list = [];
-            list.push ({x: this._aimX, y: this._aimY});
-            this._map.cellGrow(list, 'fireTile', 8, true);
+            let points = Game.Geometry.getLine(this.getX(), this.getY(), this._aimX, this._aimY);
+
+            // For each cell on line
+            for (let i = 0, l = points.length; i < l; i++) {
+                let list = [];
+                list.push ({x: points[i].x, y: points[i].y});
+                this._map.cellGrow(list, 'fireTile', 1, true);
+            }
         }
     },
     charge: function() {

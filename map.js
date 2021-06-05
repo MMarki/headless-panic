@@ -896,7 +896,16 @@ Game.Map.prototype.cellGrow = function(list, tileType, numberOfTiles, isDynamic)
         }
         let x = currentTile.x;
         let y = currentTile.y;
-
+        if (this._tiles[x][y] === Game.Tile.floorTile || this._tiles[x][y] === Game.Tile.bloodTile || this._tiles[x][y] === Game.Tile.grassTile || this._tiles[x][y] === Game.Tile.rubbleTile || this._tiles[x][y] === Game.Tile.openDoorTile) {
+            this._tiles[x][y] = tileType;
+            if (isDynamic){
+                let tileObject = Game.DynamicTileRepository.create(tileType);
+                this.addDynamicTile(tileObject, x, y);
+            }
+            list.push({x: x, y: y});
+            growthCount ++;
+            if (growthCount === numberOfTiles) break;
+        }
         if (this._tiles[x - 1][y] === Game.Tile.floorTile || this._tiles[x - 1][y] === Game.Tile.bloodTile || this._tiles[x - 1][y] === Game.Tile.grassTile || this._tiles[x - 1][y] === Game.Tile.rubbleTile || this._tiles[x - 1][y] === Game.Tile.openDoorTile) {
             this._tiles[x - 1][y] = tileType;
             if (isDynamic){
@@ -905,6 +914,7 @@ Game.Map.prototype.cellGrow = function(list, tileType, numberOfTiles, isDynamic)
             }
             list.push({x: x - 1, y: y});
             growthCount ++;
+            if (growthCount === numberOfTiles) break;
         }
         if (this._tiles[x + 1][y] === Game.Tile.floorTile || this._tiles[x + 1][y] === Game.Tile.bloodTile || this._tiles[x + 1][y] === Game.Tile.grassTile || this._tiles[x + 1][y] === Game.Tile.rubbleTile || this._tiles[x + 1][y] === Game.Tile.openDoorTile) {
             this._tiles[x + 1][y] = tileType;
@@ -914,6 +924,7 @@ Game.Map.prototype.cellGrow = function(list, tileType, numberOfTiles, isDynamic)
             }
             list.push({x: x + 1, y: y});
             growthCount ++;
+            if (growthCount === numberOfTiles) break;
         }
         if (this._tiles[x][y - 1] === Game.Tile.floorTile || this._tiles[x][y - 1] === Game.Tile.bloodTile || this._tiles[x][y - 1] === Game.Tile.grassTile || this._tiles[x][y - 1] === Game.Tile.rubbleTile || this._tiles[x][y - 1] === Game.Tile.openDoorTile) {
             this._tiles[x][y -1]  = tileType;
@@ -923,6 +934,7 @@ Game.Map.prototype.cellGrow = function(list, tileType, numberOfTiles, isDynamic)
             }
             list.push({x: x, y: y - 1});
             growthCount ++;
+            if (growthCount === numberOfTiles) break;
         }
         if (this._tiles[x][y + 1] === Game.Tile.floorTile || this._tiles[x][y + 1] === Game.Tile.bloodTile || this._tiles[x][y + 1] === Game.Tile.grassTile || this._tiles[x][y + 1] === Game.Tile.rubbleTile || this._tiles[x][y + 1] === Game.Tile.openDoorTile) {
             this._tiles[x][y + 1] = tileType;
@@ -932,6 +944,7 @@ Game.Map.prototype.cellGrow = function(list, tileType, numberOfTiles, isDynamic)
             }
             list.push({x: x, y: y + 1});
             growthCount ++;
+            if (growthCount === numberOfTiles) break;
         }
         i++
     }
