@@ -962,6 +962,13 @@ Game.Map.prototype.gasGrow = function(list, gasType, numberOfCells) {
         let x = currentTile.x;
         let y = currentTile.y;
 
+        if (this._tiles[x][y] !== Game.Tile.wallTile && this._tiles[x][y] !== Game.Tile.doorTile) {
+            this._gasMap[x][y] = gasType;
+            let gasObject = Game.GasRepository.create(gasType);
+            this.addGas(gasObject, x, y);
+            list.push({x: x, y: y});
+            growthCount++;
+        }
         if (this._tiles[x - 1][y] !== Game.Tile.wallTile && this._tiles[x - 1][y] !== Game.Tile.doorTile) {
             this._gasMap[x - 1][y] = gasType;
             let gasObject = Game.GasRepository.create(gasType);
