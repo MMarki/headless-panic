@@ -1057,7 +1057,7 @@ Game.EntityMixins.Thrower = {
             }
         }
 
-        if (item._name === 'wand of fire' || item._name === 'wand of poison'){
+        if (item._name === 'wand of fire' || item._name === 'wand of poison' || item._name === 'wand of slowing'){
             let points = Game.Geometry.getLine(startPointX, startPointY, endPointX, endPointY);
             for (let point of points){
                 if (this.getMap().getTile(point.x, point.y) === Game.Tile.wallTile || this.getMap().getTile(point.x, point.y) === Game.Tile.doorTile){
@@ -1076,12 +1076,19 @@ Game.EntityMixins.Thrower = {
                 } else if (item._name === 'wand of fire'){
                     let newEffect = new Game.Effect(12, 'burning');
                     creatureReference.setEffect(newEffect);
+                } else if (item._name === 'wand of slowing'){
+                    let newEffect = new Game.Effect(20, 'slowed');
+                    creatureReference.setEffect(newEffect);
                 }
             } else{
                 if (item._name === 'wand of fire'){
                     let tempList = []
                     tempList.push({x: endPointX, y: endPointY});
                     this._map.cellGrow(tempList, 'fireTile', 1, true);
+                } else if (item._name === 'wand of poison'){
+                    let tempList = []
+                    tempList.push({x: endPointX, y: endPointY});
+                    this._map.gasGrow(tempList, 'poisonTile', 1, true);
                 }
                 Game.sendMessage(this, 'You shoot a blast of magic from a %s.',item.getName());
             }
@@ -1666,6 +1673,10 @@ Game.EntityMixins.Affectible = {
                 let string = this.takeDamage('fire', 1, false);
                 return string.length > 0 ? true : false;
             }  
+        } else if (effectName === "hasted"){
+            this.setSpeed(this._normalSpeed * 2);
+        } else if (effectName === "slowed"){
+            this.setSpeed(this._normalSpeed / 2);
         }
     },
     transferEffects: function(effectsList){
@@ -1681,6 +1692,9 @@ Game.EntityMixins.Affectible = {
         }
     },
     removeEffect: function(index) {
+        if (this._effects[index]._name === 'hasted' || this._effects[index]._name === 'slowed'){
+            this.setSpeed(this._normalSpeed);
+        }
         this._effects.splice(index,1);
     },
     hasEffect: function(effectName){

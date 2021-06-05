@@ -18,6 +18,20 @@ Game.GatedItemRepository.define('strength potion', {
     mixins: [Game.ItemMixins.Edible, Game.ItemMixins.Throwable]
 });
 
+Game.ItemRepository.define('haste potion', {
+    name: 'haste potion',
+    character: '!',
+    foreground: Game.Colors.yellow,
+    potionEffect: {
+        duration: 20,
+        name: "hasted"
+    },
+    rarity: 'COMMON',
+    depth: 'ANY',
+    mixins: [Game.ItemMixins.Edible, Game.ItemMixins.Throwable],
+    itemLevel: 1
+});
+
 Game.ItemRepository.define('fireproof potion', {
     name: 'fireproof potion',
     character: '!',
@@ -458,6 +472,23 @@ Game.ItemRepository.define('wand of blinking', {
     disableRandomCreation: false
 });
 
+Game.ItemRepository.define('wand of slowing', {
+    name: 'wand of slowing',
+    character: '\u26B5',
+    foreground: Game.Colors.yellow,
+    attackValue: 1,
+    thrownAttackValue: 1,
+    strengthRequirement: 1,
+    damageType: 'crush',
+    useRange: [1,2],
+    rarity: 'UNCOM',
+    depth: 'ANY',
+    mixins: [Game.ItemMixins.Throwable, Game.ItemMixins.Enchantable, Game.ItemMixins.Usable],
+    itemLevel: 1
+}, {
+    disableRandomCreation: false
+});
+
 Game.ItemRepository.define('wand of digging', {
     name: 'wand of digging',
     character: '\u26B5',
@@ -467,7 +498,7 @@ Game.ItemRepository.define('wand of digging', {
     strengthRequirement: 1,
     damageType: 'crush',
     useRange: [2,3],
-    rarity: 'RARE',
+    rarity: 'UNCOM',
     depth: 'ANY',
     mixins: [Game.ItemMixins.Throwable, Game.ItemMixins.Enchantable, Game.ItemMixins.Usable],
     itemLevel: 1

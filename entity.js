@@ -8,6 +8,7 @@ Game.Entity = function(properties) {
     this._map = null;
     // Acting speed
     this._speed = properties['speed'] || 1000;
+    this._normalSpeed = this._speed;
     this._notMonster = properties['notMonster'] || false;
     //attribrutes
     this._fierce = properties['fierce'] || false; //can sometimes attack twice per turn
