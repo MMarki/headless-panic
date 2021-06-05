@@ -299,16 +299,16 @@ Game.Map.prototype.getAllTlesOfType = function(tileType){
 Game.Map.prototype.checkAdjacentNumber = function(x,y,tileType) {
     let adjacentCount = 0;
     
-    if (this._tiles[x - 1][y]  === tileType){
+    if (x > 0 && this._tiles[x - 1][y] === tileType){
         adjacentCount++;
     }
-    if (this._tiles[x + 1][y]  === tileType){
+    if (x < Game.getScreenWidth() - 1 && this._tiles[x + 1][y] === tileType){
         adjacentCount++;
     }
-    if (this._tiles[x][y - 1]  === tileType){
+    if (y > 0 && this._tiles[x][y - 1] === tileType){
         adjacentCount++;
     }
-    if (this._tiles[x][y + 1]  === tileType) {
+    if (y < Game.getScreenHeight() - 1 && this._tiles[x][y + 1] === tileType) {
         adjacentCount++;
     } 
     

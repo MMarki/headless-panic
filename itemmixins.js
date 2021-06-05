@@ -69,7 +69,23 @@ Game.ItemMixins.Edible = {
         } else if (entity.hasMixin('Attacker') && this._name === 'strength potion'){
             entity.incrementStrength();
         } else if (entity.hasMixin('Affectible') && this._name === 'knowledge potion'){
-            console.log("YOU CAN SEE THE WHOLE LEVEL NOW");
+            let map = entity.getMap();
+            for (let x = 0; x < Game.getScreenWidth(); x++){
+                for (let y = 0; y < Game.getScreenHeight(); y++){
+                    let wallNumber = map.checkAdjacentNumber(x,y,Game.Tile.wallTile);
+                    if (x === 0 && y === 0 || x === 0 && y === Game.getScreenHeight() - 1 || y ===0 && x === Game.getScreenWidth() - 1 || y === Game.getScreenHeight() - 1 && x === Game.getScreenWidth() - 1){
+                        //don't
+                    }
+                    else if (x === 0 || x === Game.getScreenWidth() - 1 || y === 0 || y === Game.getScreenHeight() - 1){
+                        if (wallNumber < 3){
+                            map.setExplored(x, y, true);
+                        }
+                    }
+                    else if (wallNumber < 4){
+                        map.setExplored(x, y, true);
+                    }
+                }
+            }
         }
     },
     describe: function() {
