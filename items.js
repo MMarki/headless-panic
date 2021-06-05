@@ -414,7 +414,6 @@ Game.ItemRepository.define('wand of poison', {
     attackValue: 1,
     thrownAttackValue: 1,
     strengthRequirement: 1,
-    wieldable: true,
     damageType: 'crush',
     useRange: [1,2],
     rarity: 'RARE',
@@ -432,7 +431,6 @@ Game.ItemRepository.define('wand of fire', {
     attackValue: 1,
     thrownAttackValue: 1,
     strengthRequirement: 1,
-    wieldable: true,
     damageType: 'crush',
     useRange: [1,1],
     rarity: 'RARE',
@@ -450,10 +448,26 @@ Game.ItemRepository.define('wand of blinking', {
     attackValue: 1,
     thrownAttackValue: 1,
     strengthRequirement: 1,
-    wieldable: true,
     damageType: 'crush',
     useRange: [2,3],
     rarity: 'UNCOM',
+    depth: 'ANY',
+    mixins: [Game.ItemMixins.Throwable, Game.ItemMixins.Enchantable, Game.ItemMixins.Usable],
+    itemLevel: 1
+}, {
+    disableRandomCreation: false
+});
+
+Game.ItemRepository.define('wand of digging', {
+    name: 'wand of digging',
+    character: '\u26B5',
+    foreground: Game.Colors.yellow,
+    attackValue: 1,
+    thrownAttackValue: 1,
+    strengthRequirement: 1,
+    damageType: 'crush',
+    useRange: [2,3],
+    rarity: 'RARE',
     depth: 'ANY',
     mixins: [Game.ItemMixins.Throwable, Game.ItemMixins.Enchantable, Game.ItemMixins.Usable],
     itemLevel: 1

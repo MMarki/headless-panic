@@ -1049,6 +1049,14 @@ Game.EntityMixins.Thrower = {
             Game.Screen.playScreen.goDownStairs(); 
         }
 
+        if (item._name === 'wand of digging'){
+            let points = Game.Geometry.getLine(startPointX, startPointY, endPointX, endPointY);
+            let map = this.getMap();
+            for (let point of points){
+                map.dig(point.x, point.y);
+            }
+        }
+
         if (item._name === 'wand of fire' || item._name === 'wand of poison'){
             let points = Game.Geometry.getLine(startPointX, startPointY, endPointX, endPointY);
             for (let point of points){
