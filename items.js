@@ -227,7 +227,7 @@ Game.ItemRepository.define('dagger', {
     damageType: 'stab',
     rarity: 'UNCOM',
     depth: 'BAND',
-    mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable, Game.ItemMixins.Enchantable],
+    mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable],
     itemLevel: 1
 }, {
     disableRandomCreation: false
@@ -244,7 +244,7 @@ Game.ItemRepository.define('club', {
     damageType: 'crush',
     rarity: 'UNCOM',
     depth: 'BAND',
-    mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable, Game.ItemMixins.Enchantable],
+    mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable],
     itemLevel: 1
 }, {
     disableRandomCreation: false
@@ -261,7 +261,7 @@ Game.ItemRepository.define('longsword', {
     damageType: 'slash',
     rarity: 'UNCOM',
     depth: 'ANY',
-    mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable, Game.ItemMixins.Enchantable],
+    mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable],
     itemLevel: 1
 }, {
     disableRandomCreation: false
@@ -278,7 +278,7 @@ Game.ItemRepository.define('greatclub', {
     damageType: 'crush',
     rarity: 'UNCOM',
     depth: 'ANY',
-    mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable, Game.ItemMixins.Enchantable],
+    mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable],
     itemLevel: 1
 }, {
     disableRandomCreation: false
@@ -295,7 +295,7 @@ Game.ItemRepository.define('warhammer', {
     damageType: 'crush',
     rarity: 'RARE',
     depth: 'ANY',
-    mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable, Game.ItemMixins.Enchantable],
+    mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable],
     itemLevel: 2
 }, {
     disableRandomCreation: false
@@ -312,7 +312,7 @@ Game.ItemRepository.define('greatsword', {
     damageType: 'slash',
     rarity: 'RARE',
     depth: 'ANY',
-    mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable, Game.ItemMixins.Enchantable],
+    mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable],
     itemLevel: 2
 }, {
     disableRandomCreation: false
@@ -329,7 +329,7 @@ Game.ItemRepository.define('war pike', {
     damageType: 'stab',
     rarity: 'RARE',
     depth: 'ANY',
-    mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable, Game.ItemMixins.Enchantable],
+    mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable],
     itemLevel: 2
 }, {
     disableRandomCreation: false
@@ -346,7 +346,7 @@ Game.ItemRepository.define('rapier', {
     damageType: 'pierce',
     rarity: 'RARE',
     depth: 'ANY',
-    mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable, Game.ItemMixins.Enchantable],
+    mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable],
     itemLevel: 1
 }, {
     disableRandomCreation: false
@@ -363,7 +363,7 @@ Game.ItemRepository.define('axe', {
     damageType: 'slash',
     rarity: 'UNCOM',
     depth: 'ANY',
-    mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable, Game.ItemMixins.Enchantable],
+    mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable],
     itemLevel: 2
 }, {
     disableRandomCreation: false
@@ -380,7 +380,7 @@ Game.ItemRepository.define('spear', {
     damageType: 'stab',
     rarity: 'UNCOM',
     depth: 'ANY',
-    mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable, Game.ItemMixins.Enchantable],
+    mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable],
     itemLevel: 1
 }, {
     disableRandomCreation: false
@@ -397,7 +397,7 @@ Game.ItemRepository.define('mace', {
     damageType: 'crush',
     rarity: 'UNCOM',
     depth: 'BAND',
-    mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable, Game.ItemMixins.Enchantable],
+    mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable],
     itemLevel: 1
 }, {
     disableRandomCreation: false
@@ -414,7 +414,7 @@ Game.ItemRepository.define('scimitar', {
     damageType: 'slash',
     rarity: 'UNCOM',
     depth: 'BAND',
-    mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable, Game.ItemMixins.Enchantable],
+    mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable],
     itemLevel: 1
 }, {
     disableRandomCreation: false
@@ -516,7 +516,7 @@ Game.ItemRepository.define('leather', {
     wearable: true,
     rarity: 'UNCOM',
     depth: 'BAND',
-    mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Enchantable],
+    mixins: [Game.ItemMixins.Equippable],
     itemLevel: 1
 }, {
     disableRandomCreation: false
@@ -531,7 +531,7 @@ Game.ItemRepository.define('studded', {
     wearable: true,
     rarity: 'UNCOM',
     depth: 'ANY',
-    mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Enchantable],
+    mixins: [Game.ItemMixins.Equippable],
     itemLevel: 1
 }, {
     disableRandomCreation: false
@@ -546,7 +546,7 @@ Game.ItemRepository.define('scalemail', {
     wearable: true,
     rarity: 'UNCOM',
     depth: 'ANY',
-    mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Enchantable],
+    mixins: [Game.ItemMixins.Equippable],
     itemLevel: 1
 }, {
     disableRandomCreation: false
@@ -561,7 +561,7 @@ Game.ItemRepository.define('chainmail', {
     wearable: true,
     rarity: 'UNCOM',
     depth: 'BAND',
-    mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Enchantable],
+    mixins: [Game.ItemMixins.Equippable],
     itemLevel: 1
 }, {
     disableRandomCreation: false
@@ -576,7 +576,7 @@ Game.ItemRepository.define('splintmail', {
     wearable: true,
     rarity: 'UNCOM',
     depth: 'ANY',
-    mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Enchantable],
+    mixins: [Game.ItemMixins.Equippable],
     itemLevel: 2
 }, {
     disableRandomCreation: false
@@ -591,7 +591,7 @@ Game.ItemRepository.define('platemail', {
     wearable: true,
     rarity: 'UNCOM',
     depth: 'ANY',
-    mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Enchantable],
+    mixins: [Game.ItemMixins.Equippable],
     itemLevel: 3
 }, {
     disableRandomCreation: false

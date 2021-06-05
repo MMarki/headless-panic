@@ -513,7 +513,7 @@ Game.EntityRepository.define('cerberus', {
     speed: 1000,
     heads: 3,
     sightRadius: 16,
-    headHits: 1,
+    headHits: 2,
     description: "A massive 3-headed bulldog.",
     tasks: ['hunt', 'wander'],
     headPower: 'When you get hit, you deal 25% damage back.',

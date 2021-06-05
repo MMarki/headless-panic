@@ -1649,7 +1649,7 @@ Game.EntityMixins.Affectible = {
                 effects[i].update();
                 if (stopActor) {return 1};
             } else {
-                this.removeEffect(i)
+                this.removeEffect(effects[i].getName())
             }
         }
         return 0;
@@ -1691,11 +1691,11 @@ Game.EntityMixins.Affectible = {
             this._effects.push(effect);
         }
     },
-    removeEffect: function(index) {
-        if (this._effects[index]._name === 'hasted' || this._effects[index]._name === 'slowed'){
+    removeEffect: function(effectName) {
+        if (effectName === 'hasted' || effectName === 'slowed'){
             this.setSpeed(this._normalSpeed);
         }
-        this._effects.splice(index,1);
+        this._effects.splice(effectName,1);
     },
     hasEffect: function(effectName){
         var effects = this._effects;

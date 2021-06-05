@@ -111,7 +111,7 @@ Game.Entity.prototype.tryMove = function(x, y) {
                     var effects = this._effects;
                     for (var i = 0; i < effects.length; i++){
                         if ('burning' === effects[i].getName()){
-                            this.removeEffect(i)
+                            this.removeEffect('burning');
                         }
                     }
                 }
