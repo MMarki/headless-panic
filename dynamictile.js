@@ -125,8 +125,6 @@ Game.DynamicTileMixins.Actor = {
         if (canSee){
             this._foreground = ROT.Color.toHex(ROT.Color.randomize(ROT.Color.fromString(this._defaultForeground), [10, 10, 10]));
             this._background = ROT.Color.toHex(ROT.Color.randomize(ROT.Color.fromString(this._defaultBackground), [10, 10, 10]));
-            // Re-render the screen
-            Game.refresh();
         }
     }
 };
