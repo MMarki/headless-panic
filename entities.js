@@ -599,7 +599,7 @@ Game.EntityRepository.define('death', {
     name: 'death',
     character: '\u2625',
     foreground: '#b7fdfe',
-    maxHP: 100,
+    maxHP: 1000,
     defenseValue: 0,
     attackValue: 20,
     accuracyValue: 100,
@@ -607,7 +607,7 @@ Game.EntityRepository.define('death', {
     description: "She seeks what is hers.",
     tasks: ['hunt', 'wander'],
     mixins: [Game.EntityMixins.TaskActor, Game.EntityMixins.Sight,
-             Game.EntityMixins.Attacker]
+             Game.EntityMixins.Attacker, Game.EntityMixins.Affectible]
 });
 
 Game.EntityRepository.repoFrequency = {
