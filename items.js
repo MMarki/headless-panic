@@ -18,7 +18,7 @@ Game.GatedItemRepository.define('strength potion', {
     mixins: [Game.ItemMixins.Edible, Game.ItemMixins.Throwable]
 });
 
-Game.ItemRepository.define('haste potion', {
+/*Game.ItemRepository.define('haste potion', {
     name: 'haste potion',
     character: '!',
     foreground: Game.Colors.yellow,
@@ -30,7 +30,7 @@ Game.ItemRepository.define('haste potion', {
     depth: 'ANY',
     mixins: [Game.ItemMixins.Edible, Game.ItemMixins.Throwable],
     itemLevel: 1
-});
+});*/
 
 Game.ItemRepository.define('fireproof potion', {
     name: 'fireproof potion',
@@ -430,6 +430,7 @@ Game.ItemRepository.define('wand of poison', {
     strengthRequirement: 1,
     damageType: 'crush',
     useRange: [1,2],
+    throwBreakChance: 0,
     rarity: 'RARE',
     depth: 'ANY',
     mixins: [Game.ItemMixins.Throwable, Game.ItemMixins.Enchantable, Game.ItemMixins.Usable],
@@ -447,6 +448,7 @@ Game.ItemRepository.define('wand of fire', {
     strengthRequirement: 1,
     damageType: 'crush',
     useRange: [1,1],
+    throwBreakChance: 0,
     rarity: 'RARE',
     depth: 'ANY',
     mixins: [Game.ItemMixins.Throwable, Game.ItemMixins.Enchantable, Game.ItemMixins.Usable],
@@ -464,6 +466,7 @@ Game.ItemRepository.define('wand of blinking', {
     strengthRequirement: 1,
     damageType: 'crush',
     useRange: [2,3],
+    throwBreakChance: 0,
     rarity: 'UNCOM',
     depth: 'ANY',
     mixins: [Game.ItemMixins.Throwable, Game.ItemMixins.Enchantable, Game.ItemMixins.Usable],
@@ -480,7 +483,8 @@ Game.ItemRepository.define('wand of slowing', {
     thrownAttackValue: 1,
     strengthRequirement: 1,
     damageType: 'crush',
-    useRange: [1,2],
+    useRange: [1,1],
+    throwBreakChance: 0,
     rarity: 'RARE',
     depth: 'ANY',
     mixins: [Game.ItemMixins.Throwable, Game.ItemMixins.Enchantable, Game.ItemMixins.Usable],
@@ -498,6 +502,7 @@ Game.ItemRepository.define('wand of digging', {
     strengthRequirement: 1,
     damageType: 'crush',
     useRange: [2,3],
+    throwBreakChance: 0,
     rarity: 'UNCOM',
     depth: 'ANY',
     mixins: [Game.ItemMixins.Throwable, Game.ItemMixins.Enchantable, Game.ItemMixins.Usable],
