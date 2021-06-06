@@ -28,6 +28,7 @@ Game.Screen.playScreen = {
     _gameEnded: false,
     _subScreen: null,
     _lastTarget: null,
+    _altarPosition: {},
     alreadyGotList: [],
     deathInfo: {
         strength: 1,
@@ -563,16 +564,15 @@ Game.Screen.playScreen = {
         // Try to move to the new cell
         this._player.tryMove(newX, newY);
     },
-    handleAltarUse: function(newX, newY) {
+    handleAltarUse: function(altarX, altarY) {
         let map = this._map;
-        if (map.getTiles()[newX][newY] === Game.Tile.altarTile){
+        if (map.getTiles()[altarX][altarY] === Game.Tile.altarTile){
             if (Game.Screen.altarScreen.setup(this._player, this._player.getItems())) {
-                map.getTiles()[newX][newY] = Game.Tile.rubbleTile;
+                this._altarPosition = {x: altarX, y: altarY};
                 this.setSubScreen(Game.Screen.altarScreen);
             } else {
                 Game.sendMessage(this._player, "You have nothing to put on the altar.");
             }
-            
         }
     },
     setSubScreen: function(subScreen) {
@@ -1201,6 +1201,10 @@ Game.Screen.altarScreen = new Game.Screen.ItemListScreen({
         } else {
             var item = selectedItems[keys[0]];
             item.setUses(item.getMaxUses());
+            let map = Game.Screen.playScreen._map;
+            let altarX = Game.Screen.playScreen._altarPosition.x;
+            let altarY = Game.Screen.playScreen._altarPosition.y;
+            map.getTiles()[altarX][altarY] = Game.Tile.rubbleTile;
             Game.sendMessage(this._player, "You put your wand on the altar. There is a flash of light and the altar crumbles!");
         }
         return true;
