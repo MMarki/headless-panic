@@ -850,7 +850,14 @@ Game.Screen.winScreen = {
         // Render our prompt to the screen
         display.drawText(2, 1, "%c{yellow}Death owes you a debt for defeating the Lich!");
         display.drawText(2, 3, "She no longer haunts you. You are free.");
-        display.drawText(2, 5, "(Thank you for playing Headless Panic)");
+        display.drawText(2, 5, "STRN: " +  Game.Screen.playScreen.deathInfo.strength);
+        display.drawText(2, 6, "MAX HP: " +  Game.Screen.playScreen.deathInfo.maxHP);
+        display.drawText(2, 7, "DMG: " +  Game.Screen.playScreen.deathInfo.weapon);
+        display.drawText(2, 8, "ARMR: " +  Game.Screen.playScreen.deathInfo.armor);
+        display.drawText(2, 9, "TURNS: " +  Game.Screen.playScreen.turnCount);
+        display.drawText(2, 10, "GOLD: " +  Game.Screen.playScreen.goldCount);
+
+        display.drawText(2, 12, "(Thank you for playing Headless Panic)");
     },
     handleInput: function(inputType, inputData) {
         // Nothing to do here      
