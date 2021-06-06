@@ -38,21 +38,21 @@ Game.ItemMixins.Edible = {
             let map = entity.getMap();
             let tempList = []
             tempList.push({x: x, y: y});
-            map.cellGrow(tempList, 'fireTile', 10, true);
+            map.cellGrow(tempList, 'fireTile', 14, true);
         } else if (this._name === 'poison potion'){
             let x = entity.getX();
             let y = entity.getY();
             let map = entity.getMap();
             let tempList = []
             tempList.push({x: x, y: y});
-            map.gasGrow(tempList, 'poisonTile', 12);
+            map.gasGrow(tempList, 'poisonTile', 16);
         } else if (this._name === 'darkness potion'){
             let x = entity.getX();
             let y = entity.getY();
             let map = entity.getMap();
             let tempList = []
             tempList.push({x: x, y: y});
-            map.gasGrow(tempList, 'darknessTile', 9);
+            map.gasGrow(tempList, 'darknessTile', 10);
         } else if (this._name === 'teleport potion') {
             let x = entity.getX();
             let y = entity.getY();

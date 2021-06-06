@@ -256,7 +256,7 @@ Game.EntityMixins.TaskActor = {
         if (this.getName() === 'hydra'){
             let list = [];
             list.push ({x: this._aimX, y: this._aimY});
-            this._map.cellGrow(list, Game.Tile.shallowWaterTile, 5, false);
+            this._map.cellGrow(list, Game.Tile.shallowWaterTile, 7, false);
         } else if (this.getName() === 'underwyrm'){
             let points = Game.Geometry.getLine(this.getX(), this.getY(), this._aimX, this._aimY);
 
@@ -986,11 +986,11 @@ Game.EntityMixins.Thrower = {
             } else if (item._name === "poison potion"){
                 var tempList = []
                 tempList.push({x: endPointX, y: endPointY});
-                this._map.gasGrow(tempList, 'poisonTile', 12);
+                this._map.gasGrow(tempList, 'poisonTile', 16);
             } else if (item._name === "fire potion"){
                 var tempList = []
                 tempList.push({x: endPointX, y: endPointY});
-                this._map.cellGrow(tempList, 'fireTile', 10, true);
+                this._map.cellGrow(tempList, 'fireTile', 14, true);
             } else if (item._name === "darkness potion"){
                 var tempList = []
                 tempList.push({x: endPointX, y: endPointY});
