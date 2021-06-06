@@ -1071,24 +1071,24 @@ Game.EntityMixins.Thrower = {
             let creatureReference = this.getMap().getEntityAt(endPointX, endPointY);
             if (creatureReference !== undefined){
                 if (item._name === 'wand of poison'){
-                    let newEffect = new Game.Effect(12, 'poisoned');
+                    let newEffect = new Game.Effect(11 + item.getMaxUses(), 'poisoned');
                     creatureReference.setEffect(newEffect);
                 } else if (item._name === 'wand of fire'){
-                    let newEffect = new Game.Effect(12, 'burning');
+                    let newEffect = new Game.Effect(11 + item.getMaxUses(), 'burning');
                     creatureReference.setEffect(newEffect);
                 } else if (item._name === 'wand of slowing'){
-                    let newEffect = new Game.Effect(20, 'slowed');
+                    let newEffect = new Game.Effect(16 + item.getMaxUses() * 2, 'slowed');
                     creatureReference.setEffect(newEffect);
                 }
             } else{
                 if (item._name === 'wand of fire'){
                     let tempList = []
                     tempList.push({x: endPointX, y: endPointY});
-                    this._map.cellGrow(tempList, 'fireTile', 1, true);
+                    this._map.cellGrow(tempList, 'fireTile', 1 + item.getMaxUses() * 2, true);
                 } else if (item._name === 'wand of poison'){
                     let tempList = []
                     tempList.push({x: endPointX, y: endPointY});
-                    this._map.gasGrow(tempList, 'poisonTile', 1, true);
+                    this._map.gasGrow(tempList, 'poisonTile', 1 + item.getMaxUses() * 2, true);
                 }
                 Game.sendMessage(this, 'You shoot a blast of magic from a %s.',item.getName());
             }

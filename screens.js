@@ -1200,6 +1200,7 @@ Game.Screen.altarScreen = new Game.Screen.ItemListScreen({
             Game.sendMessage(this._player, "You don't have any wands.")
         } else {
             var item = selectedItems[keys[0]];
+            item.incrementMaxUses();
             item.setUses(item.getMaxUses());
             let map = Game.Screen.playScreen._map;
             let altarX = Game.Screen.playScreen._altarPosition.x;
