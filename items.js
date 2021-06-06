@@ -225,7 +225,7 @@ Game.ItemRepository.define('dagger', {
     throwBreakChance: 20,
     wieldable: true,
     damageType: 'stab',
-    rarity: 'UNCOM',
+    rarity: 'COMMON',
     depth: 'BAND',
     mixins: [Game.ItemMixins.Equippable, Game.ItemMixins.Throwable],
     itemLevel: 1
@@ -481,7 +481,7 @@ Game.ItemRepository.define('wand of slowing', {
     strengthRequirement: 1,
     damageType: 'crush',
     useRange: [1,2],
-    rarity: 'UNCOM',
+    rarity: 'RARE',
     depth: 'ANY',
     mixins: [Game.ItemMixins.Throwable, Game.ItemMixins.Enchantable, Game.ItemMixins.Usable],
     itemLevel: 1
