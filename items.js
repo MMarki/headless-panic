@@ -388,7 +388,7 @@ Game.ItemRepository.define('spear', {
 
 Game.ItemRepository.define('mace', {
     name: 'mace',
-    character: '\u16F3',
+    character: '\u26B2',
     foreground: Game.Colors.yellow,
     attackValue: 4,
     thrownAttackValue: 2,
