@@ -890,6 +890,7 @@ Game.Screen.loseScreen = {
             "Weapons and armor with Strength requirements show the required Strength level in brackets.",
             "Wielding a weapon with excess strength increases chance to hit and max hit.",
             "Wearing an enemy's head gives you one of their powers.",
+            "Enemy heads with powers will have a desciption when you look at them on the ground or you select them in the inventory.",
             "The further you throw a weapon, the less likely it is to hit an enemy.",
             "Press X to eXplore automatically. It's not as smart as manual control, but it's easier on your fingers.",
             "Press L to Look at new monsters to learn something about them.",
@@ -898,8 +899,10 @@ Game.Screen.loseScreen = {
             "Weapons and armor have a Strength requirement. If you exceed this requirement, the performance of these items will scale with your strength.",
             "Weapons each have a damage type (crush, slash, or stab). Certain enemies are resistant to or vulnerable to certain damage types.",
             "Keep trying! Knowledge of monsters and items will drastically improve your chances of survival.",
+            "Damage of a type that monsters are vulnerable or resistant to will be blue and red respectively in the newsfeed.",
             "Strength Potions, Life Potions, and Altars are the most important items for tackling the dungeon.",
-            /*"When aiming a projectile, it's sometimes possible to hit targets that seem out of reach. Try adjusting the targeting reticule to a position behind them.",*/
+            "Wand Altars recharge your wands and boost the number of max charges.",
+            "Life Potions increase your max HP by 20% and fully refill your health. Sometimes it's better to use it during a fight than before a fight."
         ];
         return hintList[Math.floor(Math.random() * hintList.length)];
     }
