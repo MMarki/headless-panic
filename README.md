@@ -2,6 +2,9 @@
 
 Headless Panic is a short (~ 30 minutes long) roguelike where you play as a headless chicken knight. Wear the heads of slain enemies to gain their powers and conquer the dungeon.
 
+## Play for Free Here:
+[Play Online](https://www.marcelmarki.com/headless-panic)
+
 ## Tips:
 - Use the Arrow Keys to move.
 - Bump into monsters to hit them.
