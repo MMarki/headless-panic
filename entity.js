@@ -111,8 +111,7 @@ Game.Entity.prototype.tryMove = function(x, y) {
                     var effects = this._effects;
                     for (var i = 0; i < effects.length; i++){
                         if ('burning' === effects[i].getName()){
-                            this.removeEffect('burning');
-                            this.removeEffect('burning');
+                            this.removeEffect(i);
                         }
                     }
                 }
@@ -157,8 +156,8 @@ Game.Entity.prototype.applyNewEffects = function(){
     if (this.hasMixin('Affectible')){
         if ( (tile._name === 'fireTile' || tile._name === 'hellFireTile') && !this.hasMixin('Flyer') && this._levitating !== true){
             if (this.hasEffect('burning')){
-                this.removeEffect('burning');
-                this.removeEffect('burning');
+                let index = this.getEffectIndex('burning');
+                this.removeEffect(index);
             }
             let duration = 7;
             let name = 'burning';
@@ -166,8 +165,8 @@ Game.Entity.prototype.applyNewEffects = function(){
             this.setEffect(newEffect);
         } else if (this.hasMixin('PlayerActor') && tile._name === 'protectTile' && this._levitating !== true){
             if (this.hasEffect('protected')){
-                this.removeEffect('protected');
-                this.removeEffect('protected');
+                let index = this.getEffectIndex('protected');
+                this.removeEffect(index);
             }
             let duration = 6;
             let name = 'protected';
@@ -176,8 +175,8 @@ Game.Entity.prototype.applyNewEffects = function(){
             map.setTile(this._x, this._y, Game.Tile.floorTile);
         }  else if (this.hasMixin('PlayerActor') && tile._name === 'vulnerabilityTile' && this._levitating !== true){
             if (this.hasEffect('vulnerable')){
-                this.removeEffect('vulnerable');
-                this.removeEffect('vulnerable');
+                let index = this.getEffectIndex('vulnerable');
+                this.removeEffect(index);
             }
             let duration = 6;
             let name = 'vulnerable';
@@ -188,8 +187,8 @@ Game.Entity.prototype.applyNewEffects = function(){
 
         if (gas !== null && gas._name === 'darknessTile' && this.getName()!== 'wraith'){
             if (this.hasEffect('blind')){
-                this.removeEffect('blind');
-                this.removeEffect('blind');
+                let index = this.getEffectIndex('blind');
+                this.removeEffect(index);
             }
             let duration = 20;
             let name =  'blind';
@@ -197,8 +196,8 @@ Game.Entity.prototype.applyNewEffects = function(){
             this.setEffect(newEffect);
         } else if (gas !== null && gas._name === 'poisonTile'){
             if (this.hasEffect('poisoned')){
-                this.removeEffect('poisoned');
-                this.removeEffect('poisoned');
+                let index = this.getEffectIndex('poisoned');
+                this.removeEffect(index);
             }
             let duration = 14;
             let name =  'poisoned';

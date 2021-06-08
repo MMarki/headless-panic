@@ -1290,7 +1290,7 @@ Game.EntityMixins.Sight = {
             return false;
         }
 
-        if (this.hasMixin('Affectible') && this.hasEffect('blind')){
+        if (this.hasMixin('Affectible') && this.hasEffect('blind') && !this.hasEffect("detecting")){
             return false;
         }
 
@@ -1638,6 +1638,15 @@ Game.EntityMixins.Affectible = {
     getEffects: function(){
         return this._effects;
     },
+    getEffectIndex: function(effectName){
+        let effects = this._effects;
+        for (var i = 0; i < effects.length; i++){
+            if (effectName === effects[i].getName()){
+                return i;
+            }
+        }
+        return null;
+    },
     handleEffects: function(){
         var effects = this._effects;
         var stopActor = 0;
@@ -1647,7 +1656,7 @@ Game.EntityMixins.Affectible = {
                 effects[i].update();
                 if (stopActor) {return 1};
             } else {
-                this.removeEffect(effects[i].getName())
+                this.removeEffect(i)
             }
         }
         return 0;
@@ -1689,11 +1698,11 @@ Game.EntityMixins.Affectible = {
             this._effects.push(effect);
         }
     },
-    removeEffect: function(effectName) {
-        if (effectName === 'hasted' || effectName === 'slowed'){
+    removeEffect: function(index) {
+        if (this._effects[index]._name === 'slowed'){
             this.setSpeed(this._normalSpeed);
         }
-        this._effects.splice(effectName,1);
+        this._effects.splice(index,1);
     },
     hasEffect: function(effectName){
         var effects = this._effects;
