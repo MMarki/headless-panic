@@ -26,8 +26,7 @@ Game.EntityMixins.PlayerActor = {
         }
         // Re-render the screen
         Game.refresh();
-        // Lock the engine and wait asynchronously
-        // for the player to press a key.
+        // Lock the engine and wait asynchronously for the player to press a key.
         this.getMap().getEngine().lock();  
         // Clear the message queue
         this.clearMessages();
@@ -533,7 +532,6 @@ Game.EntityMixins.Destructible = {
                     this.unhead();
                     this.removeItem(headIndex);
                     returnMessage = " %%c{#F61067}Your head falls off!";
-                    //Game.sendMessage(this, "%c{#F61067}Your head falls off!");
                     return returnMessage;
                 }
             } else {
@@ -556,25 +554,21 @@ Game.EntityMixins.Destructible = {
                     if (this._headsRemaining === this._heads) {
                         this._headsRemaining--;
                         this.tryDropHead();
-                        //console.log("first drop!: ", this._hp);
                     }
                 } if (this._hp < this._headsBreakpoints[this._headsBreakpoints.length - 2]){
                     if (this._headsRemaining === this._heads - 1) {
                         this._headsRemaining--;
                         this.tryDropHead();
-                        //console.log("second drop!: ", this._hp);
                     }
                 } if (this._hp < this._headsBreakpoints[this._headsBreakpoints.length - 3]){
                     if (this._headsRemaining === this._heads - 2) {
                         this._headsRemaining--;
                         this.tryDropHead();
-                        //console.log("third drop!: ", this._hp);
                     }
                 } if (this._hp < this._headsBreakpoints[this._headsBreakpoints.length - 4]){
                     if (this._headsRemaining === this._heads - 3) {
                         this._headsRemaining--;
                         this.tryDropHead();
-                        //console.log("fourth drop!: ", this._hp);
                     }
                 }
             } 
@@ -884,7 +878,6 @@ Game.EntityMixins.MultiHeaded = {
         let hpIncrement = this._maxHP/this._heads;
         for (let i = 0; i < this._heads; i++){
             this._headsBreakpoints.push(i * hpIncrement)
-            //console.log(i*hpIncrement);
         }
     }
 }
@@ -1153,7 +1146,6 @@ Game.EntityMixins.Thrower = {
         }
         
         //handle thrown potions
-        //console.log("itemname:" + item._name);
         if( item._potionEffect !== null && item._potionEffect !== undefined){
             target.setEffect(item._potionEffect);
         } else if (item._name === "health potion" && targetIsDestructible === true){
@@ -1293,7 +1285,7 @@ Game.EntityMixins.Sight = {
         return this._sightRadius;
     },
     canSee: function(entity) {
-        // If not on the same map or on different floors, then exit early
+        // If not on the same map then exit early
         if (!entity || this._map !== entity.getMap()) {
             return false;
         }
