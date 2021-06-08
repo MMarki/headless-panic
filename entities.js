@@ -623,7 +623,7 @@ Game.EntityRepository.repoFrequency = {
     'L10': [{'zombie': 2}, {'slime': 1}, {'skeleton': 6}, {'golem': 1}, {'wraith': 1}, {'minotaur': 2}, {'eldritch eye':2}],
     'L11': [{'zombie': 2}, {'slime': 1}, {'skeleton': 6}, {'golem': 2}, {'bat': 2}, {'wraith': 1}, {'minotaur': 1}, {'eldritch eye':1}],
     'L12': [{'zombie': 1}, {'slime': 1}, {'skeleton': 6}, {'golem': 2}, {'wraith': 1}, {'minotaur': 2}],
-    'L13': [{'skeleton': 4}, {'wraith': 1}, {'harpy': 3}, {'devil': 1}, {'imp': 2}, {'underwyrm': 1}],
-    'L14': [{'skeleton': 5}, {'wraith': 1}, {'harpy': 2}, {'devil': 1}, {'imp': 2}, {'underwyrm': 1}],
+    'L13': [{'skeleton': 4}, {'wraith': 1}, {'harpy': 3}, {'devil': 1}, {'imp': 2}],
+    'L14': [{'skeleton': 5}, {'wraith': 1}, {'harpy': 2}, {'devil': 1}, {'imp': 2}],
     'L15': [{'skeleton': 5}, {'harpy': 2}, {'devil': 1}, {'imp': 3}]
 }

@@ -65,7 +65,7 @@ Game.Map = function(tiles, player, items, stairs, gasMap) {
         entitiesPerArea = 15;
     }
     if (Game.getLevel() > 9){
-        entitiesPerArea = 22;
+        entitiesPerArea = 21;
     }
     for (let i = 0; i < entitiesPerArea; i++) {
         // Add a random entity
@@ -94,6 +94,15 @@ Game.Map = function(tiles, player, items, stairs, gasMap) {
     // if on L12, create one cerberus
     if (Game.getLevel() === 12){
         this.addEntityAtRandomPosition(Game.EntityRepository.create('cerberus'), 1);
+    }
+    // if on L12, create one underwyrm
+    if (Game.getLevel() === 13){
+        this.addEntityAtRandomPosition(Game.EntityRepository.create('underwyrm'), 1);
+    }
+    // if on L12, create two underwyrms
+    if (Game.getLevel() === 14){
+        this.addEntityAtRandomPosition(Game.EntityRepository.create('underwyrm'), 1);
+        this.addEntityAtRandomPosition(Game.EntityRepository.create('underwyrm'), 1);
     }
     // if on L15, create one lich
     if (Game.getLevel() === 15){
