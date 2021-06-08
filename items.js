@@ -388,7 +388,7 @@ Game.ItemRepository.define('spear', {
 
 Game.ItemRepository.define('mace', {
     name: 'mace',
-    character: '\u26B4',
+    character: '\u16F3',
     foreground: Game.Colors.yellow,
     attackValue: 4,
     thrownAttackValue: 2,
@@ -405,7 +405,7 @@ Game.ItemRepository.define('mace', {
 
 Game.ItemRepository.define('scimitar', {
     name: 'scimitar',
-    character: '~',
+    character: '\u26B8',
     foreground: Game.Colors.yellow,
     attackValue: 4,
     thrownAttackValue: 2,
@@ -495,7 +495,7 @@ Game.ItemRepository.define('wand of slowing', {
 
 Game.ItemRepository.define('wand of digging', {
     name: 'wand of digging',
-    character: '\u26B5',
+    character: '~',
     foreground: Game.Colors.yellow,
     attackValue: 1,
     thrownAttackValue: 1,

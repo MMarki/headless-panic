@@ -717,18 +717,21 @@ Game.EntityMixins.Attacker = {
             if (Math.random()*100 < hitProbability){
                 let max = Math.max(1, attack + (strengthModifier));
                 let damage = max;
+                let colorPrefix = ''
                 if (targetIsVulnerable) {
                     damage *= 2;
+                    colorPrefix = "%%c{#61AEEE}"
                 } else if (targetIsResistant) {
                     damage = Math.ceil(damage/2);
+                    colorPrefix = "%%c{#F61067}"
                 } 
 
                 let returnMessage = target.takeDamage(this, damage, true);
                 if (returnMessage.length > 0){
-                    Game.sendMessage(this, 'You strike %s for %d damage.' + returnMessage, [target.describeThe(false), damage]);
+                    Game.sendMessage(this, 'You strike %s for ' + colorPrefix  + '%d damage.' + returnMessage, [target.describeThe(false), damage]);
                     Game.sendMessage(target, '%s strikes you for %d damage.' + returnMessage,  [this.describeThe(true), damage]);
                 } else {
-                    Game.sendMessage(this, 'You strike %s for %d damage.', [target.describeThe(false), damage]);
+                    Game.sendMessage(this, 'You strike %s for ' + colorPrefix + '%d damage.', [target.describeThe(false), damage]);
                     Game.sendMessage(target, '%s strikes you for %d damage.',  [this.describeThe(true), damage]);
                 }
                
@@ -1115,15 +1118,18 @@ Game.EntityMixins.Thrower = {
                 Game.sendMessage(this, 'You throw a %s at the %s. It deflects off its shell!', [item.getName(),target.getName()]);
             } else if (Math.random()*100 < hitProbability){
                 let maxAmount = Math.max(1, item.getThrownAttackValue());
+                let colorPrefix = ''
                 if (this.hasMixin('PlayerActor')) {
                     if (item.getDamageType != undefined){
                         let damageType = item.getDamageType();
                         let targetIsVulnerable = target.getVulnerabilities().includes(damageType);
                         if (targetIsVulnerable){
+                            colorPrefix = '%%c{#61AEEE}';
                             maxAmount *= 2;
                         }
                         let targetIsResistant = target.getResistances().includes(damageType);
                         if (targetIsResistant){
+                            colorPrefix = "%%c{#F61067}"
                             maxAmount = Math.ceil(maxAmount / 2);
                         } 
                     } 
@@ -1132,9 +1138,9 @@ Game.EntityMixins.Thrower = {
                 if (amount > 0){
                     let returnMessage = target.takeDamage(this, amount, true);
                     if (returnMessage.length > 0){
-                        Game.sendMessage(this, 'You throw a %s at %s for %d damage!' + returnMessage, [item.getName(),target.describeThe(false), amount]);
+                        Game.sendMessage(this, 'You throw a %s at %s for ' + colorPrefix + '%d damage!' + returnMessage, [item.getName(),target.describeThe(false), amount]);
                     } else {
-                        Game.sendMessage(this, 'You throw a %s at %s for %d damage!', [item.getName(),target.describeThe(false), amount]);
+                        Game.sendMessage(this, 'You throw a %s at %s for ' + colorPrefix + '%d damage!', [item.getName(),target.describeThe(false), amount]);
                     }
                 } else {
                     Game.sendMessage(this, 'You throw a %s at %s. It misses.', [item.getName(),target.describeThe(false)]);
