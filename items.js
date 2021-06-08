@@ -405,7 +405,7 @@ Game.ItemRepository.define('mace', {
 
 Game.ItemRepository.define('scimitar', {
     name: 'scimitar',
-    character: '\u26B8',
+    character: '~',
     foreground: Game.Colors.yellow,
     attackValue: 4,
     thrownAttackValue: 2,
@@ -423,13 +423,13 @@ Game.ItemRepository.define('scimitar', {
 //wands
 Game.ItemRepository.define('wand of poison', {
     name: 'wand of poison',
-    character: '\u26B5',
+    character: '~',
     foreground: Game.Colors.yellow,
     attackValue: 1,
     thrownAttackValue: 1,
     strengthRequirement: 1,
     damageType: 'crush',
-    useRange: [1,2],
+    useRange: [1,1],
     throwBreakChance: 0,
     rarity: 'RARE',
     depth: 'ANY',
@@ -441,7 +441,7 @@ Game.ItemRepository.define('wand of poison', {
 
 Game.ItemRepository.define('wand of fire', {
     name: 'wand of fire',
-    character: '\u26B5',
+    character: '~',
     foreground: Game.Colors.yellow,
     attackValue: 1,
     thrownAttackValue: 1,
@@ -459,7 +459,7 @@ Game.ItemRepository.define('wand of fire', {
 
 Game.ItemRepository.define('wand of blinking', {
     name: 'wand of blinking',
-    character: '\u26B5',
+    character: '~',
     foreground: Game.Colors.yellow,
     attackValue: 1,
     thrownAttackValue: 1,
@@ -477,7 +477,7 @@ Game.ItemRepository.define('wand of blinking', {
 
 Game.ItemRepository.define('wand of slowing', {
     name: 'wand of slowing',
-    character: '\u26B5',
+    character: '~',
     foreground: Game.Colors.yellow,
     attackValue: 1,
     thrownAttackValue: 1,
