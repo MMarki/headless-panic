@@ -775,12 +775,10 @@ Game.Screen.playScreen = {
             }
         }
         // Render the entities
-        if (!this._player.hasEffect('blind')){
+        if (!this._player.hasEffect('blind') || this._player.hasEffect('detecting')){
             let entities = this._map.getEntities();
             let visibleEntities = [];
             let currentHead = this._player.getHead();
-
-            //var screenWidth = Game.getScreenWidth();
 
             for (let key in entities) {
                 let entity = entities[key];
@@ -798,7 +796,8 @@ Game.Screen.playScreen = {
                         }
                     } else if (!entity.isNotMonster()) {
                         display.draw(entity.getX(), entity.getY(), entity.getChar(), entity.getForeground(), background);
-                    } else {
+                    } else if (!this._player.hasEffect('blind')) {
+                        //if you're detecting but you're blind, don't draw barrels
                         display.draw(entity.getX(), entity.getY(), entity.getChar(), entity.getForeground(), entity.getBackground());
                     }
                     if (!entity.hasMixin('PlayerActor') && entity.isNotMonster() === false){
